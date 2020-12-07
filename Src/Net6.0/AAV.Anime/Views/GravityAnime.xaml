@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="AAV.Anime.Views.GravityAnime"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AAV.Anime.Views"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="400" x:Name="ths">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/AAV.Anime;component/Styling/LocalDictionary.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <system:Double x:Key="x100">160</system:Double>
+      <system:Double x:Key="x020">17</system:Double>
+
+      <Duration x:Key="fadeDuration">0:0:0.75</Duration>
+      <Duration x:Key="fadeInDuration">0:0:0.01</Duration>
+      <Duration x:Key="fadeOuDuration">0:0:0.33</Duration>
+
+      <Storyboard x:Key="sbGravity">
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="tbkPrompt"  RepeatBehavior="Forever" BeginTime="0:0:2" AutoReverse="True" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" >
+          <EasingDoubleKeyFrame          KeyTime="0:0:2" Value="78" >
+            <EasingDoubleKeyFrame.EasingFunction>
+              <ElasticEase EasingMode="EaseIn" Springiness="10" Oscillations="0" />
+            </EasingDoubleKeyFrame.EasingFunction>
+          </EasingDoubleKeyFrame>
+        </DoubleAnimationUsingKeyFrames>
+
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="pnlEllipse" RepeatBehavior="Forever" BeginTime="0:0:4" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" >
+          <EasingDoubleKeyFrame KeyTime="0:0:4" Value="359.99" >
+            <EasingDoubleKeyFrame.EasingFunction>
+              <ElasticEase EasingMode="EaseOut" />
+            </EasingDoubleKeyFrame.EasingFunction>
+          </EasingDoubleKeyFrame>
+        </DoubleAnimationUsingKeyFrames>
+
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="pnlRoot" From="0" To="1" Duration="{StaticResource fadeInDuration}" />
+      </Storyboard>
+
+      <!--//todo: Disabling this invokes fade out from unknown animation + visibility shut off !!!--> 
+      <Storyboard x:Key="sbFadeOut">
+        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="pnlRoot" From="1" To="0" Duration="{StaticResource fadeOuDuration}" BeginTime="0:0:1.5" />
+      </Storyboard>
+
+      <Color           x:Key="PageTitleClr"     >#139364</Color>
+      <Color           x:Key="TabHeaderClr"     >#1ddc97</Color>
+      <Color           x:Key="BackgroundClr"    >#ffffff</Color>
+      <SolidColorBrush x:Key="BackgroundBrh"   Color="{StaticResource BackgroundClr}"/>
+
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <!-- Uncomment for RAD:  
+  <UserControl.Triggers>		<EventTrigger RoutedEvent="FrameworkElement.Loaded">			<BeginStoryboard Storyboard="{StaticResource sbGravity}" />		</EventTrigger>	</UserControl.Triggers>  
+  -->
+  <Grid x:Name="pnlRoot" RenderTransformOrigin="0.5,0.5" Style="{StaticResource IsYesCompletedStyleLight}">
+    <!-- //todo: Blur - find the missing switch Feb 2020.
+    <Grid.BitmapEffect>
+      <BlurBitmapEffect />
+    </Grid.BitmapEffect>
+    -->
+    <Grid.RenderTransform>
+      <TransformGroup>
+        <ScaleTransform />
+      </TransformGroup>
+    </Grid.RenderTransform>
+    <!-- no need for translate animation
+    <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="#a444"       Offset="0"/>
+                <GradientStop Color="Transparent" Offset="1.5"/>
+            </RadialGradientBrush>
+        </Grid.Background>-->
+
+    <Grid x:Name="pnlShadow" RenderTransformOrigin="0.5,0.5" Width="{StaticResource x100}" Height="{StaticResource x100}" Cursor="AppStarting" >
+      <Ellipse Height="{StaticResource x100}" Width="{StaticResource x100}" Fill="#888">
+        <Ellipse.Effect>
+          <DropShadowEffect ShadowDepth="16" BlurRadius="40" />
+        </Ellipse.Effect>
+      </Ellipse>
+    </Grid>
+
+    <Grid x:Name="pnlEllipse" RenderTransformOrigin="0.5,0.5" Width="{StaticResource x100}" Height="{StaticResource x100}" Cursor="AppStarting" >
+      <Grid.RenderTransform>
+        <TransformGroup>
+          <ScaleTransform/>
+          <SkewTransform/>
+          <RotateTransform/>
+          <TranslateTransform/>
+        </TransformGroup>
+      </Grid.RenderTransform>
+      <Ellipse HorizontalAlignment="Left" VerticalAlignment="Top" Height="{StaticResource x100}" Width="{StaticResource x100}" StrokeThickness="{StaticResource x020}">
+        <Ellipse.Fill>
+          <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" RadiusX="1" RadiusY="1">
+            <GradientStop Color="{StaticResource PageTitleClr}" Offset="1"/>
+            <GradientStop Color="{StaticResource TabHeaderClr}" Offset="0"/>
+          </RadialGradientBrush>
+        </Ellipse.Fill>
+        <Ellipse.Stroke>
+          <RadialGradientBrush GradientOrigin="0.5,0.945" Center="0.5,1" RadiusX=".8" RadiusY=".8">
+            <GradientStop Color="#cff"/>
+            <GradientStop Color="{StaticResource BackgroundClr}" Offset="0.05103"/>
+            <GradientStop Color="{StaticResource TabHeaderClr}"  Offset="0.05104"/>
+            <GradientStop Color="{StaticResource PageTitleClr}"  Offset="1"/>
+          </RadialGradientBrush>
+        </Ellipse.Stroke>
+      </Ellipse>
+    </Grid>
+
+    <Grid x:Name="tbkPrompt" Width="{StaticResource x100}" RenderTransformOrigin="0.5,0.5">
+      <Grid.RenderTransform>
+        <TransformGroup>
+          <ScaleTransform/>
+          <SkewTransform/>
+          <RotateTransform/>
+          <TranslateTransform/>
+        </TransformGroup>
+      </Grid.RenderTransform>
+      <TextBlock Text="↑" Foreground="{StaticResource BackgroundBrh}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Left"  />
+      <TextBlock Text="↓" Foreground="{StaticResource BackgroundBrh}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Right" />
+      <Viewbox HorizontalAlignment="Left" Margin="20">
+        <TextBlock Text="{Binding ElementName=ths, Path=Prompt, FallbackValue='Uploading. . .'}" Foreground="{StaticResource BackgroundBrh}" FontWeight="SemiBold" FontSize="20" />
+      </Viewbox>
+    </Grid>
+  </Grid>
+</UserControl>

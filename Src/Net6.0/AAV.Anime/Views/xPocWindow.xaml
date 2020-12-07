@@ -1,0 +1,39 @@
+﻿<Window x:Class="AAV.Anime.Views.xPocWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AAV.Anime.Views"
+        mc:Ignorable="d"
+        Title="xPocWindow" Height="450" Width="800">
+  <Grid>
+
+    <local:BusyArcRotator />
+    
+    <Path Width="200" Height="200" Stroke="#8ccc" StrokeThickness="10" Stretch="Uniform">
+      <Path.Data>
+        <GeometryGroup>
+          <EllipseGeometry Center="1,1" RadiusX="1" RadiusY="1"/>
+          <LineGeometry StartPoint="1,1" EndPoint="1,0"/>
+          <LineGeometry StartPoint="1,1" EndPoint="1.866,1.5"/>
+          <LineGeometry StartPoint="1,1" EndPoint="0.134,1.5"/>
+        </GeometryGroup>
+      </Path.Data>
+    </Path>
+
+    <Path Width="250" Height="250" Stroke="#8888" StrokeThickness="1" Stretch="Uniform">
+      <Path.Data>
+        <GeometryGroup>
+          <PathGeometry Figures="M100,100 L100,0"/>
+          <PathGeometry Figures="M100,100 L186.6,150"/>
+          <PathGeometry Figures="M100,100 L13.4,150"/>
+          <EllipseGeometry Center="100,100" RadiusX="100" RadiusY="100"/>
+        </GeometryGroup>
+      </Path.Data>
+    </Path>
+    
+
+    <!--<local:GravityAnime IsBusy="True" Prompt="Busying . . ." />-->
+
+  </Grid>
+</Window>

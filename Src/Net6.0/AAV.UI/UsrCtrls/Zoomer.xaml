@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="AAV.Common.UI.UsrCtrls.Zoomer" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="50"
+             xmlns:xui="clr-namespace:AAV.Common.UI.UsrCtrls"
+       xmlns:cnv="clr-namespace:AAV.Common.UI.Converters" 
+       >
+    <UserControl.Resources>
+        <Color x:Key="BmoBlueCDk1">#006cae</Color>
+        <Color x:Key="BmoBlueCDk4">#004874</Color>
+        <SolidColorBrush x:Key="BmoBlueDk1" Color="{StaticResource BmoBlueCDk1}" />
+        <SolidColorBrush x:Key="BmoBlueDk4" Color="{StaticResource BmoBlueCDk4}" />
+    </UserControl.Resources>
+
+    <Grid Margin="2" Width="52" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" >
+        <xui:ProgressBar x:Name="ZoomPrgBar" 
+           ForeGround="{StaticResource BmoBlueDk1}"
+           BackGround="{StaticResource BmoBlueDk4}"
+           Minimum="{Binding ElementName=ZoomSlider, Path=Minimum}" 
+           Maximum="{Binding ElementName=ZoomSlider, Path=Maximum}" 
+           PBValue="{Binding ElementName=ZoomSlider, Path=Value}" Cursor="Hand" ToolTip="Adjust zoom. &#10;Double Click - back to 100%" IsTabStop="False" Opacity=".5" />
+        <TextBlock       Text="{Binding ElementName=ZoomSlider, Path=Value, StringFormat='{}{0:N0} %', Converter={cnv:Multy100}}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
+        <Slider Orientation="Horizontal" x:Name="ZoomSlider" Minimum="0.5" Maximum="3" Value="{Binding ZmValue}" Cursor="Hand" ToolTip="Zoom. &#10;&#10;Use mouse wheel to adjust ...&#10;&#10; ... or Double Click to go back to 100% " IsTabStop="False" Opacity="0" SmallChange="0.25" />
+    </Grid>
+</UserControl>

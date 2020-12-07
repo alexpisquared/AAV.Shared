@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="AAV.Common.UI.UsrCtrls.ProgressBar" x:Name="uc" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="100"
+						 >
+	<UserControl.Resources>
+		<Color x:Key="BmoBlueCDk3">#005487</Color>
+		<Color x:Key="BmoBlueCDk5">#003c61</Color>
+		<SolidColorBrush x:Key="BmoBlueDk3" Color="{StaticResource BmoBlueCDk3}" />
+		<SolidColorBrush x:Key="BmoBlueDk5" Color="{StaticResource BmoBlueCDk5}" />
+	</UserControl.Resources>
+	<Grid>
+		<Rectangle Fill="{Binding  ElementName=uc,	Path=BackGround,	FallbackValue={StaticResource BmoBlueDk3}}" />
+		<Rectangle Fill="{Binding  ElementName=uc,	Path=ForeGround,	FallbackValue={StaticResource BmoBlueDk5}}" 
+							 Width="{Binding ElementName=uc,	Path=Progress,		FallbackValue=30, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" />
+	</Grid>
+</UserControl>

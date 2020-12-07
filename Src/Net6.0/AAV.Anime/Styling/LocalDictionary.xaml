@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AAV.Anime.Styling">
+  <ResourceDictionary.MergedDictionaries>
+    <!--
+    <ResourceDictionary Source="/AAV.Anime;component/UI/StringResources.xaml"/>
+    -->
+    <ResourceDictionary Source="/AAV.Anime;component/Styling/TransDictionary.xaml" />
+    <!--
+    <ResourceDictionary Source="/AAV.Anime;component/Styling/StyleDictionary.xaml" />
+    <ResourceDictionary Source="/AAV.Anime;component/Thm/Nymi.Theme.Dark.xaml" />
+    -->
+  </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

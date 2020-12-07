@@ -1,0 +1,229 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AAV.Anime.Styling"
+                    >
+  <!--
+                    xmlns:System="clr-namespace:System;assembly=mscorlib"
+                    xmlns:pilot="clr-namespace:AAV.AnimeModel.Pilot;assembly=AAV.AnimeModel"   
+  -->
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary Source="/AAV.Anime;component/Styling/AnimnDictionary.xaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <Style TargetType="FrameworkElement" x:Key="IsMainBigBusy_Scale19AnimStyle">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding IsMainBigBusy, UpdateSourceTrigger=PropertyChanged}" Value="True">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbFadeShow}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbFadeHide}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding IsMainBigBusy, UpdateSourceTrigger=PropertyChanged}" Value="False">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbFadeHide}" />
+        </DataTrigger.EnterActions>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style TargetType="FrameworkElement" x:Key="SlowShowOnLoad">
+    <Style.Triggers>
+      <EventTrigger RoutedEvent="Loaded">
+        <BeginStoryboard Storyboard="{StaticResource sbSlowShow}" />
+      </EventTrigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style TargetType="FrameworkElement" x:Key="IsGood_AlertBrushStyle">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding GuidedColor, UpdateSourceTrigger=PropertyChanged}" Value="False">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbFlashAlert}" />
+        </DataTrigger.EnterActions>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+
+  <SineEase    x:Key="se"     EasingMode="EaseInOut" />
+  <SineEase    x:Key="si"     EasingMode="EaseIn" />
+  <SineEase    x:Key="so"     EasingMode="EaseOut" />
+  <CubicEase   x:Key="ce"     EasingMode="EaseInOut" />
+  <CubicEase   x:Key="co"     EasingMode="EaseOut" />
+  <CubicEase   x:Key="ci"     EasingMode="EaseIn" />
+  <ElasticEase x:Key="ei"     EasingMode="EaseIn" />
+  <ElasticEase x:Key="eo"     EasingMode="EaseOut" />
+  <ElasticEase x:Key="ee"     EasingMode="EaseInOut" />
+  <ElasticEase x:Key="eo0s5"  EasingMode="EaseOut" Oscillations="0" Springiness="5" />
+  <ElasticEase x:Key="eo2s5"  EasingMode="EaseOut" Oscillations="2" Springiness="5" />
+  <BounceEase  x:Key="be"     EasingMode="EaseOut" />
+
+  <Duration x:Key="moveDuration">0:0:0.5</Duration>
+  <Duration x:Key="fadeDuration">0:0:0.3</Duration>
+  <Duration x:Key="fastDuration">0:0:0.1</Duration>
+  <Duration x:Key="immediateDrn">0:0:0.0</Duration>
+
+  <Storyboard x:Key="sbSlideShow">
+    <DoubleAnimation          To="0"                                          Duration="{StaticResource moveDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" EasingFunction="{StaticResource be}" />
+    <DoubleAnimation From="0" To="1" Storyboard.TargetProperty="Opacity"      Duration="{StaticResource fadeDuration}" />
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="Visibility"   Duration="{StaticResource immediateDrn}"  >
+      <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" />
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+  <Storyboard x:Key="sbSlideHide">
+    <DoubleAnimation          To="-2"                                         Duration="{StaticResource fastDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" EasingFunction="{StaticResource si}" />
+    <DoubleAnimation From="1" To="0" Storyboard.TargetProperty="Opacity"      Duration="{StaticResource fastDuration}" BeginTime="0:0:.05"/>
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="Visibility"   Duration="{StaticResource fastDuration}"  >
+      <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" />
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+
+  <Storyboard x:Key="sbAllCompletedFadeShow">
+    <DoubleAnimation To="1"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" />
+    <DoubleAnimation To="1"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" />
+    <!--<DoubleAnimation To="0"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.BitmapEffect).(BlurBitmapEffect.Radius)" />-->
+    <DoubleAnimation To="1"   Duration="{StaticResource moveDuration}" Storyboard.TargetProperty="Opacity" From="0" />
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="Visibility"   Duration="{StaticResource immediateDrn}"  >
+      <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" />
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+  <Storyboard x:Key="sbNotCompletedFadeHide">
+    <DoubleAnimation To="0.9" Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" />
+    <DoubleAnimation To="0.9" Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" />
+    <!--<DoubleAnimation To="5"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.BitmapEffect).(BlurBitmapEffect.Radius)" />-->
+    <DoubleAnimation To="0"   Duration="{StaticResource moveDuration}" Storyboard.TargetProperty="Opacity" From="1" />
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="Visibility"   Duration="{StaticResource moveDuration}"  >
+      <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" />
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+  <Storyboard x:Key="sbYesCompletedFadeHide">
+    <DoubleAnimation To="1.1" Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" />
+    <DoubleAnimation To="1.1" Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" />
+    <!--<DoubleAnimation To="5"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.BitmapEffect).(BlurBitmapEffect.Radius)" />
+    <DoubleAnimation To="0"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.BitmapEffect).(BlurBitmapEffect.Radius)" BeginTime="0:0:.5" />-->
+    <DoubleAnimation To="0"   Duration="{StaticResource moveDuration}" Storyboard.TargetProperty="Opacity" From="1" />
+  </Storyboard>
+  <Storyboard x:Key="sbCollapseVisibilityAtTheEnd">
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="Visibility"   Duration="{StaticResource moveDuration}"  >
+      <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}" />
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+
+  <Storyboard x:Key="sbAllCompletedFadeEnable">
+    <DoubleAnimation To="1"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" />
+    <DoubleAnimation To="1"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" />
+    <DoubleAnimation To="0"   Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.BitmapEffect).(BlurBitmapEffect.Radius)" />
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="IsEnabled"   Duration="{StaticResource immediateDrn}"  >
+      <DiscreteObjectKeyFrame>
+        <DiscreteObjectKeyFrame.Value>
+          True
+          <!--
+          <System:Boolean>True</System:Boolean>
+        -->
+        </DiscreteObjectKeyFrame.Value>
+      </DiscreteObjectKeyFrame>
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+  <Storyboard x:Key="sbAllCompletedFadeDisable">
+    <DoubleAnimation To=".9" Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" />
+    <DoubleAnimation To=".9" Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" />
+    <!--<DoubleAnimation To="5"  Duration="{StaticResource fadeDuration}" Storyboard.TargetProperty="(UIElement.BitmapEffect).(BlurBitmapEffect.Radius)" />-->
+    <ObjectAnimationUsingKeyFrames   Storyboard.TargetProperty="IsEnabled"   Duration="{StaticResource immediateDrn}"  >
+      <DiscreteObjectKeyFrame>
+        <DiscreteObjectKeyFrame.Value>
+          False
+          <!--<System:Boolean>False</System:Boolean>-->
+        </DiscreteObjectKeyFrame.Value>
+        <!--
+          -->
+      </DiscreteObjectKeyFrame>
+    </ObjectAnimationUsingKeyFrames>
+  </Storyboard>
+
+  <Style TargetType="FrameworkElement" x:Key="IsNotCompletedStyle">
+    <Setter Property="IsEnabled" Value="True" />
+    <!-- This is default before any triggers may run. It is a safety in case no triggers are run. -->
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding IsBusyAtAll, UpdateSourceTrigger=PropertyChanged}" Value="False">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeEnable}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeDisable}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding IsBusyAtAll, UpdateSourceTrigger=PropertyChanged}" Value="True">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeDisable}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeEnable}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+  <Style TargetType="FrameworkElement" x:Key="IsYesCompletedStyle">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding IsBusyAtAll, UpdateSourceTrigger=PropertyChanged}" Value="True">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeShow}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbYesCompletedFadeHide}" />
+          <BeginStoryboard Storyboard="{StaticResource sbCollapseVisibilityAtTheEnd}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding IsBusyAtAll, UpdateSourceTrigger=PropertyChanged}" Value="False">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbYesCompletedFadeHide}" />
+          <BeginStoryboard Storyboard="{StaticResource sbCollapseVisibilityAtTheEnd}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeShow}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+  <Style TargetType="FrameworkElement" x:Key="IsYesCompletedStyleLight">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding IsBusyAtAll, UpdateSourceTrigger=PropertyChanged}" Value="True">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeShow}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbYesCompletedFadeHide}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding IsBusyAtAll, UpdateSourceTrigger=PropertyChanged}" Value="False">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbYesCompletedFadeHide}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbAllCompletedFadeShow}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style TargetType="FrameworkElement" x:Key="IsCurrent_thenLowStyle">
+    <Style.Triggers>
+      <DataTrigger Binding="{Binding IsCurrent, UpdateSourceTrigger=PropertyChanged}" Value="True">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbSlideShow}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbSlideHide}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+      <DataTrigger Binding="{Binding IsCurrent, UpdateSourceTrigger=PropertyChanged}" Value="False">
+        <DataTrigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource sbSlideHide}" />
+        </DataTrigger.EnterActions>
+        <DataTrigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource sbSlideShow}" />
+        </DataTrigger.ExitActions>
+      </DataTrigger>
+    </Style.Triggers>
+  </Style>
+
+</ResourceDictionary>

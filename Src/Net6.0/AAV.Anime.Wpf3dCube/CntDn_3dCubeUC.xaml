@@ -1,0 +1,159 @@
+﻿<UserControl x:Class="AAV.Anime.Wpf3dCube.CntDn_3dCubeUC" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AAV.Anime.Wpf3dCube" mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" x:Name="w1"	>
+  <UserControl.Resources>
+    <Color           x:Key="el1">#8999</Color>
+    <SolidColorBrush x:Key="el2">#8aaa</SolidColorBrush>
+    <DiffuseMaterial x:Key="CubeSideMaterial" Viewport2DVisual3D.IsVisualHostMaterial="True" Brush="#f00"/>
+    <LinearGradientBrush x:Key="BlackBackground" EndPoint="1,1" StartPoint="0.25,0.25">
+      <GradientStop Color="#888" Offset="0"/>
+      <GradientStop Color="#555" Offset="1"/>
+    </LinearGradientBrush>
+    <Style TargetType="TextBlock" x:Key="st" >
+      <Setter Property="Background"           Value="{StaticResource BlackBackground}"  />
+      <Setter Property="Foreground"           Value="#aaa"  />
+      <Setter Property="Width"                Value="19"    />
+      <Setter Property="Height"               Value="18"    />
+    </Style>
+    <Style TargetType="Ellipse" >
+      <Setter Property="Margin"                Value="15"    />
+      <Setter Property="Stroke"                Value="{StaticResource el2}"    />
+    </Style>
+
+    <BackEase     x:Key="beo"      EasingMode="EaseOut"   />
+    <BackEase     x:Key="bei"      EasingMode="EaseIn"    />
+    <ElasticEase  x:Key="eeio"     EasingMode="EaseInOut" />
+    <Storyboard   x:Key="sbBlur_On" >
+      <!--<DoubleAnimation Storyboard.TargetName="w1" Duration="0:0:.5" From="0" To="1" Storyboard.TargetProperty="Opacity" />-->
+      <DoubleAnimation Storyboard.TargetName="s1" Duration="0:0:.3" From="0" To="1" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" EasingFunction="{StaticResource beo}" />
+      <DoubleAnimation Storyboard.TargetName="s1" Duration="0:0:.3" From="0" To="1" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" EasingFunction="{StaticResource beo}" />
+
+      <!--<DoubleAnimation Storyboard.TargetName="w1" Duration="0:0:2"  From="1" To=".01" Storyboard.TargetProperty="Opacity"                 BeginTime="0:0:3" />-->
+      <DoubleAnimation Storyboard.TargetName="s1" Duration="0:0:.5"  From="1" To="0" Storyboard.TargetProperty="(ScaleTransform.ScaleX)" BeginTime="0:0:10" EasingFunction="{StaticResource bei}" />
+      <DoubleAnimation Storyboard.TargetName="s1" Duration="0:0:.5"  From="1" To="0" Storyboard.TargetProperty="(ScaleTransform.ScaleY)" BeginTime="0:0:10" EasingFunction="{StaticResource bei}" />
+    </Storyboard>
+    <Storyboard x:Key="sbBlur_Of" >
+      <DoubleAnimation Storyboard.TargetName="w1" Duration="0:0:1" From="1" To="0" Storyboard.TargetProperty="Opacity" />
+    </Storyboard>
+  </UserControl.Resources>
+  <UserControl.Triggers>
+    <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+      <BeginStoryboard Storyboard="{StaticResource sbBlur_On}" />
+    </EventTrigger>
+  </UserControl.Triggers>
+  <Grid RenderTransformOrigin="0.5,0.5" Margin="50">
+    <Grid.RenderTransform>
+      <TransformGroup>
+        <ScaleTransform x:Name="s1" />
+        <SkewTransform/>
+        <RotateTransform/>
+        <TranslateTransform/>
+      </TransformGroup>
+    </Grid.RenderTransform>
+
+    <Ellipse >
+      <Ellipse.Fill>
+        <RadialGradientBrush GradientOrigin="0.2,0.2" Center="0.2,0.2" RadiusY="0.8" RadiusX="0.8">
+          <GradientStop Color="#eee" Offset="1"/>
+          <GradientStop Color="#ccc"/>
+        </RadialGradientBrush>
+      </Ellipse.Fill>
+    </Ellipse>
+
+    <Ellipse Height="90" >
+      <Ellipse.Stroke>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="Transparent" Offset="0.5"/>
+          <GradientStop Color="{DynamicResource el1}"        Offset="0.499"/>
+        </LinearGradientBrush>
+      </Ellipse.Stroke>
+    </Ellipse>
+    <Ellipse Width="90" >
+      <Ellipse.Stroke>
+        <LinearGradientBrush EndPoint="1, 0.5" StartPoint="0,0.5">
+          <GradientStop Color="Transparent" Offset="0.5"/>
+          <GradientStop Color="{DynamicResource el1}"        Offset="0.501"/>
+        </LinearGradientBrush>
+      </Ellipse.Stroke>
+    </Ellipse>
+
+    <Viewport3D x:Name="CubeV3D" ClipToBounds="False" RenderOptions.EdgeMode="Aliased">
+      <Viewport3D.Camera>
+        <OrthographicCamera Position="1,1,3" LookDirection="-1,-1,-3" Width="4">
+          <OrthographicCamera.Transform>
+            <RotateTransform3D>
+              <RotateTransform3D.Rotation>
+                <QuaternionRotation3D Quaternion="0, 0, 0, 0" x:Name="CameraRotation"/>
+              </RotateTransform3D.Rotation>
+            </RotateTransform3D>
+          </OrthographicCamera.Transform>
+        </OrthographicCamera>
+      </Viewport3D.Camera>
+      <!-- Cube Front Side -->
+      <Viewport2DVisual3D Material="{StaticResource CubeSideMaterial}">
+        <Viewport2DVisual3D.Geometry>
+          <MeshGeometry3D Positions="-1,1,1 -1,-1,1 1,-1,1 1,1,1" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3"/>
+        </Viewport2DVisual3D.Geometry>
+        <TextBlock Style="{StaticResource st}" Name="tbf" Text="  9" />
+      </Viewport2DVisual3D>
+      <!-- Cube Back Side -->
+      <Viewport2DVisual3D Material="{StaticResource CubeSideMaterial}">
+        <Viewport2DVisual3D.Geometry>
+          <MeshGeometry3D Positions="1,1,-1 1,-1,-1 -1,-1,-1 -1,1,-1" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3"/>
+        </Viewport2DVisual3D.Geometry>
+        <TextBlock Style="{StaticResource st}" Name="tbb" Text="  5" />
+      </Viewport2DVisual3D>
+      <!-- Cube Left Side -->
+      <Viewport2DVisual3D Material="{StaticResource CubeSideMaterial}">
+        <Viewport2DVisual3D.Geometry>
+          <MeshGeometry3D Positions="-1,1,-1 -1,-1,-1 -1,-1,1 -1,1,1" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3"/>
+        </Viewport2DVisual3D.Geometry>
+        <TextBlock Style="{StaticResource st}" Name="tbl" Text="  6" />
+      </Viewport2DVisual3D>
+      <!-- Cube Right Side -->
+      <Viewport2DVisual3D Material="{StaticResource CubeSideMaterial}">
+        <Viewport2DVisual3D.Geometry>
+          <MeshGeometry3D Positions="1,1,1 1,-1,1 1,-1,-1 1,1,-1" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3"/>
+        </Viewport2DVisual3D.Geometry>
+        <TextBlock Style="{StaticResource st}" Name="tbr" Text="  8" />
+      </Viewport2DVisual3D>
+      <!-- Up-Top Cube Side -->
+      <Viewport2DVisual3D Material="{StaticResource CubeSideMaterial}">
+        <Viewport2DVisual3D.Geometry>
+          <MeshGeometry3D Positions="-1,1,-1 -1,1,1 1,1,1 1,1,-1" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3"/>
+        </Viewport2DVisual3D.Geometry>
+        <TextBlock Style="{StaticResource st}" Name="tbu" Text="  7" />
+      </Viewport2DVisual3D>
+      <!-- Dwn-Bottom Cube Side -->
+      <Viewport2DVisual3D Material="{StaticResource CubeSideMaterial}">
+        <Viewport2DVisual3D.Geometry>
+          <MeshGeometry3D Positions="-1,-1,1 -1,-1,-1 1,-1,-1 1,-1,1" TextureCoordinates="0,0 0,1 1,1 1,0" TriangleIndices="0 1 2 0 2 3"/>
+        </Viewport2DVisual3D.Geometry>
+        <TextBlock Style="{StaticResource st}" Name="tbd" Text="  5" />
+      </Viewport2DVisual3D>
+      <!-- Lights -->
+      <ModelVisual3D>
+        <ModelVisual3D.Content>
+          <AmbientLight Color="#eef" />
+        </ModelVisual3D.Content>
+      </ModelVisual3D>
+    </Viewport3D>
+
+    <Ellipse Height="90" >
+      <Ellipse.Stroke>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+          <GradientStop Color="Transparent" Offset="0.5"/>
+          <GradientStop Color="{DynamicResource el1}"        Offset="0.501"/>
+        </LinearGradientBrush>
+      </Ellipse.Stroke>
+    </Ellipse>
+    <Ellipse Width="90" >
+      <Ellipse.Stroke>
+        <LinearGradientBrush EndPoint="1, 0.5" StartPoint="0,0.5">
+          <GradientStop Color="Transparent" Offset="0.501"/>
+          <GradientStop Color="{DynamicResource el1}"        Offset="0.5"/>
+        </LinearGradientBrush>
+      </Ellipse.Stroke>
+    </Ellipse>
+
+  </Grid>
+</UserControl> 
