@@ -104,87 +104,85 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\..\AavCore\AAV.WPF\Base\BasicDefaultsLayout.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\Base\BasicDefaultsLayout.xaml">
       <Link>Base\BasicDefaultsLayout.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Dark.Google.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Google.xaml">
       <Link>ColorScheme\Theme.Color.Dark.Google.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Dark.Gray.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Gray.xaml">
       <Link>ColorScheme\Theme.Color.Dark.Gray.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Dark.Iress.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Iress.xaml">
       <Link>ColorScheme\Theme.Color.Dark.Iress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Lite.Bootstrap.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Bootstrap.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Bootstrap.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Lite.Google.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Google.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Google.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Lite.Gray.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Gray.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Gray.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Lite.Iress.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Iress.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Iress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\ColorScheme\Theme.Color.Lite.VaporWave.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.VaporWave.xaml">
       <Link>ColorScheme\Theme.Color.Lite.VaporWave.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\UiDesign\Edge3dBevel.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\UiDesign\Edge3dBevel.xaml">
       <Link>UiDesign\Edge3dBevel.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\UiDesign\PnlNewMorph.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\UiDesign\PnlNewMorph.xaml">
       <Link>UiDesign\PnlNewMorph.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\View\ExceptionPopup.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\View\ExceptionPopup.xaml">
       <Link>View\ExceptionPopup.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml">
       <Link>View\ThemeSelectorUsrCtrl.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AavCore\AAV.WPF\View\ThemeToggleIress.xaml">
+    <Page Include="..\..\Net6.0\AAV.WPF\View\ThemeToggleIress.xaml">
       <Link>View\ThemeToggleIress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\AsLink\Themes\Common.xaml">
-      <Link>AsLink\Common.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="..\..\AsLink\Themes\CommonDark.xaml">
-      <Link>AsLink\CommonDark.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Base\DataGrid.Base.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\CommonDark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -194,35 +192,35 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\AavCore\AAV.WPF\Base\WindowBase.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\Base\WindowBase.cs">
       <Link>Base\WindowBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\Converters\ConverterUni.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\Converters\ConverterUni.cs">
       <Link>Converters\ConverterUni.cs</Link>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\Converters\ConverterVisibleCollapsed.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\Converters\ConverterVisibleCollapsed.cs">
       <Link>Converters\ConverterVisibleCollapsed.cs</Link>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\Helpers\UnhandledExceptionHndlr.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\Helpers\UnhandledExceptionHndlr.cs">
       <Link>Helpers\UnhandledExceptionHndlr.cs</Link>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\UiDesign\Edge3dBevel.xaml.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\UiDesign\Edge3dBevel.xaml.cs">
       <Link>UiDesign\Edge3dBevel.xaml.cs</Link>
       <DependentUpon>Edge3dBevel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\UiDesign\PnlNewMorph.xaml.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\UiDesign\PnlNewMorph.xaml.cs">
       <Link>UiDesign\PnlNewMorph.xaml.cs</Link>
       <DependentUpon>PnlNewMorph.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\View\ExceptionPopup.xaml.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\View\ExceptionPopup.xaml.cs">
       <Link>View\ExceptionPopup.xaml.cs</Link>
       <DependentUpon>ExceptionPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml.cs">
       <Link>View\ThemeSelectorUsrCtrl.xaml.cs</Link>
       <DependentUpon>ThemeSelectorUsrCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\AavCore\AAV.WPF\View\ThemeToggleIress.xaml.cs">
+    <Compile Include="..\..\Net6.0\AAV.WPF\View\ThemeToggleIress.xaml.cs">
       <Link>View\ThemeToggleIress.xaml.cs</Link>
       <DependentUpon>ThemeToggleIress.xaml</DependentUpon>
     </Compile>
@@ -248,7 +246,6 @@
     <None Include="Base\Obsoletes.UpForGrabs">
       <Generator>MSBuild:Compile</Generator>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -261,28 +258,8 @@
     <Content Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.1\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\analyzers\dotnet\cs\Humanizer.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\analyzers\dotnet\cs\Microsoft.NetCore.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.NetFramework.Analyzers.3.3.1\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\Mail\packages\Microsoft.NetFramework.Analyzers.3.3.1\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\cs\Microsoft.CodeAnalysis.VersionCheckAnalyzer.resources.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\analyzers\dotnet\Microsoft.CodeAnalysis.VersionCheckAnalyzer.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Humanizer.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeQuality.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.CodeQuality.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetCore.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
-    <Analyzer Include="..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetFramework.Analyzers.2.9.8\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Net6.0\AAV.Sys\AAV.Sys.csproj">
-      <Project>{9c24695c-ac06-4576-b3a4-9f79f81b51ca}</Project>
+      <Project>{7139da94-b8f6-45a2-a292-319c5dd1f66c}</Project>
       <Name>AAV.Sys</Name>
     </ProjectReference>
   </ItemGroup>
@@ -291,19 +268,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.2.9.8\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeQuality.Analyzers.2.9.8\build\Microsoft.CodeQuality.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetCore.Analyzers.2.9.8\build\Microsoft.NetCore.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.NetFramework.Analyzers.2.9.8\build\Microsoft.NetFramework.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.8\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\build\Microsoft.CodeQuality.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\build\Microsoft.CodeQuality.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\build\Microsoft.CodeQuality.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\build\Microsoft.CodeQuality.Analyzers.targets'))" />
-    <Error Condition="!Exists('..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\build\Microsoft.NetCore.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\build\Microsoft.NetCore.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\build\Microsoft.NetCore.Analyzers.targets'))" />
-    <Error Condition="!Exists('..\..\Lgc\Mail\packages\Microsoft.NetFramework.Analyzers.3.3.1\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\Mail\packages\Microsoft.NetFramework.Analyzers.3.3.1\build\Microsoft.NetFramework.Analyzers.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\Mail\packages\Microsoft.NetFramework.Analyzers.3.3.1\build\Microsoft.NetFramework.Analyzers.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\Mail\packages\Microsoft.NetFramework.Analyzers.3.3.1\build\Microsoft.NetFramework.Analyzers.targets'))" />
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.1\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.1\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.props'))" />
-    <Error Condition="!Exists('..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.1\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\Lgc\ScrSvrs\AAV.ScrSvr\packages\Microsoft.CodeAnalysis.VersionCheckAnalyzer.3.3.1\build\Microsoft.CodeAnalysis.VersionCheckAnalyzer.targets'))" />
   </Target>
   <Import Project="..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\build\Microsoft.CodeQuality.Analyzers.targets" Condition="Exists('..\..\Lgc\Mail\packages\Microsoft.CodeQuality.Analyzers.3.3.1\build\Microsoft.CodeQuality.Analyzers.targets')" />
   <Import Project="..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\build\Microsoft.NetCore.Analyzers.targets" Condition="Exists('..\..\Lgc\Mail\packages\Microsoft.NetCore.Analyzers.3.3.1\build\Microsoft.NetCore.Analyzers.targets')" />
