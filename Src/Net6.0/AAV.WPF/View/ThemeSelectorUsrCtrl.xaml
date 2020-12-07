@@ -20,8 +20,8 @@
     <Button Content="l_v" Click="onChangeTheme"  Tag="Lite.VaporWave"    ToolTip="Lite.VaporWave" />
     -->
 
-  <Menu Background="Transparent" x:Name="menu1" VerticalAlignment="Center">
-    <MenuItem Header="_Theme">
+  <Menu x:Name="menu1" VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
+    <MenuItem   Header="_Theme"                   Background="Transparent" BorderThickness="0">
       <MenuItem Header="Dark.Google"        Tag="Dark.Google"       Click="onMenuClick" IsCheckable="True" />
       <MenuItem Header="Dark.Gray"          Tag="Dark.Gray"         Click="onMenuClick" IsCheckable="True" />
       <MenuItem Header="Dark.Iress"         Tag="Dark.Iress"        Click="onMenuClick" IsCheckable="True" />
