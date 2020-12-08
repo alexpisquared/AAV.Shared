@@ -6,8 +6,9 @@ namespace AAV.Sys.Helpers
 {
   public static class Bpr
   {
-    public static void beep(int freq, int dur) => NativeMethods.Beep(freq, dur);
+    static void beep(int freq, int dur) => NativeMethods.Beep(freq, dur);
 
+    public static void Wake() => NativeMethods.Beep(18111, 50);
     public static void ErrorAsync() => Task.Run(() => ErrorSynch());
     public static void Begin1Async() => Task.Run(() => Begin1Sync());
     public static void Begin2Async() => Task.Run(() => Begin2Sync());
