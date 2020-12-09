@@ -8,7 +8,7 @@ namespace AAV.Sys.Helpers
   {
     static void beep(int freq, int dur) => NativeMethods.Beep(freq, dur);
 
-    public static void Wake() => NativeMethods.Beep(11111, 444);
+    public static void Wake() => NativeMethods.Beep(7111, 333);
     public static void ErrorAsync() => Task.Run(() => ErrorSynch());
     public static void Begin1Async() => Task.Run(() => Begin1Sync());
     public static void Begin2Async() => Task.Run(() => Begin2Sync());
