@@ -1,0 +1,64 @@
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Markup;
+
+namespace AAV.Common.UI.Converters
+{
+	public class LogScaleConverter : IValueConverter // http://stackoverflow.com/questions/7246622/how-to-create-a-slider-with-a-non-linear-scale
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			double x = (int)value;
+			return Math.Log(x);
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			double x = (double)value;
+			return (int)Math.Exp(x);
+		}
+	}
+
+
+
+	public class Multy100 : MarkupExtension, IValueConverter
+	{
+		public Multy100() { }
+		public bool InvertValue { get; set; } // public bool InvertValue		{			get { return _InvertValue; }			set { _InvertValue = value; }		}		private bool _InvertValue = false;
+
+		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			if (!(value is double)) return value;
+
+			return 100.0 * (double)value;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) { throw new NotImplementedException(string.Format("Under construction: {0}.{1}()", System.Reflection.MethodInfo.GetCurrentMethod().DeclaringType.Name, System.Reflection.MethodInfo.GetCurrentMethod().Name)); ; }
+		public override object ProvideValue(IServiceProvider serviceProvider) { return this; }
+	}
+
+	public class Divider : MarkupExtension, IValueConverter
+	{
+		public int Divisor { get { return divisor; } set { divisor = value; } }
+		int divisor = 1000000;
+
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+
+			if (value == null) return null;
+
+			if (Divisor == 0) return value;
+
+			if (value is int) return (float)(int)value / divisor;
+			if (value is long) return (float)(long)value / divisor;
+			if (value is float) return (float)(float)value / divisor;
+			if (value is double) return (double)value / divisor;
+
+			return value;
+		}
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) { throw new NotImplementedException(); }
+		public override object ProvideValue(IServiceProvider serviceProvider) { return this; }
+		public Divider() { }
+	}
+}
