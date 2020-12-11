@@ -103,13 +103,13 @@ namespace AAV.Sys.Helpers
   }
   public static class JsonIsoFileSerializer
   {
-    public static void Save<T>(T o, string filenameONLY = "", IsolatedStorageScope iss = IsoConst.PdFls)
+    public static void Save<T>(T o, string? filenameONLY = null, IsolatedStorageScope iss = IsoConst.PdFls)
     {
       try
       {
         var isoStore = IsolatedStorageFile.GetStore(iss, null, null);
 
-        using (var isoStream = new IsolatedStorageFileStream(IsoHelper.GetSetFilename<T>(filenameONLY, "json"), FileMode.Create, isoStore))
+        using (var isoStream = new IsolatedStorageFileStream(IsoHelper.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json"), FileMode.Create, isoStore))
         {
           using (var streamWriter = new StreamWriter(isoStream))
           {
@@ -121,14 +121,14 @@ namespace AAV.Sys.Helpers
       catch (Exception ex) { ex.Log(); throw; }
     }
 
-    public static T Load<T>(string filenameONLY = "", IsolatedStorageScope iss = IsoConst.PdFls) where T : new()
+    public static T Load<T>(string? filenameONLY = null, IsolatedStorageScope iss = IsoConst.PdFls) where T : new()
     {
       try
       {
         var isoStore = IsolatedStorageFile.GetStore(iss, null, null);
 
-        if (isoStore.FileExists(IsoHelper.GetSetFilename<T>(filenameONLY, "json")))
-          using (var isoStream = new IsolatedStorageFileStream(IsoHelper.GetSetFilename<T>(filenameONLY, "json"), FileMode.Open, FileAccess.Read, FileShare.Read, isoStore))
+        if (isoStore.FileExists(IsoHelper.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json")))
+          using (var isoStream = new IsolatedStorageFileStream(IsoHelper.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json"), FileMode.Open, FileAccess.Read, FileShare.Read, isoStore))
           {
             using (var streamReader = new StreamReader(isoStream))
             {

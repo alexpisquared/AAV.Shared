@@ -8,11 +8,11 @@ namespace AAV.Sys.Helpers
 {
   public static class VerHelper
   {
-    public static string CurVerStr(string NetFrwk /*= ".NET 4.8"*/) => $"{NetFrwk} - {getTimedVerString()} - {CompileMode}";
+    public static string CurVerStr(string NetFrwk /*= ".NET 4.7"*/) => $"{NetFrwk} - {getTimedVerString()} - {CompileMode}";
 
     static string getTimedVerString()
     {
-      var calng = new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime;      // from .NET 4.8 version
+      var calng = new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime;      // from .NET 4,8 version
       var entry = new FileInfo(Assembly.GetEntryAssembly()?.Location).LastWriteTime;
       var execg = new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime;
       var max = entry > execg ? entry : execg;
