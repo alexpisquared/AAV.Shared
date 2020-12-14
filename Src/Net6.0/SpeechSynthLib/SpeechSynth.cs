@@ -9,13 +9,13 @@ namespace SpeechSynthLib
 {
   public class SpeechSynth : IDisposable
   {
-    const string _rgn = "canadacentral";
+    const string _rgn = "canadacentral", _key= "use proper key here";
     readonly AzureSpeechCredentials _asc;
-    readonly bool _azure;
+    readonly bool _azureTtsIsPK;
     SpeechSynthesizer _synth = null;
     bool _disposedValue;
 
-#if !seeding
+#if StillInitializing
     public SpeechSynth()
     {
       try
@@ -25,27 +25,27 @@ namespace SpeechSynthLib
         if (_asc?.Rgn == _rgn)
           return;
 
-        JsonIsoFileSerializer.Save<AzureSpeechCredentials>(new AzureSpeechCredentials { Key = "egcmk-hdjcdh-gh56bh3-w5nncn-b3d4", Rgn = _rgn });
+        JsonIsoFileSerializer.Save<AzureSpeechCredentials>(new AzureSpeechCredentials { Key = _key, Rgn = _rgn });
         _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
       }
       catch (Exception ex) { ex.Log(); }
-      finally { _azure = _asc?.Rgn == _rgn; }
+      finally { _azureTtsIsPK = _asc?.Rgn == _rgn; }
     }
 #endif
 
-    public SpeechSynthesizer Synth => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
+    public SpeechSynthesizer SynthReal => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
     public async Task SpeakAsync(string msg)
     {
       try
       {
-        if (!_azure)
+        if (!_azureTtsIsPK)
         {
           new Process { StartInfo = new ProcessStartInfo("say.exe", msg) { RedirectStandardError = true, UseShellExecute = false } }.Start();
           return;
         }
 
-        using var result = await Synth.SpeakTextAsync(msg);
+        using var result = await SynthReal.SpeakTextAsync(msg);
 
         if (result.Reason == ResultReason.SynthesizingAudioCompleted)
         {
@@ -87,8 +87,7 @@ namespace SpeechSynthLib
     }
   }
 }
-/*
-f8653a65f32d4bdefa0157d1d4547958
+/* f8653a65f32d4bdefa0157d1d4547958
 65f32d4bdefa0157d1f8653ad4547958
 bdefa0157d1d4547958f8653a65f32d4
 */

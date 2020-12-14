@@ -97,7 +97,7 @@ namespace AAV.Sys.Helpers
       }
       catch (Exception ex) { ex.Log(); throw; }
     }
-    static string GetIsoFolder() //todo: no go for .net core 3: all are ""!
+    public static string GetIsoFolder() //todo: no go for .net core 3: all are ""!
     {
       //#if NotOnDotNetStandard // works only on .NET Framework 4.8, NOT on Core.
       try { var isf = IsolatedStorageFile.GetStore(IsoConst.PdFls, null, null); /**/ logFolder(isf); } catch (Exception ex) { Trace.WriteLine($"Nogo for:  GetStore(IsoConst.PdFls, null, null);  <= {ex.Message}"); }
