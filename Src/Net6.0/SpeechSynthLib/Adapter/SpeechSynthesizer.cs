@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace SpeechSynthLib.Adapter
     public int Volume { get; set; }
 
     public void SpeakAsyncCancelAll() => _synth = new SpeechSynth(); //todo: does it work or ...?
-    public async Task Speak(string msg) => await _synth.SpeakAsync(msg); //nogo: .Wait();
+    public async Task Speak(string msg)              /**/ => await _synth.SpeakAsync(msg); //nogo: .Wait();
     public void SpeakFaF(string msg) => Task.Run(async () => await _synth.SpeakAsync(msg));
     public void SelectVoiceByHints(object gender) => Trace.WriteLine($" throw new NotImplementedException(); {gender}");
     public void SelectVoiceByHints(VoiceGender gender, VoiceAge adult, int va, CultureInfo ci) => Trace.WriteLine($" throw new NotImplementedException(); {gender}");
@@ -23,9 +22,6 @@ namespace SpeechSynthLib.Adapter
     public object GetCurrentlySpokenPrompt() => null;
   }
 
-  //
-  // Summary:
-  //     Contains information about a speech synthesis voice installed in Windows.
   [DebuggerDisplay("{VoiceInfo.Name} [{Enabled ? \"Enabled\" : \"Disabled\"}]")]
   public class InstalledVoice
   {
@@ -65,9 +61,7 @@ namespace SpeechSynthLib.Adapter
     //     A hash code for the current System.Speech.Synthesis.InstalledVoice object.
     public override int GetHashCode() => 123;
   }
-  //
-  // Summary:
-  //     Represents an installed speech synthesis engine.
+
   [DebuggerDisplay("{(_name != null ? \"'\" + _name + \"' \" : \"\") +  (_culture != null ? \" '\" + _culture.ToString () + \"' \" : \"\") + (_gender != VoiceGender.NotSet ? \" '\" + _gender.ToString () + \"' \" : \"\") + (_age != VoiceAge.NotSet ? \" '\" + _age.ToString () + \"' \" : \"\") + (_variant > 0 ? \" \" + _variant.ToString () : \"\")}")]
   public class VoiceInfo
   {
@@ -154,54 +148,20 @@ namespace SpeechSynthLib.Adapter
     //public override int GetHashCode();
   }
 
-
-  //
-  // Summary:
-  //     Defines the values for the age of a synthesized voice.
   public enum VoiceAge
   {
-    //
-    // Summary:
-    //     Indicates that no voice age is specified.
     NotSet = 0,
-    //
-    // Summary:
-    //     Indicates a child voice (age 10).
     Child = 10,
-    //
-    // Summary:
-    //     Indicates a teenage voice (age 15).
     Teen = 15,
-    //
-    // Summary:
-    //     Indicates an adult voice (age 30).
     Adult = 30,
-    //
-    // Summary:
-    //     Indicates a senior voice (age 65).
     Senior = 65
   }
-  //
-  // Summary:
-  //     Defines the values for the gender of a synthesized voice.
+
   public enum VoiceGender
   {
-    //
-    // Summary:
-    //     Indicates no voice gender specification.
     NotSet = 0,
-    //
-    // Summary:
-    //     Indicates a male voice.
     Male = 1,
-    //
-    // Summary:
-    //     Indicates a female voice.
     Female = 2,
-    //
-    // Summary:
-    //     Indicates a gender-neutral voice.
     Neutral = 3
   }
-
 }

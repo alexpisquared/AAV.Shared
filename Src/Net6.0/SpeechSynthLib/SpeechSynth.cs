@@ -9,7 +9,7 @@ namespace SpeechSynthLib
 {
   public class SpeechSynth : IDisposable
   {
-    const string _rgn = "canadacentral", _key= "use proper key here";
+    const string _rgn = "canadacentral", _key = "use proper key here";
     readonly AzureSpeechCredentials _asc;
     readonly bool _azureTtsIsPK;
     SpeechSynthesizer _synth = null;
@@ -35,7 +35,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg)
+    public async Task SpeakAsync(string msg, string k="")
     {
       try
       {
@@ -45,7 +45,43 @@ namespace SpeechSynthLib
           return;
         }
 
-        using var result = await SynthReal.SpeakTextAsync(msg);
+        /*
+<speak version="1.0" xmlns="https://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+  <voice name="en-GB-George-Apollo">
+    <prosody rate="0.9">
+      When you're on the motorway,<break time="200ms"/> it's a good idea to use a sat-nav.
+    </prosody>
+  </voice>
+</speak>
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">
+  <voice name="en-US-AriaNeural">
+    <mstts:express-as style="cheerful">
+      This is awesome!
+    </mstts:express-as>
+  </voice>
+</speak>
+        */
+        using var result = await SynthReal.SpeakSsmlAsync(
+          k == "Faf" ?
+$@"
+<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""en-US"">
+  <voice name=""en-GB-George-Apollo"">
+    <prosody rate=""1.25"">
+      {msg}, <break time=""100ms""/> {k}.
+    </prosody>
+  </voice>
+</speak>
+" : 
+$@"
+<speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""en-US"">
+  <voice name=""en-US-AriaNeural"">
+    <mstts:express-as style=""cheerful"">
+      {msg}, <break time=""100ms""/> {k}.
+    </mstts:express-as>
+  </voice>
+</speak>
+  ");
+        //using var result = await SynthReal.SpeakTextAsync(msg);
 
         if (result.Reason == ResultReason.SynthesizingAudioCompleted)
         {
