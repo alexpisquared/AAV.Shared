@@ -15,7 +15,7 @@ namespace SpeechSynthLib
     SpeechSynthesizer _synth = null;
     bool _disposedValue;
 
-#if StillInitializing
+#if StillInitializing // supply the key + publish + delete + commit.
     public SpeechSynth()
     {
       try
@@ -31,6 +31,15 @@ namespace SpeechSynthLib
       catch (Exception ex) { ex.Log(); }
       finally { _azureTtsIsPK = _asc?.Rgn == _rgn; }
     }
+#elif UseProjSecrets
+      //DI:
+      Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
+        .ConfigureAppConfiguration((ctx, builder) => builder.AddAzureKeyVault("https://demopockv.vault.azure.net/", new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(new AzureServiceTokenProvider().KeyVaultTokenCallback)), new DefaultKeyVaultSecretManager())) //tu: !!! MVP for Azure Key Vault utilization !!! 
+        .Build().Run();
+      IConfiguration _configuration = ...
+      var keys = _configuration["CognSvcRsc0-Key-001"];
+      var _key = keys.Split(' ')[0];
+      var _rgn = keys.Split(' ')[3];
 #endif
 
     public SpeechSynthesizer SynthReal => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
@@ -56,7 +65,19 @@ namespace SpeechSynthLib
 
         var voices = new[] { // https://docs.microsoft.com/en-us/azure/cognitive-services/containers/container-image-tags?tabs=current
           "en-gb-george-apollo",  // Container image with the en-GB locale and en-GB-George-Apollo voice.	
+          "en-gb-hazel",    //??
           "en-gb-hazelrus",       // Container image with the en-GB locale and en-GB-HazelRUS voice. 
+          "en-gb-hazelNeural",
+          "en-US-Guy",      //??
+          "en-US-Guy24kRUS",
+          "en-US-GuyNeural",
+          "en-US-Aria",     //??
+          "en-US-AriaRUS",
+          "en-US-AriaNeural",
+          "zh-CN-Xiaoxiao", //??
+          "zh-CN-XiaoxiaoNeural",
+          "zh-CN-Xiaomo",   //??
+          "zh-CN-XiaomoNeural",
           "en-gb-susan-apollo"};	// Container image with the en-GB locale and en-GB-Susan-Apollo voice.	
 
         using var result = await SynthReal.SpeakSsmlAsync(
@@ -65,7 +86,7 @@ $@"
 <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""en-US"">
   <voice name=""{voices[_v % voices.Length]}"">
     <prosody rate=""1.4"">
-      {msg}, <break time=""100ms""/> {voices[_v++ % voices.Length]}.
+      {msg}, <break time=""100ms""/> {voices[_v++ % voices.Length].Substring(4)}.
     </prosody>
   </voice>
 </speak>"
@@ -122,4 +143,11 @@ $@"
 /* f8653a65f32d4bdefa0157d1d4547958
 65f32d4bdefa0157d1f8653ad4547958
 bdefa0157d1d4547958f8653a65f32d4
+
+2020-12-17 
+//todo: for more voice manipulations see https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp&source=docs
+?is it worth the effort: Get started with Custom Voice https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/how-to-custom-voice
+
+
+
 */
