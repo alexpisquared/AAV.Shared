@@ -57,31 +57,32 @@ namespace SpeechSynthLib
         }
 
         var styles = new[] { // https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp#adjust-speaking-styles
-           "newscast-formal"   ,  // Expresses a formal, confident and authoritative tone for news delivery
-           "newscast-casual"   ,  // Expresses a versatile and casual tone for general news delivery
-           "customerservice"   ,  // Expresses a friendly and helpful tone for customer support
-           "chat"              ,  // Expresses a casual and relaxed tone
-           "cheerful"          ,  // Expresses a positive and happy tone
-           "empathetic" };        // Expresses a sense of caring and understanding
+           "newscast-formal" ,  // Expresses a formal, confident and authoritative tone for news delivery
+           "newscast-casual" ,  // Expresses a versatile and casual tone for general news delivery
+           "customerservice" ,  // Expresses a friendly and helpful tone for customer support
+           "chat"            ,  // Expresses a casual and relaxed tone
+           "cheerful"        ,  // Expresses a positive and happy tone
+           "empathetic"     };  // Expresses a sense of caring and understanding
 
-        var voices = new[] { //StandardVoices 
-          // https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#text-to-speech
+        var voices = new[] { 
+          // https://docs.microsoft.com/en-us/azure/cognitive-services/containers/container-image-tags?tabs=current
+          "en-gb-george-apollo",  // Container image with the en-GB locale and en-GB-George-Apollo voice.	
+          "en-gb-hazelNeural",
+          "en-US-Guy",            // guessing
+          "en-US-Guy24kRUS",
+          "en-US-GuyNeural",
+          "en-US-Aria",           // guessing
+          "en-US-AriaRUS",
+          "zh-CN-XiaomoNeural",
+          "en-gb-susan-apollo",
+          // https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#text-to-speech:
+          // StandardVoices 
           "ar-EG-Hoda", "ar-SA-Naayf", "bg-BG-Ivan", "ca-ES-HerenaRUS", "zh-HK-Danny", "zh-HK-TracyRUS", "zh-CN-HuihuiRUS", "zh-CN-Kangkang", "zh-CN-Yaoyao", "zh-TW-HanHanRUS", "zh-TW-Yating", "zh-TW-Zhiwei", "hr-HR-Matej", "cs-CZ-Jakub", "da-DK-HelleRUS", "nl-NL-HannaRUS",
           "en-AU-Catherine", "en-AU-HayleyRUS", "en-CA-HeatherRUS", "en-CA-Linda", "en-IN-Heera", "en-IN-PriyaRUS", "en-IN-Ravi", "en-IE-Sean", "en-GB-George", "en-GB-HazelRUS", "en-GB-Susan", "en-US-BenjaminRUS", "en-US-GuyRUS", "en-US-JessaRUS", "en-US-ZiraRUS",
           "fi-FI-HeidiRUS", "fr-CA-Caroline", "fr-CA-HarmonieRUS", "fr-FR-HortenseRUS", "fr-FR-Julie", "fr-FR-Paul", "fr-CH-Guillaume", "de-AT-Michael", "de-DE-HeddaRUS", "de-DE-Stefan", "de-CH-Karsten", "el-GR-Stefanos", "he-IL-Asaf", "hi-IN-Hemant", "hi-IN-Kalpana", "hu-HU-Szabolcs", "id-ID-Andika", "it-IT-Cosimo", "it-IT-LuciaRUS",
           "ja-JP-Ayumi", "ja-JP-HarukaRUS", "ja-JP-Ichiro", "ko-KR-HeamiRUS", "ms-MY-Rizwan", "nb-NO-HuldaRUS", "pl-PL-PaulinaRUS", "pt-BR-Daniel", "pt-BR-HeloisaRUS", "pt-PT-HeliaRUS", "ro-RO-Andrei", "ru-RU-EkaterinaRUS", "ru-RU-Irina", "ru-RU-Pavel", "sk-SK-Filip", "sl-SI-Lado", "es-MX-HildaRUS", "es-MX-Raul", "es-ES-HelenaRUS", "es-ES-Laura", "es-ES-Pablo",
           "sv-SE-HedvigRUS", "ta-IN-Valluvar", "te-IN-Chitra", "th-TH-Pattara", "tr-TR-SedaRUS", "vi-VN-An",
-          // https://docs.microsoft.com/en-us/azure/cognitive-services/containers/container-image-tags?tabs=current
-          "en-gb-george-apollo",  // Container image with the en-GB locale and en-GB-George-Apollo voice.	
-          "en-gb-hazelNeural",
-          "en-US-Guy",      //??
-          "en-US-Guy24kRUS",
-          "en-US-GuyNeural",
-          "en-US-Aria",     //??
-          "en-US-AriaRUS",
-          "zh-CN-XiaomoNeural",
-          "en-gb-susan-apollo",
-          // var NeuralVoices = new[] { 
+          // Neural Voices:
           "ar-EG-SalmaNeural", "ar-EG-ShakirNeural", "ar-SA-ZariyahNeural", "ar-SA-HamedNeural", "bg-BG-KalinaNeural", "bg-BG-BorislavNeural", "ca-ES-AlbaNeural", "ca-ES-JoanaNeural", "ca-ES-EnricNeural",
           "zh-HK-HiuGaaiNeural", "zh-HK-HiuMaanNeural", "zh-HK-WanLungNeural", "zh-CN-XiaoxiaoNeural", "zh-CN-XiaoyouNeural", "zh-CN-YunyangNeural", "zh-CN-YunyeNeural", "zh-TW-HsiaoChenNeural", "zh-TW-HsiaoYuNeural", "zh-TW-YunJheNeural", "hr-HR-GabrijelaNeural", "hr-HR-SreckoNeural", "cs-CZ-VlastaNeural", "cs-CZ-AntoninNeural", "da-DK-ChristelNeural", "da-DK-JeppeNeural",
           "nl-NL-ColetteNeural", "nl-NL-FennaNeural", "nl-NL-MaartenNeural", "en-AU-NatashaNeural", "en-AU-WilliamNeural", "en-CA-ClaraNeural", "en-CA-LiamNeural", "en-IN-NeerjaNeural", "en-IN-PrabhatNeural", "en-IE-EmilyNeural", "en-IE-ConnorNeural", "en-GB-LibbyNeural", "en-GB-MiaNeural", "en-GB-RyanNeural", "en-US-AriaNeural", "en-US-JennyNeural", "en-US-GuyNeural", "fi-FI-NooraNeural", "fi-FI-SelmaNeural", "fi-FI-HarriNeural",
@@ -91,15 +92,15 @@ namespace SpeechSynthLib
           "sv-SE-HilleviNeural", "sv-SE-SofieNeural", "sv-SE-MattiasNeural", "ta-IN-PallaviNeural", "ta-IN-ValluvarNeural", "te-IN-ShrutiNeural", "te-IN-MohanNeural", "th-TH-AcharaNeural", "th-TH-PremwadeeNeural", "th-TH-NiwatNeural", "tr-TR-EmelNeural", "tr-TR-AhmetNeural", "vi-VN-HoaiMyNeural", "vi-VN-NamMinhNeural"
         };
 
-        var v = voices[_rnd.Next(voices.Length)];
+        var voiceName = voices[_rnd.Next(voices.Length)];
         var sw = Stopwatch.StartNew();
         using var result = await SynthReal.SpeakSsmlAsync(
 k == "Faf" ? // std voice from https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#standard-voices
 $@"
 <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""en-US"">
-  <voice name=""{v}"">
+  <voice name=""{voiceName}"">
     <prosody rate=""1.4"">
-      {msg}, <break time=""100ms""/> {v.Substring(6)}.
+      {msg}, <break time=""100ms""/> {voiceName.Substring(6).Replace("Neural", " Neural").Replace("RUS", " russian")}.
     </prosody>
   </voice>
 </speak>"
@@ -107,31 +108,26 @@ $@"
 $@"
 <speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""en-US"">
   <voice name=""en-US-AriaNeural"">
-    <mstts:express-as style=""{styles[_s % styles.Length]}"">
+    <mstts:express-as style=""{styles[_s % styles.Length]}"" rate=""1.4"">
       {msg}, <break time=""100ms""/> {styles[_s++ % styles.Length]}.
     </mstts:express-as>
   </voice>
 </speak>");
 
         if (k == "Faf")
-          Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f} {sw.Elapsed.TotalSeconds,6:N1} sec   Voice: {v,-26}   {msg,-44}");
+          Trace.WriteLine($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f} {sw.Elapsed.TotalSeconds,6:N1} sec   Voice: {voiceName,-26}   {msg,-44}");
 
-        if (result.Reason == ResultReason.SynthesizingAudioCompleted)
-        {
-          Trace.Write($"Speech synthesized to speaker for text [{msg}]");
-        }
-        else if (result.Reason == ResultReason.Canceled)
+        //if (result.Reason == ResultReason.SynthesizingAudioCompleted) Trace.Write($"Speech synthesized to speaker for text [{msg}]"); else
+        if (result.Reason == ResultReason.Canceled)
         {
           var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-          Trace.Write($"CANCELED: Reason={cancellation.Reason}");
+          Trace.Write($"\tCANCELED: Reason={cancellation.Reason}");
 
           if (cancellation.Reason == CancellationReason.Error)
-          {
             Trace.Write($"   ErrorCode={cancellation.ErrorCode}   ErrorDetails=[{cancellation.ErrorDetails}]   Did you update the subscription info?");
-          }
-        }
 
-        Trace.WriteLine("");
+          Trace.WriteLine("");
+        }
       }
       catch (Exception ex) { ex.Log(); }
     }

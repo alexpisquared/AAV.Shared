@@ -178,8 +178,8 @@ namespace AAV.WPF.Base
 
           _currentLeft += (int)ActualWidth;
         }
-        else
-          Trace.WriteLine($"{_isoFilenameONLY,20}: Window Positions NOT all zeros: btm:{winPlcmnt.normalPosition.Bottom,-4} top:{winPlcmnt.normalPosition.Top,-4} lft:{winPlcmnt.normalPosition.Left,-4} rht:{winPlcmnt.normalPosition.Right,-4}.  {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+        //else
+        //  Trace.WriteLine($"{_isoFilenameONLY,20}: Window Positions NOT all zeros: btm:{winPlcmnt.normalPosition.Bottom,-4} top:{winPlcmnt.normalPosition.Top,-4} lft:{winPlcmnt.normalPosition.Left,-4} rht:{winPlcmnt.normalPosition.Right,-4}.  {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
 
         NativeMethods.SetWindowPlacement_(new WindowInteropHelper(this).Handle, ref winPlcmnt); //Note: if window was closed on a monitor that is now disconnected from the computer, SetWindowPlacement will place the window onto a visible monitor.
       }
