@@ -81,7 +81,7 @@ namespace AAV.Sys.Helpers
         default: break;
       }
     }
-    #region Chimes 1 - 10
+    #region chimes 1 - 10
 
     const int _a = 4401, _b = 4801, _c = 5237, _1 = 30, _2 = 40, _3 = 50;
 
