@@ -11,27 +11,28 @@ namespace SpeechSynthLib
   public class SpeechSynth : IDisposable
   {
     const string _rgn = "canadacentral", _key = "use proper key here";
+    readonly Random _rnd = new Random(DateTime.Now.Millisecond);
     readonly AzureSpeechCredentials _asc;
+    readonly IConfigurationRoot _config;
     readonly string[] _voiceNames;
     readonly string _voiceNameWait;
     readonly bool _azureTtsIsPK;
     string _voiceNameRand;
     SpeechSynthesizer _synth = null;
     bool _disposedValue;
-    Random _rnd = new Random(DateTime.Now.Millisecond);
     int _idx = 0;
 
     public SpeechSynth()
     {
       try
       {
-        var config = new ConfigurationBuilder()
+        _config = new ConfigurationBuilder()
           .SetBasePath(AppContext.BaseDirectory)
           .AddJsonFile("appsettings.json")
           .AddUserSecrets<SpeechSynth>().Build();
 
-        _voiceNames = config.GetSection("VoiceNames").Get<string[]>(); // needs Microsoft.Extensions.Configuration.Binder
-        _voiceNameWait = config["VoiceNameWait"];
+        _voiceNames = _config.GetSection("VoiceNames").Get<string[]>(); // needs Microsoft.Extensions.Configuration.Binder
+        _voiceNameWait = _config["VoiceNameWait"];
 
         _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
 
@@ -109,15 +110,15 @@ namespace SpeechSynthLib
           </voice>
         </speak>");
 
-        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode[0]}\t{sw.Elapsed.TotalSeconds,6:N1} sec \t{(mode == "Faf" ? _voiceNameRand : _voiceNameWait),-26}\t{msg,-44}");
+        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode.Substring(0, 3)}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{(mode == "Faf" ? _voiceNameRand : _voiceNameWait),-26}\t{msg,-44}\t WhereAmI '{_config["WhereAmI"]}'");
 
         if (result.Reason == ResultReason.Canceled)
         {
           var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-          Trace.Write($"\tCANCELED: Reason={cancellation.Reason}");
+          Trace.Write($"\tCANCELED: {cancellation.Reason}");
 
           if (cancellation.Reason == CancellationReason.Error)
-            Trace.Write($"   ErrorCode={cancellation.ErrorCode}   ErrorDetails=[{cancellation.ErrorDetails}]   Did you update the subscription info?");
+            Trace.Write($"   Error: {cancellation.ErrorCode}-{cancellation.ErrorDetails}");
         }
         else
           Trace.Write($"  result: '{result.Reason}'");
