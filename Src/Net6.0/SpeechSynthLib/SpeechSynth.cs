@@ -22,7 +22,7 @@ namespace SpeechSynthLib
     bool _disposedValue;
     int _idx = 0;
 
-    public SpeechSynth()
+    public SpeechSynth() // has not been ran yet: Tracer.SetupTracingOptions()
     {
       try
       {
@@ -80,7 +80,6 @@ namespace SpeechSynthLib
            "cheerful"        ,  // Expresses a positive and happy tone
            "empathetic"     };  // Expresses a sense of caring and understanding
 
-
         _voiceNameRand = _voiceNames[_rnd.Next(_voiceNames.Length)];
         var sw = Stopwatch.StartNew();
         using var result = await SynthReal.SpeakSsmlAsync(
@@ -110,7 +109,7 @@ namespace SpeechSynthLib
           </voice>
         </speak>");
 
-        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode.Substring(0, 3)}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{(mode == "Faf" ? _voiceNameRand : _voiceNameWait),-26}\t{msg,-44}\t WhereAmI '{_config["WhereAmI"]}'");
+        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode.Substring(0, 3)}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{(mode == "Faf" ? _voiceNameRand : _voiceNameWait),-26}\t{msg,-44}\t WhereAmI '{_config["WhereAmI"]}'  ■ ■ {_voiceNames.Length,2} Voices, Wait:{_voiceNameWait}.");
 
         if (result.Reason == ResultReason.Canceled)
         {
