@@ -31,8 +31,8 @@ namespace SpeechSynthLib
           .AddJsonFile("appsettings.json")
           .AddUserSecrets<SpeechSynth>().Build();
 
-        _voiceNames = _config.GetSection("VoiceNames").Get<string[]>(); // needs Microsoft.Extensions.Configuration.Binder
-        _voiceNameWait = _config["VoiceNameWait"];
+        _voiceNames = _config.GetSection("VoiceNames").Get<string[]>() ?? new string[] { "en-IN-Heera", "en-IN-PriyaRUS", "en-IN-NeerjaNeural", "en-IN-PrabhatNeural" }; // needs Microsoft.Extensions.Configuration.Binder
+        _voiceNameWait = _config["VoiceNameWait"] ?? "en-IN-Ravi";
 
         _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
 
