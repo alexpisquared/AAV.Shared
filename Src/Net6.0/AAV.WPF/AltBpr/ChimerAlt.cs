@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -7,6 +8,23 @@ namespace AAV.WPF.AltBpr
 {
   public static class ChimerAlt
   {
+    static readonly IConfigurationRoot _config;
+    static readonly int _freqA, _freqB, _freqC, _freqUp, _freqDn, _wakeMks;
+    static ChimerAlt()
+    {
+      _config = new ConfigurationBuilder()
+        .SetBasePath(AppContext.BaseDirectory)
+        .AddJsonFile("appsettings.json")
+        //.AddUserSecrets<ChimerAlt>()
+        .Build();
+
+      _freqA = _config.GetSection("FreqA").Get<int?>() ?? 1111;
+      _freqB = _config.GetSection("FreqB").Get<int?>() ?? 1111;
+      _freqC = _config.GetSection("FreqC").Get<int?>() ?? 1111;
+      _freqUp = _config.GetSection("FreqUp").Get<int?>() ?? 32;
+      _freqDn = _config.GetSection("FreqDn").Get<int?>() ?? 8000;
+      _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 8000;
+    }
     public static void FreqTable()
     {
       for (var note = 108; note > 0; note--) Debug.WriteLine($"{note,5} => {Freq(note),8:N0}");
@@ -17,13 +35,14 @@ namespace AAV.WPF.AltBpr
     public static async Task BeepFD(int freq = 98, int durationMks = 250111) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, durationMks) } });
     public static async Task BeepFD(int freq = 98, double durationSec = .25) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, (int)(durationSec * 1000000)) } });
     public static async Task FreqWalkUp() => await FreqWalk(32, 8000, durationSec: 30, durnMultr: 0.9925);
-    public static async Task FreqWalkDn() => await FreqWalk(8000, 32, durationSec: 05, durnMultr: 1.0075);
+    public static async Task FreqWalkDn() => await FreqWalk(_freqUp, _freqDn, durationSec: 05, durnMultr: 1.0075);
     public static async Task FreqRunUpHiPh() => await FreqWalkUpDn(4000, 9000, durationSec: .3);
+    public static async Task FreqRunAbcHiPh() => await FreqWalkUpDnUp(_freqA, _freqB, _freqC, durationSec: .3);
     public static async Task FreqRunUp() => await FreqWalk(48, 100, durationSec: 1.9);
     public static async Task FreqRunDn() => await FreqWalk(128, 48, durationSec: 1.9);
     public static async Task FreqWalkUpDn() { await FreqWalkUp(); await Task.Delay(333); await FreqWalkDn(); }
     public static async Task FreqRunUpDn() { await FreqRunUp(); await Task.Delay(999); await FreqRunDn(); }
-    public static async Task Wake(int mks = 150111) => await NoteWalk(100, 101, mks);
+    public static async Task WakeAudio() => await NoteWalk(100, 101, _wakeMks); // .15 sec is audible?
 
     public static async Task FreqWalkUpDn(double freqA = 200, double freqB = 20, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
     {
@@ -45,6 +64,36 @@ namespace AAV.WPF.AltBpr
       for (double freq = freqB, j = 1;
               !up ? freq <= freqA : freq >= freqA;
               freq = !up ? freq * frMultr : freq / frMultr, j++) fixDurnAndAdd((int)(stepDurationMks * Math.Pow(durnMultr, j)), (int)Math.Round(freq), freqDurnList);
+      Console.WriteLine($"");
+
+      await Bpr.BeepMks(freqDurnList.ToArray());
+    }
+    public static async Task FreqWalkUpDnUp(double freqA = 200, double freqB = 20, double freqC = 300, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
+    {
+      if (freqA == freqB)
+        throw new Exception($"Frequencies must be different: {freqA} and {freqB}");
+
+      var freqDurnList = new List<int[]>();
+      var up1 = freqA < freqB;
+      var up2 = freqA < freqC;
+      var stepsTtl = 1.7 * Math.Log(up1 ? freqB / freqA : freqA / freqB, frMultr);
+
+      var stepDurationMks = 1000000 * durationSec / stepsTtl;
+      Console.WriteLine($"Steps: {stepsTtl,8}   Step Duration: {stepDurationMks:N0} mks  => total time requested / actual: {durationSec} / {stepsTtl * stepDurationMks * .000001}.");
+
+      for (double freq = freqA, j = 1;
+        up1 ? freq <= freqB : freq >= freqB;
+        freq = up1 ? freq * frMultr : freq / frMultr, j++) fixDurnAndAdd((int)(stepDurationMks * Math.Pow(durnMultr, j)), (int)Math.Round(freq), freqDurnList);
+      Console.WriteLine($"");
+
+      for (double freq = freqB, j = 1;
+              !up1 ? freq <= freqA : freq >= freqA;
+              freq = !up1 ? freq * frMultr : freq / frMultr, j++) fixDurnAndAdd((int)(stepDurationMks * Math.Pow(durnMultr, j)), (int)Math.Round(freq), freqDurnList);
+      Console.WriteLine($"");
+
+      for (double freq = freqA, j = 1;
+        up2 ? freq <= freqC : freq >= freqC;
+        freq = up2 ? freq * frMultr : freq / frMultr, j++) fixDurnAndAdd((int)(stepDurationMks * Math.Pow(durnMultr, j)), (int)Math.Round(freq), freqDurnList);
       Console.WriteLine($"");
 
       await Bpr.BeepMks(freqDurnList.ToArray());
@@ -92,7 +141,7 @@ namespace AAV.WPF.AltBpr
     {
       var hz = freq;
       var mks = Bpr.FixDuration(hz, dur);
-      //Console.WriteLine($"chime - {freq,5} Hz :  {dur,8:N0} => {mks,8:N0} mks. ");
+      Debug.WriteLine($"chime - {freq,5} Hz :  {dur,8:N0} => {mks,8:N0} mks. ");
       freqDurn.Add(new[] { hz, mks });
     }
     public static double Freq(int note) => Math.Pow(2, (note - 49) / 12.0) * 440;
