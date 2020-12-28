@@ -14,6 +14,8 @@ namespace AAV.WPF.AltBpr
     {
       var times = durMks * .000001 * frqHz;
       var timesm = Math.Round(times);
+      if (timesm <= 0)
+        timesm = 1;
       var durmks = (int)(/*1.03125 * */1000000 * timesm / frqHz);
 
       return durmks;
