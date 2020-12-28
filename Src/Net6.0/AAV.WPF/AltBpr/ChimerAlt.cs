@@ -13,6 +13,8 @@ namespace AAV.WPF.AltBpr
     static readonly IConfigurationRoot _config;
     static readonly int _freqUp, _freqDn, _wakeMks;
     static readonly int[] _freqs;
+    static readonly double _stepDurnSec = 0.001;
+
     static ChimerAlt()
     {
       _config = new ConfigurationBuilder()
@@ -25,6 +27,7 @@ namespace AAV.WPF.AltBpr
       _freqUp = _config.GetSection("FreqUp").Get<int?>() ?? 32;
       _freqDn = _config.GetSection("FreqDn").Get<int?>() ?? 8000;
       _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 8000;
+      _stepDurnSec = _config.GetSection("StepDurnSec").Get<double?>() ?? .001;
 
       Tracer.SetupTracingOptions("AAV.WPF", new TraceSwitch("Info", "Haha.") { Level = TraceLevel.Info });
       Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t\t WhereAmI " +
@@ -53,56 +56,35 @@ namespace AAV.WPF.AltBpr
     {
       var freqDurnList = new List<int[]>();
 
-      connectTheDots_Old(freqA, freqB, freqDurnList, durationSec, durnMultr, frMultr);
-      connectTheDots_Old(freqB, freqA, freqDurnList, durationSec, durnMultr, frMultr);
-      connectTheDots_Old(freqA, freqC, freqDurnList, durationSec, durnMultr, frMultr);
+      addS_Old(freqA, freqB, freqDurnList, durationSec, durnMultr, frMultr);
+      addS_Old(freqB, freqA, freqDurnList, durationSec, durnMultr, frMultr);
+      addS_Old(freqA, freqC, freqDurnList, durationSec, durnMultr, frMultr);
 
       await Bpr.BeepMks(freqDurnList.ToArray());
     }
 
     public static async Task PlayFreqList() => await PlayFreqList(_freqs, 1.3);
-    public static async Task PlayFreqList(int[] freqs, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
+    public static async Task PlayFreqList(int[] freqs, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02) => await PflN(freqs, durationSec, durnMultr, frMultr);
+    public static async Task PflN(int[] freqs, double durnSec = 1, double durnMultr = 1, double frMultr = 1.02) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addSteps(freqs[i], freqs[i + 1], l, durnSec, durnMultr, frMultr); await Bpr.BeepMks(l.ToArray()); }
+    public static async Task PflO(int[] freqs, double durnSec = 1, double durnMultr = 1, double frMultr = 1.02) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addS_Old(freqs[i], freqs[i + 1], l, durnSec, durnMultr, frMultr); await Bpr.BeepMks(l.ToArray()); }
+    public static void addSteps(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
     {
-      var freqDurnList = new List<int[]>();
-
-      for (var i = 0; i < freqs.Length - 1; i++) { connectTheDots_New(freqs[i], freqs[i + 1], freqDurnList, durationSec, durnMultr, frMultr); }
-      await Bpr.BeepMks(freqDurnList.ToArray());
-    }
-    public static async Task PlayFreqListNew(int[] freqs, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
-    {
-      var freqDurnList = new List<int[]>();
-
-      for (var i = 0; i < freqs.Length - 1; i++) { connectTheDots_New(freqs[i], freqs[i + 1], freqDurnList, durationSec, durnMultr, frMultr); }
-      await Bpr.BeepMks(freqDurnList.ToArray());
-    }
-    public static async Task PlayFreqListOld(int[] freqs, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
-    {
-      var freqDurnList = new List<int[]>();
-
-      for (var i = 0; i < freqs.Length - 1; i++) { connectTheDots_Old(freqs[i], freqs[i + 1], freqDurnList, durationSec, durnMultr, frMultr); }
-      await Bpr.BeepMks(freqDurnList.ToArray());
-    }
-
-    public static void connectTheDots_New(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
-    {
-      const double stepDurnSec = 0.001;
-      var stepDurnMks = stepDurnSec * 1e6;
-
-      var stepsTtlCnt = (int)(durationSec / stepDurnSec);
+      var stepDurnMks = _stepDurnSec * 1e6;
+      var stepsTtlCnt = (int)(durationSec / _stepDurnSec);
 
       var stepMultiplier = Math.Pow(freqB / freqA, 1.0 / stepsTtlCnt);
       var freq = freqA;
 
       for (var i = 0; i <= stepsTtlCnt; i++)
       {
-        Console.Write($"  {1 + i,4}.  Playing {freq,14:N1} hz  for {stepDurnSec} sec      NEW     ");
+        Console.Write($"  {1 + i,4}.  Playing {freq,14:N1} hz  for {_stepDurnSec} sec      NEW     ");
         fixDurnAndAdd((int)stepDurnMks, (int)Math.Round(freq), freqDurnList);
         freq *= stepMultiplier;
       }
 
       Console.WriteLine($"   NEW ===> {(freqDurnList.Sum(r => r[1]) * .000001):N3} sec");
     }
-    public static void connectTheDots_Old(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
+    public static void addS_Old(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
     {
       var up = freqA < freqB;
       var stepsTtlCnt = (int)(1.0 * Math.Log(up ? freqB / freqA : freqA / freqB, frMultr));
