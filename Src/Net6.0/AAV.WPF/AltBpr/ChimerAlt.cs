@@ -13,7 +13,7 @@ namespace AAV.WPF.AltBpr
     static readonly IConfigurationRoot _config;
     static readonly int _freqUp, _freqDn, _wakeMks;
     static readonly int[] _freqs;
-    static readonly double _stepDurnSec = 0.001;
+    static readonly double _stepDurnSec, _freqMultplr;
 
     static ChimerAlt()
     {
@@ -28,6 +28,7 @@ namespace AAV.WPF.AltBpr
       _freqDn = _config.GetSection("FreqDn").Get<int?>() ?? 8000;
       _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 8000;
       _stepDurnSec = _config.GetSection("StepDurnSec").Get<double?>() ?? .001;
+      _freqMultplr = _config.GetSection("FreqMultiplier").Get<double?>() ?? 1.021;
 
       Tracer.SetupTracingOptions("AAV.WPF", new TraceSwitch("Info", "Haha.") { Level = TraceLevel.Info });
       Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t\t WhereAmI " +
@@ -52,54 +53,56 @@ namespace AAV.WPF.AltBpr
 
     public static async Task WakeAudio() => await NoteWalk(100, 101, _wakeMks); // .15 sec is audible?
 
-    public static async Task FreqWalkUpDnUp(double freqA = 200, double freqB = 20, double freqC = 300, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
+    //public static async Task FreqWalkUpDnUp(double freqA = 200, double freqB = 20, double freqC = 300, double durationSec = 1, double durnMultr = 1)
+    //{
+    //  var freqDurnList = new List<int[]>();
+
+    //  addS_Old(freqA, freqB, freqDurnList, durationSec, durnMultr);
+    //  addS_Old(freqB, freqA, freqDurnList, durationSec, durnMultr);
+    //  addS_Old(freqA, freqC, freqDurnList, durationSec, durnMultr);
+
+    //  await Bpr.BeepMks(freqDurnList.ToArray());
+    //}
+
+    public static async Task PlayFreqList() => await PlayFreqList(_freqs, .175);
+    public static async Task PlayFreqList(int[] freqs, double durationSec = 1, double durnMultr = 1) => await Pfl(freqs, durationSec);
+    public static async Task pfL(int[] freqs, double durnSec) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addStrng(freqs[i], freqs[i + 1], l, durnSec); await Bpr.BeepMks(l.ToArray()); }
+    public static async Task Pfl(int[] freqs, double durnSec) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addSteps(freqs[i], freqs[i + 1], l, durnSec); await Bpr.BeepMks(l.ToArray()); }
+    public static void addStrng(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1)
     {
-      var freqDurnList = new List<int[]>();
+      var stepDurnSec = _stepDurnSec * durationSec / .1;
+      var stepsTtlCnt = (int)(durationSec / stepDurnSec);
+      var stepDurnMks = stepDurnSec * 1e6;
 
-      addS_Old(freqA, freqB, freqDurnList, durationSec, durnMultr, frMultr);
-      addS_Old(freqB, freqA, freqDurnList, durationSec, durnMultr, frMultr);
-      addS_Old(freqA, freqC, freqDurnList, durationSec, durnMultr, frMultr);
-
-      await Bpr.BeepMks(freqDurnList.ToArray());
-    }
-
-    public static async Task PlayFreqList() => await PlayFreqList(_freqs, 1.3);
-    public static async Task PlayFreqList(int[] freqs, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02) => await PflN(freqs, durationSec, durnMultr, frMultr);
-    public static async Task PflN(int[] freqs, double durnSec = 1, double durnMultr = 1, double frMultr = 1.02) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addSteps(freqs[i], freqs[i + 1], l, durnSec, durnMultr, frMultr); await Bpr.BeepMks(l.ToArray()); }
-    public static async Task PflO(int[] freqs, double durnSec = 1, double durnMultr = 1, double frMultr = 1.02) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addS_Old(freqs[i], freqs[i + 1], l, durnSec, durnMultr, frMultr); await Bpr.BeepMks(l.ToArray()); }
-    public static void addSteps(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
-    {
-      var stepDurnMks = _stepDurnSec * 1e6;
-      var stepsTtlCnt = (int)(durationSec / _stepDurnSec);
-
-      var stepMultiplier = Math.Pow(freqB / freqA, 1.0 / stepsTtlCnt);
+      var frMultr = Math.Pow(freqB / freqA, 1.0 / stepsTtlCnt);
       var freq = freqA;
 
       for (var i = 0; i <= stepsTtlCnt; i++)
       {
-        Console.Write($"  {1 + i,4}.  Playing {freq,14:N1} hz  for {_stepDurnSec} sec      NEW     ");
-        fixDurnAndAdd((int)stepDurnMks, (int)Math.Round(freq), freqDurnList);
-        freq *= stepMultiplier;
+        fixDurnAndAdd((int)(stepDurnMks), (int)Math.Round(freq), freqDurnList);
+        freq *= frMultr;
       }
 
-      Console.WriteLine($"   NEW ===> {(freqDurnList.Sum(r => r[1]) * .000001):N3} sec");
+      Console.WriteLine($"    frMultr: {frMultr:N3}   Steps: {stepsTtlCnt}   Step Duration: {stepDurnMks:N0} mks  =>  total time (s) requested / actual / took: {durationSec:N3} / {(stepsTtlCnt * stepDurnMks * .000001):N3} / {(freqDurnList.Sum(r => r[1]) * .000001):N3}.");
     }
-    public static void addS_Old(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1, double frMultr = 1.02)
+    public static void addSteps(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1)
     {
       var up = freqA < freqB;
-      var stepsTtlCnt = (int)(1.0 * Math.Log(up ? freqB / freqA : freqA / freqB, frMultr));
+      var stepsTtlCn0 = Math.Log(up ? freqB / freqA : freqA / freqB, _freqMultplr);
+      var stepsTtlCnt = (int)Math.Round(stepsTtlCn0);
       var stepDurnMks = 1000000 * durationSec / stepsTtlCnt;
-      Console.WriteLine($"Steps: {stepsTtlCnt,8}   Step Duration: {stepDurnMks:N1} mks  => total time requested / actual: {durationSec} / {stepsTtlCnt * stepDurnMks * .000001}.");
 
-      for (double freq = freqA, j = 1;
-        up ? freq <= freqB : freq >= freqB;
-        freq = up ? freq * frMultr : freq / frMultr, j++)
+      var frMultr = up ? _freqMultplr : 1.0 / _freqMultplr;
+
+      var freq = freqA;
+
+      for (var i = 0; i <= stepsTtlCnt; i++)
       {
-        Console.Write($"  {1 + j,4}.  Playing {freq,14:N1} hz  for {(stepDurnMks / 1e6):N3} sec      old     ");
-        fixDurnAndAdd((int)(stepDurnMks * Math.Pow(durnMultr, j)), (int)Math.Round(freq), freqDurnList);
+        fixDurnAndAdd((int)(stepDurnMks * Math.Pow(durnMultr, i)), (int)Math.Round(freq), freqDurnList);
+        freq *= frMultr;
       }
 
-      Console.WriteLine($"   old ===> {(freqDurnList.Sum(r => r[1]) * .000001):N3} sec");
+      Console.WriteLine($"old frMultr: {frMultr:N3}   Steps: {stepsTtlCnt}   Step Duration: {stepDurnMks:N0} mks  =>  total time (s) requested / actual / took: {durationSec:N3} / {(stepsTtlCnt * stepDurnMks * .000001):N3} / {(freqDurnList.Sum(r => r[1]) * .000001):N3}.");
     }
 
     public static async Task NoteWalk(int noteA = 108, int noteB = 11, int durationMks = 60000, double delta = 1)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AAV.Sys.Ext;
+using System;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -69,7 +70,11 @@ namespace AAV.WPF.AltBpr
 
         mStrm.Seek(0, SeekOrigin.Begin);
         _p.Stream = mStrm;
-        _p.Play();
+        try
+        {
+          _p.Play();
+        }
+        catch (Exception ex) { ex.Log(); throw; }
 
         await Task.Delay(ttlms / 1000);
 
