@@ -59,7 +59,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg, string mode = "")
+    public async Task SpeakAsync(string msg, string mode = "Faf")
     {
       try
       {
