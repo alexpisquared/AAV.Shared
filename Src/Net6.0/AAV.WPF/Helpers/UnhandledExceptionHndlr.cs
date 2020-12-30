@@ -13,7 +13,7 @@ namespace AAV.WPF.Helpers
       if (ex != null)
         ex.Handled = true;
 
-      string _header = $"Current Dispatcher Unhandled Exception - {DateTimeOffset.Now: HH:mm:ss}";
+      var _header = $"Current Dispatcher Unhandled Exception - {DateTimeOffset.Now: HH:mm:ss}";
       var innerMsgs = ex?.Exception.InnerMessages();
 
       try
