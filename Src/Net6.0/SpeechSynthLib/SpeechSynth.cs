@@ -65,7 +65,7 @@ namespace SpeechSynthLib
       {
         if (!_azureTtsIsPK)
         {
-          new Process { StartInfo = new ProcessStartInfo("say.exe", msg) { RedirectStandardError = true, UseShellExecute = false } }.Start();
+          new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start();
           return;
         }
 
