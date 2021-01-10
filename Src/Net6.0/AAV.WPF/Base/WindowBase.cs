@@ -34,7 +34,7 @@ namespace AAV.WPF.Base
       internal void LogError(Exception ex, string v) => Trace.WriteLine($"{ex}  {v}");
     }
 
-    readonly Logger _logger;
+    readonly Logger _logger = new Logger();
     public WindowBase()
     {
 #else

@@ -10,7 +10,7 @@ namespace AAV.WPF.Extension
 
       if (element.Parent as Window != null) return element.Parent as Window;
 
-      if (element.Parent as FrameworkElement != null) return FindParentWindow(element.Parent as FrameworkElement);
+      if (element.Parent as FrameworkElement != null) return FindParentWindow(element?.Parent as FrameworkElement);
 
       return null;
     }
