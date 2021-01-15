@@ -19,7 +19,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1CE2C02F-5FA8-41CA-AC2E-BA91AB283A02}</ProjectGuid>
+    <ProjectGuid>{DF459A59-5C58-4930-AB44-9B3D6E36CD98}</ProjectGuid>
     <OutputType>library</OutputType>
     <RootNamespace>AAV.WPF</RootNamespace>
     <AssemblyName>AAV.WPF</AssemblyName>

@@ -12,7 +12,7 @@ namespace AAV.WPF.AltBpr
   {
     static readonly IConfigurationRoot _config;
     static readonly int _freqUp, _freqDn, _wakeMks;
-    static readonly int[] _freqs;
+    static readonly int[] _freqWhstl;
     static readonly double _stepDurnSec, _freqMultplr;
 
     static ChimerAlt()
@@ -23,7 +23,7 @@ namespace AAV.WPF.AltBpr
         .AddUserSecrets<ChimerAlt>()
         .Build();
 
-      _freqs = _config.GetSection("Freqs").Get<int[]>();
+      _freqWhstl = _config.GetSection("FreqWhistle").Get<int[]>();
       _freqUp = _config.GetSection("FreqUp").Get<int?>() ?? 32;
       _freqDn = _config.GetSection("FreqDn").Get<int?>() ?? 8000;
       _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 8000;
@@ -39,11 +39,11 @@ namespace AAV.WPF.AltBpr
         $"\n");
     }
 
-    public static async Task BeepFD(int freq = 98, int durationMks = 250111) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, durationMks) } });
-    public static async Task BeepFD(int freq = 98, double durationSec = .25) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, (int)(durationSec * 1000000)) } });
+    public static async Task BeepFD(int freq = 98, int durationMks = 250111, ushort volume = ushort.MaxValue) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, durationMks) } }, volume);
+    public static async Task BeepFD(int freq = 98, double durationSec = .25, ushort volume = ushort.MaxValue) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, (int)(durationSec * 1000000)) } }, volume);
 
-    public static async Task FreqWalkUp() => await PlayFreqList(new[] { _freqDn, _freqUp }, 30, 0.9925);
-    public static async Task FreqWalkDn() => await PlayFreqList(new[] { _freqUp, _freqDn }, durationSec: 05, durnMultr: 1.0075);
+    public static async Task FreqWalkUp(ushort volume = ushort.MaxValue) => await PlayFreqList(new[] { _freqDn, _freqUp }, 30, volume);
+    public static async Task FreqWalkDn(ushort volume = ushort.MaxValue) => await PlayFreqList(new[] { _freqUp, _freqDn }, 05, volume);
     public static async Task FreqWalkUpDn() { await FreqWalkUp(); await Task.Delay(333); await FreqWalkDn(); }
 
     public static async Task FreqRunUpHiPh() => await PlayFreqList(new[] { 4000, 9000 }, durationSec: .3);
@@ -64,10 +64,10 @@ namespace AAV.WPF.AltBpr
     //  await Bpr.BeepMks(freqDurnList.ToArray());
     //}
 
-    public static async Task PlayFreqList() => await PlayFreqList(_freqs, .175);
-    public static async Task PlayFreqList(int[] freqs, double durationSec = 1, double durnMultr = 1) => await Pfl(freqs, durationSec);
-    public static async Task pfL(int[] freqs, double durnSec) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addStrng(freqs[i], freqs[i + 1], l, durnSec); await Bpr.BeepMks(l.ToArray()); }
-    public static async Task Pfl(int[] freqs, double durnSec) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addSteps(freqs[i], freqs[i + 1], l, durnSec); await Bpr.BeepMks(l.ToArray()); }
+    public static async Task PlayWhistle(ushort volume = ushort.MaxValue) => await PlayFreqList(_freqWhstl, .175, volume);
+    public static async Task PlayFreqList(int[] freqs, double durationSec = 1, ushort volume = ushort.MaxValue) => await Pfl(freqs, durationSec, volume);
+    public static async Task pfL(int[] freqs, double durnSec, ushort volume = ushort.MaxValue) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addStrng(freqs[i], freqs[i + 1], l, durnSec); await Bpr.BeepMks(l.ToArray(), volume); }
+    public static async Task Pfl(int[] freqs, double durnSec, ushort volume = ushort.MaxValue) { var l = new List<int[]>(); for (var i = 0; i < freqs.Length - 1; i++) addSteps(freqs[i], freqs[i + 1], l, durnSec); await Bpr.BeepMks(l.ToArray(), volume); }
     public static void addStrng(double freqA, double freqB, List<int[]> freqDurnList, double durationSec = 1, double durnMultr = 1)
     {
       var stepDurnSec = _stepDurnSec * durationSec / .1;
@@ -105,7 +105,7 @@ namespace AAV.WPF.AltBpr
       Console.WriteLine($"old frMultr: {frMultr:N3}   Steps: {stepsTtlCnt}   Step Duration: {stepDurnMks:N0} mks  =>  total time (s) requested / actual / took: {durationSec:N3} / {(stepsTtlCnt * stepDurnMks * .000001):N3} / {(freqDurnList.Sum(r => r[1]) * .000001):N3}.");
     }
 
-    public static async Task NoteWalk(int noteA = 108, int noteB = 11, int durationMks = 60000, double delta = 1)
+    public static async Task NoteWalk(int noteA = 108, int noteB = 11, int durationMks = 60000, double delta = 1, ushort volume = ushort.MaxValue)
     {
       var fullScale = new List<int[]>();
 
@@ -117,7 +117,7 @@ namespace AAV.WPF.AltBpr
       else
         for (int note = noteA, j = 1; note > noteB; note--, j++) add((int)(durationMks * Math.Pow(delta, j)), fullScale, note);
 
-      await Bpr.BeepMks(fullScale.ToArray());
+      await Bpr.BeepMks(fullScale.ToArray(), volume);
 
       static void add(int dur, List<int[]> scale, int note)
       {
@@ -143,7 +143,7 @@ namespace AAV.WPF.AltBpr
     {
       switch (min)
       {
-        case 01: await Bpr.BeepMks(new[] { new[] { _a, _p + _p } }); break;
+        case 01: await Bpr.BeepMks(new[] { new[] { _a, _p + _p } }, ushort.MaxValue); break;
         case 02: await Bpr.BeepMks(new[] { _cd, _p2, _ad }); break;
         case 03: await Bpr.BeepMks(new[] { _ad, _bd, _cd, }); break;
         //se 04: await Bpr.BeepMks(new[] { _cd, _ad, __1, _cd, _ad }); break;
