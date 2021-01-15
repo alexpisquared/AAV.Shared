@@ -16,9 +16,16 @@ namespace AsLink
 
       var url = $"https://weather.gc.ca/data/radar/{drk}temp_image//{station}/{station}{cmp}_{cap}_{rsRainOrSnow}_{d.Year}_{d.Month:0#}_{d.Day:0#}_{d.Hour:0#}_{d.Minute:0#}.GIF";
 
-      //var mdl = $"https://weather.gc.ca/data/radar/detailed/temp_image//WKR/WKR_COMP_PRECIP_RAIN_2019_07_24_15_00.GIF";      Debug.Assert(url.Substring(0, 84) == mdl.Substring(0, 84), $">>:: actual {url}\r\n>>::  model {mdl}\r\n");
-
       return url;
     }
   }
 }
+/*
+2021-01-15
+
+Latest cloud cover image: ir, vis, ir+vis:
+https://weather.gc.ca/data/satellite/goes_ecan_1070_100.jpg
+https://weather.gc.ca/data/satellite/goes_ecan_visible_100.jpg
+https://weather.gc.ca/data/satellite/goes_ecan_vvi_100.jpg
+
+*/
