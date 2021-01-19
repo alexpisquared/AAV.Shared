@@ -42,16 +42,16 @@ namespace AAV.WPF.AltBpr
     public static async Task BeepFD(int freq = 98, int durationMks = 250111, ushort volume = ushort.MaxValue) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, durationMks) } }, volume);
     public static async Task BeepFD(int freq = 98, double durationSec = .25, ushort volume = ushort.MaxValue) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, (int)(durationSec * 1000000)) } }, volume);
 
-    public static async Task FreqWalkUp(ushort volume = ushort.MaxValue) => await PlayFreqList(new[] { _freqDn, _freqUp }, 30, volume);
-    public static async Task FreqWalkDn(ushort volume = ushort.MaxValue) => await PlayFreqList(new[] { _freqUp, _freqDn }, 05, volume);
-    public static async Task FreqWalkUpDn() { await FreqWalkUp(); await Task.Delay(333); await FreqWalkDn(); }
+    public static async Task FreqWalkUp(ushort volume) => await PlayFreqList(new[] { _freqDn, _freqUp }, 30, volume);
+    public static async Task FreqWalkDn(ushort volume) => await PlayFreqList(new[] { _freqUp, _freqDn }, 60, volume);
+    public static async Task FreqWalkUpDn() { await FreqWalkUp(ushort.MaxValue); await Task.Delay(333); await FreqWalkDn(ushort.MaxValue); }
 
     public static async Task FreqRunUpHiPh() => await PlayFreqList(new[] { 4000, 9000 }, durationSec: .3);
     public static async Task FreqRunUpDn() { await FreqRunUp(); await Task.Delay(999); await FreqRunDn(); }
     public static async Task FreqRunUp() => await PlayFreqList(new[] { 48, 100 }, durationSec: 1.9);
     public static async Task FreqRunDn() => await PlayFreqList(new[] { 128, 48 }, durationSec: 1.9);
 
-    public static async Task WakeAudio() => await NoteWalk(100, 101, _wakeMks); // .15 sec is audible?
+    public static async Task WakeAudio() => await NoteWalk(101, 102, _wakeMks); // .15 sec is audible?
 
     //public static async Task FreqWalkUpDnUp(double freqA = 200, double freqB = 20, double freqC = 300, double durationSec = 1, double durnMultr = 1)
     //{

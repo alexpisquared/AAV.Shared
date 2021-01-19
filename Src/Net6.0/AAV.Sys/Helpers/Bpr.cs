@@ -8,10 +8,12 @@ namespace AAV.Sys.Helpers
   {
     static void beep(int freq, int dur) => NativeMethods.Beep(freq, dur);
 
-    public static void Wake() => NativeMethods.Beep(7111, 333);
-    public static void ErrorAsync() => Task.Run(() => ErrorSynch());
-    public static void Begin1Async() => Task.Run(() => Begin1Sync());
-    public static void Begin2Async() => Task.Run(() => Begin2Sync());
+    public static void Wake() => NativeMethods.Beep(11111, 333);
+    public static void OkFaF() => Task.Run(() => BeepOk());
+    public static void ErrorFaF() => Task.Run(() => ErrorSynch());
+    public static void Begin1FaF() => Task.Run(() => Begin1Sync());
+    public static void Begin2FaF() => Task.Run(() => Begin2Sync());
+    public static void ShortFaF() => Task.Run(() => BeepShort());
 
     public static void ErrorSynch()
     {
@@ -23,19 +25,19 @@ namespace AAV.Sys.Helpers
     public static void Begin1Sync() => beep(200, 333);
     public static void Begin2Sync() { beep(200, 100); beep(221, 100); }
 
-    public static void BeepEr() => ErrorAsync();
+    public static void BeepEr() => ErrorFaF();
 
 
-    const int _minDurn = 30, _maxDurn = 60; // minimal and medium durations on Dell 990.
-    public static void BeepOk() => beep(10500, _maxDurn);
-    public static void BeepOkB() => beep(9300, _maxDurn);
-    public static void BeepClk() => beep(10000, _maxDurn);
+    const int _minDurn = 30, _60ms = 60; // minimal and medium durations on Dell 990.
+    public static void BeepOk() => beep(10500, _60ms);
+    public static void BeepOkB() => beep(8000, _60ms);
+    public static void BeepClk() => beep(10000, _60ms);
     public static void BeepLong() => beep(100, 750);
-    public static void BeepShort() => beep(10500, _maxDurn);
+    public static void BeepShort() => beep(10500, _minDurn);
     public static void BeepDone() => BeepEnd3();
     public static void BeepFD(int v1, int v2) => beep(v1, v2);
-    public static void Beep1of2() { beep(10111, _maxDurn); beep(11111, _minDurn); }
-    public static void Beep2of2() { beep(11111, _minDurn); beep(10111, _maxDurn); }
+    public static void Beep1of2() { beep(10111, _60ms); beep(11111, _minDurn); }
+    public static void Beep2of2() { beep(11111, _minDurn); beep(10111, _60ms); }
 
     public static void BeepNo() { beep(4211, _minDurn); beep(4000, _minDurn); }
     public static void BeepBigError() { for (double i = 1000; i < 5000; i *= 1.5) { beep((int)i, (int)(10000 / i)); } }
@@ -98,6 +100,5 @@ namespace AAV.Sys.Helpers
     static void pause() => Debug.Write(""); // beep(21000, 10);
 
     #endregion
-
   }
 }
