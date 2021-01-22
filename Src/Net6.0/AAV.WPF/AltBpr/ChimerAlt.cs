@@ -19,7 +19,7 @@ namespace AAV.WPF.AltBpr
     {
       _config = new ConfigurationBuilder()
         .SetBasePath(AppContext.BaseDirectory)
-        .AddJsonFile("appsettings.json")
+        .AddJsonFile("appsettings.AAV.WPF.json")
         .AddUserSecrets<ChimerAlt>()
         .Build();
 
