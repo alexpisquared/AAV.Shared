@@ -15,7 +15,7 @@ namespace SpeechSynthLib
     readonly AzureSpeechCredentials _asc;
     readonly IConfigurationRoot _config;
     readonly string[] _voiceNames;
-    readonly string _voiceNameWait;
+    string _voiceNameWait;
     readonly bool _azureTtsIsPK;
     string _voiceNameRand;
     SpeechSynthesizer _synth = null;
@@ -28,10 +28,10 @@ namespace SpeechSynthLib
       {
         _config = new ConfigurationBuilder()
           .SetBasePath(AppContext.BaseDirectory)
-          .AddJsonFile("appsettings.json")
+          .AddJsonFile("appsettings.SpeechSynthLib.json")
           .AddUserSecrets<SpeechSynth>().Build();
 
-        _voiceNames = /*_config.GetSection("VoiceNames").Get<string[]>() ?? */new string[] { "en-IN-Heera", "en-IN-PriyaRUS" }; // needs Microsoft.Extensions.Configuration.Binder
+        _voiceNames = /*_config.GetSection("VoiceNames").Get<string[]>() ?? */new string[] { /*"en-IN-Heera", */ "en-IN-PriyaRUS" }; // needs Microsoft.Extensions.Configuration.Binder
         _voiceNameWait = /*_config["VoiceNameWait"] ?? */"en-IN-Ravi";
 
         _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
@@ -59,7 +59,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg, string mode = "Faf")
+    public async Task SpeakAsync(string msg, string mode = "Faf", string voice = null)
     {
       try
       {
@@ -80,7 +80,8 @@ namespace SpeechSynthLib
            "cheerful"        ,  // Expresses a positive and happy tone
            "empathetic"     };  // Expresses a sense of caring and understanding
 
-        _voiceNameRand = _voiceNames[_rnd.Next(_voiceNames.Length)];
+        _voiceNameRand = voice ?? _voiceNames[_rnd.Next(_voiceNames.Length)];
+        _voiceNameWait = voice ?? _voiceNameWait;
         var sw = Stopwatch.StartNew();
         using var result = await SynthReal.SpeakSsmlAsync(
           mode == "Faf" ? // randomly rotating voices
