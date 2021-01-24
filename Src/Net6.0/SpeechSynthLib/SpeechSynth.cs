@@ -3,6 +3,7 @@ using AAV.Sys.Helpers;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace SpeechSynthLib
     string _voiceNameWait;
     readonly bool _azureTtsIsPK;
     string _voiceNameRand;
-    SpeechSynthesizer _synth = null;
+    SpeechSynthesizer _synthNew = null;
     bool _disposedValue;
     int _idx = 0;
 
@@ -26,10 +27,7 @@ namespace SpeechSynthLib
     {
       try
       {
-        _config = new ConfigurationBuilder()
-          .SetBasePath(AppContext.BaseDirectory)
-          .AddJsonFile("appsettings.SpeechSynthLib.json")
-          .AddUserSecrets<SpeechSynth>().Build();
+        _config = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.SpeechSynthLib.json").AddUserSecrets<SpeechSynth>().Build(); //tu: appsets + secrets.
 
         _voiceNames = /*_config.GetSection("VoiceNames").Get<string[]>() ?? */new string[] { /*"en-IN-Heera", */ "en-IN-PriyaRUS" }; // needs Microsoft.Extensions.Configuration.Binder
         _voiceNameWait = /*_config["VoiceNameWait"] ?? */"en-IN-Ravi";
@@ -53,11 +51,19 @@ namespace SpeechSynthLib
       var _rgn = keys.Split(' ')[3];
 #endif
       }
-      catch (Exception ex) { ex.Log(); }
+      catch (Exception ex)
+      {
+        ex.Log($"Find the lates  AzureSpeechCredentials.json  on  '{Environment.MachineName}'  and provide the key from the one with it" +
+          $"bdefa0157d1d" +
+          $"45479 \nNever mind" +
+          $"58f8653" +
+          $"a65f32d4.");
+        try { JsonIsoFileSerializer.Save<AzureSpeechCredentials>(new AzureSpeechCredentials { Key = _key, Rgn = _rgn }); } catch (Exception ex2) { ex2.Log("Not sure ...."); }
+      }
       finally { _azureTtsIsPK = _asc?.Rgn == _rgn; }
     }
 
-    public SpeechSynthesizer SynthReal => _synth ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
+    public SpeechSynthesizer SynthReal => _synthNew ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
     public async Task SpeakAsync(string msg, string mode = "Faf", string voice = null)
     {
@@ -65,6 +71,7 @@ namespace SpeechSynthLib
       {
         if (!_azureTtsIsPK)
         {
+          Trace.WriteLine("■ ■ ■ No Azure keys ==> using  say.exe  instead ...");
           new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start();
           return;
         }
@@ -125,8 +132,10 @@ namespace SpeechSynthLib
 
         Trace.Write("\n");
       }
-      catch (Exception ex) { ex.Log(); }
+      catch (Win32Exception ex) { ex.Log(@"say.exe, right?"); }
+      catch (Exception ex) { ex.Log(@"Not sure again"); }
     }
+    public void StopSpeakingAsync() => SynthReal.StopSpeakingAsync();
 
     protected virtual void Dispose(bool disposing)
     {
@@ -134,7 +143,7 @@ namespace SpeechSynthLib
       {
         if (disposing)
         {
-          _synth.Dispose();
+          _synthNew.Dispose();
         }
 
         _disposedValue = true;
