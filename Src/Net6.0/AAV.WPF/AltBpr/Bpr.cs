@@ -72,14 +72,18 @@ namespace AAV.WPF.AltBpr
         _p.Stream = mStrm;
         try
         {
-          _p.Play();
+#if sync
+          _p.Play();          
+          await Task.Delay(ttlms / 1000);
+#else
+          _p.PlaySync(); 
+          await Task.Delay(10);
+#endif
+
+          writer.Close();
+          mStrm.Close();
         }
         catch (Exception ex) { ex.Log(); throw; }
-
-        await Task.Delay(ttlms / 1000);
-
-        writer.Close();
-        mStrm.Close();
       }
     }
 

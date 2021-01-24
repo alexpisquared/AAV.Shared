@@ -5,41 +5,38 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SpeechSynthLib
 {
   public class SpeechSynth : IDisposable
   {
-    const string _rgn = "canadacentral", _key = "use proper key here";
+    const string _voiceNameFallback = "en-IN-Ravi", _rgn = "canadacentral", _key = "use proper key here";
     readonly Random _rnd = new Random(DateTime.Now.Millisecond);
     readonly AzureSpeechCredentials _asc;
-    readonly IConfigurationRoot _config;
-    readonly string[] _voiceNames;
-    string _voiceNameWait;
+    readonly IConfigurationRoot _cfg;
     readonly bool _azureTtsIsPK;
-    string _voiceNameRand;
     SpeechSynthesizer _synthNew = null;
     bool _disposedValue;
-    int _idx = 0;
+    const double _speakingRate = 1.4;
 
     public SpeechSynth() // has not been ran yet: Tracer.SetupTracingOptions()
     {
       try
       {
-        _config = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.SpeechSynthLib.json").AddUserSecrets<SpeechSynth>().Build(); //tu: appsets + secrets.
-
-        _voiceNames = /*_config.GetSection("VoiceNames").Get<string[]>() ?? */new string[] { /*"en-IN-Heera", */ "en-IN-PriyaRUS" }; // needs Microsoft.Extensions.Configuration.Binder
-        _voiceNameWait = /*_config["VoiceNameWait"] ?? */"en-IN-Ravi";
-
+        _cfg = new ConfigurationBuilder().SetBasePath(AppContext.BaseDirectory).AddJsonFile("appsettings.SpeechSynthLib.json").AddUserSecrets<SpeechSynth>().Build(); //tu: appsets + secrets.
         _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
 
-        if (_asc?.Rgn == _rgn)
-          return;
+        var isOk = (_asc?.Rgn == _rgn && _asc?.Key.StartsWith("bdefa0157d1d") == true);
+        Trace.WriteLine(isOk ? "■++ Auth Cred OK" : "■ ■ ■ missing Auth Cred");
 
-#if StillInitializing // supply the key + publish + delete + commit.
-        JsonIsoFileSerializer.Save<AzureSpeechCredentials>(new AzureSpeechCredentials { Key = _key, Rgn = _rgn });
-        _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
+#if !StillInitializing // supply the key + publish + delete + commit.
+        if (!isOk)
+        {
+          JsonIsoFileSerializer.Save<AzureSpeechCredentials>(new AzureSpeechCredentials { Key = _key, Rgn = _rgn });
+          _asc = JsonIsoFileSerializer.Load<AzureSpeechCredentials>();
+        }
 #elif UseProjSecrets
       //DI:
       Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder()
@@ -53,11 +50,7 @@ namespace SpeechSynthLib
       }
       catch (Exception ex)
       {
-        ex.Log($"Find the lates  AzureSpeechCredentials.json  on  '{Environment.MachineName}'  and provide the key from the one with it" +
-          $"bdefa0157d1d" +
-          $"45479 \nNever mind" +
-          $"58f8653" +
-          $"a65f32d4.");
+        ex.Log($"Find the lates  AzureSpeechCredentials.json  on  '{Environment.MachineName}'  and provide the key from the one with it.");
         try { JsonIsoFileSerializer.Save<AzureSpeechCredentials>(new AzureSpeechCredentials { Key = _key, Rgn = _rgn }); } catch (Exception ex2) { ex2.Log("Not sure ...."); }
       }
       finally { _azureTtsIsPK = _asc?.Rgn == _rgn; }
@@ -65,7 +58,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synthNew ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg, string mode = "Faf", string voice = null)
+    public async Task SpeakAsync(string msg, VMode mode = VMode.Prosody, string voice = null, string speakingStyle = null)
     {
       try
       {
@@ -79,7 +72,12 @@ namespace SpeechSynthLib
         //    std voices from https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#standard-voices
         // neural voices from https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#neural-voices
 
-        var styles = new[] { // https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp#adjust-speaking-styles
+        var speakingStyles = new[] { // https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp#adjust-speaking-styles
+
+           "angry" ,         // XiaoxiaoNeural only
+           "sad" ,           // XiaoxiaoNeural only
+           "affectionate",   // XiaoxiaoNeural only
+
            "newscast-formal" ,  // Expresses a formal, confident and authoritative tone for news delivery
            "newscast-casual" ,  // Expresses a versatile and casual tone for general news delivery
            "customerservice" ,  // Expresses a friendly and helpful tone for customer support
@@ -87,37 +85,31 @@ namespace SpeechSynthLib
            "cheerful"        ,  // Expresses a positive and happy tone
            "empathetic"     };  // Expresses a sense of caring and understanding
 
-        _voiceNameRand = voice ?? _voiceNames[_rnd.Next(_voiceNames.Length)];
-        _voiceNameWait = voice ?? _voiceNameWait;
+        var sStyle =
+          speakingStyle == "random" ? speakingStyles[_rnd.Next(speakingStyles.Length)] :
+          speakingStyles.Contains(speakingStyle) ? speakingStyle :
+          "chat";
+
+        var voiceName = voice ?? _voiceNameFallback;
+        var lang = "en-US"; // voiceName.Length > 5 ? voiceName.Substring(0, 5) : "en-GB";
         var sw = Stopwatch.StartNew();
         using var result = await SynthReal.SpeakSsmlAsync(
-          mode == "Faf" ? // randomly rotating voices
+          mode == VMode.Prosody ?
           $@"
-        <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""en-US"">
-          <voice name=""{_voiceNameRand}"">
-            <prosody rate=""1.4"">
-              {msg}
-            </prosody>
+        <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"">
+          <voice name=""{voiceName}"">
+            <prosody rate=""{_speakingRate}"">{msg}</prosody>
           </voice>
         </speak>"
-          : mode == "Say voice name" ?
+          : //todo: rate does not work here
           $@"
-        <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""en-US"">
-          <voice name=""{_voiceNameRand}"">
-            <prosody rate=""1.4"">
-              {msg}, <break time=""100ms""/> {_voiceNameRand.Substring(6).Replace("Neural", " Neural").Replace("RUS", " russian")}.
-            </prosody>
-          </voice>
-        </speak>"
-          :           // async wait
-          $@"
-        <speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""en-US"">
-          <voice name=""{_voiceNameWait}"">
-            <mstts:express-as style=""{styles[_idx++ % styles.Length]}"" rate=""1.4"">{msg}</mstts:express-as>
+        <speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""{lang}"">
+          <voice name=""{voiceName}"" >
+            <mstts:express-as style=""{sStyle}"" styledegree=""2"" >{msg}</mstts:express-as>
           </voice>
         </speak>");
 
-        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode.Substring(0, 3)}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{(mode == "Faf" ? _voiceNameRand : _voiceNameWait),-26}\t{msg,-44}\t WhereAmI '{_config["WhereAmI"]}'  ■ ■ {_voiceNames.Length,2} Voices, Wait:{_voiceNameWait}.");
+        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{voiceName,-26}\t WhereAmI '{_cfg["WhereAmI"]}'  ■ ■ {msg,-44}");
 
         if (result.Reason == ResultReason.Canceled)
         {
@@ -125,7 +117,7 @@ namespace SpeechSynthLib
           Trace.Write($"\tCANCELED: {cancellation.Reason}");
 
           if (cancellation.Reason == CancellationReason.Error)
-            Trace.Write($"   Error: {cancellation.ErrorCode}-{cancellation.ErrorDetails}");
+            Trace.Write($"  Error: {cancellation.ErrorCode}-{cancellation.ErrorDetails}");
         }
         else
           Trace.Write($"  result: '{result.Reason}'");
@@ -156,6 +148,9 @@ namespace SpeechSynthLib
       GC.SuppressFinalize(this);
     }
   }
+
+  public enum VMode { Unknown, Prosody, Express }
+
 }
 /* f8653a65f32d4bdefa0157d1d4547958
 65f32d4bdefa0157d1f8653ad4547958
