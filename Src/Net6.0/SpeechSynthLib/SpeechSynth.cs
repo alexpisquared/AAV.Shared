@@ -12,7 +12,7 @@ namespace SpeechSynthLib
 {
   public class SpeechSynth : IDisposable
   {
-    const string _voiceNameFallback = "en-IN-Ravi", _rgn = "canadacentral", _key = "use proper key here";
+    const string _voiceNameFallback = "en-AU-WilliamNeural", _rgn = "canadacentral", _key = "use proper key here";
     readonly Random _rnd = new Random(DateTime.Now.Millisecond);
     readonly AzureSpeechCredentials _asc;
     readonly IConfigurationRoot _cfg;
@@ -58,7 +58,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synthNew ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg, VMode mode = VMode.Prosody, string voice = null, string speakingStyle = null)
+    public async Task SpeakAsync(string msg, VMode vmode = VMode.Prosody, string voice = null, string speakingStyle = null)
     {
       try
       {
@@ -73,17 +73,15 @@ namespace SpeechSynthLib
         // neural voices from https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#neural-voices
 
         var speakingStyles = new[] { // https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp#adjust-speaking-styles
-
            "angry" ,         // XiaoxiaoNeural only
            "sad" ,           // XiaoxiaoNeural only
            "affectionate",   // XiaoxiaoNeural only
-
-           "newscast-formal" ,  // Expresses a formal, confident and authoritative tone for news delivery
-           "newscast-casual" ,  // Expresses a versatile and casual tone for general news delivery
-           "customerservice" ,  // Expresses a friendly and helpful tone for customer support
-           "chat"            ,  // Expresses a casual and relaxed tone
-           "cheerful"        ,  // Expresses a positive and happy tone
-           "empathetic"     };  // Expresses a sense of caring and understanding
+           "newscast-formal" ,  // AriaNeural only 
+           "newscast-casual" ,  // AriaNeural only 
+           "customerservice" ,  // AriaNeural only 
+           "chat"            ,  // AriaNeural only 
+           "cheerful"        ,  // AriaNeural only 
+           "empathetic"     };  // AriaNeural only 
 
         var sStyle =
           speakingStyle == "random" ? speakingStyles[_rnd.Next(speakingStyles.Length)] :
@@ -93,23 +91,11 @@ namespace SpeechSynthLib
         var voiceName = voice ?? _voiceNameFallback;
         var lang = "en-US"; // voiceName.Length > 5 ? voiceName.Substring(0, 5) : "en-GB";
         var sw = Stopwatch.StartNew();
-        using var result = await SynthReal.SpeakSsmlAsync(
-          mode == VMode.Prosody ?
-          $@"
-        <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"">
-          <voice name=""{voiceName}"">
-            <prosody rate=""{_speakingRate}"">{msg}</prosody>
-          </voice>
-        </speak>"
-          : //todo: rate does not work here
-          $@"
-        <speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""{lang}"">
-          <voice name=""{voiceName}"" >
-            <mstts:express-as style=""{sStyle}"" styledegree=""2"" >{msg}</mstts:express-as>
-          </voice>
-        </speak>");
+        using var result = await SynthReal.SpeakSsmlAsync(vmode == VMode.Prosody ?
+          $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voiceName}""><prosody rate=""{_speakingRate}""                      >{msg}</prosody></voice></speak>" : //todo: rate does not work below:
+          $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voiceName}""><mstts:express-as style=""{sStyle}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>");
 
-        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{mode}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{voiceName,-26}\t WhereAmI '{_cfg["WhereAmI"]}'  ■ ■ {msg,-44}");
+        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{vmode}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{voiceName,-26}\t WhereAmI '{_cfg["WhereAmI"]}'  ■ ■ {msg,-44}");
 
         if (result.Reason == ResultReason.Canceled)
         {
