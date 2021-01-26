@@ -58,7 +58,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synthNew ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg, VMode vmode = VMode.Prosody, string voice = null, string speakingStyle = null)
+    public async Task SpeakAsync(string msg, VMode vmode = VMode.Prosody, string voice = null, string styleForExpressOnly = null)
     {
       try
       {
@@ -84,8 +84,8 @@ namespace SpeechSynthLib
            "empathetic"     };  // AriaNeural only 
 
         var sStyle =
-          speakingStyle == "random" ? speakingStyles[_rnd.Next(speakingStyles.Length)] :
-          speakingStyles.Contains(speakingStyle) ? speakingStyle :
+          styleForExpressOnly == "random" ? speakingStyles[_rnd.Next(speakingStyles.Length)] :
+          speakingStyles.Contains(styleForExpressOnly) ? styleForExpressOnly :
           "chat";
 
         var voiceName = voice ?? _voiceNameFallback;
