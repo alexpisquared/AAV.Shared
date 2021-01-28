@@ -7,7 +7,7 @@ namespace AsLink
     public static DateTime RoundBy10min(DateTime dt) => dt.AddTicks(-dt.Ticks % (10 * TimeSpan.TicksPerMinute));
     public static string GetRadarUrl(DateTime d, string rsRainOrSnow = "RAIN", string station = "WKR", bool isFallbackCAPPI = false, bool? isDark = null, bool isFallbackCOMP = false)
     {
-      isDark = isDark ?? DateTime.Now.Hour < 8 || 20 <= DateTime.Now.Hour;
+      isDark ??= IsDark;
 
       ///todo: on error try this _COMP_
       var cmp = isFallbackCOMP ? "_COMP" : "";
@@ -18,6 +18,8 @@ namespace AsLink
 
       return url;
     }
+
+    public static bool IsDark{ get => DateTime.Now.Hour < 8 || 20 <= DateTime.Now.Hour; }
   }
 }
 /*

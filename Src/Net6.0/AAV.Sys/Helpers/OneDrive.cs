@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 
 namespace AAV.Sys.Helpers
@@ -10,20 +9,21 @@ namespace AAV.Sys.Helpers
     {
       get
       {
-        var rv = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "OneDrive"); 
+        var rv = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "OneDrive");
         return Environment.MachineName.Equals("ASUS2") ? rv.Replace("C:", "D:") : rv; // :'cause Asus2 is on D:
       }
     }
 
     public static string Folder(string subFolder) => Path.Combine(Root, subFolder);
-    public static string VpdbFolder
+    public static string DataFolder(string subFolder, bool createIfNotExists = true)
     {
-      get
-      {
-        var vpDbFolder = Path.Combine(OneDrive.Root, @"Public\AppData\vpdb\");
-        FSHelper.ExistsOrCreated(vpDbFolder);
-        return vpDbFolder;
-      }
+      var folder = Path.Combine(Root, @"Public\AppData\", subFolder);
+      if (createIfNotExists)
+        FSHelper.ExistsOrCreated(folder);
+      return folder;
     }
+
+    public static string VpdbFolder => DataFolder("vpdb");
+    public static string WebCacheFolder => DataFolder("web.cache");
   }
 }
