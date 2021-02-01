@@ -7,7 +7,7 @@ namespace AsLink
     public static DateTime RoundBy10min(DateTime dt) => dt.AddTicks(-dt.Ticks % (10 * TimeSpan.TicksPerMinute));
     public static string GetRadarUrl(DateTime d, string rsRainOrSnow = "RAIN", string station = "WKR", bool isFallbackCAPPI = false, bool? isDark = null, bool isFallbackCOMP = false)
     {
-      isDark ??= IsDark;
+      isDark = isDark ?? IsDark; // isDark ??= IsDark; in UWP gives Error CS8370  Feature 'coalescing assignment' is not available in C# 7.3. Please use language version 8.0 or greater.	
 
       ///todo: on error try this _COMP_
       var cmp = isFallbackCOMP ? "_COMP" : "";
