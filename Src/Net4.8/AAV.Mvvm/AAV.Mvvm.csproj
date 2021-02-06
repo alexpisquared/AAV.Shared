@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E1334F8-B843-41DD-96A8-64A41F528CFF}</ProjectGuid>
+    <ProjectGuid>{AA5C34CF-6F6A-4B2C-B067-D9AABCAC1B6B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AAV.Mvvm</RootNamespace>
