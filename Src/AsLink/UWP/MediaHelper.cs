@@ -2,7 +2,7 @@
 {
   public static class MediaHelper
   {
-    public static string AllVideoExtensions => ".3g2,.3gp2,.3gp,.3gpp,.asf,.avi,.bin,.divx,.m2ts,.m4v,.mkv,.mov,.mp4,.mp4v,.mpeg,.mpg,.mts,.part,.vob,.wmv";
+    public static string AllVideoExtensions => ".3g2,.3gp2,.3gp,.asf,.avi,.bin,.divx,.m2ts,.m4v,.mkv,.mov,.mp4,.mp4v,.mpeg,.mpg,.mts,.part,.vob,.wmv";
     public static string AllAudioExtensions => ".3g2,.3gp2,.3gp,.3gpp,.aac,.adt,.ac3,.adts,.aif,.asf,.ec3,.flac,.m4a,.m4r,.mka,.mpa,.mp3,.mpeg,.mpg,.part,.rm,.rmvb,.wav,.wma";
     public static string AllMediaExtensions => AllAudioExtensions + AllVideoExtensions;
 
