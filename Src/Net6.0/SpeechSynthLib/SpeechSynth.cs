@@ -65,7 +65,7 @@ namespace SpeechSynthLib
         if (!_azureTtsIsPK)
         {
           Trace.WriteLine("■ ■ ■ No Azure keys ==> using  say.exe  instead ...");
-          new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start();
+          UseSayExe(msg);
           return;
         }
 
@@ -103,17 +103,21 @@ namespace SpeechSynthLib
           Trace.Write($"\tCANCELED: {cancellation.Reason}");
 
           if (cancellation.Reason == CancellationReason.Error)
+          {
             Trace.Write($"  Error: {cancellation.ErrorCode}-{cancellation.ErrorDetails}");
+            UseSayExe(msg);
+          }
         }
         else
           Trace.Write($"  result: '{result.Reason}'");
 
         Trace.Write("\n");
       }
-      catch (Win32Exception ex) { ex.Log(@"say.exe, right?"); }
+      catch (Win32Exception ex) { ex.Log(@"say.exe, right?"); UseSayExe(msg); }
       catch (Exception ex) { ex.Log(@"Not sure again"); }
     }
-    public void StopSpeakingAsync() => SynthReal.StopSpeakingAsync();
+
+    static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start(); public void StopSpeakingAsync() => SynthReal.StopSpeakingAsync();
 
     protected virtual void Dispose(bool disposing)
     {
