@@ -120,7 +120,7 @@ namespace AAV.Sys.Helpers
     static void logFolder(IsolatedStorageFile dir) => Debug.WriteLine($" iso dir: '{dir.GetType().GetField(_RootDir, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(dir)}'."); //instead of creating a temp file and get the location you can get the path from the store directly: 
 
     static readonly System.Collections.Generic.List<string> _l = new System.Collections.Generic.List<string>();
-    static void twl(IsolatedStorageFile f, string crlf = null)
+    static void twl(IsolatedStorageFile f, string crlf = "")
     {
       var s = f.GetType().GetField(_RootDir, BindingFlags.Instance | BindingFlags.NonPublic).GetValue(f).ToString();
 

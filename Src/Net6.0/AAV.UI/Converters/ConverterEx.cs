@@ -20,11 +20,12 @@ namespace AsLink
       // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return Brushes.Red;
       try
       {
-        return        value is string && !string.IsNullOrEmpty((string)value) && !((string)value).Equals("ColorRGB")
+        return value is string && !string.IsNullOrEmpty((string)value) && !((string)value).Equals("ColorRGB")
           ? new SolidColorBrush((Color)ColorConverter.ConvertFromString((string)value))
           : Brushes.Teal;
       }
-      catch {
+      catch
+      {
         return Brushes.Red;
       }
     }
@@ -104,22 +105,13 @@ namespace AsLink
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var rv = (value is DateTime && (DateTime)value >= DateTime.Today);
+      var rv = value is DateTime time && time >= DateTime.Today && time < DateTime.Today.AddDays(1);
 
-      if (targetType == typeof(Brush))
-      {
-        return rv ? Brushes.DarkOrange : Brushes.Gray;
-      }
-      else if (targetType == typeof(bool))
-      {
-        return rv;
-      }
-      else if (targetType == typeof(FontWeight))
-      {
-        return rv ? FontWeights.Bold : FontWeights.Normal;
-      }
-      else
-        return null;
+      if (targetType == typeof(Brush))        /**/ return rv ? Brushes.DarkOrange : Brushes.Gray;
+      if (targetType == typeof(bool))         /**/ return rv;
+      if (targetType == typeof(FontWeight))   /**/ return rv ? FontWeights.Bold : FontWeights.Normal;
+
+      return null;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
     public override object ProvideValue(IServiceProvider serviceProvider) => this;

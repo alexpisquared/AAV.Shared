@@ -141,16 +141,14 @@ namespace SpeechSynthLib
 
   public enum VMode { Unknown, Prosody, Express }
 
-}
-/* f8653a65f32d4bdefa0157d1d4547958
-65f32d4bdefa0157d1f8653ad4547958
-bdefa0157d1d4547958f8653a65f32d4
-
+}/* 
 2020-12-17 
 //todo: for more voice manipulations see https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp&source=docs
 ?is it worth the effort: Get started with Custom Voice https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/how-to-custom-voice
 
-
 https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#text-to-speech
 
+f8653a65f32d4bdefa0157d1d4547958
+65f32d4bdefa0157d1f8653ad4547958
+bdefa0157d1d4547958f8653a65f32d4
 */
