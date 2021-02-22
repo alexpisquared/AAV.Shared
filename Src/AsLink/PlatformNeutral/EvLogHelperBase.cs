@@ -11,7 +11,7 @@ namespace AsLink
     public static string CheckCreateLogChannel(string src = _aavSource, string log = _aavLogName) // which one is the latest
     {
       if (!IsAdministrator())
-        return ("Must be Admin to query/create event log!!!");
+        return ("Restart as Admin!!!  (...to query/create event log)");
       else
         return safeCreateEventSource(src, log);
     }
