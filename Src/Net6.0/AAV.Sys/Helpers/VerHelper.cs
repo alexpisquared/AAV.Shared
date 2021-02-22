@@ -92,6 +92,8 @@ public static string CompileMode =>        Debugger.IsAttached ? "Rls-Atchd" : "
 #endif
 
     public static bool IsVIP => Environment.UserName.ToUpperInvariant().Contains("ALEX");
-    public static bool IsMyHomePC => new string[] { "LN1", "VAIO1", "ASUS2", "RAZER1", "NUC2" }.Contains(Environment.MachineName.ToUpperInvariant());
+
+    public static bool IsKnownNonVMPC => IsMyHomePC;
+    public static bool IsMyHomePC => new string[] { "LN1", "VAIO1", "ASUS2", "RAZER1", "NUC2", "SURFACEPRO1", "YOGA1" }.Contains(Environment.MachineName.ToUpperInvariant());
   }
 }
