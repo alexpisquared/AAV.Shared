@@ -1,8 +1,6 @@
 ﻿using AAV.Sys.Ext;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace AAV.Sys.Helpers
 {
@@ -19,7 +17,7 @@ namespace AAV.Sys.Helpers
       }
       catch (IOException ex) { ex.Log($"Directory.CreateDirectory({folder})"); }
       catch (Exception ex) { ex.Log($"Directory.CreateDirectory({folder})"); throw; }
-      
+
       return false;
     }
   }

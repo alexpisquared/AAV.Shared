@@ -42,7 +42,14 @@
   <Style TargetType="{x:Type PasswordBox}"  BasedOn="{StaticResource CrlBase}" />
   <Style TargetType="{x:Type ComboBox}"     BasedOn="{StaticResource CrlBase}" />
   <Style TargetType="{x:Type CheckBox}"     BasedOn="{StaticResource CrlBase}" />
-  <Style TargetType="{x:Type DatePicker}"   BasedOn="{StaticResource CrlBase}" />
+  <Style TargetType="{x:Type DatePicker}"   BasedOn="{StaticResource CrlBase}" >
+    <Style.Resources>
+      <Style TargetType="DatePickerTextBox">
+        <Setter Property="Background" Value="Transparent"/>
+      </Style>
+    </Style.Resources>
+  </Style>
+
   <Style TargetType="{x:Type ToolTip}"      BasedOn="{StaticResource CrlBase}">
     <Setter Property="FontSize"             Value="15" />
     <Setter Property="ToolTipService.ShowDuration" Value="180000" />
