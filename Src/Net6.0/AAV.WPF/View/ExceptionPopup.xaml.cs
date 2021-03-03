@@ -5,11 +5,16 @@ using System.Windows;
 
 namespace AAV.WPF.View
 {
-  public partial class ExceptionPopup : AAV.WPF.Base.WindowBase
+  public partial class ExceptionPopup : Base.WindowBase
   {
-    public ExceptionPopup() => InitializeComponent();
-    public ExceptionPopup(Exception ex, string optl, string cmn, string cfp, int cln) : this()
+    public ExceptionPopup(Exception ex, string optl, string cmn, string cfp, int cln, Window? owner = null) : base()
     {
+      IgnoreWindowPlacement = true;
+
+      Owner = owner;
+      WindowStartupLocation = owner != null ? WindowStartupLocation.CenterOwner : WindowStartupLocation.CenterScreen;
+
+      InitializeComponent();
       Loaded += (s, e) =>
       {
         ExType.Text = ex?.GetType().Name;

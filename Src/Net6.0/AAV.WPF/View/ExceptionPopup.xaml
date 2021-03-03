@@ -1,7 +1,6 @@
 ﻿<lnk:WindowBase xmlns:lnk="clr-namespace:AAV.WPF.Base" x:Name="wnd" x:Class="AAV.WPF.View.ExceptionPopup" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         xmlns:local="clr-namespace:AAV.WPF.View"
         Title="Exception Popup" Height="600" Width="900"
-        WindowStartupLocation="CenterScreen"
         Style="{DynamicResource WindowStyle_Aav0}" Loaded="onLoaded">
   <lnk:WindowBase.Resources>
     <ResourceDictionary >
@@ -64,7 +63,7 @@
       <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" >
         <Button Content="_Abort"  IsDefault="False"   Click="onShutdown"  Foreground="#06f" FontSize="16" Margin="5" ToolTip="Shutdown the application"/>
         <Button Content="_Ignore" IsDefault="True"    Click="onCopyClose" Foreground="#0b0" FontSize="16" Margin="5" ToolTip="Copy to clipboard and close"/>
-        <Button Content="  X  "    IsCancel="True"    Click="onCloseAndContinueExecution"     Foreground="#c00" FontSize="16" Margin="5" ToolTip="Close" FontWeight="Bold" />
+        <!--<Button Content="  X  "    IsCancel="True"    Click="onCloseAndContinueExecution"     Foreground="#c00" FontSize="16" Margin="5" ToolTip="Close" FontWeight="Bold" />-->
       </StackPanel>
 
       <Image Height="80" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left"  Source="/Assets/error.gif" />

@@ -10,7 +10,7 @@ namespace AAV.WPF.Ext
 {
   public static class ExnPopr
   {
-    public static void Pop(this Exception ex, string optl = "", [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
+    public static void Pop(this Exception ex, Window? owner , string optl = "", [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
     {
       var msgForPopup = ex.Log(optl);
 
@@ -18,7 +18,7 @@ namespace AAV.WPF.Ext
       {
         try
         {
-          var pop = new AAV.WPF.View.ExceptionPopup(ex, optl, cmn, cfp, cln);
+          var pop = new AAV.WPF.View.ExceptionPopup(ex, optl, cmn, cfp, cln, owner);
           WpfUtils.AutoInvokeOnUiThread(pop.ShowDialog);
         }
         catch (Exception ex2)
