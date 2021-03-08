@@ -19,7 +19,7 @@ namespace SpeechSynthLib
     readonly bool _azureTtsIsPK;
     SpeechSynthesizer _synthNew = null;
     bool _disposedValue;
-    const double _speakingRate = 1.4;
+    const double _speakingRate = 1.25;
 
     public SpeechSynth() // has not been ran yet: Tracer.SetupTracingOptions()
     {
