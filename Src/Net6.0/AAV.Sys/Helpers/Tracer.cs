@@ -61,7 +61,7 @@ namespace AAV.Sys.Helpers
       var nm2 = len > 4 ? Environment.UserName.Substring(3, 2) : Environment.UserName.Substring(len - 2);
       var filename = Path.Combine(getLogPath(is4wk), appName +
         (is1FilePerSession ? $"-{DateTimeOffset.Now:MMdd.HHmm}" : "") +
-        $"-{Environment.UserName.Substring(1, 2)}@{Environment.MachineName.Substring(0, 3)}~{nm2.ToUpperInvariant()}{Environment.UserName.Substring(0, 1).ToLowerInvariant()}{(isRandom ? Path.GetRandomFileName().Replace(".", "") : "")}.txt");
+        $"-{Environment.UserName.Substring(1, 2)}@{Environment.MachineName.Substring(0, 3)}~{nm2.ToUpperInvariant()}{Environment.UserName.Substring(0, 1).ToLowerInvariant()}{(isRandom ? Path.GetRandomFileName().Replace(".", "") : "")}.log"); // .log extension has better color coding in VSCode (2021-03)
       return filename;
     }
 

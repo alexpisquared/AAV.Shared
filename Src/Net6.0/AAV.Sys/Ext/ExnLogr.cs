@@ -37,7 +37,7 @@ namespace AAV.Sys.Ext
         var prevSz = Trace.IndentSize;
         Trace.IndentLevel = 2;
         Trace.IndentSize = 2;
-        Trace.WriteLineIf(ExnLogr.AppTraceLevelCfg.TraceVerbose, ex?.StackTrace);
+        Trace.WriteLine(ex?.StackTrace);
         Trace.IndentLevel = prevLv;
         Trace.IndentSize = prevSz;
       }
