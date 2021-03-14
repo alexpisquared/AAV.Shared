@@ -103,7 +103,7 @@ namespace AAV.WPF.Base
         var suri = $"{pref}{themeName}.xaml";
         if (Application.LoadComponent(new Uri(suri, UriKind.RelativeOrAbsolute)) is ResourceDictionary dict)
         {
-          ResourceDictionary rd;
+          ResourceDictionary? rd;
           while ((rd = Application.Current.Resources.MergedDictionaries.FirstOrDefault(r => ((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath?.Contains(pref
 #if MockingCore3
 #else
