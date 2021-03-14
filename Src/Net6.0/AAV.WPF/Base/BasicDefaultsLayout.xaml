@@ -40,7 +40,7 @@
   </Style>
   <Style TargetType="{x:Type TextBox}"      BasedOn="{StaticResource CrlBase}" />
   <Style TargetType="{x:Type PasswordBox}"  BasedOn="{StaticResource CrlBase}" />
-  <Style TargetType="{x:Type ComboBox}"     BasedOn="{StaticResource CrlBase}" />
+  <Style TargetType="{x:Type ComboBox}"     BasedOn="{StaticResource CrlBase}" x:Key="NoGoForDarkThemes" />
   <Style TargetType="{x:Type CheckBox}"     BasedOn="{StaticResource CrlBase}" />
   <Style TargetType="{x:Type DatePicker}"   BasedOn="{StaticResource CrlBase}" >
     <Style.Resources>
