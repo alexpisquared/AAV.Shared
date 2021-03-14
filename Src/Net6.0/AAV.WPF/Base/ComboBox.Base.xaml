@@ -8,7 +8,7 @@
   <SolidColorBrush x:Key="InfoForegroundBrush" Color="{DynamicResource InfoForegroundColor}"/>
   <SolidColorBrush x:Key="MainForegroundBrush" Color="{DynamicResource TextForegroundColor}"/>
   <SolidColorBrush x:Key="ErorForegroundBrush" Color="{DynamicResource ErorForegroundColor}"/>
-  <SolidColorBrush x:Key="___Brush" Color="{DynamicResource ___Color}"/>
+  <SolidColorBrush x:Key="___Brush"            Color="{DynamicResource ___Color}"/>
 
 
 
@@ -18,7 +18,7 @@
   </LinearGradientBrush>
   <SolidColorBrush x:Key="ComboBox.Static.Border" Color="#FFACACAC"/>
   <SolidColorBrush x:Key="ComboBox.Static.Glyph" Color="#FF606060"/>
-  <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="#FFFFFFFF"/>
+  <SolidColorBrush x:Key="ComboBox.Static.Editable.Background" Color="{DynamicResource TextBackgroundColor}"/>
   <SolidColorBrush x:Key="ComboBox.Static.Editable.Border" Color="#FFABADB3"/>
   <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Background" Color="Transparent"/>
   <SolidColorBrush x:Key="ComboBox.Static.Editable.Button.Border" Color="Transparent"/>
