@@ -12,14 +12,14 @@ namespace SpeechSynthLib
 {
   public class SpeechSynth : IDisposable
   {
+    const double _speakingRate = 1.25;
     const string _voiceNameFallback = "en-AU-WilliamNeural", _rgn = "canadacentral", _key = "use proper key here";
     readonly Random _rnd = new Random(DateTime.Now.Millisecond);
     readonly AzureSpeechCredentials _asc;
     readonly IConfigurationRoot _cfg;
-    readonly bool _azureTtsIsPK;
+    readonly bool _azureTtsIsPK, _useSayExe = true;
     SpeechSynthesizer _synthNew = null;
     bool _disposedValue;
-    const double _speakingRate = 1.25;
 
     public SpeechSynth() // has not been ran yet: Tracer.SetupTracingOptions()
     {
@@ -62,12 +62,9 @@ namespace SpeechSynthLib
     {
       try
       {
-        if (!_azureTtsIsPK)
-        {
-          Trace.WriteLine("■ ■ ■ No Azure keys ==> using  say.exe  instead ...");
-          UseSayExe(msg);
-          return;
-        }
+        if (_useSayExe) { UseSayExe(msg); return; } // 2021-03-17 - testing price drop
+
+        if (!_azureTtsIsPK) { Trace.WriteLine("■ ■ ■ No Azure keys ==> using  say.exe  instead ..."); UseSayExe(msg); return; }
 
         //    std voices from https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#standard-voices
         // neural voices from https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support#neural-voices
