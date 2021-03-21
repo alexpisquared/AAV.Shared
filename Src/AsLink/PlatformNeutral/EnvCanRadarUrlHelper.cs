@@ -17,12 +17,6 @@ namespace AsLink
 
       var url = $"https://weather.gc.ca/data/radar/{drk}temp_image//{station}/{station}{cmp}_{cap}_{rsRainOrSnow}_{d.Year}_{d.Month:0#}_{d.Day:0#}_{d.Hour:0#}_{d.Minute:0#}.GIF";
 
-      //if (isFallbackCAPPI)
-      //  Debug.WriteLine(url);
-
-      //if (isFallbackCOMP)
-      //  Debug.WriteLine(url);
-
       return url;
     }
 
