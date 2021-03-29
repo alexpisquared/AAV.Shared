@@ -122,6 +122,9 @@ namespace AAV.WPF.Base
       catch (Exception ex) { _logger.LogError(ex, $""); ex.Pop(this); throw; }
     }
 
+    protected void onWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    protected void onExit(object s, RoutedEventArgs e) => Close();
+
     protected override void OnSourceInitialized(EventArgs e)
     {
       base.OnSourceInitialized(e);
