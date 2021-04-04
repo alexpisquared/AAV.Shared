@@ -4,7 +4,8 @@ namespace AsLink
 {
   public class EnvCanRadarUrlHelper
   {
-    public static string GetRadarUrl(DateTime d, string rsRainOrSnow /*= "RAIN"*/, string station /*= "WKR"*/, bool isFallbackCAPPI, bool isFallbackCOMP = false)
+    public static string GetRadarUrl(DateTime d) => $"https://weather.gc.ca/data/satellite/goes_ecan_1070_m_{d.Year}@{d.Month:0#}@{d.Day:0#}_{d.Hour:0#}h{d.Minute:0#}m.jpg";  // <===========================================
+    public static string GetRadarUrl_OLD(DateTime d, string rsRainOrSnow /*= "RAIN"*/, string station /*= "WKR"*/, bool isFallbackCAPPI, bool isFallbackCOMP = false)
     {
       var cmp = isFallbackCOMP ? "_COMP" : "";
       var cap = isFallbackCAPPI ? "CAPPI" : "PRECIP";
@@ -18,6 +19,11 @@ namespace AsLink
   }
 }
 /*
+2021-04-03
+timestamped: ir, vis, ir+vis:
+https://weather.gc.ca/data/satellite/goes_ecan_1070_m_2021@04@04_02h10m.jpg                                                             // <===========================================
+https://weather.gc.ca/data/satellite/goes_ecan_visible_m_2021@04@03_10h30m.jpg
+https://weather.gc.ca/data/satellite/goes_ecan_vvi_m_2021@04@03_10h30m.jpg
 2021-01-15
 
 Latest cloud cover image: ir, vis, ir+vis:
