@@ -21,23 +21,17 @@ namespace AsLink
 /*
 2021-04-05
 I think this is latest
-"https://weather.gc.ca/data/satellite/goes_ecan_1070_100.jpg"    
-"https://weather.gc.ca/data/satellite/goes_ecan_visible_100.jpg" 
-"https://weather.gc.ca/data/satellite/goes_ecan_vvi_100.jpg"     
+Latest cloud cover image: ir, vis, ir+vis:
+https://weather.gc.ca/data/satellite/goes_ecan_visible_100.jpg
+https://weather.gc.ca/data/satellite/goes_ecan_1070_100.jpg
+https://weather.gc.ca/data/satellite/goes_ecan_vvi_100.jpg
 
 timestamped: ir, vis, ir+vis:
 https://weather.gc.ca/data/satellite/goes_ecan_1070_m_2021@04@04_02h10m.jpg                                                             // <===========================================
 https://weather.gc.ca/data/satellite/goes_ecan_visible_m_2021@04@03_10h30m.jpg
 https://weather.gc.ca/data/satellite/goes_ecan_vvi_m_2021@04@03_10h30m.jpg
 
-
-2021-01-15
-
-Latest cloud cover image: ir, vis, ir+vis:
-https://weather.gc.ca/data/satellite/goes_ecan_1070_100.jpg
-https://weather.gc.ca/data/satellite/goes_ecan_visible_100.jpg
-https://weather.gc.ca/data/satellite/goes_ecan_vvi_100.jpg
-
+Old RADAR stuff:
 https://weather.gc.ca/data/radar/detailed/temp_image//WKR/WKR_COMP_PRECIP_SNOW_2021_03_12_23_50.GIF
 https://weather.gc.ca/data/radar/temp_image//WKR/WKR_PRECIP_SNOW_2021_03_12_23_50.GIF
 https://weather.gc.ca/data/radar/         temp_image//WKR/WKR_     PRECIP_SNOW_2021_03_12_21_00.GIF
