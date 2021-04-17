@@ -32,7 +32,7 @@ namespace AAV.Sys.Helpers
         : dt.TotalMinutes < 60      /**/ ? $"{dt.TotalMinutes:N0} minutes ago"
         : dt.TotalHours < 24        /**/ ? $"{dt.TotalHours:N1} hours ago"
         : dt.TotalDays < 10         /**/ ? $"{dt.TotalDays:N1} days ago"
-        :                           /**/ (versionMode ? $"{max:yyyy.M.d})" : $"{max:yyyy-MM-dd})");
+        :                           /**/ (versionMode ? $"{max:yyyy.M.d}" : $"{max:yyyy-MM-dd}");
     }
     public static string Elapsed(TimeSpan elapsed) => elapsed.TotalMilliseconds < 100   /**/ ? $"{elapsed.TotalMilliseconds:N0} ms" :
         elapsed.TotalSeconds < 2          /**/ ? $"{elapsed.TotalSeconds:N2} sec" :
