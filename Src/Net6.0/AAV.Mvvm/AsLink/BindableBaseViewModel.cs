@@ -50,7 +50,7 @@ namespace MVVM.Common
         {
           if (view != null)
           {
-            WpfUtils.AutoInvokeOnUiThread(view.Close); // if (Application.Current.Dispatcher.CheckAccess()) view.Close(); else await Application.Current.Dispatcher. BeginInvoke(DispatcherPriority.Normal, new Action(() => view.Close()));
+            WpfUtils.AutoInvokeOnUiThread(view.Close); // if (Application.Current == null || Application.Current.Dispatcher.CheckAccess()) view.Close(); else await Application.Current.Dispatcher. BeginInvoke(DispatcherPriority.Normal, new Action(() => view.Close()));
           }
         }
         catch (Exception ex) { Trace.WriteLine(ex.Message, System.Reflection.MethodInfo.GetCurrentMethod()?.Name); if (Debugger.IsAttached) Debugger.Break(); }

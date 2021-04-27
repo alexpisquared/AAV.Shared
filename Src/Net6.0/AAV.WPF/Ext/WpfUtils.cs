@@ -23,7 +23,7 @@ namespace AAV.WPF.Ext
     {
       _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
 
-      if (Application.Current.Dispatcher.CheckAccess()) 
+      if (Application.Current == null || Application.Current.Dispatcher.CheckAccess()) 
         action();
       else Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => 
         action()));
@@ -34,7 +34,7 @@ namespace AAV.WPF.Ext
 
       bool? rv = false;
 
-      if (Application.Current.Dispatcher.CheckAccess())
+      if (Application.Current == null || Application.Current.Dispatcher.CheckAccess())
         rv = action();
       else Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
         rv = action()));
@@ -45,7 +45,7 @@ namespace AAV.WPF.Ext
     {
       _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
 
-      if (Application.Current.Dispatcher.CheckAccess())
+      if (Application.Current == null || Application.Current.Dispatcher.CheckAccess())
         await action().ConfigureAwait(false);
       else await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(async () =>
         await action().ConfigureAwait(false)));
@@ -55,7 +55,7 @@ namespace AAV.WPF.Ext
     {
       _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
 
-      if (Application.Current.Dispatcher.CheckAccess())
+      if (Application.Current == null || Application.Current.Dispatcher.CheckAccess())
         action(param0);
       else Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
         action(param0)));
@@ -66,7 +66,7 @@ namespace AAV.WPF.Ext
     {
       _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
 
-      if (Application.Current.Dispatcher.CheckAccess()) 
+      if (Application.Current == null || Application.Current.Dispatcher.CheckAccess()) 
         action(dp, value);
       else Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
         action(dp, value)));
