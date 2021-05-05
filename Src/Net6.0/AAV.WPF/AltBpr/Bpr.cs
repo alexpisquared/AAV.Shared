@@ -9,7 +9,7 @@ namespace AAV.WPF.AltBpr
 {
   public static class Bpr
   {
-    static readonly SoundPlayer _p = new SoundPlayer();    //public static async Task Beep(int f = 50, int t = 200, ushort v = ushort.MaxValue) => await Beep((uint)f, (uint)t, v);
+    static readonly SoundPlayer _p = new();    //public static async Task Beep(int f = 50, int t = 200, ushort v = ushort.MaxValue) => await Beep((uint)f, (uint)t, v);
 
     public static int FixDuration(int frqHz, int durMks)
     {

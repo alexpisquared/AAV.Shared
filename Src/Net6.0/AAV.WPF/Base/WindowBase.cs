@@ -119,7 +119,7 @@ namespace AAV.WPF.Base
         //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => Trace.WriteLine($"    ~> ++ Adding:   {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
         //~Trace.Write($"    ~> ApplyTheme()   '{themeName}'  to  '{_isoFilenameONLY}' is done. \r\n");
       }
-      catch (Exception ex) { _logger.LogError(ex, $""); ex.Pop(this); throw; }
+      catch (Exception ex) { _logger.LogError(ex, $""); ex.Pop(); throw; }
     }
 
     protected void onWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
