@@ -24,6 +24,6 @@ namespace AAV.Sys.Helpers
     }
 
     public static string VpdbFolder => DataFolder("vpdb");
-    public static string WebCacheFolder => DataFolder("web.cache");
+    public static string WebCacheFolder => @"C:\temp\web.cache";// DataFolder("web.cache");
   }
 }
