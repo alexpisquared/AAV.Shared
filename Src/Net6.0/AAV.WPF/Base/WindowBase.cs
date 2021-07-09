@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.IO;
 
 namespace AAV.WPF.Base
 {
@@ -26,7 +27,7 @@ namespace AAV.WPF.Base
 
     protected bool IgnoreEscape { get; set; }
     protected bool IgnoreWindowPlacement { get; set; } = false;
-    string _isoFilenameONLY => $"{GetType().Name}.xml";
+    string _isoFilenameONLY => /*$"{GetType().Name}.xml";*/ Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}.json");
 
 #if MockingCore3
     class Logger
@@ -136,7 +137,7 @@ namespace AAV.WPF.Base
       {
         try
         {
-          var wpc = XmlIsoFileSerializer.Load<NativeMethods.WPContainer>(_isoFilenameONLY);
+          var wpc = JsonFileSerializer.Load<NativeMethods.WPContainer>(_isoFilenameONLY);
           ZV = wpc.Zb == 0 ? 1 : wpc.Zb;
           winPlcmnt = wpc.WindowPlacement;
 
@@ -146,7 +147,7 @@ namespace AAV.WPF.Base
         {
           ex.Log();
           ZV = 1d;
-          winPlcmnt = XmlIsoFileSerializer.Load<NativeMethods.WindowPlacement>(_isoFilenameONLY);
+          winPlcmnt = JsonFileSerializer.Load<NativeMethods.WindowPlacement>(_isoFilenameONLY);
         }
         catch (Exception ex) { ex.Log(); throw; }
 
@@ -194,7 +195,7 @@ namespace AAV.WPF.Base
       base.OnClosing(e);
 
       NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var wp);
-      XmlIsoFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, _isoFilenameONLY);
+      JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, _isoFilenameONLY);
     }
   }
 }
