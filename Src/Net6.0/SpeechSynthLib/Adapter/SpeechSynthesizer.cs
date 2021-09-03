@@ -13,7 +13,7 @@ namespace SpeechSynthLib.Adapter
     public int Volume { get; set; }
 
     public void SpeakAsyncCancelAll() => _synth = new SpeechSynth(); //todo: does it work or ...?
-    public async Task Speak(string msg)              /**/ => await _synth.SpeakAsync(msg); //nogo: .Wait();
+    public async Task SpeakAsync(string msg)         /**/ => await _synth.SpeakAsync(msg); //nogo: .Wait();
     public void SpeakFaF(string msg) => Task.Run(async () => await _synth.SpeakAsync(msg));
     public void SelectVoiceByHints(object gender) => Trace.WriteLine($" throw new NotImplementedException(); {gender}");
     public void SelectVoiceByHints(VoiceGender gender, VoiceAge adult, int va, CultureInfo ci) => Trace.WriteLine($" throw new NotImplementedException(); {gender}");
