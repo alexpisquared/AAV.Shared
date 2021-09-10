@@ -95,8 +95,7 @@ namespace AAV.Sys.Helpers
             return o;
           }
       }
-      catch (InvalidOperationException ex) { if (ex.HResult != -2146233079) ex.Log(); throw; } // "Root element is missing." ==> create new at the bottom
-      catch (Exception ex) { ex.Log(); throw; }
+      catch (Exception ex) { if (ex.HResult != -2146233079) ex.Log(); } // "Root element is missing." ==> create new at the bottom
 
       return (T)(Activator.CreateInstance(typeof(T)) ?? new T());
     }

@@ -143,13 +143,7 @@ namespace AAV.WPF.Base
 
           ApplyTheme(string.IsNullOrEmpty(wpc.Thm) ? _defaultTheme : wpc.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
         }
-        catch (InvalidOperationException ex)
-        {
-          ex.Log();
-          ZV = 1d;
-          winPlcmnt = JsonFileSerializer.Load<NativeMethods.WindowPlacement>(_isoFilenameONLY);
-        }
-        catch (Exception ex) { ex.Log(); throw; }
+        catch (Exception ex) { ex?.Log(); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<NativeMethods.WindowPlacement>(_isoFilenameONLY); }
 
         winPlcmnt.length = Marshal.SizeOf(typeof(NativeMethods.WindowPlacement));
         winPlcmnt.flags = 0;
@@ -187,8 +181,7 @@ namespace AAV.WPF.Base
 
         NativeMethods.SetWindowPlacement_(new WindowInteropHelper(this).Handle, ref winPlcmnt); //Note: if window was closed on a monitor that is now disconnected from the computer, SetWindowPlacement will place the window onto a visible monitor.
       }
-      catch (InvalidOperationException ex) { ex.Log(); }
-      catch (Exception ex) { ex.Log(); throw; }
+      catch (Exception ex) { ex.Log($"*&^> for {this.GetType().Name}."); }
     }
     protected override void OnClosing(CancelEventArgs e) // WARNING - Not fired when Application.SessionEnding is fired
     {
