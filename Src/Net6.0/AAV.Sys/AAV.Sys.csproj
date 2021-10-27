@@ -5,7 +5,6 @@
     <!--<SignAssembly>true</SignAssembly>    <AssemblyOriginatorKeyFile>aavsys.snk</AssemblyOriginatorKeyFile>-->
     <LangVersion>Latest</LangVersion>
     <Nullable>enable</Nullable>
-    <Platforms>AnyCPU;x86;x64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
