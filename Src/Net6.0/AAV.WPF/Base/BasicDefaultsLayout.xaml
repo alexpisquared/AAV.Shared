@@ -80,7 +80,7 @@
     <Setter Property="Background"           Value="{DynamicResource BackBackgroundBrush}" />
     <Setter Property="BorderBrush"          Value="{DynamicResource MainForegroundBrush}" />
     <Setter Property="BorderThickness"      Value="1" />
-    <Setter Property="CornerRadius"         Value="6" />
+    <Setter Property="CornerRadius"         Value="12" />
     <Setter Property="Padding"              Value="6" />
   </Style>
   <Style TargetType="{x:Type Border}"       BasedOn="{StaticResource BorderStyle_Aav0}" x:Key="BorderStyle_Aav0_0thick">
