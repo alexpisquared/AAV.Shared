@@ -29,7 +29,7 @@ namespace AAV.Sys.Helpers
 
 
     const int _minDurn = 30, _60ms = 60; // minimal and medium durations on Dell 990.
-    public static void BeepOk() => beep(10500, _60ms);
+    public static void BeepOk() => beep(500, _60ms);
     public static void BeepOkB() => beep(8000, _60ms);
     public static void BeepClk() => beep(10000, _60ms);
     public static void BeepLong() => beep(100, 750);
