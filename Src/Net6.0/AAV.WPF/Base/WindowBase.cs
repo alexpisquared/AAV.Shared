@@ -39,9 +39,9 @@ namespace AAV.WPF.Base
     public WindowBase()
     {
 #else
-    readonly ILogger<WindowBase> _logger;
-    public WindowBase() : this(new LoggerFactory().CreateLogger<WindowBase>()) { }
-    public WindowBase(ILogger<WindowBase> logger)
+    readonly ILogger<Window> _logger;
+    public WindowBase() : this(new LoggerFactory().CreateLogger<Window>()) { }
+    public WindowBase(ILogger<Window> logger)
     {
       _logger = logger;
 #endif
