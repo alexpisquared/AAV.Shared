@@ -21,7 +21,7 @@ namespace AAV.WPF.Ext
 
     public static void AutoInvokeOnUiThread(Action action)
     {
-      _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
+      ArgumentNullException.ThrowIfNull(action, $"▄▀▄▀▄▀");
 
       if (Application.Current == null || Application.Current.Dispatcher.CheckAccess()) 
         action();
@@ -30,7 +30,7 @@ namespace AAV.WPF.Ext
     }
     public static bool? AutoInvokeOnUiThread(Func<bool?> action)
     {
-      _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
+      ArgumentNullException.ThrowIfNull(action, $"▄▀▄▀▄▀");
 
       bool? rv = false;
 
@@ -43,7 +43,7 @@ namespace AAV.WPF.Ext
     }
     public static async Task AutoInvokeOnUiThreadAsync(Func<Task> action)
     {
-      _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
+      ArgumentNullException.ThrowIfNull(action, $"▄▀▄▀▄▀");
 
       if (Application.Current == null || Application.Current.Dispatcher.CheckAccess())
         await action().ConfigureAwait(false);
@@ -53,7 +53,7 @@ namespace AAV.WPF.Ext
 
     public static void AutoInvokeOnUiThread(Action<string> action, string param0)
     {
-      _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
+      ArgumentNullException.ThrowIfNull(action, $"▄▀▄▀▄▀");
 
       if (Application.Current == null || Application.Current.Dispatcher.CheckAccess())
         action(param0);
@@ -64,7 +64,7 @@ namespace AAV.WPF.Ext
 
     public static void AutoInvokeOnUiThread(Action<DependencyProperty, object> action, DependencyProperty dp, object value)
     {
-      _ = action ?? throw new ArgumentNullException(paramName: nameof(action)); // == if (action == null) throw new ArgumentNullException(paramName: nameof(action));
+      ArgumentNullException.ThrowIfNull(action, $"▄▀▄▀▄▀");
 
       if (Application.Current == null || Application.Current.Dispatcher.CheckAccess()) 
         action(dp, value);
