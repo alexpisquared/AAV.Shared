@@ -39,7 +39,7 @@ namespace AAV.Sys.Helpers
     }
 
 
-    static readonly IntPtr HWND_BROADCAST = new IntPtr(0xffff);
+    static readonly IntPtr HWND_BROADCAST = new(0xffff);
     const int WM_SETTINGCHANGE = 0x1a;
     const int SMTO_ABORTIFHUNG = 0x0002;
 

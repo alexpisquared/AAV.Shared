@@ -14,7 +14,7 @@ namespace SpeechSynthLib
   {
     const double _speakingRate = 1.25;
     const string _voiceNameFallback = "en-AU-WilliamNeural", _rgn = "canadacentral", _key = "use proper key here";
-    readonly Random _rnd = new Random(DateTime.Now.Millisecond);
+    readonly Random _rnd = new(DateTime.Now.Millisecond);
     readonly AzureSpeechCredentials _asc;
     readonly IConfigurationRoot _cfg;
     readonly bool _azureTtsIsPK, _useSayExe = true;

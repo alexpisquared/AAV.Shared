@@ -7,7 +7,7 @@ namespace SpeechSynthLib.Adapter
 {
   public class SpeechSynthesizer // Adapter to the old .Net 4.8 one
   {
-    SpeechSynth _synth = new SpeechSynth();
+    SpeechSynth _synth = new();
 
     public int Rate { get; set; }
     public int Volume { get; set; }
