@@ -24,10 +24,9 @@ namespace AsLink
  https://eccc-msc.github.io/open-data/msc-data/obs_radar/readme_radar_en/
  https://eccc-msc.github.io/open-data/msc-data/obs_radar/readme_radarimage-datamart_en/
 Apparently, the old style GIFs are still available, but at the new location/format:
- https://dd.meteo.gc.ca/radar/PRECIPET/GIF/WKR/202111200450_WKR_COMP_PRECIPET_RAIN.gif
- https://dd.meteo.gc.ca/radar/PRECIPET/GIF/CASKR/202201301518_CASKR_PRECIPET_RAIN.gif        every  6 min
- https://dd.meteo.gc.ca/radar/PRECIPET/GIF/CASKR/202201301500_CASKR_COMP_PRECIPET_RAIN.gif   every 10 min
- https://dd.meteo.gc.ca/radar/DPQPE/GIF/CASKR/20220130T1542Z_MSC_Radar-DPQPE_CASKR_Snow.gif  every  6 min
+ https://dd.meteo.gc.ca/radar/PRECIPET/GIF/WKR/     every 10 min
+ https://dd.meteo.gc.ca/radar/PRECIPET/GIF/CASKR/   every 6/10 min
+ https://dd.meteo.gc.ca/radar/DPQPE/GIF/CASKR/      every 6 min
 
 2021-04-05
 Latest cloud cover image: ir, vis, ir+vis:
