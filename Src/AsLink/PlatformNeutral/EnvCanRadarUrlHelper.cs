@@ -2,7 +2,7 @@
 
 namespace AsLink
 {
-  public class EnvCanRadarUrlHelper //2021: this is the single central intel used/shared by all radar consumers, including: ToRunOr, AlexPi.Scr, etc.
+  public class EnvCanRadarUrlHelper //2021: this is the single central intel used/shared by all radar consumers, including: ToRunOr, AlexPi.Scr, etc. True on 2022-02-04.
   {
     public static string GetRadarUrl(DateTime d) => $"https://dd.meteo.gc.ca/radar/PRECIPET/GIF/WKR/{d:yyyyMMddHHmm}_WKR_COMP_PRECIPET_RAIN.gif";  
     public static string GetRadarUrl_NotRadarFallback(DateTime d) => $"https://weather.gc.ca/data/satellite/goes_ecan_1070_m_{d.Year}@{d.Month:0#}@{d.Day:0#}_{d.Hour:0#}h{d.Minute:0#}m.jpg";  // <===========================================
