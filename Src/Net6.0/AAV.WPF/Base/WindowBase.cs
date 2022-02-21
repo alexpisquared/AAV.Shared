@@ -79,7 +79,9 @@ namespace AAV.WPF.Base
             default: break;
             case Key.Escape:
               if (!IgnoreEscape) Close();
-              base.OnKeyUp(e); break;
+              base.OnKeyUp(e);
+              e.Handled = true;
+              break;
           }
       };
     }
