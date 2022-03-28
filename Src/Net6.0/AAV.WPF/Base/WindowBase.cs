@@ -27,7 +27,7 @@ namespace AAV.WPF.Base
 
     protected bool IgnoreEscape { get; set; }
     protected bool IgnoreWindowPlacement { get; set; } = false;
-    string _isoFilenameONLY => /*$"{GetType().Name}.xml";*/ Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}.json");
+    string IsoFilenameONLY => /*$"{GetType().Name}.xml";*/ Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}.json");
 
 #if MockingCore3
     class Logger
@@ -125,8 +125,8 @@ namespace AAV.WPF.Base
       catch (Exception ex) { _logger.LogError(ex, $""); ex.Pop(); throw; }
     }
 
-    protected void onWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-    protected void onExit(object s, RoutedEventArgs e) => Close();
+    protected void OnWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+    protected void OnExit(object s, RoutedEventArgs e) => Close();
 
     protected override void OnSourceInitialized(EventArgs e)
     {
@@ -139,13 +139,13 @@ namespace AAV.WPF.Base
       {
         try
         {
-          var wpc = JsonFileSerializer.Load<NativeMethods.WPContainer>(_isoFilenameONLY);
+          var wpc = JsonFileSerializer.Load<NativeMethods.WPContainer>(IsoFilenameONLY);
           ZV = wpc.Zb == 0 ? 1 : wpc.Zb;
           winPlcmnt = wpc.WindowPlacement;
 
           ApplyTheme(string.IsNullOrEmpty(wpc.Thm) ? _defaultTheme : wpc.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
         }
-        catch (Exception ex) { ex?.Log(); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<NativeMethods.WindowPlacement>(_isoFilenameONLY); }
+        catch (Exception ex) { ex?.Log(); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<NativeMethods.WindowPlacement>(IsoFilenameONLY); }
 
         winPlcmnt.length = Marshal.SizeOf(typeof(NativeMethods.WindowPlacement));
         winPlcmnt.flags = 0;
@@ -153,7 +153,7 @@ namespace AAV.WPF.Base
 
         if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
         {
-          Trace.WriteLine($"{_isoFilenameONLY,20}: 1st time: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+          Trace.WriteLine($"{IsoFilenameONLY,20}: 1st time: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
 
           winPlcmnt.normalPosition.Left = _currentLeft + _margin;
           winPlcmnt.normalPosition.Top = _currentTop + _margin;
@@ -190,7 +190,7 @@ namespace AAV.WPF.Base
       base.OnClosing(e);
 
       NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var wp);
-      JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, _isoFilenameONLY);
+      JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, IsoFilenameONLY);
     }
   }
 }
