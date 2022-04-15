@@ -58,7 +58,7 @@ namespace SpeechSynthLib
 
     public SpeechSynthesizer SynthReal => _synthNew ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
-    public async Task SpeakAsync(string msg, VMode vmode = VMode.Prosody, string voice = null, string styleForExpressOnly = null)
+    public async Task SpeakAsync(string msg, VMode vmode = VMode.Prosody, string? voice = null, string? styleForExpressOnly = null)
     {
       try
       {
