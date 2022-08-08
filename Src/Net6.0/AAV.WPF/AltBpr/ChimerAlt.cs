@@ -51,7 +51,7 @@ namespace AAV.WPF.AltBpr
     public static async Task FreqRunUp() => await PlayFreqList(new[] { 48, 100 }, durationSec: 1.9);
     public static async Task FreqRunDn() => await PlayFreqList(new[] { 128, 48 }, durationSec: 1.9);
 
-    public static async Task WakeAudio() => await NoteWalk(101, 102, _wakeMks); // .15 sec is audible?
+    public static async Task WakeAudio() => await BeepFD(48, _wakeMks, ushort.MaxValue / 100);
 
     //public static async Task FreqWalkUpDnUp(double freqA = 200, double freqB = 20, double freqC = 300, double durationSec = 1, double durnMultr = 1)
     //{
