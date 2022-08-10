@@ -10,6 +10,7 @@ namespace AAV.Sys.Helpers
 
     public static void Wake() => NativeMethods.Beep(11111, 333);
     public static void OkFaF() => Task.Run(() => BeepOk());
+    public static void OKbFaF() => Task.Run(() => BeepOkB());
     public static void ErrorFaF() => Task.Run(() => ErrorSynch());
     public static void Begin1FaF() => Task.Run(() => Begin1Sync());
     public static void Begin2FaF() => Task.Run(() => Begin2Sync());
@@ -28,27 +29,26 @@ namespace AAV.Sys.Helpers
     public static void BeepEr() => ErrorFaF();
 
 
-    //nst int _minDurn = 30,  _60ms =  60; // minimal and medium durations on Dell 990.
-    const int _minDurn = 140, _60ms = 210, // minimal and medium durations on Razer1. (120 is already silent)
+    const int _minDurn140 = 140, _210ms = 210, // minimal and medium durations on Razer1. (120 is already silent)
       highest = 10111, higher = 9111;
 
-    public static void BeepOk() => beep(500, _60ms);
-    public static void BeepOkB() => beep(8000, _60ms);
-    public static void BeepClk() => beep(higher, _60ms);
+    public static void BeepOk() => beep(2500, _210ms);
+    public static void BeepOkB() => beep(4000, _210ms);
+    public static void BeepClk() => beep(higher, _210ms);
     public static void BeepLong() => beep(100, 750);
-    public static void BeepShort() => beep(highest, _minDurn);
+    public static void BeepShort() => beep(highest, _minDurn140);
     public static void BeepDone() => BeepEnd3();
     public static void BeepFD(int v1, int v2) => beep(v1, v2);
-    public static void Beep1of2() { beep(higher, _60ms); beep(highest, _minDurn); }
-    public static void Beep2of2() { beep(highest, _minDurn); beep(higher, _60ms); }
+    public static void Beep1of2() { beep(higher, _210ms); beep(highest, _minDurn140); }
+    public static void Beep2of2() { beep(highest, _minDurn140); beep(higher, _210ms); }
 
-    public static void BeepNo() { beep(4211, _minDurn); beep(4000, _minDurn); }
+    public static void BeepNo() { beep(4211, _minDurn140); beep(4000, _minDurn140); }
     public static void BeepBigError() { for (double i = 1000; i < 5000; i *= 1.5) { beep((int)i, (int)(higher / i)); } }
-    public static void BeepBgn2() { var v = 300; beep(v + 200, _minDurn); beep(v + 300, _minDurn * 6); }
-    public static void BeepEnd2() { var v = 300; beep(v + 200, _minDurn); beep(v + 100, _minDurn * 6); }
-    public static void BeepBgn3() { var v = 300; beep(v + 100, _minDurn); beep(v + 200, _minDurn); beep(v + 300, _minDurn * 6); }
-    public static void BeepEnd3() { var v = 300; beep(v + 300, _minDurn); beep(v + 200, _minDurn); beep(v + 100, _minDurn * 6); }
-    public static void BeepEnd6() { var v = 999; beep(v + 300, _minDurn); beep(v + 200, _minDurn); beep(v + 100, _minDurn); beep(v, _minDurn); beep(v + 300, _minDurn); beep(v + 300, _minDurn); }
+    public static void BeepBgn2() { var v = 300; beep(v + 200, _minDurn140); beep(v + 300, _minDurn140 * 6); }
+    public static void BeepEnd2() { var v = 300; beep(v + 200, _minDurn140); beep(v + 100, _minDurn140 * 6); }
+    public static void BeepBgn3() { var v = 300; beep(v + 100, _minDurn140); beep(v + 200, _minDurn140); beep(v + 300, _minDurn140 * 6); }
+    public static void BeepEnd3() { var v = 300; beep(v + 300, _minDurn140); beep(v + 200, _minDurn140); beep(v + 100, _minDurn140 * 6); }
+    public static void BeepEnd6() { var v = 999; beep(v + 300, _minDurn140); beep(v + 200, _minDurn140); beep(v + 100, _minDurn140); beep(v, _minDurn140); beep(v + 300, _minDurn140); beep(v + 300, _minDurn140); }
 
     [Obsolete("await AlexPi.Scr.AltBpr.ChimerAlt.Chime()", false)]
     public static void Chime(int min)
