@@ -92,7 +92,7 @@ namespace SpeechSynthLib
           $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voiceName}""><prosody rate=""{_speakingRate}""                      >{msg}</prosody></voice></speak>" : //todo: rate does not work below:
           $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voiceName}""><mstts:express-as style=""{sStyle}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>");
 
-        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{vmode}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{voiceName,-26}\t WhereAmI '{_cfg["WhereAmI"]}'  ■ ■ {msg,-44}");
+        Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t{vmode}\t{sw.Elapsed.TotalSeconds,4:N1}s\t{voiceName,-26}\t WhereAmI SpeechSynth'{_cfg["WhereAmI"]}'  ■ ■ {msg,-44}");
 
         if (result.Reason == ResultReason.Canceled)
         {
