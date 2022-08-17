@@ -31,9 +31,8 @@ namespace AAV.WPF.AltBpr
       _freqMultplr = _config.GetSection("FreqMultiplier").Get<double?>() ?? 1.021;
 
       //Tracer.SetupTracingOptions("AAV.WPF", new TraceSwitch("Info", "Haha.") { Level = TraceLevel.Info });
-      Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f}\t\t WhereAmI ChimerAlt " +
+      Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f} WhereAmI in ChimerAlt:   " +
         $"String: '{_config["WhereAmIString"]}'  " +
-        $"Array: '{_config["WhereAmIArray"]}'  " +
         $"String: '{_config.GetSection("WhereAmIString").Get<string>()}'  " +
         $"Array0: '{_config.GetSection("WhereAmIArray").Get<string[]>()?.First()}'  " +
         $"\n");

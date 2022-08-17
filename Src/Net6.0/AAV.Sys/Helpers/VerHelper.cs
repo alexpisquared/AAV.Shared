@@ -8,7 +8,7 @@ namespace AAV.Sys.Helpers
 {
   public static class VerHelper
   {
-    public static string CurVerStr(string NetFrwk /*= ".NET 4.7"*/) => $"{NetFrwk} - {getTimedVerString} - {CompileMode}";
+    public static string CurVerStr(string netVer) => $"{netVer} - {getTimedVerString} - {CompileMode}";
 
     public static string TimeAgo(DateTimeOffset max, bool versionMode = false)
     {
@@ -113,7 +113,7 @@ namespace AAV.Sys.Helpers
           new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToOADate()),
           new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime.ToOADate());
 
-        return TimeAgo(DateTime.Now - DateTime.FromOADate(max), ago: " ago");
+        return DateTime.FromOADate(max).ToString("y.M.d.HHmm"); // return TimeAgo(DateTime.Now - DateTime.FromOADate(max), ago: " ago");
       }
     }
   }
