@@ -18,8 +18,8 @@ namespace SpeechSynthLib.Adapter
     public void SelectVoiceByHints(object gender) => Trace.WriteLine($" throw new NotImplementedException(); {gender}");
     public void SelectVoiceByHints(VoiceGender gender, VoiceAge adult, int va, CultureInfo ci) => Trace.WriteLine($" throw new NotImplementedException(); {gender}");
     public void SelectVoice(string name) => Trace.WriteLine($" throw new NotImplementedException(); {name}");
-    //public IEnumerable<InstalledVoice> GetInstalledVoices() => null;
-    //public object GetCurrentlySpokenPrompt() => null;
+    public IEnumerable<InstalledVoice> GetInstalledVoices() => null;
+    public object GetCurrentlySpokenPrompt() => null;
   }
 
   [DebuggerDisplay("{VoiceInfo.Name} [{Enabled ? \"Enabled\" : \"Disabled\"}]")]
