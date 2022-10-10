@@ -1,4 +1,5 @@
-﻿using AAV.Sys.Ext;
+﻿#nullable enable
+using AAV.Sys.Ext;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,7 +8,7 @@ namespace AAV.WPF.View
 {
   public partial class ExceptionPopup : Base.WindowBase
   {
-    public ExceptionPopup(Exception ex, string optl, string cmn, string cfp, int cln, Window? owner = null) : base()
+    public ExceptionPopup(Exception ex, string? optl, string cmn, string cfp, int cln, Window? owner = null) : base()
     {
       IgnoreWindowPlacement = true;
 
