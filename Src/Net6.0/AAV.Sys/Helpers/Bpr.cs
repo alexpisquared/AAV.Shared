@@ -29,8 +29,8 @@ namespace AAV.Sys.Helpers
     public static void BeepEr() => ErrorFaF();
 
 
-    const int _minDurn140 = 140, _210ms = 210, // minimal and medium durations on Razer1. (120 is already silent)
-      highest = 10111, higher = 9111;
+    const int _minDurn140 = 140, _210ms = 210,  // minimal and medium durations on Razer1. (120 is already silent)
+      higher = 250, highest = 260;              // org too loud: highest = 10111, higher = 9111;
 
     public static void BeepOk() => beep(2500, _210ms);
     public static void BeepOkB() => beep(4000, _210ms);
