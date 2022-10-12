@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="CI.Visual.Lib.Anime.GravityAnimeDropPanel" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+             xmlns:cnv="clr-namespace:CI.Visual.Lib.Converters" 
+             xmlns:anm="clr-namespace:CI.Visual.Lib.Anime" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Anime/SmartOpacityToggleAnimStyle.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/Anime.Base.xaml" />
+        <!--
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/ComboBox.Base.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/DataGrid.Anime.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
+        -->
+        <!--<ResourceDictionary Source="/CI.SPM.Views;component/ViewModelToViewMapping.xaml" />-->
+      </ResourceDictionary.MergedDictionaries>
+
+      <sys:Double x:Key="blur">0</sys:Double>
+
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <Grid x:Name="pnlGravityAnimeDropPanel" Cursor="Wait" Background="{Binding IsBusy, Converter={cnv:UniConverter BrushTrue=#4888, BrushFalse={x:Null}, InvertValue=False}}" >
+    <Grid.RowDefinitions>
+      <RowDefinition Height="2*"/>
+      <RowDefinition Height="1*"/>
+      <RowDefinition Height="2*"/>
+    </Grid.RowDefinitions>
+    <Viewbox Grid.Row="1">
+      <Grid>
+        <Grid.Style>
+          <Style TargetType="Grid">
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="RenderTransform">
+              <Setter.Value>
+                <TranslateTransform />
+              </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                <DataTrigger.EnterActions>
+                  <StopStoryboard BeginStoryboardName="sbDropOu"/>
+                  <BeginStoryboard x:Name="sbDropIn" Storyboard="{StaticResource sbDropIn}"/>
+                </DataTrigger.EnterActions>
+              </DataTrigger>
+              <DataTrigger Binding="{Binding IsBusy}" Value="False">
+                <DataTrigger.EnterActions>
+                  <StopStoryboard BeginStoryboardName="sbDropIn"/>
+                  <BeginStoryboard x:Name="sbDropOu" Storyboard="{StaticResource sbDropOu}"/>
+                </DataTrigger.EnterActions>
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </Grid.Style>
+
+        <anm:GravityAnime IsBusy="{Binding IsBusy}" d:IsBusy="False" Prompt="{Binding BusyMessage, FallbackValue='Wait!  Loading...'}" x:Name="theGravity" />
+
+        <!--<Ellipse Grid.Row="1" Fill="#8f8f" Stroke="DarkMagenta" StrokeThickness="2" Width="140" Height="140" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding BusyMessage, FallbackValue='Wait!&#10;  Loading...'}" RenderTransformOrigin="0.5,0.5" x:Name="tbkInfoMessage" Foreground="DarkMagenta" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                  <TextBlock.RenderTransform>
+                    <RotateTransform Angle="-10"/>
+                  </TextBlock.RenderTransform>
+                  <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                      <Setter Property="RenderTransform">
+                        <Setter.Value>
+                          <RotateTransform />
+                        </Setter.Value>
+                      </Setter>
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                          <DataTrigger.EnterActions>
+                            <BeginStoryboard x:Name="sbWiggle" Storyboard="{StaticResource sbWiggle}"/>
+                          </DataTrigger.EnterActions>
+                          <DataTrigger.ExitActions>
+                            <StopStoryboard BeginStoryboardName="sbWiggle"/>
+                          </DataTrigger.ExitActions>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBlock.Style>
+                </TextBlock>-->
+      </Grid>
+    </Viewbox>
+  </Grid>
+</UserControl>

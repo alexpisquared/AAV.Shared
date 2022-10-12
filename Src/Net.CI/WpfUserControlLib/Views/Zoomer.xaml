@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="CI.Standard.Lib.Views.Zoomer" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             xmlns:cnv="clr-namespace:CI.Standard.Lib.Views" 
+             d:DesignHeight="30" d:DesignWidth="80">
+  <Border Margin="2" Width="75" Height="22" ToolTip="  Zoom. &#10;    Use mouse wheel to adjust ...&#10;      ... or Double-Click to go back to 100% " 
+          CornerRadius="6" BorderBrush="#888" Background="#888" BorderThickness="0" Padding="5 0">
+    <Grid >
+      <ProgressBar Minimum="0.1" Maximum="3" Value="{Binding ZmValue, FallbackValue=1}" FocusVisualStyle="{x:Null}" VerticalAlignment="Stretch" BorderThickness="0" >
+        <ProgressBar.Foreground>
+          <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+            <GradientStop Color="#888"/>
+            <GradientStop Color="#666" Offset="1"/>
+          </LinearGradientBrush>
+        </ProgressBar.Foreground>
+        <ProgressBar.Background>
+          <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+            <GradientStop Color="#aaa"/>
+            <GradientStop Color="#888" Offset="1"/>
+          </LinearGradientBrush>
+        </ProgressBar.Background>
+      </ProgressBar>
+      <Slider	Minimum="0.1" Maximum="3" Value="{Binding ZmValue, FallbackValue=1}" FocusVisualStyle="{x:Null}" Orientation="Horizontal" x:Name="ZoomSlider" Opacity="0" Margin="-5 0"  Cursor="Hand" IsTabStop="False" VerticalAlignment="Center" />
+      <TextBlock Text="{Binding ElementName=ZoomSlider, Path=Value, StringFormat='{}{0:N0} %', Converter={cnv:Multy100}}"	HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#eee" FontSize="15" Margin="0 0 0 1"/>
+    </Grid>
+  </Border>
+</UserControl>

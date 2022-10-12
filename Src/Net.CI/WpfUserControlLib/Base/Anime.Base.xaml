@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                                    
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+  <SineEase    x:Key="si"     EasingMode="EaseIn" />
+  <SineEase    x:Key="so"     EasingMode="EaseOut" />
+  <SineEase    x:Key="sb"     EasingMode="EaseInOut" />
+  <CubicEase   x:Key="co"     EasingMode="EaseOut" />
+  <CubicEase   x:Key="ci"     EasingMode="EaseIn" />
+  <CubicEase   x:Key="cb"     EasingMode="EaseInOut" />
+  <QuarticEase x:Key="qo"     EasingMode="EaseOut" />
+  <QuarticEase x:Key="qi"     EasingMode="EaseIn" />
+  <QuarticEase x:Key="qb"     EasingMode="EaseInOut" />
+  <BackEase    x:Key="ko"     EasingMode="EaseOut" />
+  <BackEase    x:Key="ki"     EasingMode="EaseIn" />
+  <BackEase    x:Key="kb"     EasingMode="EaseInOut" />
+  <ElasticEase x:Key="ei"     EasingMode="EaseIn" />
+  <ElasticEase x:Key="eo"     EasingMode="EaseOut" />
+  <ElasticEase x:Key="eb"     EasingMode="EaseInOut" />
+  <ElasticEase x:Key="ei0"    EasingMode="EaseIn"  Oscillations="0" />
+  <ElasticEase x:Key="eo0s5"  EasingMode="EaseOut" Oscillations="0" Springiness="5" />
+  <ElasticEase x:Key="eo2s5"  EasingMode="EaseOut" Oscillations="2" Springiness="5" />
+  <BounceEase  x:Key="bb"     EasingMode="EaseInOut" />
+  <BounceEase  x:Key="bo"     EasingMode="EaseOut" />
+  <BounceEase  x:Key="bo1"    EasingMode="EaseOut" Bounces="1" />
+
+  <Color x:Key="c">#1f00</Color>
+  <Color x:Key="a">#3f00</Color>
+  <Color x:Key="b">#1f00</Color>
+  <Color x:Key="e">#10f0</Color>
+  <Color x:Key="f">#00f0</Color>
+
+  <Storyboard x:Key="CompositeFlashing"   Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="0:0:16.888" >
+    <ColorAnimation  Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" From="Red" To="Yellow" EasingFunction="{StaticResource eo}"/>
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                              From="0.3" To="1"      EasingFunction="{StaticResource eo}"/>
+  </Storyboard>
+  <Storyboard x:Key="ColorFlashing5sec"  Duration="0:0:9" RepeatBehavior="Forever" >
+    <ColorAnimation  Duration="0:0:0.3" RepeatBehavior="3x" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" From="Orange" To="Yellow" AutoReverse="True" EasingFunction="{StaticResource so}" />
+  </Storyboard>
+  <Storyboard x:Key="ColorFlashing" Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" >
+    <ColorAnimation  Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" From="Red" To="Yellow" EasingFunction="{StaticResource so}"/>
+  </Storyboard>
+  <Storyboard x:Key="OpacityFlashing"     Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="0:0:16.888" >
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                              From="0.3" To="1"      EasingFunction="{StaticResource sb}"/>
+  </Storyboard>
+  <Storyboard x:Key="CompositeRestored"   Duration="0:0:1" FillBehavior="Stop" >
+    <ColorAnimation  Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" />
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                              To="1"           />
+  </Storyboard>
+  <Storyboard x:Key="OpacityRestored"     Duration="0:0:1" FillBehavior="Stop">
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                              To="1"           />
+  </Storyboard>
+  <Storyboard x:Key="FlashingGreen"       Duration="0:0:0.5" AutoReverse="True" RepeatBehavior="Forever" >
+    <ColorAnimation  Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" From="#0f0" To="#050" EasingFunction="{StaticResource so}"/>
+  </Storyboard>
+  <Storyboard x:Key="ColorRestored"       Duration="0:0:1" FillBehavior="Stop">
+    <ColorAnimation  Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" To="Transparent" />
+  </Storyboard>
+
+  <Duration     x:Key="du757">0:0:0.757</Duration>
+  <Duration     x:Key="du257">0:0:0.257</Duration>
+  <sys:TimeSpan x:Key="bt257">0:0:0.257</sys:TimeSpan>
+  <Storyboard x:Key="sbDropIn">
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                                From="0.00" To="1"    Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-400" To="0"    Duration="{StaticResource du757}" EasingFunction="{StaticResource bo}" />
+  </Storyboard>
+  <Storyboard x:Key="sbDropOu">
+    <!--<DoubleAnimation Storyboard.TargetProperty="Opacity"                                            To="0.00" Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />-->
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"             To="+999" Duration="{StaticResource du757}" EasingFunction="{StaticResource bo1}" />
+  </Storyboard>
+  <Storyboard x:Key="sbWiggle" RepeatBehavior="0:10:0">
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)"            To="40"   Duration="0:0:1" EasingFunction="{StaticResource so}"                   />
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)"            To="00"   Duration="0:0:1" EasingFunction="{StaticResource eo}" BeginTime="0:0:1" />
+  </Storyboard>
+</ResourceDictionary>

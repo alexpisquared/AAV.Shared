@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="CI.Visual.Lib.Anime.ArrivaThirdUserControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="450">
+  <UserControl.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/Anime.Base.xaml" />
+        <!--
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Anime/SmartOpacityToggleAnimStyle.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/ComboBox.Base.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/DataGrid.Anime.xaml" />
+        <ResourceDictionary Source="/CI.Visual.Lib;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
+        <ResourceDictionary Source="/CI.SPM.Views;component/ViewModelToViewMapping.xaml" />
+        -->
+      </ResourceDictionary.MergedDictionaries>
+      <Storyboard x:Key="sbkFrvr" RepeatBehavior="Forever" BeginTime="0:0:1">
+        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:1.0" From="0.0"  To="0.6"  Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" EasingFunction="{StaticResource ci}" />
+        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:1.0" From="200"  To="100"  Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource ci}" />
+        <DoubleAnimation BeginTime="0:0:1" Duration="0:0:1.0"             To="1.0"  Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" EasingFunction="{StaticResource co}" />
+        <DoubleAnimation BeginTime="0:0:1" Duration="0:0:1.0"             To="000"  Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource co}" />
+        <DoubleAnimation BeginTime="0:0:3" Duration="0:0:1.0"             To="0.0"  Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" EasingFunction="{StaticResource ci}" />
+        <DoubleAnimation BeginTime="0:0:3" Duration="0:0:1.0"             To="-200" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource ci}" />
+        <DoubleAnimation BeginTime="0:0:4" Duration="0:0:1.0"             To="0.0"  Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" EasingFunction="{StaticResource co}" />
+        <DoubleAnimation BeginTime="0:0:4" Duration="0:0:1.0"             To="-200" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource co}" />
+        <DoubleAnimation BeginTime="0:0:2" Duration="0:0:1.0"             To="-180" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(Angle)"                 EasingFunction="{StaticResource cb}" />
+      </Storyboard>
+
+      <Storyboard x:Key="sbkStop" FillBehavior='Stop'>
+        <!-- //tu: the idea is to bring all the targets back to starting positions ... oterwise, they'll just KEEP GOING FOREVER!!!-->
+        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:2.0"             To="0"    Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" EasingFunction="{StaticResource co}" />
+        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:2.0"             To="+200" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource co}" />
+        <DoubleAnimation BeginTime="0:0:0" Duration="0:0:2.0"             To="-180" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(Angle)"                 EasingFunction="{StaticResource co}" />
+      </Storyboard>
+
+      <Style TargetType="Rectangle" x:Key="IsBusyStyle">
+        <!--<Setter Property="Fill" Value="#ff0" />-->
+        <Style.Triggers>
+          <DataTrigger Binding="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" Value="True">
+            <Setter Property="Fill" Value="#0bf" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" Value="False">
+            <Setter Property="Fill" Value="#09d" />
+          </DataTrigger>
+          <DataTrigger Binding="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" Value="True">
+            <DataTrigger.EnterActions>
+              <BeginStoryboard Storyboard="{StaticResource sbkFrvr}" />
+            </DataTrigger.EnterActions>
+            <DataTrigger.ExitActions>
+              <BeginStoryboard Storyboard="{StaticResource sbkStop}" />
+              <!--<StopStoryboard BeginStoryboardName="sbkFrvr" />-->
+            </DataTrigger.ExitActions>
+          </DataTrigger>
+          <!--<DataTrigger Binding="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" Value="False"><DataTrigger.EnterActions></DataTrigger.EnterActions><DataTrigger.ExitActions></DataTrigger.ExitActions></DataTrigger>-->
+        </Style.Triggers>
+      </Style>
+    </ResourceDictionary>
+  </UserControl.Resources>
+  <!--<UserControl.Triggers><EventTrigger RoutedEvent="FrameworkElement.Loaded"><BeginStoryboard Storyboard="{StaticResource sbkFrvr}" /></EventTrigger></UserControl.Triggers>-->
+  <Grid>
+    <Rectangle x:Name="bg1" Width="26" Height="260" RenderTransformOrigin="0.5,0.5" Style="{StaticResource IsBusyStyle}" >
+      <Rectangle.RenderTransform>
+        <TransformGroup>
+          <ScaleTransform ScaleY="0"/>
+          <SkewTransform/>
+          <RotateTransform/>
+          <TranslateTransform Y="200"/>
+        </TransformGroup>
+      </Rectangle.RenderTransform>
+    </Rectangle>
+
+    <ToggleButton Content="On/Off" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsChecked="{Binding IsBusy}" x:Name="btnOnOff" Visibility="Collapsed" />
+  </Grid>
+</UserControl>

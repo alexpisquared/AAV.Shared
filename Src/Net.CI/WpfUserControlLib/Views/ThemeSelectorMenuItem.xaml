@@ -1,0 +1,13 @@
+﻿<MenuItem x:Class="CI.Standard.Lib.Views.ThemeSelectorMenuItem" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="26" d:DesignWidth="96" x:Name="ths">
+    <MenuItem Header="_Dark"               Tag="Lite.Bootstrap"    Click="onMenuClick" IsCheckable="True" />
+    <MenuItem Header="Dark _Google"        Tag="Dark.Google"       Click="onMenuClick" IsCheckable="True" />
+    <MenuItem Header="_Lite"               Tag="Lite.Gray"         Click="onMenuClick" IsCheckable="True" />
+    <MenuItem Header="Lite G_oogle"        Tag="Lite.Google"       Click="onMenuClick" IsCheckable="True" />
+    <MenuItem Header="Lite _VaporWave"     Tag="Lite.VaporWave"    Click="onMenuClick" IsCheckable="True" />
+</MenuItem>

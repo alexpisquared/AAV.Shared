@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <Storyboard Timeline.DesiredFrameRate="3" x:Key="Opacity_1MinLowCpu" >
+    <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="0.1"  Duration="0:1:0.0" />
+  </Storyboard>
+  <Storyboard x:Key="Opacity_On" >
+    <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="1.0"  Duration="0:0:0.6" />
+  </Storyboard>
+  <Storyboard x:Key="Opacity_Off" >
+    <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="0.0"  Duration="0:0:8.0" />
+  </Storyboard>
+
+  <Style x:Key="SmartOpacityToggleAnimStyle" TargetType="{x:Type StackPanel}">
+    <Setter Property="Opacity" Value="1.0" />
+    <Style.Triggers>
+      <!-- nogo: overrides Triggers: <EventTrigger RoutedEvent="FrameworkElement.Loaded"><BeginStoryboard Storyboard="{StaticResource Opacity_1MinLowCpu}" /></EventTrigger>-->
+      <Trigger Property="IsEnabled" Value="True">
+        <Trigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource Opacity_1MinLowCpu}" />
+        </Trigger.EnterActions>
+      </Trigger>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Trigger.EnterActions>
+          <BeginStoryboard Storyboard="{StaticResource Opacity_On}" />
+        </Trigger.EnterActions>
+        <Trigger.ExitActions>
+          <BeginStoryboard Storyboard="{StaticResource Opacity_Off}" />
+        </Trigger.ExitActions>
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+</ResourceDictionary>

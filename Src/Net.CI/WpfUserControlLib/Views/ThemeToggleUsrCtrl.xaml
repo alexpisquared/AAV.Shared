@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="CI.Standard.Lib.Views.ThemeToggleUsrCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="48" d:DesignWidth="110">
+  <ToggleButton Content="ð" FontFamily="Wingdings 2" FontSize="18" Click="onToggleTheme" x:Name="tgl1" FocusVisualStyle="{x:Null}" 
+                ToolTip="Change to Dark mode ... and back" Background="#8888" Padding="2" Height="26"/>
+</UserControl>
