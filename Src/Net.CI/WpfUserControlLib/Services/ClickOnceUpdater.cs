@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Services;
+﻿namespace WpfUserControlLib.Services;
 public class ClickOnceUpdater
 {
   readonly string _deplTrgExe, _deplSrcDir, _deplTrgDir;

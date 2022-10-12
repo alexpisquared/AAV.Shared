@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Helpers;
+﻿namespace WpfUserControlLib.Helpers;
 
 public static class UnhandledExceptionHndlr // Core 3
 {

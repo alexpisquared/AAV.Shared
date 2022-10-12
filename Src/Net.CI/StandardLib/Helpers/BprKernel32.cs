@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CI.Standard.Lib.Helpers
+namespace StandardLib.Helpers
 {
   //[System.Obsolete] - only for exceptional situations when proper beeper is not available.
   internal class BprKernel32

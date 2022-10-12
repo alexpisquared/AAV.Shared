@@ -1,4 +1,4 @@
-﻿namespace CI.Standard.Lib.Services;
+﻿namespace StandardLib.Services;
 
 public interface IGTimer
 {

@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                                 
-                    xmlns:stb="clr-namespace:CI.Visual.Lib.Helpers" >
+                    xmlns:stb="clr-namespace:WpfUserControlLib.Helpers" >
 
   <SolidColorBrush x:Key="BackBackgroundBrush" Color="{DynamicResource BackBackgroundColor}"/>
   <SolidColorBrush x:Key="ButnBackgroundBrush" Color="{DynamicResource ButnBackgroundColor}"/>

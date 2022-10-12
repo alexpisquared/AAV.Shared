@@ -1,4 +1,4 @@
-﻿namespace StandardContracts.Lib;
+﻿namespace StandardContractsLib;
 
 public class CfgName
 {

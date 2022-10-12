@@ -1,6 +1,6 @@
-﻿namespace CI.Standard.Lib.Base;
+﻿namespace StandardLib.Base;
 
-public class UserSettingsShared : UserSettingsStore
+public class UserSettingsShared : UserSettingsStore_
 {
   public string? PrefSqlServer { get; set; }
   public string? NewAcntFilter_ { get; set; }

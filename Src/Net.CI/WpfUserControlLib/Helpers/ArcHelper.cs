@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Helpers;
+﻿namespace WpfUserControlLib.Helpers;
 class ArcHelper
 {
   const double _2Pi = Math.PI * 2;

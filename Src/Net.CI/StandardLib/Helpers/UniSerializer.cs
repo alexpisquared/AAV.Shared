@@ -4,9 +4,9 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using CI.Standard.Lib.Extensions;
+using StandardLib.Extensions;
 
-namespace CI.Standard.Lib.Helpers;
+namespace StandardLib.Helpers;
 
 public static class JsonFileSerializer
 {
@@ -14,7 +14,7 @@ public static class JsonFileSerializer
   {
     try
     {
-      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename)))
+      if (!FSHelper_.ExistsOrCreated(Path.GetDirectoryName(filename)))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);
@@ -44,7 +44,7 @@ public static class XmlFileSerializer
   {
     try
     {
-      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename)))
+      if (!FSHelper_.ExistsOrCreated(Path.GetDirectoryName(filename)))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);

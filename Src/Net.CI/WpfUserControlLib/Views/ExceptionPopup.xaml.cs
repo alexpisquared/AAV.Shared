@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Views;
+﻿namespace WpfUserControlLib.Views;
 
 public partial class ExceptionPopup : WindowBase
 {

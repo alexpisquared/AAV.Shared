@@ -1,6 +1,6 @@
-﻿using CI.Visual.Lib.Helpers;
+﻿using WpfUserControlLib.Helpers;
 
-namespace CI.Visual.Lib.Anime;
+namespace WpfUserControlLib.Anime;
 
 public partial class ArcPi : UserControl
 {

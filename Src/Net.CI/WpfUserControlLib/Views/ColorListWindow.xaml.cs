@@ -1,7 +1,6 @@
-﻿namespace CI.Standard.Lib.Views
+﻿namespace WpfUserControlLib.Views;
+
+public partial class ColorListWindow : WindowBase
 {
-  public partial class ColorListWindow : Visual.Lib.Base.WindowBase
-  {
-    public ColorListWindow() => InitializeComponent();
-  }
+  public ColorListWindow() => InitializeComponent();
 }

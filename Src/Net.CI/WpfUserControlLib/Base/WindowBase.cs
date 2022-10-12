@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Base;
+﻿namespace WpfUserControlLib.Base;
 public partial class WindowBase : Window
 {
   protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
@@ -67,7 +67,7 @@ public partial class WindowBase : Window
   {
     _logger.LogInformation($"shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
 
-    const string pref = "/CI.Visual.Lib;component/ColorScheme/Theme.Color.";
+    const string pref = "/WpfUserControlLib;component/ColorScheme/Theme.Color.";
 
     try
     {

@@ -1,4 +1,4 @@
-﻿namespace CI.Standard.Lib.Services;
+﻿namespace StandardLib.Services;
 public class MouseOperations
 {
   [DllImport("user32.dll", EntryPoint = "SetCursorPos")][return: MarshalAs(UnmanagedType.Bool)] static extern bool SetCursorPos(int x, int y);

@@ -1,12 +1,12 @@
-﻿<lnk:WindowBase xmlns:lnk="clr-namespace:CI.Visual.Lib.Base" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+﻿<lnk:WindowBase xmlns:lnk="clr-namespace:WpfUserControlLib.Base" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
                 xmlns:system="clr-namespace:System;assembly=mscorlib"
-                xmlns:Anime="clr-namespace:CI.Visual.Lib.Anime" x:Name="wnd" x:Class="CI.Visual.Lib.Views.ExceptionPopup" mc:Ignorable="d"
+                xmlns:Anime="clr-namespace:WpfUserControlLib.Anime" x:Name="wnd" x:Class="WpfUserControlLib.Views.ExceptionPopup" mc:Ignorable="d"
                 Width="900" SizeToContent="Height" MinHeight="320" MaxHeight="1200" Style="{DynamicResource WindowStyle_Aav0}" Topmost="True" Loaded="OnLoaded">
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/CI.Visual.Lib;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
-        <ResourceDictionary Source="/CI.Visual.Lib;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
       </ResourceDictionary.MergedDictionaries>
 
       <system:Double x:Key="Y0">+360</system:Double>
@@ -89,7 +89,7 @@
         <RowDefinition Height="Auto"  />
       </Grid.RowDefinitions>
 
-      <Image RenderOptions.BitmapScalingMode="HighQuality" Height="50" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"  Source="/CI.Visual.Lib;component/Assets/error.gif" />
+      <Image RenderOptions.BitmapScalingMode="HighQuality" Height="50" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"  Source="/WpfUserControlLib;component/Assets/error.gif" />
 
       <TextBlock Grid.Row="0" HorizontalAlignment="Center" Foreground="#FF4A4D" FontSize="26" VerticalAlignment="Top"    Margin="8" Text="Exception ORG!!!" x:Name="ExType"                />
       <TextBlock Grid.Row="0" HorizontalAlignment="Right"  Foreground="#0080e0" FontSize="14" VerticalAlignment="Bottom" Margin="0" Text="Press any key to continue...   &#xA;         ...or any other key to quit" />

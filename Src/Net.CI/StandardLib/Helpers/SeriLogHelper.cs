@@ -1,8 +1,8 @@
 ﻿using Serilog;
 
-namespace CI.Standard.Lib.Helpers;
+namespace StandardLib.Helpers;
 
-public class SeriLogHelper
+public class SeriLogHelper_
 {
   public static ILoggerFactory InitLoggerFactory(string folder, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
   {

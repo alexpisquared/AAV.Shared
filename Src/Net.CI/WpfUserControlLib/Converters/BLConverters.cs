@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Converters;
+﻿namespace WpfUserControlLib.Converters;
 
 public class DropListConverter : MarkupExtension, IValueConverter
 {

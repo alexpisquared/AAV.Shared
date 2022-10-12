@@ -1,6 +1,6 @@
 ﻿using System.Drawing; // keep here.
 
-namespace CI.Visual.Lib.Services;
+namespace WpfUserControlLib.Services;
 
 public class GuiCapture
 {

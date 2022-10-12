@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Extensions;
+﻿namespace WpfUserControlLib.Extensions;
 
 public static class MiscCollectionSupport
 {

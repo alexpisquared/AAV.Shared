@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace CI.Standard.Lib.Helpers;
+namespace StandardLib.Helpers;
 
 public static class OneDrive // Core 3
 {
@@ -19,7 +19,7 @@ public static class OneDrive // Core 3
   {
     var folder = Path.Combine(Root, @"Public\AppData\", subFolder);
     if (createIfNotExists)
-      FSHelper.ExistsOrCreated(folder);
+      FSHelper_.ExistsOrCreated(folder);
     return folder;
   }
 

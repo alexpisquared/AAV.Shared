@@ -1,4 +1,4 @@
-﻿namespace CI.Standard.Lib.Views;
+﻿namespace WpfUserControlLib.Views;
 
 public partial class ThemeSelectorMenuItem : MenuItem
 {

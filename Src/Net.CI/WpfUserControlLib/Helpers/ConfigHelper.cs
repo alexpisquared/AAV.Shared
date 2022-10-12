@@ -1,6 +1,6 @@
-﻿using StandardContracts.Lib;
+﻿using StandardContractsLib;
 
-namespace CI.Visual.Lib.Helpers;
+namespace WpfUserControlLib.Helpers;
 
 public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.com/csharp-how-to-update-appsettings-json-programmatically/
 {
@@ -62,7 +62,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
       .Build();
 
     cfg[CfgName.WhereAmAy] = "hardCODE";
-    cfg[CfgName.ServerLst] = Standard.Lib.Base.Consts.SqlServerCSV;
+    cfg[CfgName.ServerLst] = StandardLib.Base.Consts_.SqlServerCSV;
     cfg[CfgName.LogFolder] = VersionHelper.IsDbg ? @"C:\Temp\Logs\..log" : @"Z:\Dev\_Redis_MTDEV\BMS\IncomePaymentManagement\Logs\..log";
     cfg[CfgName.SqlVerIpm] = VersionHelper.IsDbg ? "Server={0};Database={1};Trusted_Connection=True;Connection Timeout=15;" : "Server={0};Database={1};Trusted_Connection=True;Connection Timeout=52;"; // On dbg 5 sec was fine .. let's see if 1 sec is going to cause YY's issues.
     cfg[CfgName.SqlVerIp_] = "Server={0};Database={1};persist security info=True;user id={2};password={3};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=57";

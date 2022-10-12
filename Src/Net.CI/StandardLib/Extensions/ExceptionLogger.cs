@@ -1,4 +1,4 @@
-﻿namespace CI.Standard.Lib.Extensions;
+﻿namespace StandardLib.Extensions;
 
 public static class ExnLogr // the one and only .net core 3 (Dec2019)
 {

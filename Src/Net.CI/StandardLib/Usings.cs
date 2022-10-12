@@ -9,8 +9,8 @@ global using System.Runtime.CompilerServices;
 global using System.Runtime.InteropServices;
 global using System.Text;
 global using System.Threading.Tasks;
-global using CI.Standard.Lib.Extensions;
-global using CI.Standard.Lib.Helpers;
+global using StandardLib.Extensions;
+global using StandardLib.Helpers;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
 //obal using System.Text.Json; //tu: new and very performant Json lib (Dec 2021)

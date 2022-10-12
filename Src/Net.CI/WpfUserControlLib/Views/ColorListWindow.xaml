@@ -1,4 +1,4 @@
-﻿<lnk:WindowBase xmlns:lnk="clr-namespace:CI.Visual.Lib.Base" x:Name="wnd" x:Class="CI.Standard.Lib.Views.ColorListWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+﻿<lnk:WindowBase xmlns:lnk="clr-namespace:WpfUserControlLib.Base" x:Name="wnd" x:Class="WpfUserControlLib.Views.ColorListWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
         Title="Color List Window" Height="300" Width="650" Background="#444"                Style="{DynamicResource WindowStyle_Aav0}">
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />

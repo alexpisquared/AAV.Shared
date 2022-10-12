@@ -1,6 +1,6 @@
-﻿namespace CI.Standard.Lib.Helpers;
+﻿namespace StandardLib.Helpers;
 
-public static class FSHelper
+public static class FSHelper_
 {
   public static string GetCreateSafeLogFolderAndFile(string[] fullPaths)
   {

@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Helpers;
+﻿namespace WpfUserControlLib.Helpers;
 
 public class HighlightableTextBlock : Control // latest + multi-word feature + IGNORE THE OTHER ONES!!!!!!!
 {

@@ -1,4 +1,4 @@
-﻿namespace CI.Standard.Lib.Helpers;
+﻿namespace StandardLib.Helpers;
 
 public class DevOps
 {

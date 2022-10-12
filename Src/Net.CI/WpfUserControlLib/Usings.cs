@@ -25,15 +25,15 @@ global using System.Windows.Markup;
 global using System.Windows.Media;
 global using System.Windows.Media.Animation;
 global using System.Windows.Threading;
-global using CI.Standard.Lib.Extensions;
-global using CI.Standard.Lib.Helpers;
-global using CI.Visual.Lib.Base;
-global using CI.Visual.Lib.Extensions;
-global using CI.Visual.Lib.Services;
-global using CI.Visual.Lib.Views;
+global using StandardLib.Extensions;
+global using StandardLib.Helpers;
+global using WpfUserControlLib.Base;
+global using WpfUserControlLib.Extensions;
+global using WpfUserControlLib.Services;
+global using WpfUserControlLib.Views;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
-//global using StandardContracts.Lib;
+//global using StandardContractsLib;
 //obal using System.Text.Json; //tu: new and very performant Json lib (Dec 2021)
 
 global using static System.Diagnostics.Trace;

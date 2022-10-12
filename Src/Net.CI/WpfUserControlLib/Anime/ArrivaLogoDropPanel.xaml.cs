@@ -1,4 +1,4 @@
-﻿namespace CI.Visual.Lib.Anime;
+﻿namespace WpfUserControlLib.Anime;
 public partial class ArrivaLogoDropPanel : UserControl
 {
   public ArrivaLogoDropPanel() => InitializeComponent();

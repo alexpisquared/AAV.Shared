@@ -1,4 +1,4 @@
-﻿namespace StandardContracts.Lib;
+﻿namespace StandardContractsLib;
 
 public interface IBpr
 {

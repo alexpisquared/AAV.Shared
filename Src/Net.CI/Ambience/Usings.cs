@@ -6,6 +6,6 @@ global using System.IO;
 global using System.Linq;
 global using System.Media;
 global using System.Threading.Tasks;
-global using StandardContracts.Lib;
+global using StandardContractsLib;
 
 global using static System.Diagnostics.Trace;

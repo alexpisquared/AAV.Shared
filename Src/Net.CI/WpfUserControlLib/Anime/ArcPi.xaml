@@ -1,5 +1,5 @@
-﻿<UserControl x:Class="CI.Visual.Lib.Anime.ArcPi" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
-             xmlns:local="clr-namespace:CI.Visual.Lib.Anime"
+﻿<UserControl x:Class="WpfUserControlLib.Anime.ArcPi" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             xmlns:local="clr-namespace:WpfUserControlLib.Anime"
              d:DesignHeight="32" d:DesignWidth="32">
   <Grid>
     <Ellipse Stroke="#2888" StrokeThickness="2" />
