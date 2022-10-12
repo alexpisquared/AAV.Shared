@@ -14,7 +14,7 @@ public static class JsonFileSerializer
   {
     try
     {
-      if (!FSHelper_.ExistsOrCreated(Path.GetDirectoryName(filename)))
+      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename)))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);
@@ -44,7 +44,7 @@ public static class XmlFileSerializer
   {
     try
     {
-      if (!FSHelper_.ExistsOrCreated(Path.GetDirectoryName(filename)))
+      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename)))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);

@@ -1,4 +1,4 @@
-﻿namespace Ambience.Lib;
+﻿namespace AmbienceLib;
 public partial class Bpr
 {
   readonly SoundPlayer _p = new();

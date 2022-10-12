@@ -2,7 +2,7 @@
 
 namespace StandardLib.Helpers;
 
-public class SeriLogHelper_
+public class SeriLogHelper
 {
   public static ILoggerFactory InitLoggerFactory(string folder, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
   {

@@ -1,6 +1,6 @@
 ﻿namespace StandardLib.Helpers;
 
-public static class FSHelper_
+public static class FSHelper
 {
   public static string GetCreateSafeLogFolderAndFile(string[] fullPaths)
   {

@@ -1,6 +1,6 @@
 ﻿namespace StandardContractsLib;
 
-public class CfgName
+public class CfgName___________
 {
   public const string
     SqlVerIpm = "SqlConStrFormat", // limited by IpmRole access: to fully impersonate IpmRole-defined access.                                   

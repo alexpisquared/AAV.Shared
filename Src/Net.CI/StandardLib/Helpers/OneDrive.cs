@@ -19,7 +19,7 @@ public static class OneDrive // Core 3
   {
     var folder = Path.Combine(Root, @"Public\AppData\", subFolder);
     if (createIfNotExists)
-      FSHelper_.ExistsOrCreated(folder);
+      FSHelper.ExistsOrCreated(folder);
     return folder;
   }
 

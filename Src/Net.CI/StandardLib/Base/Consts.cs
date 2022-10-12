@@ -1,6 +1,6 @@
 ﻿namespace StandardLib.Base;
 
-public class Consts_
+public class Consts
 {
 #if DEBUG
   public static string SqlServerCSV => DevOps.IsDevMachineH ? @".\sqlexpress .\SQLEXPRESS" : "MtDEVSQLDB,1625 MtUATSQLDB MTPRDSQLDB";
