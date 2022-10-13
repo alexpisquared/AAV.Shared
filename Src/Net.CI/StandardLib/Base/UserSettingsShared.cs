@@ -1,6 +1,6 @@
 ﻿namespace StandardLib.Base;
 
-public class UserSettingsShared : UserSettingsStore_
+public class UserSettingsShared : UserSettingsBase
 {
   public string? PrefSqlServer { get; set; }
   public string? NewAcntFilter_ { get; set; }
