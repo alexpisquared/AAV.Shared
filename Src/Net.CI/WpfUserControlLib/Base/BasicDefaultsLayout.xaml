@@ -168,7 +168,7 @@
 
   <Style TargetType="{x:Type Border}"       x:Key="BorderStyle_Aav0">
     <Setter Property="Background"           Value="{DynamicResource BackBackgroundBrush}" />
-    <Setter Property="BorderBrush"          Value="{DynamicResource MainForegroundBrush}" />
+    <Setter Property="BorderBrush"          Value="{DynamicResource TextBackgroundBrush}" />
     <Setter Property="BorderThickness"      Value="1" />
     <Setter Property="CornerRadius"         Value="9" />
     <Setter Property="Padding"              Value="6" />
