@@ -106,9 +106,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
       if (Directory.Exists(dir) != true)
         Directory.CreateDirectory(dir);
 
-      if (enforceCreation
-        || !File.Exists(appsettingsPathFileExt)
-        || (DateTime.Now < new DateTime(2021, 9, 14) && Environment.MachineName != "RAZER1" && Environment.MachineName != "D21-MJ0AWBEV"))
+      if (enforceCreation || !File.Exists(appsettingsPathFileExt))
       {
         File.WriteAllText(appsettingsPathFileExt, string.Format(_defaultAppSetValues, appsettingsPathFileExt.Replace(@"\", @"\\"), Assembly.GetEntryAssembly()?.GetName().Name, DateTimeOffset.Now.ToString()));
         WriteLine($"TrWL:> ■ WARNING: overwrote this {appsettingsPathFileExt}.");
