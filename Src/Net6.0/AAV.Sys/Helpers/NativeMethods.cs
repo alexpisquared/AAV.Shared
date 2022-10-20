@@ -46,7 +46,7 @@ namespace AAV.Sys.Helpers
 
       public override int GetHashCode()
       {
-        throw new NotImplementedException();
+        throw new NotImplementedException("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
       }
     }
 

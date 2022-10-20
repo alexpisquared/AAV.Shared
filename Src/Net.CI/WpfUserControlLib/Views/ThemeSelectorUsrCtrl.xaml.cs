@@ -2,7 +2,7 @@
 
 public partial class ThemeSelectorUsrCtrl : UserControl
 {
-  public delegate void ApplyThemeDelegate(string v);
+  public delegate void ApplyThemeDelegate(string v, string? cmn);
   public ThemeSelectorUsrCtrl() => InitializeComponent();
   public ApplyThemeDelegate? ThemeApplier { get; set; }
   public static readonly DependencyProperty CurThemeProperty = DependencyProperty.Register("CurTheme", typeof(string), typeof(ThemeSelectorUsrCtrl)); public string CurTheme { get => (string)GetValue(CurThemeProperty); set => SetValue(CurThemeProperty, value); }
@@ -17,15 +17,15 @@ public partial class ThemeSelectorUsrCtrl : UserControl
         item.IsChecked = theme?.Equals(item.Tag.ToString(), StringComparison.OrdinalIgnoreCase) ?? false;
   }
 
-  void onChangeTheme(object s, RoutedEventArgs e) => ThemeApplier?.Invoke(((Button)s)?.Tag?.ToString() ?? "No Theme");
+  void onChangeTheme(object s, RoutedEventArgs e) => ThemeApplier?.Invoke(((Button)s)?.Tag?.ToString() ?? "No Theme", "");
   void onSelectionChanged(object s, SelectionChangedEventArgs e)
   {
     if (e?.AddedItems?.Count > 0 && ThemeApplier != null)
-      ThemeApplier(CurTheme = ((FrameworkElement)((object[])e.AddedItems)[0]).Tag?.ToString() ?? "No Theme?");
+      ThemeApplier(CurTheme = ((FrameworkElement)((object[])e.AddedItems)[0]).Tag?.ToString() ?? "No Theme?", "" );
   }
   void onMenuClick(object s, RoutedEventArgs e)
   {
-    ThemeApplier?.Invoke(CurTheme = ((FrameworkElement)s).Tag?.ToString() ?? "No Theme");
+    ThemeApplier?.Invoke(CurTheme = ((FrameworkElement)s).Tag?.ToString() ?? "No Theme", "");
 
     SetCurThemeToMenu(CurTheme);
   }
