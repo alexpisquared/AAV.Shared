@@ -114,7 +114,8 @@ namespace SpeechSynthLib
       catch (Exception ex) { ex.Log(@"Not sure again"); }
     }
 
-    static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start(); public void StopSpeakingAsync() => SynthReal.StopSpeakingAsync();
+    static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start(); 
+    public void StopSpeakingAsync() => SynthReal.StopSpeakingAsync();
 
     protected virtual void Dispose(bool disposing)
     {

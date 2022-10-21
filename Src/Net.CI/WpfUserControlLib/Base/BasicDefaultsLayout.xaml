@@ -246,10 +246,9 @@
     <Setter Property="HorizontalAlignment"	Value="Stretch"/>
   </Style>
   <Style TargetType="{x:Type TextBox}"			BasedOn="{StaticResource TbxBase}" x:Key="tbxRW">
-    <Setter Property="Margin"								Value="0 0 18 0"/>
-    <Setter Property="Height"								Value="26"/>
-    <Setter Property="VerticalAlignment"		Value="Center"/>
     <Setter Property="HorizontalAlignment"	Value="Stretch"/>
+    <Setter Property="BorderBrush"          Value="{StaticResource ButnBackgroundBrush}" />
+    <Setter Property="BorderThickness"      Value="0.5" />
   </Style>
   <Style TargetType="{x:Type TextBox}"			BasedOn="{StaticResource tbxRW}" x:Key="tbxRO">
     <Setter Property="IsReadOnly"						Value="True" />
