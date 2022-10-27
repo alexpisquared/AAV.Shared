@@ -18,7 +18,8 @@ public partial class Bpr : IBpr
   public void Start() => Task.Run(async () => await StartAsync().ConfigureAwait(false));   /**/ public async Task StartAsync() => await GradientAsync(300, 1100, 4).ConfigureAwait(false);  // 300 ms
   public void Finish() => Task.Run(async () => await FinishAsync().ConfigureAwait(false)); /**/ public async Task FinishAsync() => await GradientAsync(1100, 300, 4).ConfigureAwait(false); // 300 ms
   public void AppStart() => Task.Run(async () => await AppStartAsync().ConfigureAwait(false));   /**/ public async Task AppStartAsync() => await GradientAsync(200, 600, 2).ConfigureAwait(false);  // 600 ms
-  public void AppFinish() => Task.Run(async () => await AppFinishAsync().ConfigureAwait(false)); /**/ public async Task AppFinishAsync() => await GradientAsync(800, 100, 1).ConfigureAwait(false); // 2.0 s
+  public void AppFinish() => Task.Run(async () => await AppFinishAsync().ConfigureAwait(false)); /**/ public async Task AppFinishAsync() => await GradientAsync(799, 100, 1).ConfigureAwait(false); // 2.0 s (failed: 800 ) An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.
+
 
   public void No() => Task.Run(async () => await NoAsync().ConfigureAwait(false)); public async Task NoAsync() => await BeepHzMks(new[] { FFD(6000, _dMin), FFD(5000, _dMin) }).ConfigureAwait(false);
   public void Yes() => Task.Run(async () => await YesAsync().ConfigureAwait(false)); public async Task YesAsync() => await BeepHzMks(new[] { FFD(5000, _dMin), FFD(6000, _dMin) }).ConfigureAwait(false);

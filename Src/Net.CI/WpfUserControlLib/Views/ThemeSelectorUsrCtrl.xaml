@@ -1,10 +1,9 @@
 ﻿<UserControl x:Class="WpfUserControlLib.Views.ThemeSelectorUsrCtrl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
-             d:DesignHeight="26" d:DesignWidth="96" x:Name="ths">
-  <Menu x:Name="menu1" VerticalAlignment="Center"   Background="Transparent" HorizontalAlignment="Stretch" ToolTip="Dark mode and other themes0">
-    <MenuItem   Header="{Binding ElementName=ths, Path=Header, FallbackValue=' ð '}" 
-                FontFamily="{Binding ElementName=ths, Path=FontFml, FallbackValue='Wingdings 2'}" 
-                FontSize="{Binding ElementName=ths, Path=FontSze, FallbackValue='26'}" 
-                Background="Transparent" Height="26" Padding="0 2 0 0">
+             x:Name="ths">
+  <Menu x:Name="menu1" Background="Transparent" ToolTip="Dark mode and other themes0" >
+    <MenuItem   Header="{Binding ElementName=ths, Path=Header, FallbackValue='ð'}" 
+            FontFamily="{Binding ElementName=ths, Path=FontFml, FallbackValue='Wingdings 2'}" 
+              FontSize="{Binding ElementName=ths, Path=FontSze, FallbackValue='26'}" Background="Transparent" >
       <MenuItem Header="Dark"               Tag="Lite.Bootstrap"    Click="onMenuClick" IsCheckable="True" FontFamily="Arial" />
       <MenuItem Header="Dark Google"        Tag="Dark.Google"       Click="onMenuClick" IsCheckable="True" FontFamily="Arial" />
       <MenuItem Header="Lite"               Tag="Lite.Gray"         Click="onMenuClick" IsCheckable="True" FontFamily="Arial" />

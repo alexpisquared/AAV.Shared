@@ -64,7 +64,7 @@ public static class VersionHelper
 
   public static Version CurVer => Assembly.GetEntryAssembly()?.GetName()?.Version ?? new Version("No Kidding...");
 
-  public static bool IsDbgAndRBD => IsDbg && IsRBD;
+  public static bool IsDbgAndRBD => IsDbg || IsRBD;
   public static bool IsRBD => Environment.UserName.StartsWith("api") || Environment.UserName.EndsWith("exp"); // ran by dev.
   public static bool IsDbg
   {

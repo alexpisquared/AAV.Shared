@@ -57,31 +57,6 @@
 
         <anm:GravityAnime IsBusy="{Binding IsBusy}" d:IsBusy="False" Prompt="{Binding BusyMessage, FallbackValue='Wait!  Loading...'}" x:Name="theGravity" />
 
-        <!--<Ellipse Grid.Row="1" Fill="#8f8f" Stroke="DarkMagenta" StrokeThickness="2" Width="140" Height="140" HorizontalAlignment="Right" VerticalAlignment="Center" />
-                <TextBlock Text="{Binding BusyMessage, FallbackValue='Wait!&#10;  Loading...'}" RenderTransformOrigin="0.5,0.5" x:Name="tbkInfoMessage" Foreground="DarkMagenta" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                  <TextBlock.RenderTransform>
-                    <RotateTransform Angle="-10"/>
-                  </TextBlock.RenderTransform>
-                  <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                      <Setter Property="RenderTransform">
-                        <Setter.Value>
-                          <RotateTransform />
-                        </Setter.Value>
-                      </Setter>
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsBusy}" Value="True">
-                          <DataTrigger.EnterActions>
-                            <BeginStoryboard x:Name="sbWiggle" Storyboard="{StaticResource sbWiggle}"/>
-                          </DataTrigger.EnterActions>
-                          <DataTrigger.ExitActions>
-                            <StopStoryboard BeginStoryboardName="sbWiggle"/>
-                          </DataTrigger.ExitActions>
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </TextBlock.Style>
-                </TextBlock>-->
       </Grid>
     </Viewbox>
   </Grid>

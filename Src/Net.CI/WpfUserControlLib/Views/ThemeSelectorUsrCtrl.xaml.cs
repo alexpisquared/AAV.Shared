@@ -6,7 +6,7 @@ public partial class ThemeSelectorUsrCtrl : UserControl
   public ThemeSelectorUsrCtrl() => InitializeComponent();
   public ApplyThemeDelegate? ThemeApplier { get; set; }
   public static readonly DependencyProperty CurThemeProperty = DependencyProperty.Register("CurTheme", typeof(string), typeof(ThemeSelectorUsrCtrl)); public string CurTheme { get => (string)GetValue(CurThemeProperty); set => SetValue(CurThemeProperty, value); }
-  public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(ThemeSelectorUsrCtrl), new PropertyMetadata(" ð ")); public string Header { get => (string)GetValue(HeaderProperty); set => SetValue(HeaderProperty, value); }
+  public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(ThemeSelectorUsrCtrl), new PropertyMetadata("ð")); public string Header { get => (string)GetValue(HeaderProperty); set => SetValue(HeaderProperty, value); }
   public static readonly DependencyProperty FontFmlProperty = DependencyProperty.Register("FontFml", typeof(FontFamily), typeof(ThemeSelectorUsrCtrl), new PropertyMetadata(new FontFamily("Wingdings 2"))); public FontFamily FontFml { get => (FontFamily)GetValue(FontFmlProperty); set => SetValue(FontFmlProperty, value); }
   public static readonly DependencyProperty FontSzeProperty = DependencyProperty.Register("FontSze", typeof(int), typeof(ThemeSelectorUsrCtrl), new PropertyMetadata(26)); public int FontSze { get => (int)GetValue(FontSzeProperty); set => SetValue(FontSzeProperty, value); }
 

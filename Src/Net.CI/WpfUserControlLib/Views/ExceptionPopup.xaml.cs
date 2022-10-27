@@ -38,11 +38,7 @@ public partial class ExceptionPopup : WindowBase
     await Task.Delay(1250);
     Close(); // close popup and continue app execution
   }
-  protected override void OnClosed(EventArgs e)
-  {
-    Loaded -= OnLoaded;
-    base.OnClosed(e);
-  }
+  protected override void OnClosed(EventArgs e)  {    Loaded -= OnLoaded;    base.OnClosed(e);  }
 
   void OnAppShutdown(object s, RoutedEventArgs e) => Application.Current.Shutdown(55);
   void OnCopyAndContinue(object s, RoutedEventArgs e)

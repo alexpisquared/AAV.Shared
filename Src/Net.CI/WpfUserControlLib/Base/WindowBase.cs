@@ -1,68 +1,31 @@
 ﻿namespace WpfUserControlLib.Base;
 public partial class WindowBase : Window
 {
+  readonly ILogger<Window> _logger;
   protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
   const double _defaultZoomV = 1.25;
   const string _defaultTheme = "No Theme";
   const int _swShowNormal = 1, _swShowMinimized = 2, _margin = 0;
   static int _currentTop = 0, _currentLeft = 0;
   string WinFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}.json");
-
-  protected bool IgnoreEscape { get; set; } = !VersionHelper.IsDbgAndRBD;
-  protected bool IgnoreWindowPlacement { get; set; }
-
-#if MockingCore3
-  class Logger
-  {
-    internal void LogError(Exception ex, string v) => WriteLine($"TrWL:> {ex}  {v}");
-  }
-
-  readonly Logger _logger = new Logger();
-  public WindowBase()
-  {
-#else
-  readonly ILogger<Window> _logger;
   public WindowBase() : this(new LoggerFactory().CreateLogger<Window>()) { } // no logging needed; for cases like error popups, etc.
   public WindowBase(ILogger<Window> logger)
   {
     _logger = logger;
-#endif
+
+    //??    ShutdownMode = ShutdownMode.OnLastWindowClose;
+
+    Topmost = Debugger.IsAttached;
 
     MouseLeftButtonDown += (s, e) => OnMouseLeftButtonDown_(e);
     MouseWheel += (s, e) => OnMouseWheel_(e);
     KeyUp += (s, e) => OnKeyUp_(e);
   }
 
-  void OnMouseLeftButtonDown_(MouseButtonEventArgs e) //tu: workaround for  "Can only call DragMove when primary mouse button is down." (2021-03-10: pre-opened dropdown seemingly caused the error)
-  {
-    if (e.LeftButton == MouseButtonState.Pressed) DragMove();
-  }
-
-  void OnMouseWheel_(MouseWheelEventArgs e)
-  {
-    if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) return; ZV += e.Delta * .000834; e.Handled = true; WriteLine(Title = $">>ZV:{ZV,12}   (Zoom Value)");
-  }
-
-  void OnKeyUp_(KeyEventArgs e)
-  {
-    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-      switch (e.Key)
-      {
-        default: break;
-        case Key.NumPad0:
-        case Key.D0:        /**/ ZV = 1.00; break;
-        case Key.OemMinus:  /**/ ZV /= 1.1; break;
-        case Key.OemPlus:   /**/ ZV *= 1.1; break;
-      }
-    else if (e.Key == Key.Escape && !IgnoreEscape)
-      CloseShutdown();
-
-    base.OnKeyUp(e);
-  }
-
+  protected bool IgnoreEscape { get; set; } = !VersionHelper.IsDbgAndRBD;
+  protected bool IgnoreWindowPlacement { get; set; }
   public static readonly DependencyProperty ZVProperty = DependencyProperty.Register("ZV", typeof(double), typeof(WindowBase), new PropertyMetadata(_defaultZoomV)); public double ZV { get => (double)GetValue(ZVProperty); set => SetValue(ZVProperty, value); }
   public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_defaultTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }
-
   protected void ApplyTheme(string themeName, [CallerMemberName] string? cmn = "")
   {
     _logger.LogInformation($"shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
@@ -101,12 +64,38 @@ public partial class WindowBase : Window
     }
     catch (Exception ex) { ex.Pop(this, $"New theme '{themeName}' is trouble.", lgr: _logger); }
   }
+  async void CloseShutdown()
+  {
+    WriteLine($",,, Win  aaa");
+    Close();
+    await Task.Delay(2500);
+    /*Application.Current.Shutdown();*/
+  }
 
-  protected void OnWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-  protected virtual void OnExit(object s, RoutedEventArgs e) => CloseShutdown();
+  void OnMouseLeftButtonDown_(MouseButtonEventArgs e) //tu: workaround for  "Can only call DragMove when primary mouse button is down." (2021-03-10: pre-opened dropdown seemingly caused the error)
+  {
+    if (e.LeftButton == MouseButtonState.Pressed) DragMove();
+  }
+  void OnMouseWheel_(MouseWheelEventArgs e)
+  {
+    if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) return; ZV += e.Delta * .000834; e.Handled = true; WriteLine(Title = $">>ZV:{ZV,12}   (Zoom Value)");
+  }
+  void OnKeyUp_(KeyEventArgs e)
+  {
+    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+      switch (e.Key)
+      {
+        default: break;
+        case Key.NumPad0:
+        case Key.D0:        /**/ ZV = 1.00; break;
+        case Key.OemMinus:  /**/ ZV /= 1.1; break;
+        case Key.OemPlus:   /**/ ZV *= 1.1; break;
+      }
+    else if (e.Key == Key.Escape && !IgnoreEscape)
+      CloseShutdown();
 
-  void CloseShutdown() { Close(); Application.Current.Shutdown(); }
-
+    base.OnKeyUp(e);
+  }
   protected override void OnSourceInitialized(EventArgs e)
   {
     base.OnSourceInitialized(e);
@@ -182,10 +171,11 @@ public partial class WindowBase : Window
   }
   protected override void OnClosing(CancelEventArgs e) // WARNING - Not fired when Application.SessionEnding is fired
   {
-    base.OnClosing(e);
-
+    WriteLine($",,, Win  bbb OnClosing");
     try
     {
+      base.OnClosing(e);
+
       _ = NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var winPlcmnt);
 
       if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
@@ -195,12 +185,14 @@ public partial class WindowBase : Window
     }
     catch (Exception ex) { _logger.LogError(ex, $"■▄▀■ Logged/Ignored  ..since old good values are already there."); _ = ex.Log(); }
   }
-
   protected override void OnClosed(EventArgs e)
   {
+    WriteLine($",,, Win  ccc OnClosed");
     base.OnClosed(e);
     KeyUp -= (s, e) => OnKeyUp_(e);
     MouseWheel -= (s, e) => OnMouseWheel_(e);
     MouseLeftButtonDown -= (s, e) => OnMouseLeftButtonDown_(e);
   }
+  //protected void OnWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+  //protected virtual void OnExit(object s, RoutedEventArgs e) => CloseShutdown();
 }

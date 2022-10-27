@@ -36,12 +36,12 @@
     <Setter Property="VerticalAlignment"    Value="Center" />
     <Setter Property="Margin"               Value="3 0" />
   </Style>
-  <!-- DO NOT uncomment: prevents buttons, etc. from Foreground Clr:
-  <Style TargetType="{x:Type TextBlock}"  BasedOn="{StaticResource TbkVCenteredInfoClr}" />-->
+  <!-- DO NOT uncomment: prevents buttons, etc. from Foreground Clr: <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TbkVCenteredInfoClr}" />-->
 
   <Style TargetType="{x:Type AccessText}">
-    <!-- This applies to all the Label with '_'           (INFO: Label without '_' acquires the style from the TextBlock; to overcome, use AccessText; in case Label's Target functionality needed, use:       <AccessText Text="_AccessText:"  AccessKeyManager.AccessKeyPressed="onAccessKeyPressed_focusT2" /> ) -->
+    <!-- This applies to all the Label with '_'           (INFO: Label without '_' acquires the style from the TextBlock; to overcome, use AccessText; in case Label's Target functionality needed, use:       <AccessText Text="_AccessText:"  AccessKeyManager.AccessKeyPressed="onAccessKeyPressed_focusT2" /> ) 
     <Setter Property="Foreground"           Value="{StaticResource LablForegroundBrush}" />
+    -->
     <Setter Property="VerticalAlignment"    Value="Center" />
     <Setter Property="HorizontalAlignment"  Value="Right" />
   </Style>
@@ -62,6 +62,7 @@
   <Style TargetType="{x:Type ComboBox}"     BasedOn="{StaticResource CrlBase}" x:Key="CbxBase"/>
   <Style TargetType="{x:Type ComboBox}"     BasedOn="{StaticResource CbxBase}" />
   <Style TargetType="{x:Type DatePicker}"   BasedOn="{StaticResource CrlBase}" x:Key="DPrBase">
+    <Setter Property="BorderThickness"      Value="0" />
     <Style.Resources>
       <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
@@ -95,7 +96,7 @@
     <Setter Property="Foreground"           Value="{StaticResource LablForegroundBrush}" />
     <Setter Property="Background"           Value="Transparent" />
     <Setter Property="VerticalAlignment"    Value="Center" />
-    <Setter Property="HorizontalAlignment"  Value="Left" />
+    <Setter Property="HorizontalAlignment"  Value="Right" />
     <Setter Property="FontSize"             Value="12" />
     <Setter Property="Padding"              Value="0" />
   </Style>
@@ -115,6 +116,8 @@
     <Setter Property="Foreground"           Value="{StaticResource InfoForegroundBrush}" />
     <Setter Property="Background"           Value="{StaticResource ButnBackgroundBrush}" />
     <Setter Property="Opacity"              Value="1.0" />
+    <Setter Property="Padding"              Value="8 2" />
+    <Setter Property="Margin"               Value="2 2" />
     <Setter Property="ToolTipService.ShowOnDisabled"  Value="True" />
     <Style.Triggers>
       <Trigger Property="IsEnabled"         Value="False" >
@@ -202,8 +205,8 @@
   <Style TargetType="{x:Type Menu}"      >
     <!-- Transparent seems better:
     <Setter Property="Background"           Value="{DynamicResource BackBackgroundBrush}" />
-    -->
     <Setter Property="Foreground"           Value="{StaticResource LablForegroundBrush}" />
+    -->
     <Setter Property="Background"           Value="Transparent" />
   </Style>
 
