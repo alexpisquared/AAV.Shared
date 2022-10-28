@@ -49,12 +49,6 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="StandardContracts.Lib">
-      <HintPath>..\..\..\..\CI-DPL-IMP\Src\SharedLib\StandardContracts.Lib\bin\Debug\netstandard2.0\StandardContracts.Lib.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 
   <ItemGroup>
     <Compile Update="Anime\ArcPi.xaml.cs">
