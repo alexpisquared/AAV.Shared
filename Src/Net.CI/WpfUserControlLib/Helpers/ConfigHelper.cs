@@ -1,4 +1,6 @@
-﻿namespace WpfUserControlLib.Helpers;
+﻿using StandardContractsLib;
+
+namespace WpfUserControlLib.Helpers;
 
 public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.com/csharp-how-to-update-appsettings-json-programmatically/
 {

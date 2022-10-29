@@ -193,6 +193,6 @@ public partial class WindowBase : Window
     MouseWheel -= (s, e) => OnMouseWheel_(e);
     MouseLeftButtonDown -= (s, e) => OnMouseLeftButtonDown_(e);
   }
-  //protected void OnWindowMinimize(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-  //protected virtual void OnExit(object s, RoutedEventArgs e) => CloseShutdown();
+  protected virtual void OnWindowMiniBase(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+  protected virtual void OnClosShutdnBase(object s, RoutedEventArgs e) => CloseShutdown();
 }

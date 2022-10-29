@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StandardContractsLib\StandardContractsLib.csproj" />
     <ProjectReference Include="..\StandardLib\StandardLib.csproj" />
   </ItemGroup>
 
