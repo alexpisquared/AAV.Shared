@@ -18,7 +18,7 @@ public static class UnhandledExceptionHndlr // Core 3
 
       if (Debugger.IsAttached)
       {
-        TraceError(details);
+        //TraceError(details);
         Debugger.Break();
       }
       else if (MessageBox.Show(details, "Unhandled Exception - Do you want to continue?", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.Yes) == MessageBoxResult.No)
