@@ -59,7 +59,9 @@
   <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbxBase}" />
   <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource CrlBase}" x:Key="PBxBase"/>
   <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource PBxBase}" />
-  <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource CrlBase}" x:Key="CbxBase"/>
+  <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource CrlBase}" x:Key="CbxBase">
+    <Setter Property="MinWidth"					Value="120"/>
+  </Style>
   <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource CbxBase}" />
   <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource CrlBase}" x:Key="DPrBase">
     <Setter Property="BorderThickness" Value="0" />

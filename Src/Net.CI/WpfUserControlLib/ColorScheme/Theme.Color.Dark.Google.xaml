@@ -9,7 +9,7 @@
   <Color x:Key="TextForegroundColor">#08d82e</Color>
   <Color x:Key="ErorForegroundColor">#ff0232</Color>
 
-  <Color x:Key="LogoTextColor"      >#e02040</Color>  
+  <Color x:Key="LogoTextColor"      >#fe55fe</Color>  
   <Color x:Key="___Color"           >#fe00fe</Color>
 
 </ResourceDictionary>

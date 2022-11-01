@@ -17,6 +17,7 @@ public class CfgName
     SqlVerIp_ = "SqlConStrForma_", // limited by IpmRole access: to fully impersonate IpmRole-defined access.                                   
     WhereAmAy = "WhereAmI",
     LogFolder = "LogFolder",
+    DtBsNmLst = "DtBsNmLst",
     ServerLst = "ServerLst";
 }
 
