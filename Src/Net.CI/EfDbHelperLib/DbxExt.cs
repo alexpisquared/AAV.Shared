@@ -102,7 +102,6 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
   }
 
   public static string SqlConStrValues(this string constr, int firstN = 10) => string.Join("·", constr.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList().Take(firstN).Select(r => r.Split('=').LastOrDefault() ?? "°"));
-  public static string CalcConStr<T>(IServiceProvider sp, string sqlsvr, string sqlver) => string.Format(sp.GetRequiredService<IConfigurationRoot>()[sqlver]!, sqlsvr, typeof(T).Name.Replace("Context", ""), "IpmDevDbgUser", "IpmDevDbgUser");
 
   static string? GetConStrValue(List<string> lst, string key) => lst.FirstOrDefault(r => r.Split('=')[0].Equals(key, StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
   static object GetComplexPropertyValue(DbPropertyValues propertyValues, string[] propertyChain)
