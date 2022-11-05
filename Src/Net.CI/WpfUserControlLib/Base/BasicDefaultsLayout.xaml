@@ -31,40 +31,45 @@
     <GradientStop Color="#04000000" Offset="1"/>
   </LinearGradientBrush>
 
-  <Style TargetType="{x:Type TextBlock}" x:Key="TbkVCenteredInfoClr">
-    <Setter Property="Foreground"      Value="{StaticResource InfoForegroundBrush}" />
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="Margin"          Value="3 0" />
+  <Style TargetType="{x:Type TextBlock}"  x:Key="TbkVCenteredInfoClr">
+    <Setter Property="Foreground"         Value="{StaticResource InfoForegroundBrush}" />
+    <Setter Property="VerticalAlignment"  Value="Center" />
+    <Setter Property="Margin"             Value="3 0" />
   </Style>
   <!-- DO NOT uncomment: prevents buttons, etc. from Foreground Clr: <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TbkVCenteredInfoClr}" />-->
 
-  <Style TargetType="{x:Type AccessText}">
-    <!-- This applies to all the Label with '_'           (INFO: Label without '_' acquires the style from the TextBlock; to overcome, use AccessText; in case Label's Target functionality needed, use:       <AccessText Text="_AccessText:" AccessKeyManager.AccessKeyPressed="onAccessKeyPressed_focusT2" /> ) 
-    <Setter Property="Foreground"      Value="{StaticResource LablForegroundBrush}" />
-    -->
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="HorizontalAlignment" Value="Right" />
-  </Style>
 
-  <Style TargetType="{x:Type Control}" x:Key="CrlBase" >
-    <Setter Property="Foreground"      Value="{StaticResource MainForegroundBrush}" />
-    <Setter Property="Background"      Value="{StaticResource TextBackgroundBrush}" />
-    <Setter Property="BorderThickness" Value="1" />
-    <Setter Property="VerticalAlignment" Value="Center" />
-    <Setter Property="HorizontalAlignment" Value="Left" />
-    <Setter Property="Padding"         Value="2" />
+  <Style TargetType="{x:Type FrameworkElement}" x:Key="FweBase" >
+    <Setter Property="VerticalAlignment"        Value="Center" />
+    <Setter Property="HorizontalAlignment"      Value="Left" />
     <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
   </Style>
-  <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource CrlBase}" x:Key="TbxBase"/>
-  <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TbxBase}" />
-  <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource CrlBase}" x:Key="PBxBase"/>
-  <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource PBxBase}" />
-  <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource CrlBase}" x:Key="CbxBase">
-    <Setter Property="MinWidth"					Value="120"/>
+
+  <Style TargetType="{x:Type AccessText}"       BasedOn="{StaticResource FweBase}">
+    <!-- This applies to all the Label with '_'           (INFO: Label without '_' acquires the style from the TextBlock; to overcome, use AccessText; in case Label's Target functionality needed, use:       <AccessText Text="_AccessText:" AccessKeyManager.AccessKeyPressed="onAccessKeyPressed_focusT2" /> ) 
+    <Setter Property="Foreground"      Value="{StaticResource LablForegroundBrush}" />    -->
+    <Setter Property="VerticalAlignment"        Value="Center" />
+    <Setter Property="HorizontalAlignment"      Value="Right" />
+    <Setter Property="Foreground"               Value="{StaticResource LablForegroundBrush}" />
   </Style>
-  <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource CbxBase}" />
-  <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource CrlBase}" x:Key="DPrBase">
-    <Setter Property="BorderThickness" Value="0" />
+
+  <Style TargetType="{x:Type Control}"          BasedOn="{StaticResource FweBase}" x:Key="CrlBase" >
+    <Setter Property="Foreground"               Value="{StaticResource MainForegroundBrush}" />
+    <Setter Property="Background"               Value="{StaticResource TextBackgroundBrush}" />
+    <Setter Property="BorderThickness"          Value="1" />
+    <Setter Property="Padding"                  Value="2" />
+  </Style>
+  <Style TargetType="{x:Type TextBox}"          BasedOn="{StaticResource CrlBase}" x:Key="TbxBase"/>
+  <Style TargetType="{x:Type TextBox}"          BasedOn="{StaticResource TbxBase}" />
+  <Style TargetType="{x:Type PasswordBox}"      BasedOn="{StaticResource CrlBase}" x:Key="PBxBase"/>
+  <Style TargetType="{x:Type PasswordBox}"      BasedOn="{StaticResource PBxBase}" />
+  <Style TargetType="{x:Type ComboBox}"         BasedOn="{StaticResource CrlBase}" x:Key="CbxBase">
+    <Setter Property="MinWidth"					        Value="60"/>
+  </Style>
+  <Style TargetType="{x:Type ComboBox}"         BasedOn="{StaticResource CbxBase}" />
+  <Style TargetType="{x:Type DatePicker}"       BasedOn="{StaticResource CrlBase}" x:Key="DPrBase">
+    <Setter Property="BorderThickness"          Value="0" />
+    <Setter Property="MinWidth"					        Value="118"/>
     <Style.Resources>
       <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
