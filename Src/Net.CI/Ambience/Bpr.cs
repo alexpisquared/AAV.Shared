@@ -10,8 +10,8 @@ public partial class Bpr : IBpr
   public void Beep(int hz, double sec) => Task.Run(async () => await BeepAsync(hz, sec).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000000)) }).ConfigureAwait(false);
   public void Beep(int hz, double sec, ushort vol) => Task.Run(async () => await BeepAsync(hz, sec, vol).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec, ushort vol) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000000)) }, vol).ConfigureAwait(false);
 
-  public void Tick() => Task.Run(async () => await TickAsync().ConfigureAwait(false)); public async Task TickAsync() { if (!_st) await BeepHzMks(new[] { FFD(6000, _dMin) }).ConfigureAwait(false); }
-  public void Click() => Task.Run(async () => await ClickAsync().ConfigureAwait(false)); public async Task ClickAsync() { if (!_st) await BeepHzMks(new[] { FFD(3000, _dMin) }).ConfigureAwait(false); }
+  public void Tick() => Task.Run(async () => await TickAsync().ConfigureAwait(false)); public async Task TickAsync() { if (!_st) await BeepHzMks(new[] { FFD(400, _dMin) }).ConfigureAwait(false); }
+  public void Click() => Task.Run(async () => await ClickAsync().ConfigureAwait(false)); public async Task ClickAsync() { if (!_st) await BeepHzMks(new[] { FFD(800, _dMin) }).ConfigureAwait(false); }
   public void Warn() => Task.Run(async () => await WarnAsync().ConfigureAwait(false)); public async Task WarnAsync() { if (!SuppressAlarm) await BeepHzMks(new[] { _fdw1, _fdw2 }).ConfigureAwait(false); }
   public void Error() => Task.Run(async () => await ErrorAsync().ConfigureAwait(false)); public async Task ErrorAsync() { if (!SuppressAlarm) await BeepHzMks(new[] { _fd21, _fd21, _fd21, _fd23 }).ConfigureAwait(false); }
 
