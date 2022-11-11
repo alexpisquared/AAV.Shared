@@ -70,13 +70,34 @@
   <Style TargetType="{x:Type DatePicker}"       BasedOn="{StaticResource CrlBase}" x:Key="DPrBase">
     <Setter Property="BorderThickness"          Value="0" />
     <Setter Property="MinWidth"					        Value="118"/>
-    <Style.Resources>
+    <!--<Style.Resources>
       <Style TargetType="DatePickerTextBox">
         <Setter Property="Background" Value="Transparent"/>
       </Style>
-    </Style.Resources>
+    </Style.Resources>-->
   </Style>
   <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource DPrBase}" />
+
+  <Style TargetType="{x:Type DatePickerTextBox}">
+    <!--<Setter Property="Background" Value="{DynamicResource CtrlTextBackground}"/>
+    <Setter Property="BorderThickness" Value="0"/>                           ssssssssssssssseeeeemmmmmmmmmms to do nothing -->
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate x:Name="dptext" TargetType="{x:Type DatePickerTextBox}">
+          <Grid>
+            <Grid x:Name="WatermarkContent" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+              <ScrollViewer x:Name="PART_ContentHost" Margin="0" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Grid>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <!--<Style.Triggers>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Background" Value="{DynamicResource CtrlDisabledBackground}" />
+      </Trigger>
+    </Style.Triggers>                                                        ssssssssssssssseeeeemmmmmmmmmms to do nothing -->
+  </Style>
 
   <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource CrlBase}">
     <Setter Property="FontSize"        Value="15" />
