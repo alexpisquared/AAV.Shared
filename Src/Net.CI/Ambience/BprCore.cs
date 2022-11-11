@@ -74,6 +74,6 @@ public partial class Bpr
       writer.Close();
       mmStrm.Close();
     }
-    catch (Exception ex) { WriteLine(ex); if (Debugger.IsAttached) Debugger.Break(); }
+    catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); } // Net7.0 started catching/showing.
   }
 }
