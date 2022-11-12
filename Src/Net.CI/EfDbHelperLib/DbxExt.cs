@@ -15,6 +15,8 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
           stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} records saved. " :
           $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} = {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps. ";
 
+      WriteLine(reportOut);
+
       return (true, rowsSaved, reportOut);
     }
     catch (DbEntityValidationException ex)                          /**/ { reportOut += ex.Log($"{ValidationExceptionToString(ex)}"); }

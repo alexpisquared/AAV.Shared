@@ -145,7 +145,7 @@ public class UniConverter : MarkupExtension, IValueConverter
   public string TextFalse { get; set; } = "No";
   public Brush BrushTrue { get; set; } = Brushes.Green;
   public Brush BrushFalse { get; set; } = Brushes.DarkRed;
-  public string Match { get; set; } = default!;
+  required public string Match { get; set; } // = default!;
 
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {

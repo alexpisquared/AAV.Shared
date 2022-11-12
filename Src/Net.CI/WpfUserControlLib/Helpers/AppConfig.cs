@@ -2,13 +2,13 @@
 
 public class AppConfig
 {
-  public string WhereAmI { get; set; } = default!;
-  public string LogFolder { get; set; } = default!;
-  public string ServerList { get; set; } = default!;
-  public string SqlConStrSansSnD { get; set; } = default!;
-  public string SqlConStrBR { get; set; } = default!;
-  public string SqlConStrVBCM { get; set; } = default!;
-  public string SqlConStrAlpha { get; set; } = default!;
-  public string SqlConStrBanking { get; set; } = default!;
-  public string SqlConStrInventory { get; set; } = default!;
+  required public string WhereAmI { get; set; }
+  required public string LogFolder { get; set; }
+  required public string ServerList { get; set; }
+  required public string SqlConStrSansSnD { get; set; }
+  required public string SqlConStrBR { get; set; }
+  required public string SqlConStrVBCM { get; set; }
+  required public string SqlConStrAlpha { get; set; }
+  required public string SqlConStrBanking { get; set; }
+  required public string SqlConStrInventory { get; set; }
 }
