@@ -59,8 +59,8 @@ public class ClickOnceUpdater
         StartInfo = new ProcessStartInfo
         {
           FileName = "robocopy.exe",
-          //guments = @$"{_deplSrcDir}  {_deplTrgDir} /XF *.config /MIR /NJH /NDL /NP /W:3",
-          Arguments = @$"{_deplSrcDir}  {_deplTrgDir}              /MIR /NJH /NDL /NP /W:3",
+          //guments = $"{_deplSrcDir}  {_deplTrgDir} /XF *.config /MIR /NJH /NDL /NP /W:3",
+          Arguments = $"{_deplSrcDir}  {_deplTrgDir}              /MIR /NJH /NDL /NP /W:3",
           WindowStyle = ProcessWindowStyle.Normal,
           RedirectStandardOutput = true,
           //RedirectStandardError = true,
