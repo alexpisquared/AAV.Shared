@@ -81,6 +81,17 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
 
   const string
     _appSettingsFileNameOnly = "AppSettings.json",
+    _cs11_demo = "demo",
+    _cs11_demo1 = $$"""
+    {
+      "name": "{{_cs11_demo}}"
+    }
+    """,
+    __cs11_demo2 = $$"""
+    {
+      "name": "{0}"
+    }
+    """,
     _defaultAppSetValues = @"{{
       ""WhoAmI"":               ""{1}"",
       ""WhereAmI"":             ""{0}"",
