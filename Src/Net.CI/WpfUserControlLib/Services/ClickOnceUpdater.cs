@@ -106,7 +106,7 @@ public class ClickOnceUpdater
         StartInfo = new ProcessStartInfo
         {
           FileName = _deplTrgExe,
-          Arguments = @"None",
+          Arguments = "None",
           WindowStyle = ProcessWindowStyle.Normal,
           RedirectStandardOutput = true,
           RedirectStandardError = true,

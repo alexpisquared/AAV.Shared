@@ -43,6 +43,6 @@ public class GuiCapture
   [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)] public static extern IntPtr GetDesktopWindow();
   [StructLayout(LayoutKind.Sequential)] struct Rect { public int Left; public int Top; public int Right; public int Bottom; }
 
-  const string _dir = @"Z:\Dev\AlexPi\Misc\Logs.Viz\";
+  const string _dir = """Z:\Dev\AlexPi\Misc\Logs.Viz\""";
   const string _pfn = $"{_dir}{{0}}-{{1}}-{{2:MM.dd-HH.mm.ss}}-{{3}}.jpg";
 }

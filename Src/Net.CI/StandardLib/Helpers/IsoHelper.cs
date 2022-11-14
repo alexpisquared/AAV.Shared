@@ -6,7 +6,7 @@ public static class IsoHelper
 {
   [Obsolete("AAV-> ..instead use:\r\n System.IO.IsolatedStorage.IsolatedStorageFile.GetStore(System.IO.IsolatedStorage.IsolatedStorageScope.User | System.IO.IsolatedStorage.IsolatedStorageScope.Assembly, null, null)", true)] public static IsolatedStorageFile GetIsolatedStorageFile() => IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);// #if TEMPO//      return IsolatedStorageFile.GetUserStoreForAssembly();       //todo: GetUserStoreForApplication does not work// #else//      if (AppDomain.CurrentDomain.ActivationContext == null)//        return IsolatedStorageFile.GetMachineStoreForDomain();    // C:\ProgramData\IsolatedStorage\...			http://stackoverflow.com/questions/72626/could-not-find-file-when-using-isolated-storage				//      //return IsolatedStorageFile.GetMachineStoreForAssembly(); 			//      else//        return IsolatedStorageFile.GetUserStoreForApplication();	// C:\Users\Alex\AppData\Local\Apps\...		http://stackoverflow.com/questions/202013/clickonce-and-isolatedstorage/227218#227218// #endif
 
-  [Obsolete(@"Use '\c\AsLink\UniSerializer.cs' instead!!!")]
+  [Obsolete("""Use '\c\AsLink\UniSerializer.cs' instead!!!""")]
   public static void SaveIsoFile(string filename, string json)
   {
     try
@@ -19,7 +19,7 @@ public static class IsoHelper
     catch (Exception ex) { _ = ex.Log(); throw; }
   }
 
-  [Obsolete(@"Use '\c\AsLink\UniSerializer.cs' instead!!!")]
+  [Obsolete("""Use '\c\AsLink\UniSerializer.cs' instead!!!""")]
   public static string ReadIsoFile(string filename)
   {
     try

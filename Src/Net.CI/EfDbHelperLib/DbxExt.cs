@@ -70,7 +70,7 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
 
     foreach (var eve in ex.EntityValidationErrors)
     {
-      _ = sb.AppendLine($"- Entity of type \"{eve.Entry.Entity.GetType().FullName}\" in state \"{eve.Entry.State}\" has the following validation errors:");
+      _ = sb.AppendLine($"""- Entity of type "{eve.Entry.Entity.GetType().FullName}" in state "{eve.Entry.State}" has the following validation errors:""");
       foreach (var ve in eve.ValidationErrors)
       {
         object value;

@@ -17,12 +17,12 @@ public static class OneDrive // Core 3
   public static string Folder(string subFolder) => Path.Combine(Root, subFolder);
   public static string DataFolder(string subFolder, bool createIfNotExists = true)
   {
-    var folder = Path.Combine(Root, @"Public\AppData\", subFolder);
+    var folder = Path.Combine(Root, """Public\AppData\""", subFolder);
     if (createIfNotExists)
       FSHelper.ExistsOrCreated(folder);
     return folder;
   }
 
   public static string VpdbFolder => DataFolder("vpdb");
-  public static string WebCacheFolder => @"C:\temp\web.cache";// DataFolder("web.cache");
+  public static string WebCacheFolder => """C:\temp\web.cache""";// DataFolder("web.cache");
 }
