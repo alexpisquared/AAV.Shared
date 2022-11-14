@@ -13,6 +13,7 @@
     <Nullable>enable</Nullable>
     <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
     <Platforms>AnyCPU;x64</Platforms>
+    <UserSecretsId>5e397be3-bcee-45cf-b25e-03a345bd7532</UserSecretsId>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

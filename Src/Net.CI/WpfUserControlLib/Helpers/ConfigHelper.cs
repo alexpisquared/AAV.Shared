@@ -58,10 +58,11 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
   {
     var svr = DevOps.IsDevMachineH ? @".\SqlExpress" : "mtDEVsqldb,1625";
     var cfg = new ConfigurationBuilder()
-      .AddInMemoryCollection()
+      .AddInMemoryCollection()            
+      .AddUserSecrets<WhatIsThatForType>()
       .Build();
 
-    cfg[CfgName.WhereAmAy] = "hardCODE";
+    cfg[CfgName.WhereAmAy] = "HardCODE in .\\WpfUserControlLib\\Helpers\\ConfigHelper.cs";
     cfg[CfgName.ServerLst] = StandardLib.Base.Consts.SqlServerCSV;
     cfg[CfgName.DtBsNmLst] = StandardLib.Base.Consts.DtBsNameCSV;
     cfg[CfgName.LogFolder] = VersionHelper.IsDbg ? @"C:\Temp\Logs\..log" : @"Z:\Dev\_Redis_MTDEV\BMS\IncomePaymentManagement\Logs\..log";
