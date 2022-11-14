@@ -4,10 +4,10 @@ public class Deployment
   const string
     DeplName = "CI.SPM",
     DeplExe = DeplName + ".App.exe";
-  public static string DeplSrcDir => @$"Z:\Dev\_Redis_MTDEV\{DeplName}\bin\Phase0";
-  public static string DeplTrgDir => @$"C:\CIIS-Apps\DEV\{DeplName}";
-  public static string DeplSrcExe => @$"{DeplSrcDir}\{DeplExe}";
-  public static string DeplTrgExe => @$"{DeplTrgDir}\{DeplExe}";
+  public static string DeplSrcDir => $"""Z:\Dev\_Redis_MTDEV\{DeplName}\bin\Phase0""";
+  public static string DeplTrgDir => $"""C:\CIIS-Apps\DEV\{DeplName}""";
+  public static string DeplSrcExe => $"""{DeplSrcDir}\{DeplExe}""";
+  public static string DeplTrgExe => $"""{DeplTrgDir}\{DeplExe}""";
 }
 
 public class CfgName
@@ -26,20 +26,20 @@ public class DeplConstDpl
   const string
     DeplName = "CI.DPL",
     DeplExe = DeplName + ".exe";
-  public static string DeplSrcDir => @$"Z:\Dev\_Redis_MTDEV\{DeplName}\bin\Phase0";
-  public static string DeplTrgDir => @$"C:\CIIS-Apps\DEV\{DeplName}";
-  public static string DeplSrcExe => @$"{DeplSrcDir}\{DeplExe}";
-  public static string DeplTrgExe => @$"{DeplTrgDir}\{DeplExe}";
+  public static string DeplSrcDir => $"""Z:\Dev\_Redis_MTDEV\{DeplName}\bin\Phase0""";
+  public static string DeplTrgDir => $"""C:\CIIS-Apps\DEV\{DeplName}""";
+  public static string DeplSrcExe => $"""{DeplSrcDir}\{DeplExe}""";
+  public static string DeplTrgExe => $"""{DeplTrgDir}\{DeplExe}""";
 }
 public class DeplConstSpm
 {
   const string
     DeplName = "CI.SPM",
     DeplExe = DeplName + ".App.exe";
-  public static string DeplSrcDir => @$"Z:\Dev\_Redis_MTDEV\{DeplName}\bin\Phase0";
-  public static string DeplTrgDir => @$"C:\CIIS-Apps\DEV\{DeplName}";
-  public static string DeplSrcExe => @$"{DeplSrcDir}\{DeplExe}";
-  public static string DeplTrgExe => @$"{DeplTrgDir}\{DeplExe}";
+  public static string DeplSrcDir => $"""Z:\Dev\_Redis_MTDEV\{DeplName}\bin\Phase0""";
+  public static string DeplTrgDir => $"""C:\CIIS-Apps\DEV\{DeplName}""";
+  public static string DeplSrcExe => $"""{DeplSrcDir}\{DeplExe}""";
+  public static string DeplTrgExe => $"""{DeplTrgDir}\{DeplExe}""";
 }
 public class DeplConstIpm
 {
@@ -48,8 +48,8 @@ public class DeplConstIpm
   public static string IpmDevDbgUser => "IpmDevDbgUser";
   public static string IpmDevDbgOpen => "IpmDevDbgUser";
 
-  public static string DeplSrcDir => @$"Z:\Dev\_Redis_MTDEV\BMS\{DeplName}\bin";
-  public static string DeplTrgDir => @$"C:\CIIS-Apps\DEV\BMS\{DeplName}";
-  public static string DeplSrcExe => @$"{DeplSrcDir}\{DeplExe}";
-  public static string DeplTrgExe => @$"{DeplTrgDir}\{DeplExe}";
+  public static string DeplSrcDir => $"""Z:\Dev\_Redis_MTDEV\BMS\{DeplName}\bin""";
+  public static string DeplTrgDir => $"""C:\CIIS-Apps\DEV\BMS\{DeplName}""";
+  public static string DeplSrcExe => $"""{DeplSrcDir}\{DeplExe}""";
+  public static string DeplTrgExe => $"""{DeplTrgDir}\{DeplExe}""";
 }
