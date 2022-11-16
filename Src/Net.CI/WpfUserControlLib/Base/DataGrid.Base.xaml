@@ -24,25 +24,26 @@
     </Style.Triggers>
   </Style>
 
-  <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource ColumnHeaderStyle_Aav0}" x:Key="ColumnHeaderStyle_Bold0" >
-    <Setter Property="Foreground"     Value="Red"/>
-    <Setter Property="FontWeight"     Value="Bold"/>
+  <Style TargetType="{x:Type DataGridColumnHeader}"   BasedOn="{StaticResource ColumnHeaderStyle_Aav0}" x:Key="ColumnHeaderStyle_Bold0" >
+    <Setter Property="Foreground"                     Value="Red"/>
+    <Setter Property="FontWeight"                     Value="Bold"/>
   </Style>
 
   <Style TargetType="{x:Type DataGrid}" x:Key="RowAnimationFriendly">
-    <Setter Property="AutoGenerateColumns"		  Value="False"  />
-    <Setter Property="Background"			          Value="Transparent" />
-    <Setter Property="BorderThickness"			    Value="1" />
-    <Setter Property="BorderBrush"			        Value="{DynamicResource ButnBackgroundBrush}" />
-    <Setter Property="CanUserAddRows"			      Value="False" />
-    <Setter Property="ColumnHeaderStyle"		    Value="{StaticResource ColumnHeaderStyle_Aav0}"/>
-    <Setter Property="EnableRowVirtualization"	Value="True"  />
-    <Setter Property="Foreground"               Value="{StaticResource MainForegroundBrush}" />
-    <Setter Property="GridLinesVisibility"		  Value="None" />
-    <Setter Property="HeadersVisibility"		    Value="Column" />
-    <Setter Property="IsReadOnly"				        Value="True"  />
-    <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"  />
-    <Setter Property="VerticalAlignment"		    Value="Top"  />
+    <Setter Property="IsSynchronizedWithCurrentItem"	Value="True"  />
+    <Setter Property="AutoGenerateColumns"		        Value="False"  />
+    <Setter Property="Background"			                Value="Transparent" />
+    <Setter Property="BorderThickness"			          Value="1" />
+    <Setter Property="BorderBrush"			              Value="{DynamicResource ButnBackgroundBrush}" />
+    <Setter Property="CanUserAddRows"			            Value="False" />
+    <Setter Property="ColumnHeaderStyle"		          Value="{StaticResource ColumnHeaderStyle_Aav0}"/>
+    <Setter Property="EnableRowVirtualization"	      Value="True"  />
+    <Setter Property="Foreground"                     Value="{StaticResource MainForegroundBrush}" />
+    <Setter Property="GridLinesVisibility"		        Value="None" />
+    <Setter Property="HeadersVisibility"		          Value="Column" />
+    <Setter Property="IsReadOnly"				              Value="True"  />
+    <Setter Property="RowDetailsVisibilityMode"       Value="VisibleWhenSelected"  />
+    <Setter Property="VerticalAlignment"		          Value="Top"  />
   </Style>
   <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource RowAnimationFriendly}" x:Key="FullDeal">
     <Setter Property="AlternatingRowBackground" Value="{DynamicResource ButnBackgroundBrush}" />
