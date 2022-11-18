@@ -19,12 +19,12 @@ public class BprSilentMock : IBpr
   public async Task ErrorAsync() => await Task.Yield();
   public void Exit() { }
   public int[] FFD(int hz, int durationMks = 100111) => Array.Empty<int>();
-  public void Finish() { }
-  public async Task FinishAsync() => await Task.Yield();
+  public void Finish(int stepHz = 4) { }
+  public async Task FinishAsync(int stepHz = 4) => await Task.Yield();
   public void No() { }
   public async Task NoAsync() => await Task.Yield();
-  public void Start() { }
-  public async Task StartAsync() => await Task.Yield();
+  public void Start(int stepHz = 4) { }
+  public async Task StartAsync(int stepHz = 4) => await Task.Yield();
   public void Tick() { }
   public async Task TickAsync() => await Task.Yield();
   public async Task WaveAsync(int baseHz = 100, int plusHz = 300, int step = 4) => await Task.Yield();

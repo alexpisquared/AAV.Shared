@@ -24,13 +24,13 @@ public interface IBpr
   void Exit();
   Task ExitAsync();
   int[] FFD(int hz, int mks = 75000);
-  void Finish();
-  Task FinishAsync();
+  void Finish(int stepHz = 4);
+  Task FinishAsync(int stepHz = 4);
   Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4);
   void No();
   Task NoAsync();
-  void Start();
-  Task StartAsync();
+  void Start(int stepHz = 4);
+  Task StartAsync(int stepHz = 4);
   void Tick();
   Task TickAsync();
   void Warn();
