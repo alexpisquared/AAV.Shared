@@ -104,72 +104,72 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\..\net7.0\AAV.WPF\Base\BasicDefaultsLayout.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\Base\BasicDefaultsLayout.xaml">
       <Link>Base\BasicDefaultsLayout.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Google.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Google.xaml">
       <Link>ColorScheme\Theme.Color.Dark.Google.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Gray.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Gray.xaml">
       <Link>ColorScheme\Theme.Color.Dark.Gray.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Iress.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Dark.Iress.xaml">
       <Link>ColorScheme\Theme.Color.Dark.Iress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Bootstrap.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Bootstrap.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Bootstrap.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Google.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Google.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Google.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Gray.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Gray.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Gray.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Iress.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.Iress.xaml">
       <Link>ColorScheme\Theme.Color.Lite.Iress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\ColorScheme\Theme.Color.Lite.VaporWave.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\ColorScheme\Theme.Color.Lite.VaporWave.xaml">
       <Link>ColorScheme\Theme.Color.Lite.VaporWave.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\UiDesign\Edge3dBevel.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\UiDesign\Edge3dBevel.xaml">
       <Link>UiDesign\Edge3dBevel.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\UiDesign\PnlNewMorph.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\UiDesign\PnlNewMorph.xaml">
       <Link>UiDesign\PnlNewMorph.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\View\ExceptionPopup.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\View\ExceptionPopup.xaml">
       <Link>View\ExceptionPopup.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml">
       <Link>View\ThemeSelectorUsrCtrl.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="..\..\net7.0\AAV.WPF\View\ThemeToggleIress.xaml">
+    <Page Include="..\..\net6.0\AAV.WPF\View\ThemeToggleIress.xaml">
       <Link>View\ThemeToggleIress.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -192,35 +192,35 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\net7.0\AAV.WPF\Base\WindowBase.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\Base\WindowBase.cs">
       <Link>Base\WindowBase.cs</Link>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\Converters\ConverterUni.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\Converters\ConverterUni.cs">
       <Link>Converters\ConverterUni.cs</Link>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\Converters\ConverterVisibleCollapsed.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\Converters\ConverterVisibleCollapsed.cs">
       <Link>Converters\ConverterVisibleCollapsed.cs</Link>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\Helpers\UnhandledExceptionHndlr.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\Helpers\UnhandledExceptionHndlr.cs">
       <Link>Helpers\UnhandledExceptionHndlr.cs</Link>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\UiDesign\Edge3dBevel.xaml.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\UiDesign\Edge3dBevel.xaml.cs">
       <Link>UiDesign\Edge3dBevel.xaml.cs</Link>
       <DependentUpon>Edge3dBevel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\UiDesign\PnlNewMorph.xaml.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\UiDesign\PnlNewMorph.xaml.cs">
       <Link>UiDesign\PnlNewMorph.xaml.cs</Link>
       <DependentUpon>PnlNewMorph.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\View\ExceptionPopup.xaml.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\View\ExceptionPopup.xaml.cs">
       <Link>View\ExceptionPopup.xaml.cs</Link>
       <DependentUpon>ExceptionPopup.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\View\ThemeSelectorUsrCtrl.xaml.cs">
       <Link>View\ThemeSelectorUsrCtrl.xaml.cs</Link>
       <DependentUpon>ThemeSelectorUsrCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\..\net7.0\AAV.WPF\View\ThemeToggleIress.xaml.cs">
+    <Compile Include="..\..\net6.0\AAV.WPF\View\ThemeToggleIress.xaml.cs">
       <Link>View\ThemeToggleIress.xaml.cs</Link>
       <DependentUpon>ThemeToggleIress.xaml</DependentUpon>
     </Compile>
@@ -258,7 +258,7 @@
     <Content Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\net7.0\AAV.Sys\AAV.Sys.csproj">
+    <ProjectReference Include="..\..\net6.0\AAV.Sys\AAV.Sys.csproj">
       <Project>{7139da94-b8f6-45a2-a292-319c5dd1f66c}</Project>
       <Name>AAV.Sys</Name>
     </ProjectReference>
