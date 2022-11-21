@@ -63,7 +63,13 @@
   <Style TargetType="{x:Type TextBox}"          BasedOn="{StaticResource TbxBase}" />
   <Style TargetType="{x:Type PasswordBox}"      BasedOn="{StaticResource CrlBase}" x:Key="PBxBase"/>
   <Style TargetType="{x:Type PasswordBox}"      BasedOn="{StaticResource PBxBase}" />
-  <Style TargetType="{x:Type ComboBox}"         BasedOn="{StaticResource CrlBase}" x:Key="CbxBase">
+  <Style TargetType="{x:Type Selector}"         BasedOn="{StaticResource CrlBase}" x:Key="SelBase">
+    <Setter Property="MinWidth"					        Value="60"/>
+    <Setter Property="Foreground"      Value="{DynamicResource MainForegroundBrush}" />
+    <Setter Property="Background"      Value="{DynamicResource BackBackgroundBrush}" />
+    <Setter Property="BorderBrush"     Value="{DynamicResource TextBackgroundBrush}" />
+  </Style>
+  <Style TargetType="{x:Type ComboBox}"         BasedOn="{StaticResource SelBase}" x:Key="CbxBase">
     <Setter Property="MinWidth"					        Value="60"/>
   </Style>
   <Style TargetType="{x:Type ComboBox}"         BasedOn="{StaticResource CbxBase}" />
@@ -219,22 +225,20 @@
     <Setter Property="CornerRadius"    Value="24" />
   </Style>
 
-  <Style TargetType="{x:Type ListBox}" >
-    <Setter Property="Background"      Value="{DynamicResource BackBackgroundBrush}" />
-    <Setter Property="BorderBrush"     Value="{DynamicResource MainForegroundBrush}" />
+  <Style TargetType="{x:Type ListBox}" BasedOn="{StaticResource SelBase}" >
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Padding"         Value="6" />
   </Style>
 
-  <Style TargetType="{x:Type ListView}" >
-    <Setter Property="Background"      Value="{DynamicResource BackBackgroundBrush}" />
-    <Setter Property="BorderBrush"     Value="{DynamicResource MainForegroundBrush}" />
+  <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource SelBase}" >
     <Setter Property="BorderThickness" Value=".4" />
     <Setter Property="Padding"         Value="6" />
   </Style>
 
   <Style TargetType="{x:Type ListViewItem}" >
+    <Setter Property="Foreground"      Value="{DynamicResource MainForegroundBrush}" />
     <Setter Property="Background"      Value="{DynamicResource BackBackgroundBrush}" />
+    <Setter Property="BorderBrush"     Value="{DynamicResource TextBackgroundBrush}" />
     <Setter Property="Padding"         Value="6" />
   </Style>
 
