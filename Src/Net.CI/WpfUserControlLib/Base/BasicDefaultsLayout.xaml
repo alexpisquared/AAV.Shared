@@ -133,9 +133,9 @@
     <Setter Property="HorizontalAlignment"  Value="Right" />
     <Setter Property="FontSize"             Value="12" />
     <Setter Property="Padding"              Value="0" />
+    <Setter Property="Margin"               Value="2 0" />
   </Style>
   <Style TargetType="{x:Type Label}"				BasedOn="{StaticResource LblBase}" x:Key="lblTopLeft">
-    <Setter Property="Margin"               Value="2 0" />
     <Setter Property="FontSize"             Value="8" />
     <Setter Property="HorizontalAlignment"	Value="Left"/>
   </Style>
