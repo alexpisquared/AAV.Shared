@@ -6,8 +6,8 @@ public partial class Bpr : IBpr
   public bool SuppressTicks { get => _st; set => _st = value; }
   public bool SuppressAlarm { get => _sa; set => _sa = value; }
 
-  public void Beep(int hz, double sec) => Task.Run(async () => await BeepAsync(hz, sec).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000000)) }).ConfigureAwait(false);
-  public void Beep(int hz, double sec, ushort vol) => Task.Run(async () => await BeepAsync(hz, sec, vol).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec, ushort vol) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000000)) }, vol).ConfigureAwait(false);
+  public void Beep(int hz, double sec) => Task.Run(async () => await BeepAsync(hz, sec).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }).ConfigureAwait(false);
+  public void Beep(int hz, double sec, ushort vol) => Task.Run(async () => await BeepAsync(hz, sec, vol).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec, ushort vol) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }, vol).ConfigureAwait(false);
 
   public void Tick() => Task.Run(TickAsync); public async Task TickAsync() { if (!SuppressTicks) await BeepHzMks(new[] { FFD(400, _dMin) }).ConfigureAwait(false); }
   public void Click() => Task.Run(ClickAsync); public async Task ClickAsync() { if (!SuppressTicks) await BeepHzMks(new[] { FFD(800, _dMin) }).ConfigureAwait(false); }
@@ -127,7 +127,7 @@ public partial class Bpr : IBpr
     if (roundedTimesWavePlayed <= 0) // make sure at least one wave is played.
       roundedTimesWavePlayed = 1;
 
-    return new int[] { hz, (int)(1000000 * roundedTimesWavePlayed / hz) };
+    return new int[] { hz, (int)(1000_000 * roundedTimesWavePlayed / hz) };
   }
 
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
