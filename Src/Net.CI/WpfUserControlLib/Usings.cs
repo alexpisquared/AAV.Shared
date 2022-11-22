@@ -35,7 +35,6 @@ global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
 //global using StandardContractsLib;
 //obal using System.Text.Json; //tu: new and very performant Json lib (Dec 2021)
-
 global using static System.Diagnostics.Trace;
 global using static System.Media.SystemSounds;
-
+global using System.Text.RegularExpressions;
