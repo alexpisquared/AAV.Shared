@@ -3,17 +3,14 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
 {
   public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbx, string? info = "", [CallerMemberName] string callerName = "")
   {
-    var reportOut = $"{info} . {callerName}    ";
+    var reportOut = $"■■ {info}.{callerName}  records saved: ";
 
     try
     {
       var stopwatch = Stopwatch.StartNew();
       var rowsSaved = await dbx.SaveChangesAsync();
 
-      reportOut +=
-          rowsSaved == 0 ? $"No DB changes to save. " :
-          stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} records saved. " :
-          $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} = {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps. ";
+      reportOut += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0}. " : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps. ";
 
       WriteLine(reportOut);
 
