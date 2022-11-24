@@ -4,6 +4,9 @@ public readonly record struct AreaCode(string Code, string Area, int Prio, strin
 {
   public string Tooltip => $"\t{Area,12}    {Oset} h  \n{Note}";
   public bool IsLocal => Prio <= 1;
+  public bool IsGta => Prio <= 3;
+  public bool IsOntario => Prio <= 5;
+  public bool IsCanada => Prio <= 8;
 }
 
 public static class AreaCodeValidator
@@ -317,7 +320,7 @@ public static class AreaCodeValidator
       new ("804", "VA", 9, "-5", "E Virginia: Richmond (see splits 757, 434)"),
       new ("805", "CA", 9, "-8", "S Cent. and Cent. Coastal California: Ventura County, Santa Barbara County: San Luis Obispo, Thousand Oaks, Carpinteria, Santa Barbara, Santa Maria, Lompoc, Santa Ynez Valley / Solvang (see 661 split)"),
       new ("806", "TX", 9, "-6", "Panhandle Texas: Amarillo, Lubbock"),
-      new ("807", "ON", 6, "-5/-6", "Canada: W Ontario: Thunder Bay region to Manitoba border"),
+      new ("807", "ON", 5, "-5/-6", "Canada: W Ontario: Thunder Bay region to Manitoba border"),
       new ("808", "HI", 9, "-10*", "Hawaii"),
       new ("809", "··", 9, "-4", "Dominican Republic (see splits 264, 268, 284, 340, 441, 473, 664, 758, 767, 784, 868, 876; overlay 829)"),
       new ("810", "MI", 9, "-5", "E Michigan: Flint, Pontiac (see 248; split 586)"),

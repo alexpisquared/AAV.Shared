@@ -3,28 +3,27 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
 {
   public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbx, string? info = "", [CallerMemberName] string callerName = "")
   {
-    var reportOut = $"■■ {info}.{callerName}()  records saved: ";
+    var report = $"■■ {info}.{callerName}()  records saved: ";
 
     try
     {
       var stopwatch = Stopwatch.StartNew();
       var rowsSaved = await dbx.SaveChangesAsync();
 
-      reportOut += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} ■■" : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps ■■";
+      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} ■■" : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps ■■";
 
-      WriteLine(reportOut);
+      WriteLine(report);
 
-      return (true, rowsSaved, reportOut);
+      return (true, rowsSaved, report);
     }
-    catch (DbEntityValidationException ex)                          /**/ { reportOut += ex.Log($"{ValidationExceptionToString(ex)}"); }
-    catch (System.Data.Entity.Infrastructure.DbUpdateException ex)  /**/ { reportOut += ex.Log($"{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count()} rows affected]  :Infr"); }
-    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)      /**/ { reportOut += ex.Log($"{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count,5} rows affected]  :Core"); }
-    catch (Exception ex)                                            /**/ { reportOut += ex.Log($""); }
+    catch (DbEntityValidationException ex)                          /**/ { report += ex.Log($"\n{ValidationExceptionToString(ex)}"); }
+    catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)      /**/ { report += ex.Log($"\n{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count,5} rows affected]  :Core"); }
+    catch (System.Data.Entity.Infrastructure.DbUpdateException ex)  /**/ { report += ex.Log($"\n{string.Join("\t", ex.Entries.Select(r => r.ToString()))}  [{ex.Entries.Count()} rows affected]  :Infr"); }
+    catch (Exception ex)                                            /**/ { report += ex.Log(); }
 
-    return (false, -88, reportOut);
+    return (false, -88, report);
   }
   public static void DiscardChanges(this DbContext db) => db.ChangeTracker.Clear();
-
   public static bool HasUnsavedChanges(this DbContext db) => db != null && db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
   public static string GetDbChangesReport(this DbContext db, int maxLinesToShow = 33)
   {
@@ -57,9 +56,6 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
 
     return sb.ToString();
   }
-
-  static string DbUpdateExceptionToStrin2(Microsoft.EntityFrameworkCore.DbUpdateException ex) => string.Join("\t", ex.Entries.Select(r => r.ToString()));
-  static string DbUpdateExceptionToString(System.Data.Entity.Infrastructure.DbUpdateException ex) => string.Join("\t", ex.Entries.Select(r => r.ToString()));
 
   public static string ValidationExceptionToString(this DbEntityValidationException ex)
   {
@@ -99,7 +95,6 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
       $"No server name found in the con. string  {constr} :(";
     //return $"{(server.Equals(@"(localdb)\MSSQLLocalDB", StringComparison.OrdinalIgnoreCase) ? "" : server.Contains("database.windows.net") ? "Azure\\" : server)}{getConStrValue(kvpList, "AttachDbFilename")}{getConStrValue(kvpList, "initial catalog")}";
   }
-
   public static string SqlConStrValues(this string constr, int firstN = 10) => string.Join("·", constr.Split(';', StringSplitOptions.RemoveEmptyEntries).ToList().Take(firstN).Select(r => r.Split('=').LastOrDefault() ?? "°"));
 
   static string? GetConStrValue(List<string> lst, string key) => lst.FirstOrDefault(r => r.Split('=')[0].Equals(key, StringComparison.OrdinalIgnoreCase))?.Split('=')[1];
@@ -115,6 +110,5 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
     str.Length <= _maxWidth ? str : $"\r\n  {str[.._maxWidth].Replace("\n", " ").Replace("\r", " ")}...{str.Length:N0}\r\n" :
     val?.ToString() ?? "Null";
 
-  static readonly object _thisLock = new();
   const int _maxWidth = 42;
 }
