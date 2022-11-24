@@ -1,8 +1,9 @@
-﻿namespace WpfUserControlLib.Converters;
+﻿namespace StandardLib.Consts;
 
 public readonly record struct AreaCode(string Code, string Area, int Prio, string Oset, string Note)
 {
   public string Tooltip => $"\t{Area,12}    {Oset} h  \n{Note}";
+  public bool IsLocal => Prio <= 1;
 }
 
 public static class AreaCodeValidator

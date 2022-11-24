@@ -38,3 +38,4 @@ global using Microsoft.Extensions.Logging;
 global using static System.Diagnostics.Trace;
 global using static System.Media.SystemSounds;
 global using System.Text.RegularExpressions;
+global using StandardLib.Consts;
