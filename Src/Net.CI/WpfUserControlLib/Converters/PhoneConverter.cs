@@ -19,7 +19,7 @@ public class PhoneToolTipConverter : MarkupExtension, IValueConverter
 public class PhoneBrushConverter : MarkupExtension, IValueConverter
 {
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => (value is string str && !string.IsNullOrEmpty(str)) ?
-    AreaCodeValidator.GetIt(str)?.Prio switch
+    AreaCodeValidator.FirstOrDefault(str)?.Prio switch
     {
       1 => Brushes.Lime,        // TO
       2 => Brushes.GreenYellow,

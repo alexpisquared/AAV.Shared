@@ -7,8 +7,8 @@ public readonly record struct AreaCode(string Code, string Area, int Prio, strin
 
 public static class AreaCodeValidator
 {
-  static readonly AreaCode[] acs;
-  static AreaCodeValidator() => acs = new[]
+  static readonly AreaCode[] _areaCodes;
+  static AreaCodeValidator() => _areaCodes = new[]
     {
       new ("5255", "MX", 9, "-6", "Mexico: Mexico City area (country code + city code)"),
       new ("201", "NJ", 9, "-5", "N New Jersey: Jersey City, Hackensack (see split 973, overlay 551)"),
@@ -425,6 +425,7 @@ public static class AreaCodeValidator
       new AreaCode("999", "··", 9, "-■", "Often used by carriers to indicate that the area code information is unavailable for CNID, even though the rest of the number is present")
     };
 
-  public static AreaCode? GetIt(string phoneNumber) => acs.FirstOrDefault(r => phoneNumber.StartsWith(r.Code));
-  public static string GetToolTip(string phoneNumber) => GetIt(phoneNumber)?.Tooltip ?? "~N/A";
+  public static bool Any(string phoneNumber) => _areaCodes.Any(r => phoneNumber.StartsWith(r.Code));
+  public static AreaCode? FirstOrDefault(string phoneNumber) => _areaCodes.FirstOrDefault(r => phoneNumber.StartsWith(r.Code));
+  public static string GetToolTip(string phoneNumber) => FirstOrDefault(phoneNumber)?.Tooltip ?? "~N/A";
 }
