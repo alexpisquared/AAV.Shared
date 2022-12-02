@@ -133,22 +133,18 @@ public class SmartDateConverter : MarkupExtension, IValueConverter
 {
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
-    if (value is null) return null;
+    if (value is not DateTime dtVal)
+      return "DateTime expected ▄▀▄▀▄▀ ■ ■ ■";
 
-    if (value is DateTime valDTm)
-      {
-      var va = valDTm;
-      var dt = DateTime.Now - va;
-      return
-        dt.TotalSeconds < 10 ? $"Now!!!" :
-        dt.TotalMinutes < 60 ? $"{va:HH:mm:ss}" :
-        dt.TotalHours < 10.0 ? $"{va:HH:mm}" :
-        dt.TotalDays < 3.000 ? $"{va:ddd HH:mm}" :
-        dt.TotalDays < 183.0 ? $"{va:MMM-d}" :
-        $"{va:yyyy-MMM}";
-    }
+    var dt = DateTime.Now - dtVal;
 
-    return "▄▀▄▀▄▀ ■ ■ ■";
+    return
+      dt.TotalSeconds < 10 ? $"Now!!!" :
+      dt.TotalMinutes < 60 ? $"{dtVal:HH:mm:ss}" :
+      dt.TotalHours < 10.0 ? $"{dtVal:HH:mm}" :
+      dt.TotalDays < 3.000 ? $"{dtVal:ddd HH:mm}" :
+      dt.TotalDays < 183.0 ? $"{dtVal:MMM-d}" :
+                             $"{dtVal:yyyy-MMM}";
   }
 
   public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => false;
