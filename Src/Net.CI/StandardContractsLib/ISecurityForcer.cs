@@ -1,6 +1,6 @@
 ﻿namespace StandardContractsLib;
 
-public interface ISecForcer
+public interface ISecurityForcer
 {
   bool CanEdit { get; }
   bool CanRead { get; }
