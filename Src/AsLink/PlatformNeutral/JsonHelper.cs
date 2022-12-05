@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Json; // requires ref: System.Runtime.Serialization
 using System.Text;
+using Newtonsoft.Json;
 
 namespace AsLink
 {
@@ -18,6 +19,8 @@ namespace AsLink
     {
       try
       {
+        JsonConvert.DefaultSettings = () => new JsonSerializerSettings { MaxDepth = 128 }; // Dec 2022: as per https://github.com/alexpisquared/BusCatch/security/dependabot/1
+
         var serializer = new DataContractJsonSerializer(typeof(T));
         using (var ms = new MemoryStream())
         {
@@ -31,6 +34,8 @@ namespace AsLink
 
     public static T FromJson<T>(string json) //catch ... : lets the caller handle the failure: it knows better what to do
     {
+      JsonConvert.DefaultSettings = () => new JsonSerializerSettings { MaxDepth = 128 }; // Dec 2022: as per https://github.com/alexpisquared/BusCatch/security/dependabot/1
+
       if (!string.IsNullOrEmpty(json))
         try
         {
