@@ -1,6 +1,6 @@
 ﻿namespace WpfUserControlLib.Helpers;
 
-public class HighlightableTextBlock : Control // latest + multi-word feature + IGNORE THE OTHER ONES!!!!!!!
+public class HighlightableTextBlock : Control // latest + multi-word feature + IGNORE THE OTHER ONES!!!!!!! ▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀▄▄▀▀
 {
   readonly char[] _delim = new char[] { '·', '|', '&' };
 
