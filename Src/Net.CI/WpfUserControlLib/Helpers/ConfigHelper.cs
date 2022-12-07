@@ -6,7 +6,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
     const int maxTries = 2;
 
     var appsettingsFiles = new[] {
-        @$"Z:\Dev\_Redis_MTDEV\CI.IPM\Config\{_appSettingsFileNameOnly}",
+        @$"C:\Temp\Publish\CI.IPM\Config\{_appSettingsFileNameOnly}",
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{_appSettingsFileNameOnly}"),
         @$"AppSettings\{_appSettingsFileNameOnly}",
         @$"{_appSettingsFileNameOnly}",
@@ -62,7 +62,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
     cfg[CfgName.WhereAmAy] = "HardCODE in .\\WpfUserControlLib\\Helpers\\ConfigHelper.cs";
     cfg[CfgName.ServerLst] = StandardLib.Base.Consts.SqlServerCSV;
     cfg[CfgName.DtBsNmLst] = StandardLib.Base.Consts.DtBsNameCSV;
-    cfg[CfgName.LogFolder] = VersionHelper.IsDbg ? @"C:\Temp\Logs\..log" : @"Z:\Dev\_Redis_MTDEV\BMS\IncomePaymentManagement\Logs\..log";
+    cfg[CfgName.LogFolder] = VersionHelper.IsDbg ? @"C:\Temp\Logs\..log" : @"C:\Temp\Publish\BMS\IncomePaymentManagement\Logs\..log";
     cfg[CfgName.SqlVerIpm] = VersionHelper.IsDbg ? "Server={0};Database={1};Trusted_Connection=True;Encrypt=False;Connection Timeout=15;" : "Server={0};Database={1};Trusted_Connection=True;Encrypt=False;Connection Timeout=52;"; // On dbg 5 sec was fine .. let's see if 1 sec is going to cause YY's issues.
     cfg[CfgName.SqlVerIp_] = "Server={0};Database={1};persist security info=True;user id={2};password={3};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=57";
 
@@ -92,7 +92,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
     _defaultAppSetValues = @"{{
       ""WhoAmI"":               ""{1}"",
       ""WhereAmI"":             ""{0}"",
-      ""LogFolder"":            ""Z:\\Dev\\_Redis_MTDEV\\BMS\\IncomePaymentManagement\\Logs\\..log"",
+      ""LogFolder"":            ""C:\\Temp\\Logs\\..log"",
       ""ServerLst"":            ""mtDEVsqldb,1625 mtUATsqldb mtPRDsqldb .\\sqlexpress"",
       ""DtBsNmLst"":            ""QStatsDbg QStatsRls"",
       ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=41;"",
