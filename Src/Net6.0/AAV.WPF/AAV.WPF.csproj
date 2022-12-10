@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
-    <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
     <UserSecretsId>f7f8a829-a088-4d74-90e1-9d4c0e9cfad3</UserSecretsId>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;BldRls</Configurations>
