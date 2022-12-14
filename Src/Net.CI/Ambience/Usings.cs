@@ -7,5 +7,4 @@ global using System.Linq;
 global using System.Media;
 global using System.Threading.Tasks;
 global using StandardContractsLib;
-
 global using static System.Diagnostics.Trace;
