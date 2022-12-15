@@ -102,7 +102,7 @@ namespace AAV.Sys.Helpers
 
         var path =
           Environment.MachineName == "RAZER1"       /**/ ? LogFolder_OneDrive :
-          Environment.MachineName == "CA03-APIGID"  /**/ ? (isApp4wk ? LogFolder_FileShare : LogFolder_OneDrive)
+          Environment.MachineName == "LR6WB43X"     /**/ ? (isApp4wk ? LogFolder_FileShare : LogFolder_OneDrive)
                                                     /**/ : LogFolder_OneDrive; // Apr3: I think this cause err on Zoe's for AlexPi.Scr: LogFolder_FallbackZ;
         if (FSHelper.ExistsOrCreated(path)) return path;
 
