@@ -1,7 +1,7 @@
 ﻿namespace StandardLib.Helpers;
 
-[Obsolete( "■ only for exceptional situations when proper beeper is not available ■", false)] 
-internal class BprKernel32
+[Obsolete( "■ only for exceptional situations when proper beeper is not available ■", false)]
+internal class BprKernel32Internal
 {
   public static void Start() { Beep(_7kHz, _msA); Beep(_8kHz, _msB); }
   public static void Finish() { Beep(_8kHz, _msB); Beep(_7kHz, _msA); }

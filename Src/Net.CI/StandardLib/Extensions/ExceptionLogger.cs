@@ -13,7 +13,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     TraceStackIfVerbose(ex);
 
     if (VersionHelper.IsDbg)
-      BprKernel32.ErrorFaF();
+      BprKernel32Internal.ErrorFaF();
 
     if (Debugger.IsAttached)
       Debugger.Break();
