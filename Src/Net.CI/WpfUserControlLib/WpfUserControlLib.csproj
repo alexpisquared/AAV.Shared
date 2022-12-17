@@ -18,6 +18,11 @@
     <None Remove="Assets\vb - logo_s.gif" />
     <None Remove="Assets\vb VIRTUAL BROKERS - logo_s.gif" />
     <None Remove="Assets\Watermark.png" />
+    <None Remove="ReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ReadMe.md" />
   </ItemGroup>
 
   <ItemGroup>

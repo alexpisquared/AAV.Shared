@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="EmptyFormWindow.cs">
       <SubType>Form</SubType>
     </Compile>

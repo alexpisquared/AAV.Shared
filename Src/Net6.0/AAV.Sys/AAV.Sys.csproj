@@ -41,4 +41,12 @@
     <DefineConstants>TRACE;ExploreIso</DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="ReadMe.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ReadMe.md" />
+  </ItemGroup>
+
 </Project>
