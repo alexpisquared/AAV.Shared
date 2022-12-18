@@ -1,6 +1,4 @@
-﻿using WpfUserControlLib.Helpers;
-
-namespace WpfUserControlLib.Anime;
+﻿namespace WpfUserControlLib.Anime;
 
 public partial class ArcPi : UserControl
 {

@@ -1,5 +1,5 @@
 ﻿namespace WpfUserControlLib.Helpers;
-class ArcHelper
+public class ArcHelper
 {
   const double _2Pi = Math.PI * 2;
 

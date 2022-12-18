@@ -38,3 +38,4 @@ global using WpfUserControlLib.Views;
 //obal using System.Text.Json; //tu: new and very performant Json lib (Dec 2021)
 global using static System.Diagnostics.Trace;
 global using static System.Media.SystemSounds;
+global using WpfUserControlLib.Helpers;
