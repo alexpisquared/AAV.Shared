@@ -132,11 +132,4 @@ public partial class Bpr : IBpr
   }
 
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
-  
-  
-  //todo: find existing implementation:
-  public void Finish() => throw new NotImplementedException();
-  public Task FinishAsync() => throw new NotImplementedException();
-  public void Start() => throw new NotImplementedException();
-  public Task StartAsync() => throw new NotImplementedException();
 }
