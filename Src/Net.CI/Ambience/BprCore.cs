@@ -15,7 +15,7 @@ public partial class Bpr
   public async Task BeepHzMks(int[][] HzMks) => await BeepHzMks(HzMks, _smartVolume);
   public async Task BeepHzMks(int[][] HzMks, ushort volume)
   {
-    if (_st || _sa) return;
+    if (SuppressTicks || SuppressAlarm) return;
 
     const double TAU = 2 * Math.PI;
     const int formatChunkSize = 16, headerSize = 8, samplesPerSecond = 44100, waveSize = 4;

@@ -2,9 +2,8 @@
 
 public partial class Bpr : IBpr
 {
-  bool _sa;
   public bool SuppressTicks { get; set; }
-  public bool SuppressAlarm { get => _sa; set => _sa = value; }
+  public bool SuppressAlarm { get; set; }
 
   public void Beep(int hz, double sec) => Task.Run(async () => await BeepAsync(hz, sec).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }).ConfigureAwait(false);
   public void Beep(int hz, double sec, ushort vol) => Task.Run(async () => await BeepAsync(hz, sec, vol).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec, ushort vol) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }, vol).ConfigureAwait(false);
