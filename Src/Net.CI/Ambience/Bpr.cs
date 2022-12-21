@@ -2,8 +2,8 @@
 
 public partial class Bpr : IBpr
 {
-  bool _st, _sa;
-  public bool SuppressTicks { get => _st; set => _st = value; }
+  bool _sa;
+  public bool SuppressTicks { get; set; }
   public bool SuppressAlarm { get => _sa; set => _sa = value; }
 
   public void Beep(int hz, double sec) => Task.Run(async () => await BeepAsync(hz, sec).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }).ConfigureAwait(false);
@@ -21,8 +21,8 @@ public partial class Bpr : IBpr
   public void AppFinish() => Task.Run(AppFinishAsync); /**/ public async Task AppFinishAsync() => await GradientAsync(799, 100, 1).ConfigureAwait(false); // 2.0 s (failed: 800 ) An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.
 
   //was  void No() => Task.Run(async () => await NoAsync().ConfigureAwait(false)); public async Task NoAsync() => await BeepHzMks(new[] { FFD(6000, _dMin), FFD(5000, _dMin) }).ConfigureAwait(false); <== auto converted by the VS!!! to this:
-  public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false);
-  public void No() => Task.Run(NoAsync); public async Task NoAsync() => await BeepHzMks(new[] { FFD(5000, _dMin), FFD(4000, _dMin*2) }).ConfigureAwait(false);
+  public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false); // Oh, Yes.
+  public void No() => Task.Run(NoAsync); public async Task NoAsync() => await BeepHzMks(new[] { FFD(5000, _dMin), FFD(50, _dMin / 2), FFD(4000, _dMin * 2) }).ConfigureAwait(false); // Hell, No.
 
   public void Enter() => Task.Run(EnterAsync); public async Task EnterAsync() => await BeepHzMks(new[] { FFD(1000, _dMin) }).ConfigureAwait(false);
   public void Exit() => Task.Run(ExitAsync); public async Task ExitAsync() => await BeepHzMks(new[] { FFD(1000, _dMin) }).ConfigureAwait(false);
