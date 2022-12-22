@@ -46,9 +46,9 @@ public partial class Bpr : IBpr
       for (var hz = tillHz; hz < fromHz; hz += stepHz) { vs.Add(FixDuration(hz, 1)); } //   /
     }
 
-    var sw = Stopwatch.GetTimestamp();
+    var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
-    WriteLine($"TrWL:> ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(sw).TotalMilliseconds} ms");
+    WriteLine($"TrWL:> ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
   }
   public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
   {
@@ -63,9 +63,9 @@ public partial class Bpr : IBpr
       for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
     }
 
-    var sw = Stopwatch.GetTimestamp();
+    var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
-    WriteLine($"TrWL:> ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(sw).TotalMilliseconds} ms");
+    WriteLine($"TrWL:> ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
   }
 
   public static async Task DevDbg() //  public App()  {    AmbienceLib.Bpr.DevDbg(); // ...
