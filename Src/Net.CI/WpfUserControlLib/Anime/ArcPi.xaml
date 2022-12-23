@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="WpfUserControlLib.Anime.ArcPi" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
              d:DesignHeight="32" d:DesignWidth="32">
   <Grid>
-    <Ellipse StrokeThickness="2" Stroke="#2888" />
-    <Path    StrokeThickness="2" Stroke="#f00" x:Name="arc_path" />
+    <Ellipse StrokeThickness="4" Stroke="#2888" />
+    <Path    StrokeThickness="4" Stroke="#888" x:Name="arc_path" />
   </Grid>
 </UserControl>
