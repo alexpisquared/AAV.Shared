@@ -13,8 +13,6 @@ public partial class WindowBase : Window
   {
     _logger = logger;
 
-    //??    ShutdownMode = ShutdownMode.OnLastWindowClose;
-
     Topmost = Debugger.IsAttached;
 
     MouseLeftButtonDown += (s, e) => OnMouseLeftButtonDown_(e);
