@@ -1,12 +1,4 @@
-﻿using System.IO.IsolatedStorage;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using StandardLib.Extensions;
-
-namespace StandardLib.Helpers;
+﻿namespace StandardLib.Helpers;
 
 public static class JsonFileSerializer
 {
@@ -14,7 +6,7 @@ public static class JsonFileSerializer
   {
     try
     {
-      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename)))
+      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename) ?? throw new ArgumentNullException("▄▀")))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);
@@ -44,7 +36,7 @@ public static class XmlFileSerializer
   {
     try
     {
-      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename)))
+      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename) ?? throw new ArgumentNullException("▄▀")))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);

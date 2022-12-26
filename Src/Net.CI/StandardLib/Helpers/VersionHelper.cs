@@ -54,7 +54,7 @@ public static class VersionHelper
     get
     {
       var max = Math.Max(Math.Max(
-        new FileInfo(Assembly.GetEntryAssembly()?.Location).LastWriteTime.ToOADate(),
+        new FileInfo(Assembly.GetEntryAssembly()?.Location ?? throw new ArgumentNullException("▄▀")).LastWriteTime.ToOADate(),
         new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToOADate()),
         new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime.ToOADate());
 
