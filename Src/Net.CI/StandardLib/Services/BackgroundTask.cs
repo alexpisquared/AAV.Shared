@@ -13,10 +13,8 @@ public class BackgroundTask //tu: Nick Chapsas - Scheduling repeating tasks with
   public void Start() => _timerTask = DoWorkAsync(_act);
   public async Task StopAsync()
   {
-    if (_timerTask is null) return;
-
     _cts.Cancel();
-    await _timerTask; // wait for the last invocation of the task to complete.
+    if (_timerTask is not null) await _timerTask; // wait for the last invocation of the task to complete.
     _cts.Dispose();
     WriteLine("   ..Task (timer) was cancelled.");
   }
