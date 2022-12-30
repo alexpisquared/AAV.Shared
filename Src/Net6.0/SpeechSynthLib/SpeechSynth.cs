@@ -18,7 +18,7 @@ namespace SpeechSynthLib
     readonly AzureSpeechCredentials _asc;
     readonly IConfigurationRoot _cfg;
     readonly bool _azureTtsIsPK, _useSayExe = true;
-    SpeechSynthesizer _synthNew = null;
+    SpeechSynthesizer? _synthNew = null;
     bool _disposedValue;
 
     public SpeechSynth() // has not been ran yet: Tracer.SetupTracingOptions()
