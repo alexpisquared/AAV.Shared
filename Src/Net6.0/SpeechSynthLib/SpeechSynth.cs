@@ -15,13 +15,13 @@ namespace SpeechSynthLib
     const double _speakingRate = 1.25;
     const string _voiceNameFallback = "en-AU-WilliamNeural", _rgn = "canadacentral", _key = "use proper key here";
     readonly Random _rnd = new(DateTime.Now.Millisecond);
-    readonly AzureSpeechCredentials _asc;
+    readonly AzureSpeechCredentials? _asc;
     readonly IConfigurationRoot _cfg;
     readonly bool _azureTtsIsPK, _useSayExe = true;
-    SpeechSynthesizer? _synthNew = null;
+    SpeechSynthesizer? _synthesizer = null;
     bool _disposedValue;
 
-    public SpeechSynth() // has not been ran yet: Tracer.SetupTracingOptions()
+    public SpeechSynth() 
     {
       try
       {
@@ -56,7 +56,7 @@ namespace SpeechSynthLib
       finally { _azureTtsIsPK = _asc?.Rgn == _rgn; }
     }
 
-    public SpeechSynthesizer SynthReal => _synthNew ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
+    SpeechSynthesizer synthesizer => _synthesizer ??= new SpeechSynthesizer(SpeechConfig.FromSubscription(_asc.Key, _asc.Rgn));
 
     public async Task SpeakAsync(string msg, VMode vmode = VMode.Prosody, string? voice = null, string? styleForExpressOnly = null)
     {
@@ -88,7 +88,7 @@ namespace SpeechSynthLib
         var voiceName = voice ?? _voiceNameFallback;
         var lang = "en-US"; // voiceName.Length > 5 ? voiceName.Substring(0, 5) : "en-GB";
         var sw = Stopwatch.StartNew();
-        using var result = await SynthReal.SpeakSsmlAsync(vmode == VMode.Prosody ?
+        using var result = await synthesizer.SpeakSsmlAsync(vmode == VMode.Prosody ?
           $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voiceName}""><prosody rate=""{_speakingRate}""                      >{msg}</prosody></voice></speak>" : //todo: rate does not work below:
           $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voiceName}""><mstts:express-as style=""{sStyle}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>");
 
@@ -115,7 +115,7 @@ namespace SpeechSynthLib
     }
 
     static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start(); 
-    public void StopSpeakingAsync() => SynthReal.StopSpeakingAsync();
+    public void StopSpeakingAsync() => synthesizer.StopSpeakingAsync();
 
     protected virtual void Dispose(bool disposing)
     {
@@ -123,7 +123,7 @@ namespace SpeechSynthLib
       {
         if (disposing)
         {
-          _synthNew.Dispose();
+          _synthesizer?.Dispose();
         }
 
         _disposedValue = true;
@@ -138,7 +138,6 @@ namespace SpeechSynthLib
   }
 
   public enum VMode { Unknown, Prosody, Express }
-
 }/* 
 2020-12-17 
 //todo: for more voice manipulations see https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-synthesis-markup?tabs=csharp&source=docs
@@ -149,4 +148,9 @@ https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/languag
 f8653a65f32d4bdefa0157d1d4547958
 65f32d4bdefa0157d1f8653ad4547958
 bdefa0157d1d4547958f8653a65f32d4
+
+2022-12-30 - revisiting/retracing steps to play cached content instead of say.exe:
+Quick Start: https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-text-to-speech?tabs=windows%2Cterminal&pivots=programming-language-csharp
+Synthesize speech to a file ++: https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/how-to-speech-synthesis?tabs=browserjs%2Cterminal&pivots=programming-language-csharp
+Microsoft Cognitive Services Speech SDK Samples: https://learn.microsoft.com/en-us/samples/azure-samples/cognitive-services-speech-sdk/sample-repository-for-the-microsoft-cognitive-services-speech-sdk/
 */

@@ -10,3 +10,5 @@ global using StandardContractsLib;
 global using static System.Diagnostics.Trace;
 global using System.Text.RegularExpressions;
 global using Microsoft.CognitiveServices.Speech;
+global using System.ComponentModel;
+global using System.Xml.Linq;
