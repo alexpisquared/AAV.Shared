@@ -26,69 +26,50 @@ public class SpeechSynth : IDisposable
 
   public async Task SpeakAsync(string msg)
   {
-    var filename = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
+    await SpeakOr(msg, file, _synthesizer.SpeakTextAsync);
+  }
+  public async Task SpeakProsodyAsync(string msg, string voice = _voiceNameFallback, double speakingRate = 1.5)
+  {
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{RemoveIllegalCharacters(msg)}.wav";
+    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
+    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync);
+  }
+  public async Task SpeakExpressAsync(string msg, string voice = _voiceNameFallback, string style = "cheerful")
+  {
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
+    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>";
+    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync);
+  }
+
+  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> action)
+  {
     if (_useCached)
     {
-      if (!File.Exists(filename))
-        await SynthesizeAudioAsync(msg, filename);
+      if (!File.Exists(file))
+        await SpeakPlus(msg, file, action);
 
-      PlayWavFileAsync(filename);
+      PlayWavFileAsync(file);
     }
     else
     {
-      await SynthesizeAudioAsync(msg, filename);
+      await SpeakPlus(msg, file, action);
     }
   }
-  public async Task SpeakProsodyAsync(string msg, string voiceName = _voiceNameFallback, double speakingRate = 1.25)
-  {
-    var filename = @$"{_pathToCache}{RemoveIllegalCharacters(voiceName)}~{speakingRate}~{RemoveIllegalCharacters(msg)}.wav";
-    if (!File.Exists(filename))
-      await SynthesizeAudioProsodyAsync(msg, voiceName, speakingRate, filename);
-
-    PlayWavFileAsync(filename);
-  }
-  public async Task SpeakExpressAsync(string msg, string voiceName = _voiceNameFallback, string style = "cheerful")
-  {
-    var filename = @$"{_pathToCache}{RemoveIllegalCharacters(voiceName)}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
-    if (!File.Exists(filename))
-      await SynthesizeAudioExpressAsync(msg, voiceName, style, filename);
-
-    PlayWavFileAsync(filename);
-  }
-
-  async Task SynthesizeAudioAsync(string msg, string filename)
+  async Task SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> act)
   {
     try
     {
-      using var result = await _synthesizer.SpeakTextAsync(msg);
+      using var result = await act(msg);
       if (_useCached)
       {
-        using var stream = await NewMethod1(filename, result);
+        await CreateWavFile(file, result);
       }
     }
     catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
   }
 
-  async Task SynthesizeAudioProsodyAsync(string msg, string voice, double speakingRate, string filename)
-  {
-    await NewMethod(filename, $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>");
-  }
-  async Task SynthesizeAudioExpressAsync(string msg, string voice, string style, string filename)
-  {
-    await NewMethod(filename, $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>");
-  }
-
-  async Task NewMethod(string filename, string ssml)
-  {
-    try
-    {
-      using var result = await _synthesizer.SpeakSsmlAsync(ssml);
-      using var stream = await NewMethod1(filename, result);
-    }
-    catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
-  }
-
-  private static async Task<AudioDataStream> NewMethod1(string filename, SpeechSynthesisResult result)
+  static async Task CreateWavFile(string file, SpeechSynthesisResult result)
   {
     if (result.Reason == ResultReason.Canceled)
     {
@@ -98,20 +79,16 @@ public class SpeechSynth : IDisposable
         Write($"  result.Reason: '{result.Reason}'  Error: {cancellationDetails.ErrorCode}-{cancellationDetails.ErrorDetails}\n");
       }
     }
-    var stream = AudioDataStream.FromResult(result);
+
+    using var stream = AudioDataStream.FromResult(result);
 
     var temp = Path.GetTempFileName();
-    await stream.SaveToWaveFileAsync(temp);
-    File.Move(temp, filename);
-    return stream;
+    await stream.SaveToWaveFileAsync(temp); // :does not like foreign chars ==>  ^^ + >>
+    File.Move(temp, file);
   }
 
-  void PlayWavFileAsync(string filename) => new SoundPlayer(filename).PlaySync();//_player.SoundLocation= filename;//_player.Play();
-  string RemoveIllegalCharacters(string filename = "My:File*Name?")
-  {
-    filename = Regex.Replace(filename, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", string.Empty);
-    return filename;
-  }
+  void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
+  string RemoveIllegalCharacters(string file) => Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", string.Empty);
 
   protected virtual void Dispose(bool disposing)
   {
