@@ -4,13 +4,18 @@ public class SpeechSynth : IDisposable
   const string _voiceNameFallback = "uk-UA-PolinaNeural", _rgn = "canadacentral", _key = "use proper key here", _pathToCache = @"c:\temp\tts\";
   readonly string _speechKey;
   readonly SpeechSynthesizer _synthesizer;
-  bool _disposedValue, useCached = true;
+  readonly bool _useCached;
+  bool _disposedValue;
 
-  public SpeechSynth(string speechKey)
+  public SpeechSynth(string speechKey, bool useCached = true, string speechSynthesisLanguage = "uk-UA")
   {
+    _useCached = useCached;
+
     var speechConfig = SpeechConfig.FromSubscription(_speechKey = speechKey, "canadacentral");
 
-    if (useCached)
+    speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage;
+
+    if (_useCached)
     {
       speechConfig.SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm);
       _synthesizer = new SpeechSynthesizer(speechConfig, null);
@@ -21,10 +26,9 @@ public class SpeechSynth : IDisposable
 
   public async Task SpeakAsync(string msg)
   {
-    if (useCached)
+    var filename = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
+    if (_useCached)
     {
-
-      var filename = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
       if (!File.Exists(filename))
         await SynthesizeAudioAsync(msg, filename);
 
@@ -32,7 +36,7 @@ public class SpeechSynth : IDisposable
     }
     else
     {
-      await SynthesizeAudioAsync(msg);
+      await SynthesizeAudioAsync(msg, filename);
     }
   }
   public async Task SpeakProsodyAsync(string msg, string voiceName = _voiceNameFallback, double speakingRate = 1.25)
@@ -56,81 +60,50 @@ public class SpeechSynth : IDisposable
   {
     try
     {
-      var result = await _synthesizer.SpeakTextAsync(msg);
-      using var stream = AudioDataStream.FromResult(result);
-      await stream.SaveToWaveFileAsync(filename);
-    }
-    catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
-  }
-  async Task SynthesizeAudioAsync(string msg)
-  {
-    try
-    {
-      var result = await _synthesizer.SpeakTextAsync(msg);
+      using var result = await _synthesizer.SpeakTextAsync(msg);
+      if (_useCached)
+      {
+        using var stream = await NewMethod1(filename, result);
+      }
     }
     catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
   }
 
   async Task SynthesizeAudioProsodyAsync(string msg, string voice, double speakingRate, string filename)
   {
-    try
-    {
-      var lang = voice.Length > 5 ? voice[..5] : "en-US";
-
-      using var result = await _synthesizer.SpeakSsmlAsync($@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>");
-
-      if (result.Reason == ResultReason.Canceled)
-      {
-        var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-        Write($"\tCANCELED: {cancellation.Reason}");
-
-        if (cancellation.Reason == CancellationReason.Error)
-        {
-          Write($"  Error: {cancellation.ErrorCode}-{cancellation.ErrorDetails}");
-        }
-      }
-      else
-        Write($"  result: '{result.Reason}'");
-
-      Write("\n");
-
-      using var stream = AudioDataStream.FromResult(result);
-      await stream.SaveToWaveFileAsync(filename);
-    }
-    catch (Win32Exception) { throw; }
-    catch (Exception) { throw; }
+    await NewMethod(filename, $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>");
   }
   async Task SynthesizeAudioExpressAsync(string msg, string voice, string style, string filename)
   {
+    await NewMethod(filename, $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>");
+  }
+
+  async Task NewMethod(string filename, string ssml)
+  {
     try
     {
-      var lang = voice.Length > 5 ? voice[..5] : "en-US";
-
-      using var result = await _synthesizer.SpeakSsmlAsync(
-        $@" <speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>");
-
-      if (result.Reason == ResultReason.Canceled)
-      {
-        var cancellation = SpeechSynthesisCancellationDetails.FromResult(result);
-        Write($"\tCANCELED: {cancellation.Reason}");
-
-        if (cancellation.Reason == CancellationReason.Error)
-        {
-          Write($"  Error: {cancellation.ErrorCode}-{cancellation.ErrorDetails}");
-        }
-      }
-      else
-        Write($"  result: '{result.Reason}'");
-
-      Write("\n");
-
-      using var stream = AudioDataStream.FromResult(result);
-
-      var temp = Path.GetTempFileName();
-      await stream.SaveToWaveFileAsync(temp);
-      File.Move(temp, filename);
+      using var result = await _synthesizer.SpeakSsmlAsync(ssml);
+      using var stream = await NewMethod1(filename, result);
     }
     catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
+  }
+
+  private static async Task<AudioDataStream> NewMethod1(string filename, SpeechSynthesisResult result)
+  {
+    if (result.Reason == ResultReason.Canceled)
+    {
+      var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);
+      if (cancellationDetails.Reason == CancellationReason.Error)
+      {
+        Write($"  result.Reason: '{result.Reason}'  Error: {cancellationDetails.ErrorCode}-{cancellationDetails.ErrorDetails}\n");
+      }
+    }
+    var stream = AudioDataStream.FromResult(result);
+
+    var temp = Path.GetTempFileName();
+    await stream.SaveToWaveFileAsync(temp);
+    File.Move(temp, filename);
+    return stream;
   }
 
   void PlayWavFileAsync(string filename) => new SoundPlayer(filename).PlaySync();//_player.SoundLocation= filename;//_player.Play();
