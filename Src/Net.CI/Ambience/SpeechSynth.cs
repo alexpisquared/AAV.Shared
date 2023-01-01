@@ -1,19 +1,20 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _voiceNameFallback = "uk-UA-PolinaNeural", _rgn = "canadacentral", _key = "use proper key here", _pathToCache = @"c:\temp\tts\";
-  readonly string _speechKey;
+  const string _rgn = "canadacentral", _pathToCache = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _styleFallback = "cheerful";
+  readonly string _voiceFallback;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public SpeechSynth(string speechKey, bool useCached = true, string speechSynthesisLanguage = "uk-UA")
+  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string speechSynthesisLanguage = "uk-UA")
   {
     _useCached = useCached;
+    _voiceFallback = voiceNameFallback;
 
-    var speechConfig = SpeechConfig.FromSubscription(_speechKey = speechKey, "canadacentral");
+    var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
 
-    speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage;
+    speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage; // seems like no effect ... keep it though for a new language on a new machine usecase to validate; seems like it helps kicking off new ones.
 
     if (_useCached)
     {
@@ -24,18 +25,21 @@ public class SpeechSynth : IDisposable
       _synthesizer = new SpeechSynthesizer(speechConfig);
   }
 
-  public async Task SpeakAsync(string msg)
+  public async Task SpeakDefaultAsync(string msg)
   {
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
     await SpeakOr(msg, file, _synthesizer.SpeakTextAsync);
   }
-  public async Task SpeakProsodyAsync(string msg, string voice = _voiceNameFallback, double speakingRate = 1.5)
+  public async Task SpeakProsodyAsync(string msg, double speakingRate = 1.5) => await SpeakProsodyAsync(msg, _voiceFallback, speakingRate);
+  public async Task SpeakProsodyAsync(string msg, string voice, double speakingRate = 1.5)
   {
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync);
   }
-  public async Task SpeakExpressAsync(string msg, string voice = _voiceNameFallback, string style = "cheerful")
+  public async Task SpeakExpressAsync(string msg) => await SpeakExpressAsync(msg, _voiceFallback, _styleFallback);
+  public async Task SpeakExpressAsync(string msg, string voice) => await SpeakExpressAsync(msg, voice, _styleFallback);
+  public async Task SpeakExpressAsync(string msg, string voice, string style)
   {
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>";
@@ -46,30 +50,39 @@ public class SpeechSynth : IDisposable
   {
     if (_useCached)
     {
-      if (!File.Exists(file) || new FileInfo(file).Length < 10)
-        await SpeakPlus(msg, file, action);
-
-      PlayWavFileAsync(file);
+      if (File.Exists(file) && new FileInfo(file).Length > 10)
+      {
+        PlayWavFileAsync(file);
+      }
+      else
+      {
+        if (await SpeakPlus(msg, file, action))
+          PlayWavFileAsync(file);
+        else
+          UseSayExe(msg);
+      }
     }
     else
     {
-      await SpeakPlus(msg, file, action);
+      _ = await SpeakPlus(msg, file, action);
     }
   }
-  async Task SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> act)
+  async Task<bool> SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> act)
   {
     try
     {
       using var result = await act(msg);
       if (_useCached)
       {
-        await CreateWavFile(file, result);
+        return await CreateWavFile(file, result);
       }
     }
     catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
+
+    return false;
   }
 
-  static async Task CreateWavFile(string file, SpeechSynthesisResult result)
+  static async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
   {
     if (result.Reason == ResultReason.Canceled)
     {
@@ -84,7 +97,15 @@ public class SpeechSynth : IDisposable
 
     var temp = Path.GetTempFileName();
     await stream.SaveToWaveFileAsync(temp); // :does not like foreign chars ==>  ^^ + >>
-    File.Move(temp, file);
+    if (new FileInfo(temp).Length > 10)
+      File.Move(temp, file);
+    else
+    {
+      UseSayExe($"Check the internet: zero file length.");
+      return false;
+    }
+
+    return true;
   }
 
   void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
@@ -131,11 +152,11 @@ public record Voice_styles_and_roles(string Voice, string[] Styles, string[] Rol
 public class CC
 {
   public static Voice_styles_and_roles
-    UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
     UkuaPolinaNeural = new("uk-UA-PolinaNeural", Array.Empty<string>(), Array.Empty<string>()),
+    UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
     EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, Array.Empty<string>()),
-    EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, Array.Empty<string>()),
     EnusAriaNeural = new("en-US-AriaNeural", new[] { cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful }, Array.Empty<string>()),
+    EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, Array.Empty<string>()),
     ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", new[] { cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious }, new[] { YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy });
 
   const string
