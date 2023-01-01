@@ -46,7 +46,7 @@ public class SpeechSynth : IDisposable
   {
     if (_useCached)
     {
-      if (!File.Exists(file))
+      if (!File.Exists(file) || new FileInfo(file).Length < 10)
         await SpeakPlus(msg, file, action);
 
       PlayWavFileAsync(file);
@@ -128,39 +128,39 @@ public record Voice_styles_and_roles(string Voice, string[] Styles, string[] Rol
 public class CC
 {
   public static Voice_styles_and_roles
-    UkuaOstapNeural = new("uk-UA-OstapNeural", new string[] { }, new string[] { }),
-    UkuaPolinaNeural = new("uk-UA-PolinaNeural", new string[] { }, new string[] { }),
-    EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, new string[] { }),
-    EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, new string[] { }),
-    EnusAriaNeural = new("en-US-AriaNeural", new[] { chat, customerservice, narration_professional, newscast_casual, newscast_formal, cheerful, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful }, new string[] { }),
-    ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", new[] { embarrassed, calm, fearful, cheerful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious }, new[] { YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy });
+    UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
+    UkuaPolinaNeural = new("uk-UA-PolinaNeural", Array.Empty<string>(), Array.Empty<string>()),
+    EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, Array.Empty<string>()),
+    EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, Array.Empty<string>()),
+    EnusAriaNeural = new("en-US-AriaNeural", new[] { cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful }, Array.Empty<string>()),
+    ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", new[] { cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious }, new[] { YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy });
 
   const string
-    embarrassed = "embarrassed",
-    calm = "calm",
-    fearful = "fearful",
-    cheerful = "cheerful",
-    disgruntled = "disgruntled",
-    serious = "serious",
-    angry = "angry",
-    sad = "sad",
-    depressed = "depressed",
     affectionate = "affectionate",
-    gentle = "gentle",
-    envious = "envious",
+    angry = "angry",
+    calm = "calm",
     chat = "chat",
+    cheerful = "cheerful",
     customerservice = "customerservice",
+    disgruntled = "disgruntled",
+    depressed = "depressed",
+    envious = "envious",
+    excited = "excited",
+    embarrassed = "embarrassed",
+    empathetic = "empathetic",
+    fearful = "fearful",
+    friendly = "friendly",
+    gentle = "gentle",
+    hopeful = "hopeful",
     narration_professional = "narration-professional",
     newscast_casual = "newscast-casual",
     newscast_formal = "newscast-formal",
-    empathetic = "empathetic",
-    excited = "excited",
-    friendly = "friendly",
-    terrified = "terrified",
+    sad = "sad",
+    serious = "serious",
     shouting = "shouting",
+    terrified = "terrified",
     unfriendly = "unfriendly",
     whispering = "whispering",
-    hopeful = "hopeful",
 
     YoungAdultFemale = "YoungAdultFemale",
     YoungAdultMale = "YoungAdultMale",
