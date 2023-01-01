@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SpeechSynthLib
 {
+//[Obsolete("", true)]  
   public class SpeechSynth : IDisposable
   {
     const double _speakingRate = 1.25;

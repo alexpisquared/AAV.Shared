@@ -108,6 +108,9 @@ public class SpeechSynth : IDisposable
     Dispose(disposing: true);
     GC.SuppressFinalize(this);
   }
+
+  public async Task SayExe(string msg) { UseSayExe(msg); await Task.Yield(); }
+  public static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start();
 }
 /*
 2022-12-30 - revisiting/retracing steps to play cached content instead of say.exe:
