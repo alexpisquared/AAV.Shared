@@ -28,14 +28,14 @@ public class SpeechSynth : IDisposable
   public async Task SpeakDefaultAsync(string msg)
   {
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
-    await SpeakOr(msg, file, _synthesizer.SpeakTextAsync);
+    await SpeakOr(msg, file, _synthesizer.SpeakTextAsync, msg);
   }
   public async Task SpeakProsodyAsync(string msg, double speakingRate = 1.5) => await SpeakProsodyAsync(msg, _voiceFallback, speakingRate);
   public async Task SpeakProsodyAsync(string msg, string voice, double speakingRate = 1.5)
   {
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
-    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync);
+    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
   public async Task SpeakExpressAsync(string msg) => await SpeakExpressAsync(msg, _voiceFallback, _styleFallback);
   public async Task SpeakExpressAsync(string msg, string voice) => await SpeakExpressAsync(msg, voice, _styleFallback);
@@ -43,10 +43,10 @@ public class SpeechSynth : IDisposable
   {
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>";
-    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync);
+    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
 
-  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> action)
+  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> action, string? orgMsg = null)
   {
     if (_useCached)
     {
@@ -59,7 +59,7 @@ public class SpeechSynth : IDisposable
         if (await SpeakPlus(msg, file, action))
           PlayWavFileAsync(file);
         else
-          UseSayExe(msg);
+          UseSayExe(orgMsg ?? msg);
       }
     }
     else
