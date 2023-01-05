@@ -7,8 +7,12 @@ public class MouseOperations
   [DllImport("user32.dll")] public static extern int SwapMouseButton(int bSwap);
   [DllImport("user32.dll")] static extern int GetSystemMetrics(int abc);
 
-  public static bool IsMouseSwapped() => GetSystemMetrics(SM_SWAPBUTTON) > 0;
-  public static int SwapMouseButton_() => SwapMouseButton(IsMouseSwapped() ? 0 : 1);
+  public static bool IsMouseSwapped => GetSystemMetrics(SM_SWAPBUTTON) > 0;
+  public static bool SwapMouseButton_()
+  {
+    SwapMouseButton(IsMouseSwapped ? 0 : 1);
+    return IsMouseSwapped;
+  }
 
   public static void SetCursorPosition(int x, int y) => SetCursorPos(x, y);
   public static void SetCursorPosition(MousePoint point) => SetCursorPos(point.X, point.Y);
