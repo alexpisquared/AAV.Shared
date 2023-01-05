@@ -4,6 +4,11 @@ public class MouseOperations
   [DllImport("user32.dll", EntryPoint = "SetCursorPos")][return: MarshalAs(UnmanagedType.Bool)] static extern bool SetCursorPos(int x, int y);
   [DllImport("user32.dll")][return: MarshalAs(UnmanagedType.Bool)] static extern bool GetCursorPos(out MousePoint lpMousePoint);
   [DllImport("user32.dll")] static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+  [DllImport("user32.dll")] public static extern int SwapMouseButton(int bSwap);
+  [DllImport("user32.dll")] static extern int GetSystemMetrics(int abc);
+
+  public static bool IsMouseSwapped() => GetSystemMetrics(SM_SWAPBUTTON) > 0;
+  public static int SwapMouseButton_() => SwapMouseButton(IsMouseSwapped() ? 0 : 1);
 
   public static void SetCursorPosition(int x, int y) => SetCursorPos(x, y);
   public static void SetCursorPosition(MousePoint point) => SetCursorPos(point.X, point.Y);
@@ -57,4 +62,6 @@ public class MouseOperations
     RightDown = 0x00000008,
     RightUp = 0x00000010
   }
+
+  const int SM_SWAPBUTTON = 23;
 }
