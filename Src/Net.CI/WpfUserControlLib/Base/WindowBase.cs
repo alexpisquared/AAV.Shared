@@ -180,6 +180,8 @@ public partial class WindowBase : Window
         WriteLine($"TrWL:> {WinFile,20}: On  Save: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
       else
         JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);
+
+      _logger.LogInformation($"### Saved window placement to {WinFile}.");
     }
     catch (Exception ex) { _logger.LogError(ex, $"■▄▀■ Logged/Ignored  ..since old good values are already there."); _ = ex.Log(); }
   }
