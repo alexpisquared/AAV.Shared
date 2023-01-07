@@ -1,21 +1,19 @@
 ﻿namespace WpfUserControlLib.Helpers;
-public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.com/csharp-how-to-update-appsettings-json-programmatically/
+public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.com/csharp-how-to-update-appsettings-json-programmatically/
 {
   public static IConfigurationRoot AutoInitConfigFromFile(bool enforceCreation = false)
   {
     const int maxTries = 2;
+    int tryCntr;
 
-    var appsettingsFiles = new[] {
+    foreach (var appsettingsFile in new[] {
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{_appSettingsFileNameOnly}"),
         @$"C:\Temp\Publish\{Assembly.GetExecutingAssembly().GetName().Name}\Config\{_appSettingsFileNameOnly}",
         @$"AppSettings\{_appSettingsFileNameOnly}",
         @$"{_appSettingsFileNameOnly}",
-      };
-
-    foreach (var appsettingsFile in appsettingsFiles)
+      })
     {
-      int i;
-      for (i = 0; i < maxTries && TryCreateDefaultFile(appsettingsFile, enforceCreation); i++)
+      for (tryCntr = 0; tryCntr < maxTries && TryCreateDefaultFile(appsettingsFile, enforceCreation); tryCntr++)
       {
         try
         {
@@ -32,7 +30,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
         catch (FileNotFoundException ex)
         {
           if (!TryCreateDefaultFile(appsettingsFile, enforceCreation))
-            _ = ex.Log("Retrying 3 times ...");
+            _ = ex.Log($"Retrying {maxTries} times ...");
         }
         catch (FormatException ex)
         {
@@ -46,7 +44,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
         }
       }
 
-      new Exception().Pop($"Unable to create default  {appsettingsFile}  file  {i}/{maxTries} times.");
+      new Exception().Pop($"Unable to create default  {appsettingsFile}  file  {tryCntr}/{maxTries} times.");
     }
 
     return AutoInitConfigHardcoded(enforceCreation);
@@ -55,7 +53,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
   {
     var svr = DevOps.IsDevMachineH ? @".\SqlExpress" : "mtDEVsqldb,1625";
     var cfg = new ConfigurationBuilder()
-      .AddInMemoryCollection()            
+      .AddInMemoryCollection()
       .AddUserSecrets<WhatIsThatForType>()
       .Build();
 
@@ -75,33 +73,6 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
 
     return cfg;
   }
-
-  const string
-    _appSettingsFileNameOnly = "AppSettings.json",
-    _cs11_demo = "demo",
-    _cs11_demo1 = $$"""
-    {
-      "name": "{{_cs11_demo}}"
-    }
-    """,
-    __cs11_demo2 = $$"""
-    {
-      "name": "{0}"
-    }
-    """,
-    _defaultAppSetValues = @"{{
-      ""WhoAmI"":               ""{1}"",
-      ""WhereAmI"":             ""{0}"",
-      ""LogFolder"":            ""C:\\Temp\\Logs\\WpfUsrCtrlLib..log"",
-      ""ServerLst"":            ""mtDEVsqldb,1625 mtUATsqldb mtPRDsqldb .\\sqlexpress"",
-      ""DtBsNmLst"":            ""QStatsDbg QStatsRls"",
-      ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=41;"",
-      ""SqlConStrForma_"":      ""Server={{0}};Database={{1}};persist security info=True;user id={{2}};password={{3}};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=47"",
-      ""SubDetails"": {{
-        ""KeyVaultURL"":        ""<moved to a safe place>"",
-        ""PreCreatedAt"":       ""{2}""
-      }}
-}}";
   static bool TryCreateDefaultFile(string appsettingsPathFileExt, bool enforceCreation)
   {
     try
@@ -132,5 +103,32 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
     }
     catch (Exception ex) { ex.Pop(); return false; }
   }
+
+  const string
+    _appSettingsFileNameOnly = "AppSettings.json",
+    _cs11_demo0 = "demo",
+    _cs11_demo1 = $$"""
+    {
+      "name": "{{_cs11_demo0}}"
+    }
+    """,
+    _cs11_demo2 = $$"""
+    {
+      "name": "{0}"
+    }
+    """,
+    _defaultAppSetValues = @"{{
+      ""WhoAmI"":               ""{1}"",
+      ""WhereAmI"":             ""{0}"",
+      ""LogFolder"":            ""C:\\Temp\\Logs\\WpfUsrCtrlLib..log"",
+      ""ServerLst"":            ""mtDEVsqldb,1625 mtUATsqldb mtPRDsqldb .\\sqlexpress"",
+      ""DtBsNmLst"":            ""QStatsDbg QStatsRls"",
+      ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=41;"",
+      ""SqlConStrForma_"":      ""Server={{0}};Database={{1}};persist security info=True;user id={{2}};password={{3}};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=47"",
+      ""SubDetails"": {{
+        ""KeyVaultURL"":        ""<moved to a safe place>"",
+        ""PreCreatedAt"":       ""{2}""
+      }}
+}}";
   class WhatIsThatForType { public string MyProperty { get; set; } = "<Default Value of Nothing Special>"; }
 }
