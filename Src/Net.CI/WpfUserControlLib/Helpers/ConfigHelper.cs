@@ -6,8 +6,8 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
     const int maxTries = 2;
 
     var appsettingsFiles = new[] {
-        @$"C:\Temp\Publish\CI.IPM\Config\{_appSettingsFileNameOnly}",
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{_appSettingsFileNameOnly}"),
+        @$"C:\Temp\Publish\{Assembly.GetExecutingAssembly().GetName().Name}\Config\{_appSettingsFileNameOnly}",
         @$"AppSettings\{_appSettingsFileNameOnly}",
         @$"{_appSettingsFileNameOnly}",
       };
@@ -22,7 +22,7 @@ public class ConfigHelper //todo:  appsettings as user prefs: https://makolyte.c
           return new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile(appsettingsFile)
-            .AddUserSecrets<WhatIsThatForType>()
+            .AddUserSecrets<WhatIsThatForType>() // :overrides value from the appsettings file above, but only for debug?local?etc. runs, right?
             .Build();
         }
         catch (InvalidOperationException ex)

@@ -131,13 +131,12 @@ public class SpeechSynth : IDisposable
   }
 
   public async Task SayExe(string msg) { UseSayExe(msg); await Task.Yield(); }
-  public static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", $"\"{msg}\"") { RedirectStandardError = true, UseShellExecute = false } }.Start();
+  public static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", msg) { RedirectStandardError = true, UseShellExecute = false } }.Start();
 }
-
-public record Voice_styles_and_roles(string Voice, string[] Styles, string[] Roles);
+public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
 public class CC
 {
-  public static Voice_styles_and_roles
+  public static VoiceStylesRoles
     UkuaPolinaNeural = new("uk-UA-PolinaNeural", Array.Empty<string>(), Array.Empty<string>()),
     UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
     EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, Array.Empty<string>()),
