@@ -3,7 +3,6 @@
   <WindowChrome.WindowChrome>
     <WindowChrome CaptionHeight="0" ResizeBorderThickness="10" />
   </WindowChrome.WindowChrome>
-
   <WrapPanel>
     <WrapPanel.Resources>
       <Style TargetType="Rectangle">
