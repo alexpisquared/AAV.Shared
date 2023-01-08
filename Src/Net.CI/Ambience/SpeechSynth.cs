@@ -1,16 +1,17 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", _pathToCache = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _styleFallback = "cheerful";
-  readonly string _voiceFallback;
+  const string _rgn = "canadacentral", _pathToCache = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  readonly string _voiceFallback, _styleFallback;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string speechSynthesisLanguage = "uk-UA")
+  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
   {
     _useCached = useCached;
     _voiceFallback = voiceNameFallback;
+    _styleFallback = styleFallback;
 
     var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
 
@@ -24,6 +25,8 @@ public class SpeechSynth : IDisposable
     else
       _synthesizer = new SpeechSynthesizer(speechConfig);
   }
+
+  public void SpeakExpressFAF(string v) => _ = Task.Run(() => SpeakExpressAsync(v));
 
   public async Task SpeakDefaultAsync(string msg)
   {

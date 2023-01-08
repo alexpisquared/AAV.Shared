@@ -62,11 +62,16 @@ public partial class WindowBase : Window
     }
     catch (Exception ex) { ex.Pop(this, $"New theme '{themeName}' is trouble.", lgr: _logger); }
   }
-  async void CloseShutdown()
+  void CloseShutdown()
   {
     WriteLine($",,, Win  aaa");
-    Close();
-    await Task.Delay(2500);
+    try
+    {
+      //Hide();
+      //await Task.Delay(2500);
+      Close();
+    }
+    catch (Exception ex) { ex.Pop(this, $"CloseShutdown()", lgr: _logger); }
     /*Application.Current.Shutdown();*/
   }
 
@@ -181,17 +186,21 @@ public partial class WindowBase : Window
       else
         JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);
 
-      _logger.Log(LogLevel.Trace,  $"### Saved window placement to {WinFile}.");
+      _logger.Log(LogLevel.Trace, $"### Saved window placement to {WinFile}.");
     }
     catch (Exception ex) { _logger.LogError(ex, $"■▄▀■ Logged/Ignored  ..since old good values are already there."); _ = ex.Log(); }
   }
   protected override void OnClosed(EventArgs e)
   {
-    WriteLine($",,, Win  ccc OnClosed");
-    base.OnClosed(e);
-    KeyUp -= (s, e) => OnKeyUp_(e);
-    MouseWheel -= (s, e) => OnMouseWheel_(e);
-    MouseLeftButtonDown -= (s, e) => OnMouseLeftButtonDown_(e);
+    try
+    {
+      WriteLine($",,, Win  ccc OnClosed");
+      base.OnClosed(e);
+      KeyUp -= (s, e) => OnKeyUp_(e);
+      MouseWheel -= (s, e) => OnMouseWheel_(e);
+      MouseLeftButtonDown -= (s, e) => OnMouseLeftButtonDown_(e);
+    }
+    catch (Exception ex) { ex.Pop(this, ex.Message, lgr: _logger); }
   }
   protected virtual void OnWindowMiniBase(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
   protected virtual void OnClosShutdnBase(object s, RoutedEventArgs e) => CloseShutdown();
