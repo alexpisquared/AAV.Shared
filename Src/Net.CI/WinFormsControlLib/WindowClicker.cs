@@ -1,7 +1,7 @@
 ﻿namespace WinFormsControlLib;
 public class WindowClicker // https://chat.openai.com/chat : better to use the OpenAI's tried method, than this unknown piece (2022-12)
 {
-  [DllImport("user32.dll")] static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+  [DllImport("user32.dll")] static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
   [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr hWnd);
   [DllImport("user32.dll")] static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
