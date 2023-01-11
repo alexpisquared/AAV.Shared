@@ -9,7 +9,7 @@ public static class NativeMethods
 
   internal static void BeepIf(int freq, int dur)
   {
-    if (VersionHelper.IsDbgAndRBD)
+    if (VersionHelper.IsDbgOrRBD)
       _ = Beep(freq, dur);
   }
 

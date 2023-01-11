@@ -20,7 +20,7 @@ public partial class WindowBase : Window
     KeyUp += (s, e) => OnKeyUp_(e);
   }
 
-  protected bool IgnoreEscape { get; set; } = !VersionHelper.IsDbgAndRBD;
+  protected bool IgnoreEscape { get; set; } = !VersionHelper.IsDbgOrRBD;
   protected bool IgnoreWindowPlacement { get; set; }
   public static readonly DependencyProperty ZVProperty = DependencyProperty.Register("ZV", typeof(double), typeof(WindowBase), new PropertyMetadata(_defaultZoomV)); public double ZV { get => (double)GetValue(ZVProperty); set => SetValue(ZVProperty, value); }
   public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_defaultTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }

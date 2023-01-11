@@ -29,7 +29,7 @@ public partial class ExceptionPopup : WindowBase
     methodNm.Text = $"{cmn}()";
     optnlMsg.Text = msg;
     innrMsgs.Text = ex.InnerMessages();
-    if (VersionHelper.IsDbgAndRBD && cfp is not null)
+    if (VersionHelper.IsDbgOrRBD && cfp is not null)
       OpenVsOnTheCulpritLine(cfp, cln);
 
     Hand.Play();
