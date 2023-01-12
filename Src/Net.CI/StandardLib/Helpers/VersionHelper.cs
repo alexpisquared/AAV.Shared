@@ -3,7 +3,7 @@ public static class VersionHelper
 {
   public static string CurVerStr(string fmt) => $"v{TimedVer.ToString(fmt)}  {CompileMode}";
   public static string CurVerStrYYMMDD => $"v{TimedVer:yy.MM.dd}  {CompileMode}";
-  public static string CurVerStrYMd => $"v{TimedVer:yy.M.d}  {CompileMode}";
+  public static string CurVerStrYMd => $"v{TimedVer:y.M.d}  {CompileMode}";
   public static string DotNetCoreVersion { get { try { return Environment.Version.ToString(); } catch (Exception ex) { return ex.Message; } } } // Gets a System.Version object that describes the major, minor, build, and revision numbers of the CLR (common language runtime). ---sadly, for/of the app only.
   public static string DevDbgAudit(IConfigurationRoot cfg, [CallerMemberName] string? cmn = "") => $"{CurVerStrYYMMDD}  " +
       @$"{Environment.MachineName}.{Environment.UserDomainName}\{Environment.UserName}  " +
@@ -13,11 +13,7 @@ public static class VersionHelper
       $"{cmn}  " +
       $"arg:[{string.Join("|", Environment.GetCommandLineArgs().Skip(1))}]";        // $"cur:{Environment.CurrentDirectory}  ";
 
-  public static string Env()
-  {
-    var ary = Assembly.GetExecutingAssembly().Location.Split('\\');
-    return ary.Length > 2 ? ary[2] : ary.Length.ToString();
-  }
+  public static string Env()  {    var ary = Assembly.GetExecutingAssembly().Location.Split('\\');    return ary.Length > 2 ? ary[2] : ary.Length.ToString();  } // ???
 
   public static (bool isObsolete, DateTime curExeTime) CheckForNewVersion(string pathToSetupExe, int buildTimeOffsetInMin = 3)
   {
@@ -29,7 +25,7 @@ public static class VersionHelper
   public static string CompileMode =>
     IsDbg ?
     (Debugger.IsAttached ? "·Dbg-Atchd" : "Dbg!!!") :
-    (Debugger.IsAttached ? "·Rls-Atchd" : "");
+    (Debugger.IsAttached ? "·Rls-Atchd" : "Rls");
 
   public static string TimeAgo(TimeSpan timespan, bool small = false, bool versionMode = false, string ago = "", string since = "") =>
     timespan < TimeSpan.Zero          /**/ ? "Never" :
