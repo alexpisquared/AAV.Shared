@@ -134,7 +134,16 @@ public class SpeechSynth : IDisposable
   }
 
   public async Task SayExe(string msg) { UseSayExe(msg); await Task.Yield(); }
-  public static void UseSayExe(string msg) => new Process { StartInfo = new ProcessStartInfo("say.exe", msg) { RedirectStandardError = true, UseShellExecute = false } }.Start();
+  public static void UseSayExe(string msg) => new Process
+  {
+    StartInfo = new ProcessStartInfo("say.exe", msg)
+    {
+      RedirectStandardOutput = true,
+      RedirectStandardError = true,
+      UseShellExecute = false,
+      CreateNoWindow = true               // Set command to run in a hidden window
+    }
+  }.Start();
 }
 public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
 public class CC

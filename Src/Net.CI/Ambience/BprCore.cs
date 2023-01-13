@@ -76,4 +76,6 @@ public partial class Bpr
     }
     catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); } // Net7.0 started catching/showing.
   }
+
+  public void SayExe(string msg) => SpeechSynth.UseSayExe(msg);
 }
