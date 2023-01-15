@@ -104,7 +104,8 @@ public class SpeechSynth : IDisposable
       File.Move(temp, file);
     else
     {
-      UseSayExe($"Check the internet: zero file length.");
+      UseSayExe($"Bad key: zero file length.");
+      await Task.Delay(888);
       return false;
     }
 
