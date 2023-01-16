@@ -33,6 +33,8 @@ public class SpeechSynth : IDisposable
     var file = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
     await SpeakOr(msg, file, _synthesizer.SpeakTextAsync, msg);
   }
+
+  public void SpeakProsodyFAF(string v) => _ = Task.Run(() => SpeakProsodyAsync(v));
   public async Task SpeakProsodyAsync(string msg, double speakingRate = 1.5) => await SpeakProsodyAsync(msg, _voiceFallback, speakingRate);
   public async Task SpeakProsodyAsync(string msg, string voice, double speakingRate = 1.5)
   {
