@@ -122,7 +122,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
       ""WhereAmI"":             ""{0}"",
       ""LogFolder"":            ""C:\\Temp\\Logs\\WpfUsrCtrlLib..log"",
       ""ServerLst"":            ""mtDEVsqldb,1625 mtUATsqldb mtPRDsqldb .\\sqlexpress"",
-      ""DtBsNmLst"":            ""QStatsDbg QStatsRls"",
+      ""DtBsNmLst"":            ""FinDemoDbg QStatsRls"",
       ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=41;"",
       ""SqlConStrForma_"":      ""Server={{0}};Database={{1}};persist security info=True;user id={{2}};password={{3}};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=47"",
       ""SubDetails"": {{
