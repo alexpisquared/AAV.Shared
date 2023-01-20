@@ -2,15 +2,14 @@
 
 public class Consts
 {
-#if DEBUG
+#if BackAtCI
   public static string SqlServerCSV => DevOps.IsDevMachineH ? """.\sqlexpress .\SQLEXPRESS""" : "MtDEVSQLDB,1625 MtUATSQLDB MTPRDSQLDB";
-  public static string DtBsNameCSV => DevOps.IsDevMachineH ? "FinDemoDbg qstatsrls" : "FinDemoDbg QStatsRls";
+  public static string DtBsNameCSV  => DevOps.IsDevMachineH ? "QStatsDbg QStatsRls" : "QStatsDbg QStatsRls";
 #else
-  public static string SqlServerCSV = "MTDEVSQLDB,1625 MTUATSQLDB MTPRDSQLDB";
-  public static string DtBsNameCSV = "FinDemoDbg QStatsRls";
+  public static string SqlServerCSV = @".\sqlexpress .\SQLEXPRESS";
+  public static string DtBsNameCSV = "QStatsDbg QStatsRLS";
 #endif
 
-  public const string ___ = "MTDEVSQLDB MTUATSQLDB MTPRDSQLDB";
-
   public static List<string> SqlServerList = SqlServerCSV.Split(' ').ToList();
+  public static List<string> DtBsNameList = DtBsNameCSV.Split(' ').ToList();
 }
