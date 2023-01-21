@@ -82,7 +82,7 @@
       </Style>
     </Style.Resources>-->
   </Style>
-  <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource DPrBase}" />
+  <Style TargetType="{x:Type DatePicker}"       BasedOn="{StaticResource DPrBase}" />
 
   <Style TargetType="{x:Type DatePickerTextBox}">
     <!--<Setter Property="Background" Value="{DynamicResource CtrlTextBackground}"/>
@@ -273,7 +273,7 @@
     <Setter Property="AllowsTransparency" Value="True"   />
     <Setter Property="ResizeMode"      Value="CanResize" />
   </Style>
-  <Style TargetType="Window" BasedOn="{StaticResource WindowStyle_Aav0}" x:Key="MouseOverMakesOpagueStyle">
+  <Style TargetType="{x:Type Window}" BasedOn="{StaticResource WindowStyle_Aav0}" x:Key="MouseOverMakesOpagueStyle">
     <Setter Property="Opacity"         Value=".3"/>
     <Style.Triggers>
       <Trigger Property="IsMouseOver"  Value="true">
@@ -281,7 +281,14 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  <Style TargetType="Window" BasedOn="{StaticResource WindowStyle_Aav0}" />
+  <Style TargetType="{x:Type Window}" BasedOn="{StaticResource WindowStyle_Aav0}" />
+
+  <Style TargetType="{x:Type ScrollBar}" x:Key="ScrollBarBase">
+    <Setter Property="Background"  Value="#333" />
+    <Setter Property="BorderBrush" Value="#555" />
+    <Setter Property="Foreground"  Value="#0f0" />
+  </Style>
+  <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBarBase}" />
 
   <!--Ipi Editors:-->
   <Style TargetType="{x:Type Label}"				BasedOn="{StaticResource LblBase}" x:Key="lblIP">
@@ -421,7 +428,6 @@
       <TextBlock  Margin="3" Foreground="{StaticResource InfoForegroundBrush}" FontWeight="Medium" Text="{Binding StringFormat='{}{0:yyyy-MM-dd}'}" />
     </Border>
   </ControlTemplate>
-
   <!--Ipi Editors.-->
 
 </ResourceDictionary>

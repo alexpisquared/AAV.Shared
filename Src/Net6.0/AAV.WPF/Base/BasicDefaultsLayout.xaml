@@ -131,7 +131,7 @@
     <Setter Property="AllowsTransparency"   Value="True"        />
     <Setter Property="ResizeMode"           Value="CanResize"   />
   </Style>
-  <Style TargetType="Window" BasedOn="{StaticResource WindowStyle_Aav0}" x:Key="MouseOverMakesOpagueStyle">
+  <Style TargetType="{x:Type Window}" BasedOn="{StaticResource WindowStyle_Aav0}" x:Key="MouseOverMakesOpagueStyle">
     <Setter Property="Opacity"              Value=".3"/>
     <Style.Triggers>
       <Trigger Property="IsMouseOver"       Value="true">
@@ -139,6 +139,6 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  <Style TargetType="Window" BasedOn="{StaticResource WindowStyle_Aav0}" />
+  <Style TargetType="{x:Type Window}" BasedOn="{StaticResource WindowStyle_Aav0}" />
 
 </ResourceDictionary>
