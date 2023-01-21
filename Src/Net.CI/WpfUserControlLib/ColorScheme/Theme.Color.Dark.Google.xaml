@@ -9,8 +9,8 @@
   <Color x:Key="TextForegroundColor">#08d82e</Color>
   <Color x:Key="ErorForegroundColor">#ff0232</Color>
 
-  <Color x:Key="LogoTextColor"      >#fe55fe</Color>  
-  <Color x:Key="___Color"           >#fe00fe</Color>
+  <Color x:Key="LogoTextColor"      >#08d82e</Color>  
+  <Color x:Key="___Color"           >#f0f</Color>
 
 </ResourceDictionary>
 <!--    Google Color  https://www.color-hex.com/color-palette/3305
