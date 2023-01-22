@@ -284,8 +284,8 @@
   <Style TargetType="{x:Type Window}" BasedOn="{StaticResource WindowStyle_Aav0}" />
 
   <Style TargetType="{x:Type ScrollBar}" x:Key="ScrollBarBase">
-    <Setter Property="Background"  Value="#333" />
-    <Setter Property="BorderBrush" Value="#555" />
+    <Setter Property="Background"  Value="#666" />
+    <Setter Property="BorderBrush" Value="#888" />
     <Setter Property="Foreground"  Value="#0f0" />
   </Style>
   <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource ScrollBarBase}" />
