@@ -1,7 +1,7 @@
 ﻿namespace WpfUserControlLib.Base;
 public partial class WindowBase : Window
 {
-    readonly ILogger<Window> _logger;
+    readonly ILogger _logger;
     protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
     const double _defaultZoomV = 1.25;
     const string _defaultTheme = "No Theme";
@@ -9,7 +9,7 @@ public partial class WindowBase : Window
     static int _currentTop = 0, _currentLeft = 0;
     string WinFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}{(VersionHelper.IsDbg ? ".dbg" : "")}.json");
     public WindowBase() : this(new LoggerFactory().CreateLogger<Window>()) { } // no logging needed; for cases like error popups, etc.
-    public WindowBase(ILogger<Window> logger)
+    public WindowBase(ILogger logger)
     {
         _logger = logger;
 
@@ -40,7 +40,7 @@ public partial class WindowBase : Window
             }
 
             //~Write($"TrcW:>     ~> ThemeApplier()   '{themeName}'  to  '{WinFile}' ... Dicts --/++:\r\n");
-            //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => WriteLine($"TrWL:>     ~> -- Removing: {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
+            //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => _logger.Log(LogLevel.Trace, $"TrWL:>     ~> -- Removing: {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
 
             var suri = $"{pref}{themeName}.xaml";
             if (Application.LoadComponent(new Uri(suri, UriKind.RelativeOrAbsolute)) is ResourceDictionary dict)
@@ -59,14 +59,14 @@ public partial class WindowBase : Window
 
             Thm = themeName;
 
-            //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => WriteLine($"TrWL:>     ~> ++ Adding:   {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
+            //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => _logger.Log(LogLevel.Trace, $"TrWL:>     ~> ++ Adding:   {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
             //~Write($"TrcW:>     ~> ThemeApplier()   '{themeName}'  to  '{WinFile}' is done. \r\n");
         }
         catch (Exception ex) { ex.Pop(this, $"New theme '{themeName}' is trouble.", lgr: _logger); }
     }
     void CloseShutdown()
     {
-        WriteLine($",,, Win  aaa");
+        _logger.Log(LogLevel.Trace, $",,, Win  aaa CloseShutdown()");
         try
         {
             //Hide();
@@ -83,7 +83,7 @@ public partial class WindowBase : Window
     }
     void OnMouseWheel_(MouseWheelEventArgs e)
     {
-        if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) return; ZV += e.Delta * .000834; e.Handled = true; WriteLine(Title = $">>ZV:{ZV,12}   (Zoom Value)");
+        if (!(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))) return; ZV += e.Delta * .000834; e.Handled = true; _logger.Log(LogLevel.Trace, Title = $">>ZV:{ZV,12}   (Zoom Value)");
     }
     void OnKeyUp_(KeyEventArgs e)
     {
@@ -143,7 +143,7 @@ public partial class WindowBase : Window
 
             if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
             {
-                WriteLine($"TrWL:> {WinFile,20}: 1st time: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+                _logger.Log(LogLevel.Trace, $"TrWL:> {WinFile,20}: 1st time: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
 
                 winPlcmnt.normalPosition.Left = _currentLeft + _margin;
                 winPlcmnt.normalPosition.Top = _currentTop + _margin;
@@ -176,7 +176,7 @@ public partial class WindowBase : Window
     }
     protected override void OnClosing(CancelEventArgs e) // WARNING - Not fired when Application.SessionEnding is fired
     {
-        WriteLine($",,, Win  bbb OnClosing");
+        _logger.Log(LogLevel.Trace, $",,, Win  bbb OnClosing");
         try
         {
             base.OnClosing(e);
@@ -184,7 +184,7 @@ public partial class WindowBase : Window
             _ = NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var winPlcmnt);
 
             if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
-                WriteLine($"TrWL:> {WinFile,20}: On  Save: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+                _logger.Log(LogLevel.Trace, $"TrWL:> {WinFile,20}: On  Save: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
             else
                 JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);
 
@@ -201,7 +201,7 @@ public partial class WindowBase : Window
     {
         try
         {
-            WriteLine($",,, Win  ccc OnClosed");
+            _logger.Log(LogLevel.Trace, $",,, Win  ccc OnClosed\n");
             base.OnClosed(e);
             KeyUp -= (s, e) => OnKeyUp_(e);
             MouseWheel -= (s, e) => OnMouseWheel_(e);

@@ -7,7 +7,7 @@ public static class VersionHelper
   public static string DotNetCoreVersion { get { try { return Environment.Version.ToString(); } catch (Exception ex) { return ex.Message; } } } // Gets a System.Version object that describes the major, minor, build, and revision numbers of the CLR (common language runtime). ---sadly, for/of the app only.
   public static string DevDbgAudit(IConfigurationRoot cfg, [CallerMemberName] string? cmn = "") => $"{CurVerStrYYMMDD}  " +
       @$"{Environment.MachineName}.{Environment.UserDomainName}\{Environment.UserName}  " +
-      $"exe:{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}  " +  // $"log:{cfg?["LogFolder"]}  " +     //nogo: no point
+      //tmi: $"exe:{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}  " +  // $"log:{cfg?["LogFolder"]}  " +     //nogo: no point
       $".dn:{DotNetCoreVersion}  " +                                                // $"·{DotNetCoreVersionCmd()}·  " +  //todo: flickers CMD window; remove when ..ready.
       $"wai:{cfg?["WhereAmI"]}  " +
       $"{cmn}  " +
