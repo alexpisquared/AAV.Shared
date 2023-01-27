@@ -7,6 +7,10 @@ public class SpeechSynth : IDisposable
   readonly bool _useCached;
   bool _disposedValue;
 
+  public static SpeechSynth Factory(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
+  {
+    return new SpeechSynth(speechKey, useCached, voiceNameFallback, styleFallback, speechSynthesisLanguage);
+  }
   public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
   {
     _useCached = useCached;
@@ -106,8 +110,8 @@ public class SpeechSynth : IDisposable
       File.Move(temp, file);
     else
     {
-      UseSayExe($"Bad key: zero file length.");
-      await Task.Delay(888);
+      UseSayExe($"Bad key! And/or wav-file length is zero. -speed=1");
+      await Task.Delay(2500);
       return false;
     }
 
