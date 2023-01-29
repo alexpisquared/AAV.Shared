@@ -113,7 +113,7 @@ namespace AAV.Sys.Helpers
           new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToOADate()),
           new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime.ToOADate());
 
-        return DateTime.FromOADate(max).ToString("y.M.d.HHmm"); // return TimeAgo(DateTime.Now - DateTime.FromOADate(max), ago: " ago");
+        return DateTime.FromOADate(max).ToString("yyyy.M.d.HHmm"); // return TimeAgo(DateTime.Now - DateTime.FromOADate(max), ago: " ago");
       }
     }
   }
