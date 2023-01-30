@@ -81,13 +81,13 @@ StreamReader? streamReader = new(stream);
   public static string GetIsoFolder() //todo: no go for .net core 3: all are ""!
   {
     //#if NotOnDotNetStandard // works only on .NET Framework 4.8, NOT on Core.
-    try { var isf = IsolatedStorageFile.GetStore(IsoConst.PdFls, null, null); /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetStore(IsoConst.PdFls, null, null);  <= {ex.InnerMessages()}"); }
-    try { var isf = IsolatedStorageFile.GetMachineStoreForApplication();      /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetMachineStoreForApplication();       <= {ex.InnerMessages()}"); }
-    try { var isf = IsolatedStorageFile.GetUserStoreForApplication();         /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetUserStoreForApplication();          <= {ex.InnerMessages()}"); }
-    try { var isf = IsolatedStorageFile.GetMachineStoreForAssembly();         /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetMachineStoreForAssembly();          <= {ex.InnerMessages()}"); }
-    try { var isf = IsolatedStorageFile.GetMachineStoreForDomain();           /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetMachineStoreForDomain();            <= {ex.InnerMessages()}"); }
-    try { var isf = IsolatedStorageFile.GetUserStoreForAssembly();            /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetUserStoreForAssembly();             <= {ex.InnerMessages()}"); }
-    try { var isf = IsolatedStorageFile.GetUserStoreForDomain();              /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"TrWL:> Nogo for:  GetUserStoreForDomain();               <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetStore(IsoConst.PdFls, null, null); /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetStore(IsoConst.PdFls, null, null);  <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetMachineStoreForApplication();      /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetMachineStoreForApplication();       <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetUserStoreForApplication();         /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetUserStoreForApplication();          <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetMachineStoreForAssembly();         /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetMachineStoreForAssembly();          <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetMachineStoreForDomain();           /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetMachineStoreForDomain();            <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetUserStoreForAssembly();            /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetUserStoreForAssembly();             <= {ex.InnerMessages()}"); }
+    try { var isf = IsolatedStorageFile.GetUserStoreForDomain();              /**/ logFolder(isf); } catch (Exception ex) { WriteLine($"[xx:xx:xx Trc] Nogo for:  GetUserStoreForDomain();               <= {ex.InnerMessages()}"); }
     //#endif
 
     try
@@ -98,7 +98,7 @@ StreamReader? streamReader = new(stream);
     }
     catch (Exception ex) { ex.Log(); throw; }
   }
-  static void logFolder(IsolatedStorageFile dir) => WriteLine($"TrWL:>  iso dir: '{dir.GetType().GetField(_RootDir, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(dir)}'."); //instead of creating a temp file and get the location you can get the path from the store directly: 
+  static void logFolder(IsolatedStorageFile dir) => WriteLine($"[xx:xx:xx Trc]  iso dir: '{dir.GetType().GetField(_RootDir, BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(dir)}'."); //instead of creating a temp file and get the location you can get the path from the store directly: 
 
   static readonly System.Collections.Generic.List<string> _l = new System.Collections.Generic.List<string>();
   static void twl(IsolatedStorageFile f, string crlf = "")

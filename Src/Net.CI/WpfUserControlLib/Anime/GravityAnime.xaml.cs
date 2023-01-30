@@ -25,11 +25,11 @@ public partial class GravityAnime : UserControl
     }
     catch (OperationCanceledException ex)
     {
-      Trace.WriteLine($"TrWL:> --Ignore OperationCanceledException {ex.Message}");
+      Trace.WriteLine($"[xx:xx:xx Trc] --Ignore OperationCanceledException {ex.Message}");
     }
     catch (AggregateException ex) when (ex.InnerException is OperationCanceledException)
     {
-      Trace.WriteLine($"TrWL:> --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
+      Trace.WriteLine($"[xx:xx:xx Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
     }
   }
 

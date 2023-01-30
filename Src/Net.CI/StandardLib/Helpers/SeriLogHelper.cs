@@ -6,7 +6,7 @@ public class SeriLogHelper
 {
   public static ILoggerFactory InitLoggerFactory(string folder, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
   {
-    WriteLine($"TrWL:/> {folder}\nTrWL:/> {folder.Replace("..", ".ERR..")}");
+    WriteLine($"[XX:XX:XX Trc] {folder}\n[XX:XX:XX Trc] {folder.Replace("..", ".ERR..")}");
 
     var loggerConfiguration =
       Debugger.IsAttached ?

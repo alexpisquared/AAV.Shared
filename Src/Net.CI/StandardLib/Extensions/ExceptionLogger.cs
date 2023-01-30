@@ -8,7 +8,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
   {
     var msgForPopup = $"{ex?.InnerMessages()}\r\n{ex?.GetType().Name} at {cfp}({cln}): {cmn}() {optl}";
 
-    WriteLine($"TrWL:> {DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f} ██ {msgForPopup.Replace("\n", "  "/*, StringComparison.Ordinal*/).Replace("\r", "  "/*, StringComparison.Ordinal*/)}"); // .TraceError just adds the "ProgName.exe : Error : 0" line <= no use.
+    WriteLine($"[xx:xx:xx Trc] {DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f} ██ {msgForPopup.Replace("\n", "  "/*, StringComparison.Ordinal*/).Replace("\r", "  "/*, StringComparison.Ordinal*/)}"); // .TraceError just adds the "ProgName.exe : Error : 0" line <= no use.
 
     TraceStackIfVerbose(ex);
 

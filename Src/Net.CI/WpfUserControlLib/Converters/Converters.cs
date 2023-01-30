@@ -71,7 +71,7 @@ public class NullToVisibilityConverter : MarkupExtension, IValueConverter
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
     var rv = InvertValue ? (value is null) == true : (value is null) != true;
-    //System.Diagnostics.WriteLine($"TrWL:> +++   val:{value}  param:'{parameter}'  invert:{InvertValue}   =>   {rv}   !!! ");
+    //System.Diagnostics.WriteLine($"[xx:xx:xx Trc] +++   val:{value}  param:'{parameter}'  invert:{InvertValue}   =>   {rv}   !!! ");
     return rv ? Visibility.Visible : Visibility.Collapsed;
   }
   public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => false;
@@ -84,7 +84,7 @@ public class NullToBoolConverter : MarkupExtension, IValueConverter
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
     var rv = InvertValue ? (value is null) == true : (value is null) != true;
-    //System.Diagnostics.WriteLine($"TrWL:> +++   val:{value}  param:'{parameter}'  invert:{InvertValue}   =>   {rv}   !!! ");
+    //System.Diagnostics.WriteLine($"[xx:xx:xx Trc] +++   val:{value}  param:'{parameter}'  invert:{InvertValue}   =>   {rv}   !!! ");
     return rv;
   }
   public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => false;
@@ -104,7 +104,7 @@ public class ToBoolConverter : MarkupExtension, IValueConverter
       TypeCode.Boolean => InvertValue ? !(bool)value : (bool)value,
       _ => InvertValue ? value is null : value is not null
     };
-    //System.Diagnostics.WriteLine($"TrWL:> +++   val:{value}  param:'{parameter}'  invert:{InvertValue}   =>   {rv}   !!! ");
+    //System.Diagnostics.WriteLine($"[xx:xx:xx Trc] +++   val:{value}  param:'{parameter}'  invert:{InvertValue}   =>   {rv}   !!! ");
     return rv;
   }
   public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => false;

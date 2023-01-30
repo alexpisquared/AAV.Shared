@@ -50,7 +50,7 @@ public partial class Bpr
       long ms = hzms[1];
       var theta = hz * TAU / samplesPerSecond;
 
-      //WriteLine($"TrWL:>  ** Beep():  {hz,8:N0} hz   {ms,8:N0} ms     =>     2Pi *{hz,5} hz  /  {samplesPerSecond} sampl/s  =  {theta:N4}");
+      //WriteLine($"[xx:xx:xx Trc]  ** Beep():  {hz,8:N0} hz   {ms,8:N0} ms     =>     2Pi *{hz,5} hz  /  {samplesPerSecond} sampl/s  =  {theta:N4}");
 
       // 'volume' is UInt16 with range 0 thru Uint16.MaxValue (= 65 535);
       // we need 'amp' to have   range 0 thru  Int16.MaxValue (= 32 767);

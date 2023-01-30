@@ -22,7 +22,7 @@ public static class Dynamics
     catch (Exception ex)
     {
       if (VersionHelper.IsDbg)
-        WriteLine($"TrWL:> Log + Ignore: {ex.InnerMessages()}. ");
+        WriteLine($"[xx:xx:xx Trc] Log + Ignore: {ex.InnerMessages()}. ");
       else
         _ = ex.Log($"Exception in ToDataTable()  --  Log + Ignore: {ex.InnerMessages()}.  --  Ignore and return an empty DataTable ... but log for future ideas!");
     }

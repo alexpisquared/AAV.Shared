@@ -142,7 +142,7 @@ public class SqlSpRuner
     IDictionary<string, object?> expandoObject = new ExpandoObject(); // '/' - not tested ~~~~!!!
     for (var i = 0; i < reader.FieldCount; i++)
     {
-      //WriteLine($"TrWL:> @# {i,3}  {reader.GetName(i),-22} - {reader.GetValue(i).GetType(),-18} - {reader.GetValue(i)} - {reader.GetValue(i)}");
+      //WriteLine($"[xx:xx:xx Trc] @# {i,3}  {reader.GetName(i),-22} - {reader.GetValue(i).GetType(),-18} - {reader.GetValue(i)} - {reader.GetValue(i)}");
       expandoObject.Add(reader.GetName(i), reader.GetValue(i));
     }
 

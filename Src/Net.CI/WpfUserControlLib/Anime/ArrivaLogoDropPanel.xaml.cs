@@ -15,11 +15,11 @@ public partial class ArrivaLogoDropPanel : UserControl
     //catch (OperationCanceledException ex) { Logger.LogWarning(ex.Message); }
         catch (OperationCanceledException ex)
     {
-      WriteLine($"TrWL:> --Ignore OperationCanceledException {ex.Message}");
+      WriteLine($"[xx:xx:xx Trc] --Ignore OperationCanceledException {ex.Message}");
     }
     catch (AggregateException ex) when (ex.InnerException is OperationCanceledException)
     {
-      WriteLine($"TrWL:> --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
+      WriteLine($"[xx:xx:xx Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
     }
   }
 }
