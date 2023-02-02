@@ -1,22 +1,25 @@
-﻿namespace AmbienceLib;
+﻿using Microsoft.Extensions.Logging;
+
+namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
   const string _rgn = "canadacentral", _pathToCache = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   readonly string _voiceFallback, _styleFallback;
+  private readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
   {
-    return new SpeechSynth(speechKey, useCached, voiceNameFallback, styleFallback, speechSynthesisLanguage);
+    return new SpeechSynth(speechKey, useCached, voiceNameFallback, styleFallback, speechSynthesisLanguage, lgr);
   }
-  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
+  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA", ILogger? lgr = null)
   {
     _useCached = useCached;
     _voiceFallback = voiceNameFallback;
     _styleFallback = styleFallback;
-
+    this._lgr = lgr;
     var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
 
     speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage; // seems like no effect ... keep it though for a new language on a new machine usecase to validate; seems like it helps kicking off new ones.
@@ -79,7 +82,7 @@ public class SpeechSynth : IDisposable
     return false;
   }
 
-  static async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
+  async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
   {
     if (result.Reason == ResultReason.Canceled)
     {
@@ -99,6 +102,7 @@ public class SpeechSynth : IDisposable
     else
     {
       UseSayExe($"Bad key or wav-file length is zero.");
+      _lgr?.Log(LogLevel.Warning, $"result.Reason: {result.Reason}    Bad key or wav-file length is zero.   {file} ");
       await Task.Delay(2500);
       return false;
     }
