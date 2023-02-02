@@ -57,24 +57,12 @@ public class SpeechSynth : IDisposable
 
   async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> action, string? orgMsg = null)
   {
-    if (_useCached)
+    if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)
     {
-      if (File.Exists(file) && new FileInfo(file).Length > 10)
-      {
-        PlayWavFileAsync(file);
-      }
-      else
-      {
-        if (await SpeakPlus(msg, file, action))
-          PlayWavFileAsync(file);
-        else
-          UseSayExe(orgMsg ?? msg);
-      }
+      PlayWavFileAsync(file);
     }
-    else
-    {
-      _ = await SpeakPlus(msg, file, action);
-    }
+    else if (await SpeakPlus(msg, file, action) == false)
+      UseSayExe(orgMsg ?? msg);
   }
   async Task<bool> SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> act)
   {
@@ -110,7 +98,7 @@ public class SpeechSynth : IDisposable
       File.Move(temp, file);
     else
     {
-      UseSayExe($"Bad key! And/or wav-file length is zero. -speed=1");
+      UseSayExe($"Bad key or wav-file length is zero.");
       await Task.Delay(2500);
       return false;
     }
