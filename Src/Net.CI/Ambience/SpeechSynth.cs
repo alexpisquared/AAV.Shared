@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace AmbienceLib;
+﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
   const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github= @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\";
