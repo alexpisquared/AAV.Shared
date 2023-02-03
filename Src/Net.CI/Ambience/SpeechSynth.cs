@@ -40,7 +40,7 @@ public class SpeechSynth : IDisposable
   public void    /**/ SpeakProsodyFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn) => _ = Task.Run(() => SpeakProsodyAsync(msg, speakingRate, volumePercent, voice));
   public async Task SpeakProsodyAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn)
   {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{volumePercent}~{RemoveIllegalCharacters(msg)}.wav";
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate:N2}~{volumePercent:0#}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
@@ -48,7 +48,7 @@ public class SpeechSynth : IDisposable
   public void    /**/ SpeakExpressFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakExpressAsync(msg, speakingRate, volumePercent, voice, style));
   public async Task SpeakExpressAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs)
   {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{volumePercent}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate:N2}~{volumePercent:0#}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></prosody></voice></speak>";
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
