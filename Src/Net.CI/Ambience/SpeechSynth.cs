@@ -1,24 +1,27 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github= @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\";
-  readonly string _voiceFallback, _styleFallback, _pathToCache;
-  private readonly ILogger? _lgr;
+  const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\",
+    vn = "en-GB-SoniaNeural", vs = "whispering", vl = "uk-UA";
+  const double sr = 1.25, vp = 33;
+  readonly string _voice, _style, _pathToCache;
+  readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA")
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voiceNameFallback = vn, string styleFallback = vs, string speechSynthesisLanguage = vl)
   {
     return new SpeechSynth(speechKey, useCached, voiceNameFallback, styleFallback, speechSynthesisLanguage, lgr);
   }
-  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA", ILogger? lgr = null, string pathToCache = _github)
+  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = vn, string styleFallback = vs, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
   {
-    _useCached = useCached;
-    _voiceFallback = voiceNameFallback;
-    _styleFallback = styleFallback;
     _pathToCache = pathToCache;
-    this._lgr = lgr;
+    _useCached = useCached;
+    _voice = voiceNameFallback;
+    _style = styleFallback;
+    _lgr = lgr;
+    
     var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
 
     speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage; // seems like no effect ... keep it though for a new language on a new machine usecase to validate; seems like it helps kicking off new ones.
@@ -32,28 +35,21 @@ public class SpeechSynth : IDisposable
       _synthesizer = new SpeechSynthesizer(speechConfig);
   }
 
-  public void SpeakExpressFAF(string v) => _ = Task.Run(() => SpeakExpressAsync(v));
+  public async Task SpeakDefaultAsync(string msg) { await SpeakOr(msg, @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav", _synthesizer.SpeakTextAsync, msg); }
 
-  public async Task SpeakDefaultAsync(string msg)
+  public void    /**/ SpeakProsodyFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn) => _ = Task.Run(() => SpeakProsodyAsync(msg, speakingRate, volumePercent, voice));
+  public async Task SpeakProsodyAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn)
   {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav";
-    await SpeakOr(msg, file, _synthesizer.SpeakTextAsync, msg);
-  }
-
-  public void SpeakProsodyFAF(string v) => _ = Task.Run(() => SpeakProsodyAsync(v));
-  public async Task SpeakProsodyAsync(string msg, double speakingRate = 1.5) => await SpeakProsodyAsync(msg, _voiceFallback, speakingRate);
-  public async Task SpeakProsodyAsync(string msg, string voice, double speakingRate = 1.5)
-  {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{RemoveIllegalCharacters(msg)}.wav";
-    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{volumePercent}~{RemoveIllegalCharacters(msg)}.wav";
+    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
-  public async Task SpeakExpressAsync(string msg) => await SpeakExpressAsync(msg, _voiceFallback, _styleFallback);
-  public async Task SpeakExpressAsync(string msg, string voice) => await SpeakExpressAsync(msg, voice, _styleFallback);
-  public async Task SpeakExpressAsync(string msg, string voice, string style)
+
+  public void    /**/ SpeakExpressFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakExpressAsync(msg, speakingRate, volumePercent, voice, style));
+  public async Task SpeakExpressAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs)
   {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
-    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></voice></speak>";
+    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate}~{volumePercent}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
+    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></prosody></voice></speak>";
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
 
