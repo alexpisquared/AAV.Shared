@@ -3,8 +3,8 @@
 namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", _pathToCache = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
-  readonly string _voiceFallback, _styleFallback;
+  const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github= @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\";
+  readonly string _voiceFallback, _styleFallback, _pathToCache;
   private readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
@@ -14,11 +14,12 @@ public class SpeechSynth : IDisposable
   {
     return new SpeechSynth(speechKey, useCached, voiceNameFallback, styleFallback, speechSynthesisLanguage, lgr);
   }
-  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA", ILogger? lgr = null)
+  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = "en-GB-SoniaNeural", string styleFallback = "whispering", string speechSynthesisLanguage = "uk-UA", ILogger? lgr = null, string pathToCache = _github)
   {
     _useCached = useCached;
     _voiceFallback = voiceNameFallback;
     _styleFallback = styleFallback;
+    _pathToCache = pathToCache;
     this._lgr = lgr;
     var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
 
@@ -98,7 +99,10 @@ public class SpeechSynth : IDisposable
     var temp = Path.GetTempFileName();
     await stream.SaveToWaveFileAsync(temp); // :does not like foreign chars ==>  ^^ + >>
     if (new FileInfo(temp).Length > 10)
+    {
       File.Move(temp, file);
+      PlayWavFileAsync(file);
+    }
     else
     {
       UseSayExe($"Bad key or wav-file length is zero.");
@@ -111,7 +115,7 @@ public class SpeechSynth : IDisposable
   }
 
   void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
-  string RemoveIllegalCharacters(string file) => Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", string.Empty);
+  string RemoveIllegalCharacters(string file) => Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", "·");
 
   protected virtual void Dispose(bool disposing)
   {
