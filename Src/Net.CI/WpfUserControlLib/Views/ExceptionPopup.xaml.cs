@@ -1,11 +1,11 @@
 ﻿namespace WpfUserControlLib.Views;
-
 public partial class ExceptionPopup : WindowBase
 {
   const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine\bin\Release\OpenInVsOnTheCulpritLine.exe""";
   readonly string? msg, cmn, cfp;
   readonly Exception? ex;
   readonly int cln = 0;
+  //IBpr bpr = new Bpr(); ?? add ref to Ambience ?? is it worth it?
 
   public ExceptionPopup() => InitializeComponent();
   public ExceptionPopup(Exception ex, string msg, string cmn, string cfp, int cln, Window owner) : this()
@@ -19,6 +19,7 @@ public partial class ExceptionPopup : WindowBase
     Owner = owner;
     WindowStartupLocation = owner != null ? WindowStartupLocation.CenterOwner : WindowStartupLocation.CenterScreen;
     InitializeComponent();
+    KeepOpenReason = "";
   }
 
   async void OnLoaded(object s, RoutedEventArgs e)
@@ -38,7 +39,7 @@ public partial class ExceptionPopup : WindowBase
     await Task.Delay(1250);
     Close(); // close popup and continue app execution
   }
-  protected override void OnClosed(EventArgs e)  {    Loaded -= OnLoaded;    base.OnClosed(e);  }
+  protected override void OnClosed(EventArgs e) { Loaded -= OnLoaded; base.OnClosed(e); }
 
   void OnAppShutdown(object s, RoutedEventArgs e) => Application.Current.Shutdown(55);
   void OnCopyAndContinue(object s, RoutedEventArgs e)

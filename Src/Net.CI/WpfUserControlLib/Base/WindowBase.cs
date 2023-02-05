@@ -1,7 +1,7 @@
 ﻿namespace WpfUserControlLib.Base;
 public partial class WindowBase : Window
 {
-  readonly ILogger _logger;
+  protected readonly ILogger _logger;
   protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
   const double _defaultZoomV = 1.25;
   const string _defaultTheme = "No Theme";
