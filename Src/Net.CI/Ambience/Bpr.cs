@@ -72,7 +72,7 @@ public partial class Bpr : IBpr
   {
     if (Debugger.IsAttached)
     {
-      var bpr = new Bpr();
+      Bpr bpr = new ();
       while (true)
       {
         await bpr.StartAsync(2).ConfigureAwait(false); await Task.Delay(800);

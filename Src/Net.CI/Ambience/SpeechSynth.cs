@@ -1,4 +1,6 @@
-﻿namespace AmbienceLib;
+﻿using System.Text;
+
+namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
   const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\",
@@ -21,7 +23,7 @@ public class SpeechSynth : IDisposable
     _voice = voiceNameFallback;
     _style = styleFallback;
     _lgr = lgr;
-    
+
     var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
 
     speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage; // seems like no effect ... keep it though for a new language on a new machine usecase to validate; seems like it helps kicking off new ones.
@@ -48,31 +50,31 @@ public class SpeechSynth : IDisposable
   public void    /**/ SpeakExpressFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakExpressAsync(msg, speakingRate, volumePercent, voice, style));
   public async Task SpeakExpressAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs)
   {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate:N2}~{volumePercent:0#}~{RemoveIllegalCharacters(style)}~{RemoveIllegalCharacters(msg)}.wav";
+    var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></prosody></voice></speak>";
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
 
-  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> action, string? orgMsg = null)
+  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak, string? orgMsg = null)
   {
     if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)
     {
       PlayWavFileAsync(file);
     }
-    else if (await SpeakPlus(msg, file, action) == false)
+    else if (await SpeakPlus(msg, file, speak) == false)
       UseSayExe(orgMsg ?? msg);
   }
-  async Task<bool> SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> act)
+  async Task<bool> SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
   {
     try
     {
-      using var result = await act(msg);
+      using var result = await speak(msg);
       if (_useCached)
       {
         return await CreateWavFile(file, result);
       }
     }
-    catch (Exception ex) { WriteLine($"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
+    catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
 
     return false;
   }
@@ -83,24 +85,26 @@ public class SpeechSynth : IDisposable
     {
       var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);
       if (cancellationDetails.Reason == CancellationReason.Error)
-      {
-        Write($"  result.Reason: '{result.Reason}'  Error: {cancellationDetails.ErrorCode}-{cancellationDetails.ErrorDetails}\n");
-      }
+        _lgr?.Log(LogLevel.Warning, $"result.Reason: '{result.Reason}'  Error: {cancellationDetails.ErrorCode}-{cancellationDetails.ErrorDetails}   CreateWavFile({file})");
     }
+    else
+      _lgr?.Log(LogLevel.Trace, $"result.Reason: '{result.Reason}'  CreateWavFile({file})");
 
     using var stream = AudioDataStream.FromResult(result);
 
     var temp = Path.GetTempFileName();
     await stream.SaveToWaveFileAsync(temp); // :does not like foreign chars ==>  ^^ + >>
-    if (new FileInfo(temp).Length > 10)
+    var len = new FileInfo(temp).Length;
+    if (len > 10)
     {
       File.Move(temp, file);
       PlayWavFileAsync(file);
     }
     else
     {
-      UseSayExe($"Bad key or wav-file length is zero.");
-      _lgr?.Log(LogLevel.Warning, $"result.Reason: {result.Reason}    Bad key or wav-file length is zero.   {file} ");
+      var msg = $"Wav-file length is {len}. Check the key.";
+      UseSayExe(msg);
+      _lgr?.Log(LogLevel.Warning, $"{msg}   {temp} ");
       await Task.Delay(2500);
       return false;
     }
@@ -109,7 +113,31 @@ public class SpeechSynth : IDisposable
   }
 
   void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
-  string RemoveIllegalCharacters(string file) => Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", "·");
+  string RemoveIllegalCharacters(string file)
+  {
+    var r1 = Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", "·");
+    var r2 = ch(r1);
+    return r2;
+  }
+
+  string ch(string input)
+  {
+    StringBuilder result = new StringBuilder();
+    foreach (char c in input)
+    {
+      if (c >= 0x4e00 && c <= 0x9fa5)
+      {
+        int index = (c - 0x4e00) % 26;
+        result.Append((char)('A' + index));
+      }
+      else
+      {
+        result.Append(c);
+      }
+    }
+    return (result.ToString());
+  }
+
 
   protected virtual void Dispose(bool disposing)
   {
