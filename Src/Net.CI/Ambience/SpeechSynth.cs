@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace AmbienceLib;
+﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
   const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\",
@@ -93,23 +91,21 @@ public class SpeechSynth : IDisposable
     using var stream = AudioDataStream.FromResult(result);
 
     var temp = Path.GetTempFileName();
-    await stream.SaveToWaveFileAsync(temp); // :does not like foreign chars ==>  ^^ + >>
+    await stream.SaveToWaveFileAsync(temp); // :does not like foreign chars, like ·, etc.
     var len = new FileInfo(temp).Length;
     if (len > 10)
     {
       File.Move(temp, file);
       PlayWavFileAsync(file);
+      return true;
     }
     else
     {
-      var msg = $"Wav-file length is {len}. Check the key.";
-      UseSayExe(msg);
-      _lgr?.Log(LogLevel.Warning, $"{msg}   {temp} ");
-      await Task.Delay(2500);
+      _lgr?.Log(LogLevel.Warning, $"Wav-file length is {len}. Check the key.   {temp} ");
+      await new Bpr().NoAsync();
+      File.Delete(temp);
       return false;
     }
-
-    return true;
   }
 
   void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
