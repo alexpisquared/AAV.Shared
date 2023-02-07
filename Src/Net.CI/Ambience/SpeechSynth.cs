@@ -79,14 +79,14 @@ public class SpeechSynth : IDisposable
 
   async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
   {
-    if (result.Reason == ResultReason.Canceled)
+    if (result.Reason != ResultReason.Canceled)
+      _lgr?.Log(LogLevel.Trace, $"result.Reason: '{result.Reason}'  CreateWavFile({file})");
+    else
     {
       var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);
       if (cancellationDetails.Reason == CancellationReason.Error)
         _lgr?.Log(LogLevel.Warning, $"result.Reason: '{result.Reason}'  Error: {cancellationDetails.ErrorCode}-{cancellationDetails.ErrorDetails}   CreateWavFile({file})");
     }
-    else
-      _lgr?.Log(LogLevel.Trace, $"result.Reason: '{result.Reason}'  CreateWavFile({file})");
 
     using var stream = AudioDataStream.FromResult(result);
 
@@ -101,7 +101,7 @@ public class SpeechSynth : IDisposable
     }
     else
     {
-      _lgr?.Log(LogLevel.Warning, $"Wav-file length is {len}. Check the key.   {temp} ");
+      _lgr?.Log(LogLevel.Warning, $"Wav-file length is {len}. Check the key. ");
       await new Bpr().NoAsync();
       File.Delete(temp);
       return false;
@@ -112,28 +112,27 @@ public class SpeechSynth : IDisposable
   string RemoveIllegalCharacters(string file)
   {
     var r1 = Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", "·");
-    var r2 = ch(r1);
+    var r2 = SubstitureUnicodeSymbolsWithAbc(r1);
     return r2;
   }
 
-  string ch(string input)
+  string SubstitureUnicodeSymbolsWithAbc(string input)
   {
-    StringBuilder result = new StringBuilder();
-    foreach (char c in input)
+    var result = new StringBuilder();
+    foreach (var c in input)
     {
-      if (c >= 0x4e00 && c <= 0x9fa5)
+      if (c is >= (char)0x4e00 and <= (char)0x9fa5)
       {
-        int index = (c - 0x4e00) % 26;
-        result.Append((char)('A' + index));
+        var index = (c - 0x4e00) % 26;
+        _ = result.Append((char)('A' + index));
       }
       else
       {
-        result.Append(c);
+        _ = result.Append(c);
       }
     }
-    return (result.ToString());
+    return result.ToString();
   }
-
 
   protected virtual void Dispose(bool disposing)
   {
