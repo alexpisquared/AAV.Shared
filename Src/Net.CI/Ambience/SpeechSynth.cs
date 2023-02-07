@@ -4,22 +4,20 @@ public class SpeechSynth : IDisposable
   const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\",
     vn = "en-GB-SoniaNeural", vs = "whispering", vl = "uk-UA";
   const double sr = 1.25, vp = 33;
-  readonly string _voice, _style, _pathToCache;
+  readonly string _pathToCache;
   readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voiceNameFallback = vn, string styleFallback = vs, string speechSynthesisLanguage = vl)
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string speechSynthesisLanguage = vl)
   {
-    return new SpeechSynth(speechKey, useCached, voiceNameFallback, styleFallback, speechSynthesisLanguage, lgr);
+    return new SpeechSynth(speechKey, useCached, speechSynthesisLanguage, lgr);
   }
-  public SpeechSynth(string speechKey, bool useCached = true, string voiceNameFallback = vn, string styleFallback = vs, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
+  public SpeechSynth(string speechKey, bool useCached = true, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
   {
     _pathToCache = pathToCache;
     _useCached = useCached;
-    _voice = voiceNameFallback;
-    _style = styleFallback;
     _lgr = lgr;
 
     var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);  // Error in case of bad key:  AuthenticationFailure-WebSocket upgrade failed: Authentication error (401). Please check subscription information and region name. USP state: 2. Received audio size: 0 bytes.
