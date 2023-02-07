@@ -22,34 +22,26 @@ public class SpeechSynth : IDisposable
     _style = styleFallback;
     _lgr = lgr;
 
-    var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);
-
-    speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage; // seems like no effect ... keep it though for a new language on a new machine usecase to validate; seems like it helps kicking off new ones.
+    var speechConfig = SpeechConfig.FromSubscription(speechKey, _rgn);  // Error in case of bad key:  AuthenticationFailure-WebSocket upgrade failed: Authentication error (401). Please check subscription information and region name. USP state: 2. Received audio size: 0 bytes.
+    
+    speechConfig.SpeechSynthesisLanguage = speechSynthesisLanguage;     // seems like no effect ... keep it though for a new language on a new machine usecase to validate; seems like it helps kicking off new ones.
 
     if (_useCached)
     {
       speechConfig.SetSpeechSynthesisOutputFormat(SpeechSynthesisOutputFormat.Riff24Khz16BitMonoPcm);
-      _synthesizer = new SpeechSynthesizer(speechConfig, null);
     }
-    else
-      _synthesizer = new SpeechSynthesizer(speechConfig);
+
+    _synthesizer = _useCached ? new SpeechSynthesizer(speechConfig, null) : new SpeechSynthesizer(speechConfig);
   }
 
-  public async Task SpeakDefaultAsync(string msg) { await SpeakOr(msg, @$"{_pathToCache}{RemoveIllegalCharacters(RemoveIllegalCharacters(msg))}.wav", _synthesizer.SpeakTextAsync, msg); }
-
-  public void    /**/ SpeakProsodyFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn) => _ = Task.Run(() => SpeakProsodyAsync(msg, speakingRate, volumePercent, voice));
-  public async Task SpeakProsodyAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn)
-  {
-    var file = @$"{_pathToCache}{RemoveIllegalCharacters(voice)}~{speakingRate:N2}~{volumePercent:0#}~{RemoveIllegalCharacters(msg)}.wav";
-    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}"">{msg}</prosody></voice></speak>";
-    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
-  }
-
-  public void    /**/ SpeakExpressFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakExpressAsync(msg, speakingRate, volumePercent, voice, style));
-  public async Task SpeakExpressAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs)
+  public void    /**/ SpeakFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
+  public async Task SpeakAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs)
   {
     var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
-    var ssml = $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></prosody></voice></speak>";
+    var ssml = style == "" ?
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       >{msg}</prosody></voice></speak>" :
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></prosody></voice></speak>";
+    
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
 
@@ -60,7 +52,7 @@ public class SpeechSynth : IDisposable
       PlayWavFileAsync(file);
     }
     else if (await SpeakPlus(msg, file, speak) == false)
-      UseSayExe(orgMsg ?? msg);
+      SayExe(orgMsg ?? msg);
   }
   async Task<bool> SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
   {
@@ -76,7 +68,6 @@ public class SpeechSynth : IDisposable
 
     return false;
   }
-
   async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
   {
     if (result.Reason != ResultReason.Canceled)
@@ -107,7 +98,6 @@ public class SpeechSynth : IDisposable
       return false;
     }
   }
-
   void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
   string RemoveIllegalCharacters(string file)
   {
@@ -115,7 +105,6 @@ public class SpeechSynth : IDisposable
     var r2 = SubstitureUnicodeSymbolsWithAbc(r1);
     return r2;
   }
-
   string SubstitureUnicodeSymbolsWithAbc(string input)
   {
     var result = new StringBuilder();
@@ -153,8 +142,7 @@ public class SpeechSynth : IDisposable
     GC.SuppressFinalize(this);
   }
 
-  public async Task SayExe(string msg) { UseSayExe(msg); await Task.Yield(); }
-  public static void UseSayExe(string msg) => new Process
+  public static void SayExe(string msg) => new Process
   {
     StartInfo = new ProcessStartInfo("say.exe", msg)
     {
