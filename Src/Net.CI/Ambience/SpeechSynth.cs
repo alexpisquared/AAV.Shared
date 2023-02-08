@@ -1,9 +1,8 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\",
-    vn = "en-GB-SoniaNeural", vs = "whispering", vl = "uk-UA";
-  const double sr = 1.25, vp = 33;
+  const string _rgn = "canadacentral", vn = "en-US-AriaNeural", vs = "whispering", vl = "uk-UA", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  const double _speechRate = 1.00, _volumePercent = 33;
   readonly string _pathToCache;
   readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
@@ -32,8 +31,8 @@ public class SpeechSynth : IDisposable
     _synthesizer = _useCached ? new SpeechSynthesizer(speechConfig, null) : new SpeechSynthesizer(speechConfig);
   }
 
-  public void    /**/ SpeakFAF(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
-  public async Task SpeakAsync(string msg, double speakingRate = sr, double volumePercent = vp, string voice = vn, string style = vs)
+  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
+  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = vn, string style = vs)
   {
     var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = style == "" ?
@@ -69,7 +68,7 @@ public class SpeechSynth : IDisposable
   async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
   {
     if (result.Reason != ResultReason.Canceled)
-      _lgr?.Log(LogLevel.Trace, $"result.Reason: '{result.Reason}'  CreateWavFile({file})");
+      _lgr?.Log(LogLevel.Trace, $"result.Reason '{result.Reason}'   Created wav file '{file}'.");
     else
     {
       var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);
@@ -157,8 +156,8 @@ public class CC
   public static VoiceStylesRoles
     UkuaPolinaNeural = new("uk-UA-PolinaNeural", Array.Empty<string>(), Array.Empty<string>()),
     UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
-    EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, Array.Empty<string>()),
     EnusAriaNeural = new("en-US-AriaNeural", new[] { cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful }, Array.Empty<string>()),
+    EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, Array.Empty<string>()),
     EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, Array.Empty<string>()),
     ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", new[] { cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious }, new[] { YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy });
 
