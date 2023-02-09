@@ -3,18 +3,16 @@ public class SpeechSynth : IDisposable
 {
   const string _rgn = "canadacentral", vn = "en-US-AriaNeural", vs = "whispering", vl = "uk-UA", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 33;
-  readonly string _pathToCache;
+  readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string speechSynthesisLanguage = vl)
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl)  {    return new SpeechSynth(speechKey, useCached, vn, speechSynthesisLanguage, lgr);  }
+  public SpeechSynth(string speechKey, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
   {
-    return new SpeechSynth(speechKey, useCached, speechSynthesisLanguage, lgr);
-  }
-  public SpeechSynth(string speechKey, bool useCached = true, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
-  {
+    _fallbackVoice = voice; //todo: 
     _pathToCache = pathToCache;
     _useCached = useCached;
     _lgr = lgr;
@@ -33,9 +31,11 @@ public class SpeechSynth : IDisposable
     try { if (Directory.Exists(pathToCache) == false) Directory.CreateDirectory(pathToCache); } catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); }
   }
 
-  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = vn, string style = vs) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
-  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = vn, string style = vs)
+  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = vs) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
+  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = vs)
   {
+    if (voice == "") voice = _fallbackVoice;
+
     var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var ssml = style == "" ?
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       >{msg}</prosody></voice></speak>" :
