@@ -28,7 +28,7 @@ public partial class WindowBase : Window
 
   protected void ApplyTheme(string themeName, [CallerMemberName] string? cmn = "")
   {
-    _logger.LogInformation($"shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
+    _logger.Log(LogLevel.Trace, $"shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
 
     const string pref = "/WpfUserControlLib;component/ColorScheme/Theme.Color.";
 
