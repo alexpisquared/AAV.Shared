@@ -1,8 +1,8 @@
 ﻿namespace WpfUserControlLib.Base;
 public partial class WindowBase : Window
 {
-  protected readonly ILogger _logger;
   protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
+  protected readonly ILogger _logger;
   const double _defaultZoomV = 1.25;
   const string _defaultTheme = "No Theme";
   const int _swShowNormal = 1, _swShowMinimized = 2, _margin = 0;
@@ -19,13 +19,11 @@ public partial class WindowBase : Window
     MouseWheel += (s, e) => OnMouseWheel_(e);
     KeyUp += (s, e) => OnKeyUp_(e);
   }
-
   protected bool IgnoreEscape { get; set; } = !VersionHelper.IsDbgOrRBD;
   protected bool IgnoreWindowPlacement { get; set; }
   public static readonly DependencyProperty ZVProperty = DependencyProperty.Register("ZV", typeof(double), typeof(WindowBase), new PropertyMetadata(_defaultZoomV)); public double ZV { get => (double)GetValue(ZVProperty); set => SetValue(ZVProperty, value); }
   public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_defaultTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }
   public string? KeepOpenReason { get; set; } = """ [KeepOpenReason = "Changes have not been saved."] """;
-
   protected void ApplyTheme(string themeName, [CallerMemberName] string? cmn = "")
   {
     _logger.Log(LogLevel.Trace, $"shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
@@ -76,7 +74,6 @@ public partial class WindowBase : Window
     catch (Exception ex) { ex.Pop(this, $"CloseShutdown()", lgr: _logger); }
     /*Application.Current.Shutdown();*/
   }
-
   void OnMouseLeftButtonDown_(MouseButtonEventArgs e) //tu: workaround for  "Can only call DragMove when primary mouse button is down." (2021-03-10: pre-opened dropdown seemingly caused the error)
   {
     if (e.LeftButton == MouseButtonState.Pressed) DragMove();
@@ -205,7 +202,7 @@ public partial class WindowBase : Window
   {
     try
     {
-      _logger.Log(LogLevel.Trace, $",,, Win  ccc OnClosed\n");
+      _logger.Log(LogLevel.Trace, $",,, Win  ccc OnClosed");
       base.OnClosed(e);
       KeyUp -= (s, e) => OnKeyUp_(e);
       MouseWheel -= (s, e) => OnMouseWheel_(e);

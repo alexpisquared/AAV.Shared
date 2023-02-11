@@ -12,16 +12,16 @@
       <system:Double x:Key="Y0">+360</system:Double>
       <system:Double x:Key="X0">-850</system:Double>
       <Duration      x:Key="showDuration">0:0:05</Duration>
-      <Duration      x:Key="showDuratio2">0:1:35</Duration>
+      <Duration      x:Key="showDuratio2">0:0:35</Duration>
       <SineEase    x:Key="so"     EasingMode="EaseOut" />
       <QuarticEase x:Key="qi"     EasingMode="EaseIn" />
       <ElasticEase x:Key="eo"     EasingMode="EaseOut" />
       <QuarticEase x:Key="qb"     EasingMode="EaseInOut" />
       <Storyboard x:Key="sbkFrvr" RepeatBehavior="1x" >
-        <DoubleAnimation BeginTime="0:1:35"   Duration="{StaticResource showDuration}" From="{StaticResource Y0}" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource so}" />
-        <DoubleAnimation BeginTime="0:1:35"   Duration="{StaticResource showDuration}" From="{StaticResource X0}" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"  EasingFunction="{StaticResource qi}" />
-        <DoubleAnimation BeginTime="0:1:40.4" Duration="0:0:0.2"                                                  To="8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource qi}" />
-        <DoubleAnimation BeginTime="0:1:40.6" Duration="0:0:0.3"                                                  To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource qi}" />
+        <DoubleAnimation BeginTime="0:0:35"   Duration="{StaticResource showDuration}" From="{StaticResource Y0}" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource so}" />
+        <DoubleAnimation BeginTime="0:0:35"   Duration="{StaticResource showDuration}" From="{StaticResource X0}" To="0" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"  EasingFunction="{StaticResource qi}" />
+        <DoubleAnimation BeginTime="0:0:40.4" Duration="0:0:0.2"                                                  To="8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource qi}" />
+        <DoubleAnimation BeginTime="0:0:40.6" Duration="0:0:0.3"                                                  To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"  EasingFunction="{StaticResource qi}" />
       </Storyboard>
       <Style TargetType="{x:Type Rectangle}" x:Key="IsOnStyle">
         <Style.Triggers>
@@ -47,9 +47,9 @@
     <EventTrigger RoutedEvent="FrameworkElement.Loaded">
       <BeginStoryboard>
         <Storyboard RepeatBehavior="Forever">
-          <!--<DoubleAnimation BeginTime="0:1:00" Duration="0:0:05" From="25" To="06"   Storyboard.TargetName="arcpi1" Storyboard.TargetProperty="Angle" EasingFunction="{StaticResource eo}" />
-          <DoubleAnimation BeginTime="0:1:05" Duration="0:0:35"           To="99.9" Storyboard.TargetName="arcpi1" Storyboard.TargetProperty="Angle" EasingFunction="{StaticResource qb}" />-->
-          <DoubleAnimation BeginTime="0:0:00" Duration="0:1:40"           To="99.9" Storyboard.TargetName="arcpi1" Storyboard.TargetProperty="Angle" EasingFunction="{StaticResource qb}" />
+          <!--<DoubleAnimation BeginTime="0:0:00" Duration="0:0:05" From="25" To="06"   Storyboard.TargetName="arcpi1" Storyboard.TargetProperty="Angle" EasingFunction="{StaticResource eo}" />
+          <DoubleAnimation BeginTime="0:0:05" Duration="0:0:35"           To="99.9" Storyboard.TargetName="arcpi1" Storyboard.TargetProperty="Angle" EasingFunction="{StaticResource qb}" />-->
+          <DoubleAnimation BeginTime="0:0:00" Duration="0:0:40"           To="99.9" Storyboard.TargetName="arcpi1" Storyboard.TargetProperty="Angle" />
         </Storyboard>
       </BeginStoryboard>
     </EventTrigger>
