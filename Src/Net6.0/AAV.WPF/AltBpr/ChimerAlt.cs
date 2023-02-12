@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -22,19 +21,12 @@ public class ChimerAlt
       .AddUserSecrets<ChimerAlt>()
       .Build();
 
-    _freqWhstl = _config.GetSection("FreqWhistle").Get<int[]>() ?? throw new ArgumentNullException("FreqWhistle is missing in cfg????" );       
+    _freqWhstl = _config.GetSection("FreqWhistle").Get<int[]>() ?? throw new ArgumentNullException("FreqWhistle is missing in cfg????");
     _freqUp = _config.GetSection("FreqUp").Get<int?>() ?? 32;
     _freqDn = _config.GetSection("FreqDn").Get<int?>() ?? 8000;
     _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 8000;
     _stepDurnSec = _config.GetSection("StepDurnSec").Get<double?>() ?? .001;
     _freqMultplr = _config.GetSection("FreqMultiplier").Get<double?>() ?? 1.021;
-
-    //Tracer.SetupTracingOptions("AAV.WPF", new TraceSwitch("Info", "Haha.") { Level = TraceLevel.Info });
-    Trace.Write($"{DateTimeOffset.Now:yy.MM.dd HH:mm:ss.f} WhereAmI in ChimerAlt:   " +
-      $"String: '{_config["WhereAmIString"]}'  " +
-      $"String: '{_config.GetSection("WhereAmIString").Get<string>()}'  " +
-      $"Array0: '{_config.GetSection("WhereAmIArray").Get<string[]>()?.First()}'  " +
-      $"\n");
   }
 
   public static async Task BeepFD(int freq = 98, int durationMks = 250111, ushort volume = ushort.MaxValue) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, durationMks) } }, volume);
