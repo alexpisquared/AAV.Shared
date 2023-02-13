@@ -105,7 +105,7 @@ public static class VersionHelper
   static string? _dnv = null;
 
   public static DateTime GetLastBuildTime => (new[] {
-                new FileInfo(Assembly.GetEntryAssembly()?.Location!).LastWriteTime,             // the same \\//
-                new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime,             // the same //\\
-                new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime }.Max());  // lib
+                new FileInfo(Assembly.GetEntryAssembly()?.Location!).LastWriteTime,             // the startup exe/dll
+                new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime,             // the passthrough caller
+                new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime }.Max());  // this lib - StandardLib
 }
