@@ -37,7 +37,7 @@ public static class ExnPopr
       if (Debugger.IsAttached)
         Debugger.Break();
       else
-        _ = MessageBox.Show($"{ex2.InnerMessages()} \n\nwhile reporting this:\n\n{msgForPopup}", $"Exception During Exception in {cmn}", MessageBoxButton.OK, MessageBoxImage.Error);
+        _ = MessageBox.Show(owner, $"{ex2.InnerMessages()} \n\nwhile reporting this:\n\n{msgForPopup}", $"Exception During Exception in {cmn}", MessageBoxButton.OK, MessageBoxImage.Error);
     }
   }
 
