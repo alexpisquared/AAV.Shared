@@ -1,12 +1,10 @@
-﻿using Serilog;
-
-namespace StandardLib.Helpers;
+﻿namespace StandardLib.Helpers;
 
 public class SeriLogHelper
 {
-  public static ILoggerFactory InitLoggerFactory(string folder, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
+  public static ILoggerFactory InitLoggerFactory(string logFile, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
   {
-    WriteLine($"[XX:XX:XX Trc] {folder}\n[XX:XX:XX Trc] {folder.Replace("..", ".ERR..")}");
+    FSHelper.GetCreateSafeLogFolderAndFile(logFile);
 
     var loggerConfiguration =
       Debugger.IsAttached ?
@@ -17,13 +15,13 @@ public class SeriLogHelper
             .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
             .Enrich.FromLogContext(); // .Enrich.WithMachineName().Enrich.WithThreadId()                                       
 
-    if (levels.Contains("+ErNT")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".ErNT..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error); // ErNT == Error No Template.
-    if (levels.Contains("+Erro")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".Er▄▀..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error, outputTemplate: _exnOnlyTemplate);
-    if (levels.Contains("+Warn")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".Warn..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning, outputTemplate: _optimalTemplate);
-    if (levels.Contains("+Info")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".Info..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information, outputTemplate: _optimalTemplate);
-    if (levels.Contains("+Verb")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".Verb..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose, outputTemplate: _optimalTemplate);
-    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite);
-    if (levels.Contains("+11mb")) loggerConfiguration.WriteTo.File(path: @$"{folder.Replace("..", ".11mb..").Replace(".log", ".json")}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose, rollOnFileSizeLimit: true, fileSizeLimitBytes: 11000000, formatter: new Serilog.Formatting.Json.JsonFormatter()); // useful only with log aggregators.
+    if (levels.Contains("+ErNT")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".ErNT..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error); // ErNT == Error No Template.
+    if (levels.Contains("+Erro")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Er▄▀..")}", rollingInterval: RollingInterval.Day, outputTemplate: _exnOnlyTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error);
+    if (levels.Contains("+Warn")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Warn..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning);
+    if (levels.Contains("+Info")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Info..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information);
+    if (levels.Contains("+Verb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Verb..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
+    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
+    if (levels.Contains("+11mb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".11mb..").Replace(".log", ".json")}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose, rollOnFileSizeLimit: true, fileSizeLimitBytes: 11000000, formatter: new Serilog.Formatting.Json.JsonFormatter()); // useful only with log aggregators.
 
     _ = builder.AddSerilog(loggerConfiguration.CreateLogger());
   });

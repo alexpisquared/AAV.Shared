@@ -18,6 +18,7 @@ global using System.Xml;
 global using System.Xml.Serialization;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.Logging;
+global using Serilog;
 global using StandardLib.Extensions;
 global using StandardLib.Helpers;
 global using static System.Diagnostics.Trace;
