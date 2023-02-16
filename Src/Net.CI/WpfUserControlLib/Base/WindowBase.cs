@@ -26,7 +26,7 @@ public partial class WindowBase : Window
   public string? KeepOpenReason { get; set; } = """ [KeepOpenReason = "Changes have not been saved."] """;
   protected void ApplyTheme(string themeName, [CallerMemberName] string? cmn = "")
   {
-    _logger.Log(LogLevel.Trace, $"~~WinBase  shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
+    _logger.Log(LogLevel.Trace, $"► WinBase  shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
 
     const string pref = "/WpfUserControlLib;component/ColorScheme/Theme.Color.";
 
@@ -64,7 +64,7 @@ public partial class WindowBase : Window
   }
   void CloseShutdown(string from, [CallerMemberName] string? cmn = "")
   {
-    _logger.Log(LogLevel.Trace, $"~~WinBase  {cmn}.CloseShutdown({from}) ");
+    _logger.Log(LogLevel.Trace, $"██WinBase  {cmn}.CloseShutdown({from}) ");
     try
     {
       //Hide();
@@ -94,7 +94,7 @@ public partial class WindowBase : Window
         case Key.OemPlus:   /**/ ZV *= 1.1; break;
       }
     else if (e.Key == Key.Escape && !IgnoreEscape)
-      CloseShutdown("WinBase.Key Up");
+      CloseShutdown("WinBase.KeyUp");
 
     base.OnKeyUp(e);
   }
@@ -173,14 +173,14 @@ public partial class WindowBase : Window
   }
   protected override void OnClosing(CancelEventArgs e) // WARNING - Not fired when Application.SessionEnding is fired
   {
-    _logger.Log(LogLevel.Trace, $"~~WinBase  OnClosing   {GetType().Name}   {(GetHashCode() == Application.Current.MainWindow?.GetHashCode() ? "Is App..MainWin!" : "")}   ShutdownMode:{Application.Current.ShutdownMode} (//memo: OnMainWindowClose causes double call of this method!!!)");
+    _logger.Log(LogLevel.Trace, $"■ WinBase  OnClosing   {GetType().Name}   {(GetHashCode() == Application.Current.MainWindow?.GetHashCode() ? "Is App..MainWin!" : "")}   ShutdownMode:{Application.Current.ShutdownMode} (//memo: OnMainWindowClose causes double call of this method!!!)");
 
     try
     {
       _ = NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var winPlcmnt);
 
       if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
-        _logger.Log(LogLevel.Trace, $"~~WinBase  !!! Saved window placement NOT  <==  Window Positions - all zeros!      {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+        _logger.Log(LogLevel.Trace, $"! WinBase  !!! Saved window placement NOT  <==  Window Positions - all zeros!      {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
       else
         JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);  // _logger.Log(LogLevel.Trace, $"### Saved window placement to  {WinFile}.");
 
@@ -199,7 +199,7 @@ public partial class WindowBase : Window
   {
     try
     {
-      _logger.Log(LogLevel.Trace, $"~~WinBase  OnClosed");
+      _logger.Log(LogLevel.Trace, $"■ WinBase  OnClosed.");
       base.OnClosed(e);
       KeyUp -= (s, e) => OnKeyUp_(e);
       MouseWheel -= (s, e) => OnMouseWheel_(e);
@@ -208,5 +208,5 @@ public partial class WindowBase : Window
     catch (Exception ex) { ex.Pop(this, ex.Message, lgr: _logger); }
   }
   protected virtual void OnWindowMiniBase(object s, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-  protected virtual void OnClosShutdnBase(object s, RoutedEventArgs e) => CloseShutdown("WinBase.Btn Click");
+  protected virtual void OnClosShutdnBase(object s, RoutedEventArgs e) => CloseShutdown("WinBase.BtnClick");
 }
