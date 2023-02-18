@@ -62,6 +62,12 @@ public partial class WindowBase : Window
     }
     catch (Exception ex) { ex.Pop(this, $"New theme '{themeName}' is trouble.", lgr: _logger); }
   }
+  protected async void CloseBaseWindow(object s, RoutedEventArgs e)
+  {
+    _logger.Log(LogLevel.Trace, $"██WinBase  ..CloseBaseWindow({s.GetType().Name}) ");
+    await Task.Delay(333); 
+    Close();
+  }
   void CloseShutdown(string from, [CallerMemberName] string? cmn = "")
   {
     _logger.Log(LogLevel.Trace, $"██WinBase  {cmn}.CloseShutdown({from}) ");
