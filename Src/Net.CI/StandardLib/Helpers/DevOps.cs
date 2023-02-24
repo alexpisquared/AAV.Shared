@@ -34,7 +34,7 @@ public class DevOps
     return sb.ToString();
   }
 
-  static string[] _selects = new[] {
+  static readonly string[] _selects = new[] {
   //"06f8aa28c4c328ccb33b1c595ab1b39d27ed9ddb2bbfc2fc51d556f56d2e699f", // test only of a..xp temp
     "2k8s4a5f7a363f194b1b5916e71c1d2065cf0c4afdaf33kwjhdhfha5a1952888", // test of always False
     "977f4a5f7a363f194b1b5916e71c1d2065cf0c4afdaf33291ec5c6a5a1952f8f"

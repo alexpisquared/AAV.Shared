@@ -5,10 +5,10 @@ public class Equals : MarkupExtension, IValueConverter
 
   public bool InvertValue { get; set; } = false;
 
-  public string EqualsText { get; set; }
-  public string NotEqualsText { get; set; }
-  public Brush BrushTrue { get; set; }
-  public Brush BrushFalse { get; set; }
+  public string EqualsText { get; set; } = default!;
+  public string NotEqualsText { get; set; } = default!;
+  public Brush BrushTrue { get; set; } = default!;
+  public Brush BrushFalse { get; set; } = default!;
 
   public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
   {
