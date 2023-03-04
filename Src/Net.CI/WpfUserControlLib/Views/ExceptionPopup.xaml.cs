@@ -34,7 +34,7 @@ public partial class ExceptionPopup : WindowBase
       OpenVsOnTheCulpritLine(cfp, cln);
 
     Hand.Play();
-    await Task.Delay(((Duration)FindResource("showDuration")).TimeSpan + ((Duration)FindResource("showDuratio2")).TimeSpan);
+    await Task.Delay(((Duration)FindResource("animDuration")).TimeSpan + ((Duration)FindResource("preAnimnWait")).TimeSpan);
     Beep.Play();
     await Task.Delay(1250);
     Close(); // close popup and continue app execution

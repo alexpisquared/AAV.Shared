@@ -21,14 +21,18 @@ public static class UnhandledExceptionHndlr // Core 3
         WriteLine(details);
         Debugger.Break();
       }
-      else if (MessageBox.Show(details, "Unhandled Exception - Do you want to continue?", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.Yes) == MessageBoxResult.No)
-      {
-        Logger?.LogInformation("Safe decision: to aborrt execution.");
-        Application.Current.Shutdown(44);
-      }
+      //else if (MessageBox.Show(details, "Unhandled Exception - Do you want to continue?", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.Yes) == MessageBoxResult.No)
+      //{
+      //  Logger?.LogInformation("Safe decision: to aborrt execution.");
+      //  Application.Current.Shutdown(44);
+      //}
+      //else
+      //{
+      //  Logger?.LogInformation("Brave decision: to continue execution.");
+      //}
       else
       {
-        Logger?.LogInformation("Brave decision: to continue execution.");
+        e?.Exception.Pop("Unhandled Exception - Auto continue if not aborted");
       }
     }
     catch (Exception ex)
