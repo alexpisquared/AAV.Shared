@@ -131,22 +131,22 @@
                 FontWeight="Bold" BorderThickness="0" Style="{StaticResource RoundButton}" ToolTip="Ignore + Copy to clipboard &#xA; (will close in 1.5 min automatically)" />
       </Grid>
 
-      <Rectangle Width="26" Height="26" RenderTransformOrigin="0.5,0.5" Style="{StaticResource IsOnStyle}" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.RowSpan="5" Margin="8 -6">
-        <Rectangle.RenderTransform>
+      <Ellipse Width="26" Height="26" RenderTransformOrigin="0.5,0.5" Style="{StaticResource IsOnStyle}" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.RowSpan="5" Margin="8 -6">
+        <Ellipse.RenderTransform>
           <TransformGroup>
             <ScaleTransform/>
             <SkewTransform/>
             <RotateTransform/>
             <TranslateTransform X="{StaticResource X0}" Y="{StaticResource Y0}" />
           </TransformGroup>
-        </Rectangle.RenderTransform>
-        <Rectangle.Fill>
+        </Ellipse.RenderTransform>
+        <Ellipse.Fill>
           <RadialGradientBrush Center="0.4,0.3" GradientOrigin="0.3,0.2">
             <GradientStop Color="#FF4488CC"/>
             <GradientStop Color="#FF004488" Offset="1"/>
           </RadialGradientBrush>
-        </Rectangle.Fill>
-      </Rectangle>
+        </Ellipse.Fill>
+      </Ellipse>
     </Grid>
   </Border>
 </lnk:WindowBase>
