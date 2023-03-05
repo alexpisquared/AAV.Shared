@@ -34,10 +34,18 @@
       <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BtnBase}" x:Key="RoundButton">
         <Setter Property="Width"                Value="28"/>
         <Setter Property="Height"               Value="28"/>
-        <Setter Property="BorderThickness"      Value="0" />
         <Style.Resources>
           <Style TargetType="Border">
             <Setter Property="CornerRadius"     Value="20" />
+          </Style>
+        </Style.Resources>
+      </Style>
+
+      <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BtnBase}">
+        <Setter Property="BorderThickness"      Value="0" />
+        <Style.Resources>
+          <Style TargetType="Border">
+            <Setter Property="CornerRadius"     Value="8" />
           </Style>
         </Style.Resources>
       </Style>
@@ -111,10 +119,10 @@
       <TextBlock Grid.Row="3" Style="{StaticResource tb}" FontSize="12" x:Name="callerFL" Text="C:\c\folder\file.cs: 12" />
       <TextBlock Grid.Row="4" Style="{StaticResource tb}" FontSize="12" x:Name="methodNm" Text="MethodName()"       Margin="20 10"/>
 
-      <Button Grid.Row="1" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="optnlMsg" Background="Transparent" />
-      <Button Grid.Row="2" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="innrMsgs" Background="Transparent" />
-      <Button Grid.Row="3" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="callerFL" Background="Transparent" />
-      <Button Grid.Row="4" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="methodNm" Background="Transparent" />
+      <Button Grid.Row="1" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="optnlMsg" />
+      <Button Grid.Row="2" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="innrMsgs" />
+      <Button Grid.Row="3" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="callerFL" />
+      <Button Grid.Row="4" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="methodNm" />
 
       <Grid Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" >
         <Button Content=" _Abort " IsCancel="True" Click="OnAppShutdown"     Foreground="#06f" FontSize="16" Margin="5 5 55 5" ToolTip="Shutdown the app"/>
