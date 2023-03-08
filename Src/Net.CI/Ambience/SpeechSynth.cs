@@ -9,7 +9,7 @@ public class SpeechSynth : IDisposable
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl)  {    return new SpeechSynth(speechKey, useCached, vn, speechSynthesisLanguage, lgr);  }
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl) { return new SpeechSynth(speechKey, useCached, vn, speechSynthesisLanguage, lgr); }
   public SpeechSynth(string speechKey, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
   {
     _fallbackVoice = voice; //todo: 
@@ -46,14 +46,12 @@ public class SpeechSynth : IDisposable
 
   async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak, string? orgMsg = null)
   {
-    if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)
-    {
-      PlayWavFileAsync(file);
-    }
-    else if (await SpeakPlus(msg, file, speak) == false)
-      SayExe(orgMsg ?? msg);
+    if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)    
+      PlayWavFileAsync(file);    
+    else if (await SpeakPlusCreateWavFile(msg, file, speak) == false)
+      Speak(orgMsg ?? msg);
   }
-  async Task<bool> SpeakPlus(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
+  async Task<bool> SpeakPlusCreateWavFile(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
   {
     try
     {
@@ -141,6 +139,7 @@ public class SpeechSynth : IDisposable
     GC.SuppressFinalize(this);
   }
 
+  public static void Speak(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
   public static void SayExe(string msg) => new Process
   {
     StartInfo = new ProcessStartInfo("say.exe", msg)
