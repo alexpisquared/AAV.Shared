@@ -27,7 +27,7 @@ public static class VersionHelper
     (Debugger.IsAttached ? "·Dbg-Atchd" : "Dbg!!!") :
     (Debugger.IsAttached ? "·Rls-Atchd" : "Rls");
 
-  public static string TimeAgo(TimeSpan timespan, bool small = false, bool versionMode = false, string ago = "", string since = "") =>
+  public static string TimeAgo(TimeSpan timespan, bool small = true, bool versionMode = false, string ago = "", string since = "") =>
     timespan < TimeSpan.Zero          /**/ ? "Never" :
     timespan.TotalMilliseconds < 1    /**/ ? $"{timespan.TotalMilliseconds * 1000:N0} {(small ? "mks" : "microseconds")}{ago}" :
     timespan.TotalMilliseconds < 10   /**/ ? $"{timespan.TotalMilliseconds:N2} {(small ? "ms" : "millseconds")}{ago}" :
