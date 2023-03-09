@@ -140,6 +140,7 @@ public class SpeechSynth : IDisposable
   }
 
   public static void Speak(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
+  [Obsolete("Use ..Speak()")]
   public static void SayExe(string msg) => new Process
   {
     StartInfo = new ProcessStartInfo("say.exe", msg)
