@@ -60,7 +60,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
     cfg[CfgName.WhereAmAy] = "HardCODE in .\\WpfUserControlLib\\Helpers\\ConfigHelper.cs";
     cfg[CfgName.ServerLst] = sqlServerCSV ?? StandardLib.Base.Consts.SqlServerCSV;
     cfg[CfgName.DtBsNmLst] = dtBsNameCSV ?? StandardLib.Base.Consts.DtBsNameCSV;
-    cfg[CfgName.LogFolder] = VersionHelper.IsDbg ? @"C:\Temp\Logs\..log" : @"C:\Temp\Publish\BMS\IncomePaymentManagement\Logs\..log";
+    cfg[CfgName.LogFolder] = VersionHelper.IsDbg ? @"C:\Temp\Logs\..log" : @"C:\Temp\Publish\SM\IncomePaymentManagement\Logs\..log";
     cfg[CfgName.SqlVerIpm] = VersionHelper.IsDbg ? "Server={0};Database={1};Trusted_Connection=True;Encrypt=False;Connection Timeout=15;" : "Server={0};Database={1};Trusted_Connection=True;Encrypt=False;Connection Timeout=52;"; // On dbg 5 sec was fine .. let's see if 1 sec is going to cause YY's issues.
     cfg[CfgName.SqlVerIp_] = "Server={0};Database={1};persist security info=True;user id={2};password={3};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=57";
 
@@ -121,7 +121,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
       ""WhoAmI"":               ""{1}"",
       ""WhereAmI"":             ""{0}"",
       ""LogFolder"":            ""C:\\Temp\\Logs\\WpfUsrCtrlLib..log"",
-      ""ServerLst"":            ""mtDEVsqldb,1625 mtUATsqldb mtPRDsqldb .\\sqlexpress"",
+      ""ServerLst"":            "".\\sqlexpress .\\sqlexpress"",
       ""DtBsNmLst"":            ""QStatsDbg QStatsRls"",
       ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=41;"",
       ""SqlConStrForma_"":      ""Server={{0}};Database={{1}};persist security info=True;user id={{2}};password={{3}};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=47"",

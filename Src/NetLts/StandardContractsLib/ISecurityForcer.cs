@@ -1,6 +1,15 @@
 ﻿namespace StandardContractsLib;
 
-public interface ISecurityForcer
+public interface ISecForcer
+{
+  bool CanEdit { get; }
+  bool CanRead { get; }
+  string PermisssionCSV { get; }
+
+  bool HasAccessTo(PermissionFlag ownedPermissions, PermissionFlag requiredPermission);
+}
+
+public interface ISecurityForcer // older
 {
   bool CanEdit { get; }
   bool CanRead { get; }

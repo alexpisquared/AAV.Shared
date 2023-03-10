@@ -175,7 +175,7 @@ public static class IsoConst
 {
   public const IsolatedStorageScope
   //
-  //PdAsm = (IsolatedStorageScope)(0 | 4 | 16), // C:\ProgramData                  \IsolatedStorage\...\AssemFiles\   //nogo: Requires Admin permissions !!! CI Jul 2021
+  //PdAsm = (IsolatedStorageScope)(0 | 4 | 16), // C:\ProgramData                  \IsolatedStorage\...\AssemFiles\   //nogo: Requires Admin permissions !!! Jul 2021
     f33 = IsolatedStorageScope.User | IsolatedStorageScope.Application, // 1 | 32
     ULocA = (IsolatedStorageScope)(0 | 1 | 04), // C:\Users\[user]\AppData\ Local  \IsolatedStorage\...\AssemFiles\   //
     URoaA = (IsolatedStorageScope)(1 | 4 | 08), // C:\Users\[user]\AppData\Roaming \IsolatedStorage\...\AssemFiles\   //

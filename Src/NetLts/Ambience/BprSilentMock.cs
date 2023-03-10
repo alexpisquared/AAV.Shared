@@ -1,6 +1,6 @@
 ﻿namespace AmbienceLib;
 
-public class BprSilentMock : IBpr
+public class BprSilentMock : StandardContractsLib.IBpr
 {
   bool suppressTicks, suppressAlarm;
 

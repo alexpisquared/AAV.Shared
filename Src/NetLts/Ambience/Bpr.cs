@@ -1,6 +1,6 @@
 ﻿namespace AmbienceLib;
 
-public partial class Bpr : IBpr
+public partial class Bpr : StandardContractsLib.IBpr
 {
   public bool SuppressTicks { get; set; }
   public bool SuppressAlarm { get; set; }

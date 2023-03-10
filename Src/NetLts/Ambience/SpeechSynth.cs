@@ -1,7 +1,7 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", vn = "en-US-AriaNeural", vs = "whispering", vl = "uk-UA", _github = @"C:\g\AAV.Shared\Src\Net.CI\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  const string _rgn = "canadacentral", vn = "en-US-AriaNeural", vs = "whispering", vl = "uk-UA", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 33;
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
