@@ -34,7 +34,7 @@ public class Equals : MarkupExtension, IValueConverter
     return result;
   }
 
-  public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => throw new NotImplementedException();
+  public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => throw new NotImplementedException("█ █ █ █ █ █ █ █ █ █");
 
   public override object ProvideValue(IServiceProvider serviceProvider) => this;
 }
