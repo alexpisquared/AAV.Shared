@@ -3,7 +3,7 @@
 public partial class ThemeSelectorMenuItem : MenuItem
 {
   public delegate void ApplyThemeDelegate(string v, string? cmn = "■══■ ~Manual.");
-  //public ThemeSelectorMenuItem() => InitializeComponent();
+  public ThemeSelectorMenuItem() => InitializeComponent();
   public ApplyThemeDelegate? ThemeApplier { get; set; }
   public static readonly DependencyProperty CurThemeProperty = DependencyProperty.Register("CurTheme", typeof(string), typeof(ThemeSelectorMenuItem)); public string CurTheme { get => (string)GetValue(CurThemeProperty); set => SetValue(CurThemeProperty, value); }
 

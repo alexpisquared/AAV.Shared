@@ -37,7 +37,7 @@ public class StringToColor : MarkupExtension, IValueConverter
 }
 public class BoolToColorConverter : MarkupExtension, IValueConverter
 {
-  public Color ColorTrue { get; set; } = Colors.Green;
+  public Color ColorTrue { get; set; } = Colors.LightGreen;
   public Color ColorFalse { get; set; } = Colors.Red;
   public bool InvertValue { get; set; }
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => new SolidColorBrush(((bool?)value) == null ? Colors.Transparent : ((bool?)value) == true ? ColorTrue : ColorFalse);
