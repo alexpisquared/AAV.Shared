@@ -1,7 +1,11 @@
-﻿namespace WpfUserControlLib.Services;
+﻿using CliWrap;
+using System.Text;
+using System.Threading;
+
+namespace WpfUserControlLib.Services;
 public class ClickOnceUpdater
 {
-  readonly string _deplTrgExe, _deplSrcDir, _deplTrgDir;
+  readonly string _deplTrgExe, _deplSrcDir, _deplTrgDir, _robocopy = "robocopy.exe";
   readonly ILogger _lgr;
 
   public ClickOnceUpdater(ILogger logger)
@@ -38,7 +42,7 @@ public class ClickOnceUpdater
       }
 
       ReportProgress("Re-Starting the Tool..."); await Task.Delay(2000);
-      LaunchFromCDrive();
+await      LaunchFromCDrive();
 
       ReportProgress("Copying done! \n\n   Finalizing...");
 
@@ -48,7 +52,7 @@ public class ClickOnceUpdater
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
   }
 
-  async Task CopyZtoCDrive()
+  async Task CopyZtoCDrive_()
   {
     try
     {
@@ -97,7 +101,33 @@ public class ClickOnceUpdater
     }
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
   }
-  void LaunchFromCDrive()
+  async Task CopyZtoCDrive()
+  {
+    try
+    {
+      _lgr.Log(LogLevel.Trace, "Copying... \n\n"); await Task.Delay(2000);
+
+      var r1 = await Run(_robocopy, new[] { _deplSrcDir, _deplTrgDir, "/MIR", "/NJH", "/NDL", "/NP", "/W:3" });
+      _lgr.Log(LogLevel.Trace, r1.rv + r1.er);
+
+
+      var r2 = await Run(_robocopy, new[] { $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar", "*.lnk", "/XO"});
+      _lgr.Log(LogLevel.Trace, r2.rv + r2.er);
+    }
+    catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+  }
+  async Task LaunchFromCDrive()
+  {
+    try
+    {
+      _lgr.Log(LogLevel.Trace, "Launching... \n\n"); 
+
+      var r1 = await Run(_robocopy, new[] { _deplTrgExe, "none" });
+      _lgr.Log(LogLevel.Trace, r1.rv + r1.er);
+    }
+    catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+  }
+  void LaunchFromCDrive_()
   {
     try
     {
@@ -117,5 +147,33 @@ public class ClickOnceUpdater
       _ = process.WaitForExit(2500);
     }
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+  }
+
+
+  async Task<(bool success, string rv, string er, TimeSpan runTime)> Run(string exe, string[] ee, int timeoutmin = 3) // https://www.youtube.com/watch?v=Pt-0KM5SxmI&t=418s
+  {
+    StringBuilder sbOut = new(), sbErr = new();
+
+    using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(timeoutmin));
+
+    try
+    {
+      var commandResult = await Cli.Wrap(exe)
+        .WithArguments(ee)
+        .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sbOut))
+        .WithStandardErrorPipe(PipeTarget.ToStringBuilder(sbErr))
+        .ExecuteAsync(cts.Token);
+
+      
+      return (true, sbOut.ToString().Trim('\n').Trim('\r'), sbErr.ToString(), commandResult.RunTime);
+    }
+    catch (OperationCanceledException ex)
+    {
+      return (false, "", ex.Message, TimeSpan.MinValue);
+    }
+    catch (Exception ex)
+    {
+      return (false, "", ex.Message, TimeSpan.MinValue);
+    }
   }
 }
