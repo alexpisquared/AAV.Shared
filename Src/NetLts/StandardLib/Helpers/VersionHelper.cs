@@ -35,6 +35,7 @@ public static class VersionHelper
     timespan.TotalSeconds < 1         /**/ ? $"{timespan.TotalSeconds:N2} {(small ? "sec" : "seconds")}{ago}" :
     timespan.TotalSeconds < 10        /**/ ? $"{timespan.TotalSeconds:N1} {(small ? "sec" : "seconds")}{ago}" :
     timespan.TotalSeconds < 100       /**/ ? $"{timespan.TotalSeconds:N0} {(small ? "sec" : "seconds")}{ago}" :
+    timespan.TotalMinutes < 10        /**/ ? $"{timespan.TotalMinutes:N1} {(small ? "min" : "minutes")}{ago}" :
     timespan.TotalMinutes < 60        /**/ ? $"{timespan.TotalMinutes:N0} {(small ? "min" : "minutes")}{ago}" :
     timespan.TotalHours < 24          /**/ ? $"{timespan.TotalHours:N1} {(small ? "hr" : "hours")}{ago}" :
     timespan.TotalDays < 10           /**/ ? $"{timespan.TotalDays:N1} {(small ? "day" : "days")}{ago}" :
