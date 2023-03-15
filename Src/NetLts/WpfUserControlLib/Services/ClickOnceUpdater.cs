@@ -24,10 +24,9 @@ public class ClickOnceUpdater
       _deplSrcDir = Environment.GetCommandLineArgs()[2];
       _deplTrgDir = Environment.GetCommandLineArgs()[3];
       _deplTrgExe = Environment.GetCommandLineArgs()[4];
-      _lgr.Log(LogLevel.Trace, $"{string.Join('\n', Environment.GetCommandLineArgs().Skip(1))} \t\t ==> Automatic args-based execution mode");
+      _lgr.Log(LogLevel.Trace, $"{string.Join('\n', Environment.GetCommandLineArgs().Skip(1))} \t\t <== SrcDir TrgDir TrgExe ==> Automatic args-based execution mode");
     }
-  }
-  public async Task CopyAndLaunch(Action<string> ReportProgress)
+  }    public async Task CopyAndLaunch(Action<string> ReportProgress)
   {
     try
     {
@@ -120,9 +119,9 @@ await      LaunchFromCDrive();
   {
     try
     {
-      _lgr.Log(LogLevel.Trace, "Launching... \n\n"); 
+      _lgr.Log(LogLevel.Trace, $"Launching {_deplTrgExe}... \n\n"); 
 
-      var r1 = await Run(_robocopy, new[] { _deplTrgExe, "none" });
+      var r1 = await Run(_deplTrgExe, new[] {  "none" });
       _lgr.Log(LogLevel.Trace, r1.rv + r1.er);
     }
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
