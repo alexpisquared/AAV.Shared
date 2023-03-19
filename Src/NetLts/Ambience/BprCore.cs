@@ -2,7 +2,9 @@
 public partial class Bpr
 {
   readonly SoundPlayer _p = new();
-  const int _dMin = 75000; //below .075 sec nogo on razer1.
+  const int d1 = 125_000, _dMin = 75_000; //below .075 sec nogo on razer1.
+  const int d2 = d1 + d1;
+  readonly int[][] _bethoven6th = new[] { FixDuration(392, d1), FixDuration(392, d1), FixDuration(392, d1), FixDuration(311, d2), FixDuration(349, d1), FixDuration(349, d1), FixDuration(349, d1), FixDuration(294, d2) };
   readonly int[]
      _fd11 = FixDuration(5000, _dMin),
      _fd22 = FixDuration(6000, _dMin * 2),
@@ -63,9 +65,9 @@ public partial class Bpr
       }
     }
 
-    mmStrm.Seek(0, SeekOrigin.Begin);
+    _ = mmStrm.Seek(0, SeekOrigin.Begin);
     _p.Stream = mmStrm;
-    
+
     try //todo: the exceptions are not being caught here!!!
     {
       _p.Play();       // _p.PlaySync(); <== pauses all animations!!!

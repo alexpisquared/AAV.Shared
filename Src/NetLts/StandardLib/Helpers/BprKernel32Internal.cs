@@ -10,10 +10,14 @@ internal class BprKernel32Internal
   public static void Warn() => NativeMethods.BeepIf(8000, 120);
   public static void Error() // CI-RDP-adjusted.
   {
-    NativeMethods.BeepIf(_6kHz, 200);
-    NativeMethods.BeepIf(_6kHz, 200);
-    NativeMethods.BeepIf(_6kHz, 200);
-    NativeMethods.BeepIf(_5kHz, 800);
+    NativeMethods.BeepIf(392, 150);
+    NativeMethods.BeepIf(392, 150);
+    NativeMethods.BeepIf(392, 150);
+    NativeMethods.BeepIf(311, 300);
+    NativeMethods.BeepIf(349, 150);
+    NativeMethods.BeepIf(349, 150);
+    NativeMethods.BeepIf(349, 150);
+    NativeMethods.BeepIf(294, 300);
   }
 
   public static void StartFAF() => Task.Run(Start);
