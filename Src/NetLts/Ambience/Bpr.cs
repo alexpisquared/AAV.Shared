@@ -10,8 +10,8 @@ public partial class Bpr : StandardContractsLib.IBpr
 
   public void Tick() => Task.Run(TickAsync); public async Task TickAsync() { if (!SuppressTicks) await BeepHzMks(new[] { FFD(400, _dMin) }).ConfigureAwait(false); }
   public void Click() => Task.Run(ClickAsync); public async Task ClickAsync() { if (!SuppressTicks) await BeepHzMks(new[] { FFD(800, _dMin) }).ConfigureAwait(false); }
-  public void Warn() => Task.Run(WarnAsync); public async Task WarnAsync() { if (!SuppressAlarm) await BeepHzMks(new[] { _fdw1, _fdw2 }).ConfigureAwait(false); }
-  public void Error() => Task.Run(ErrorAsync); public async Task ErrorAsync() { if (!SuppressAlarm) await BeepHzMks(_bethoven6th).ConfigureAwait(false); }
+  public void Warn() => Task.Run(WarnAsync); public async Task WarnAsync() { if (!SuppressAlarm) await BeepHzMks(_bethoven6thWarn/*new[] { _fdw1, _fdw2 }*/).ConfigureAwait(false); }
+  public void Error() => Task.Run(ErrorAsync); public async Task ErrorAsync() { if (!SuppressAlarm) await BeepHzMks(_bethoven6thErr).ConfigureAwait(false); }
 
   public void Start(int stepHz = 4) => Task.Run(async () => await StartAsync(stepHz).ConfigureAwait(false));   /**/ public async Task StartAsync(int stepHz = 4) => await GradientAsync(300, 1100, stepHz).ConfigureAwait(false); // 4 - 300 ms
   public void Finish(int stepHz = 4) => Task.Run(async () => await FinishAsync(stepHz).ConfigureAwait(false)); /**/ public async Task FinishAsync(int stepHz = 4) => await GradientAsync(1100, 300, stepHz).ConfigureAwait(false); // 300 ms
