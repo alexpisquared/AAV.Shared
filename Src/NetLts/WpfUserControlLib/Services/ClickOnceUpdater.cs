@@ -159,6 +159,7 @@ await      LaunchFromCDrive();
     {
       var commandResult = await Cli.Wrap(exe)
         .WithArguments(ee)
+        //.WithValidation(CommandResultValidation.None) gives error .. could by since no path.
         .WithStandardOutputPipe(PipeTarget.ToStringBuilder(sbOut))
         .WithStandardErrorPipe(PipeTarget.ToStringBuilder(sbErr))
         .ExecuteAsync(cts.Token);

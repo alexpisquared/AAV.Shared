@@ -99,7 +99,7 @@ public class UniConverter : MarkupExtension, IValueConverter
       case TypeCode.Double:
         return Type.GetTypeCode(value.GetType()) switch
         {
-          TypeCode.Boolean => InvertValue ? ((bool)value ? 0.0 : 10.0) : ((bool)value ? 10.0 : 0.0), // Blur for IsBusy
+          TypeCode.Boolean => InvertValue ? ((bool)value ? 0.0 : 3.0) : ((bool)value ? 3.0 : 0.0), // Blur for IsBusy .. 10 was too harsh.
           _ => InvertValue ? value is null : value is not null
         };
       case TypeCode.Empty:
