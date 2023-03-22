@@ -40,6 +40,6 @@ public class DevOps
     "977f4a5f7a363f194b1b5916e71c1d2065cf0c4afdaf33291ec5c6a5a1952f8f"
   };
   const string
-    _devMachineO = "c6575bfeb9a42bdc01bac5e621bcc7cc884b574d3078b3d5bbe8b2db7dd1f968", // d21 - gone/obolete/etc.
+    _devMachineO = "15b818879eba4cddeb744ca6e5f64b22867a7be25e6827d7195e19bcf3be8065", // 2023
     _devMachineH = "73d007eb0b0a148c1205f3ee36d0e792ab8d0833054a8a94c50f0d197bb0fd8d"; // rzr (both are lowercase on rzr1 ... )
 }
