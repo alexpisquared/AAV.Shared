@@ -21,6 +21,9 @@ public static class FSHelper
   {
     try
     {
+      if (string.IsNullOrEmpty(directory))
+        return true;
+
       if (Directory.Exists(directory))
         return true;
 

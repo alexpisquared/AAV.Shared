@@ -6,8 +6,10 @@ public static class JsonFileSerializer
   {
     try
     {
-      if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename) ?? throw new ArgumentNullException("▄▀")))
-        throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
+      var dir = Path.GetDirectoryName(filename);
+      if (!string.IsNullOrEmpty(dir))
+        if (!FSHelper.ExistsOrCreated(dir))
+          throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
       using StreamWriter? streamWriter = new(filename);
       new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, o);
