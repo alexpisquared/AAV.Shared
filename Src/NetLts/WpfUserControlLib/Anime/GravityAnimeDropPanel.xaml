@@ -32,10 +32,10 @@
       <Grid>
         <Grid.Style>
           <Style TargetType="Grid">
-            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="Opacity" Value="1" />
             <Setter Property="RenderTransform">
               <Setter.Value>
-                <TranslateTransform />
+                <TranslateTransform Y="-800"/>
               </Setter.Value>
             </Setter>
             <Style.Triggers>

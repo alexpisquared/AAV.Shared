@@ -10,7 +10,7 @@
       <sys:Double x:Key="x100">160</sys:Double>
       <sys:Double x:Key="x020">17</sys:Double>
 
-      <Duration x:Key="fadeDuration">0:0:0.75</Duration>
+      <Duration x:Key="fadeDuration"  >0:0:0.75</Duration>
       <Duration x:Key="fadeInDuration">0:0:0.01</Duration>
       <Duration x:Key="fadeOuDuration">0:0:0.33</Duration>
 

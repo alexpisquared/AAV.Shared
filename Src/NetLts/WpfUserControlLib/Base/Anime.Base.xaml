@@ -59,9 +59,10 @@
   <Duration     x:Key="du757">0:0:0.757</Duration>
   <Duration     x:Key="du257">0:0:0.257</Duration>
   <sys:TimeSpan x:Key="bt257">0:0:0.257</sys:TimeSpan>
+  <sys:TimeSpan x:Key="bt757">0:0:0.757</sys:TimeSpan>
   <Storyboard x:Key="sbDropIn">
-    <DoubleAnimation Storyboard.TargetProperty="Opacity"                                From="0.00" To="1"    Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />
-    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-400" To="0"    Duration="{StaticResource du757}" EasingFunction="{StaticResource bo}" />
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                                From="0.00" To="1"    Duration="{StaticResource du757}" BeginTime="{StaticResource bt757}" EasingFunction="{StaticResource si}" />
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-400" To="0"    Duration="{StaticResource du757}" BeginTime="{StaticResource bt757}" EasingFunction="{StaticResource bo}" />
   </Storyboard>
   <Storyboard x:Key="sbDropOu">
     <!--<DoubleAnimation Storyboard.TargetProperty="Opacity"                                            To="0.00" Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />-->
