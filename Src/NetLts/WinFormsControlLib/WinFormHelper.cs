@@ -13,5 +13,3 @@ public class WinFormHelper
     return (secondaryScreen is null) ? new Rectangle(0, 0, 1920, 1080) : secondaryScreen.Bounds;
   }
 }
-
-static class Program { [STAThread] static void Main___() { } } //?? what is this doing here?..
