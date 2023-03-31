@@ -11,6 +11,19 @@
   <SolidColorBrush x:Key="LogoTextBrush"       Color="{DynamicResource LogoTextColor}"/>
   <SolidColorBrush x:Key="___Brush"            Color="{DynamicResource ___Color}"/>
 
+  <!--Select All rowheader button is white without this-->
+  <Style TargetType="{x:Type Button}" x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}">
+    <Setter Property="Background" Value="Green"/>
+  </Style>
+
+  <!--rowheader style - rare but white without this-->
+  <Style TargetType="{x:Type DataGridRowHeader}" x:Key="RowHeaderStyle_Aav0" >
+    <Setter Property="Height"               Value="28"/>
+    <Setter Property="Foreground"           Value="{StaticResource LablForegroundBrush}" />
+    <Setter Property="Background"           Value="Transparent" />
+    <Setter Property="FontSize"             Value="12" />
+  </Style>
+
   <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="ColumnHeaderStyle_Aav0" >
     <Setter Property="Height"               Value="28"/>
     <Setter Property="Foreground"           Value="{StaticResource LablForegroundBrush}" />
@@ -37,6 +50,7 @@
     <Setter Property="BorderBrush"			              Value="{DynamicResource ButnBackgroundBrush}" />
     <Setter Property="CanUserAddRows"			            Value="False" />
     <Setter Property="ColumnHeaderStyle"		          Value="{StaticResource ColumnHeaderStyle_Aav0}"/>
+    <Setter Property="RowHeaderStyle"		              Value="{StaticResource RowHeaderStyle_Aav0}"/>
     <Setter Property="EnableRowVirtualization"	      Value="True"  />
     <Setter Property="Foreground"                     Value="{StaticResource MainForegroundBrush}" />
     <Setter Property="GridLinesVisibility"		        Value="None" />
@@ -44,6 +58,7 @@
     <Setter Property="IsReadOnly"				              Value="True"  />
     <Setter Property="RowDetailsVisibilityMode"       Value="VisibleWhenSelected"  />
     <Setter Property="VerticalAlignment"		          Value="Top"  />
+    <Setter Property="SelectionMode"		              Value="Single"  />
   </Style>
   <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource RowAnimationFriendly}" x:Key="FullDeal">
     <Setter Property="AlternatingRowBackground" Value="{DynamicResource ButnBackgroundBrush}" />
