@@ -2,7 +2,7 @@
 
 namespace WpfUserControlLib.Services;
 
-public class GuiCapture
+public partial class GuiCapture
 {
   public static Bitmap StoreActiveWindowToFile(string shortNote)
   {
@@ -38,9 +38,9 @@ public class GuiCapture
     return result;
   }
 
-  [DllImport("user32.dll")] static extern IntPtr GetForegroundWindow();
-  [DllImport("user32.dll")] static extern IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
-  [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)] public static extern IntPtr GetDesktopWindow();
+  [LibraryImport("user32.dll")] private static partial IntPtr GetForegroundWindow();
+  [LibraryImport("user32.dll")] private static partial IntPtr GetWindowRect(IntPtr hWnd, ref Rect rect);
+  [LibraryImport("user32.dll")] public static partial IntPtr GetDesktopWindow();
   [StructLayout(LayoutKind.Sequential)] struct Rect { public int Left; public int Top; public int Right; public int Bottom; }
 
   const string _dir = """C:\Temp\Logs.Viz\""";

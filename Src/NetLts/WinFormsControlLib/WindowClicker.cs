@@ -1,9 +1,9 @@
 ﻿namespace WinFormsControlLib;
-public class WindowClicker // https://chat.openai.com/chat : better to use the OpenAI's tried method, than this unknown piece (2022-12)
+public partial class WindowClicker // https://chat.openai.com/chat : better to use the OpenAI's tried method, than this unknown piece (2022-12)
 {
-  [DllImport("user32.dll")] static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
-  [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr hWnd);
-  [DllImport("user32.dll")] static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+  [LibraryImport("user32.dll", StringMarshalling = StringMarshalling.Utf16)] private static partial IntPtr FindWindow(string? lpClassName, string lpWindowName);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool SetForegroundWindow(IntPtr hWnd);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
   const int WM_LBUTTONDOWN = 0x0201;
   const int WM_LBUTTONUP = 0x0202;

@@ -1,10 +1,10 @@
 ﻿namespace StandardLib.Helpers;
 
-public static class NativeMethods
+public static partial class NativeMethods
 {
-  [DllImport("user32.dll")] public static extern int SendMessage(int hWnd, uint wMsg, uint wParam, uint lParam);
-  [DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern int SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
-  [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)] public static extern IntPtr SendMessageTimeout(IntPtr hWnd, int Msg, IntPtr wParam, string lParam, uint fuFlags, uint uTimeout, IntPtr lpdwResult);
+  [LibraryImport("user32.dll")] public static partial int SendMessage(int hWnd, uint wMsg, uint wParam, uint lParam);
+  [LibraryImport("user32.dll", StringMarshalling = StringMarshalling.Utf16)] public static partial int SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
+  [LibraryImport("user32.dll", SetLastError = true, StringMarshalling = StringMarshalling.Utf16)] public static partial IntPtr SendMessageTimeout(IntPtr hWnd, int Msg, IntPtr wParam, string lParam, uint fuFlags, uint uTimeout, IntPtr lpdwResult);
   [DllImport("user32.dll", EntryPoint = "SendMessageTimeoutW", SetLastError = true, CharSet = CharSet.Unicode)] public static extern uint SendMessageTimeoutW(IntPtr hWnd, int Msg, int countOfChars, StringBuilder text, uint flags, uint uTImeoutj, uint result);
 
   internal static void BeepIf(int freq, int dur)
@@ -16,15 +16,15 @@ public static class NativeMethods
 #if DEBUG // just in case.
   static bool Beep(int freq, int dur) { WriteLine($"Silent Beep({freq}, {dur})"); return true; }
 #else
-  [DllImport("kernel32.dll")] static extern bool Beep(int freq, int dur);
+  [LibraryImport("kernel32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool Beep(int freq, int dur);
 #endif
 
   #region Win32 API declarations to set and get window placement
   public static bool SetWindowPlacement_(IntPtr hWnd, [In] ref WindowPlacement lpwndpl) => SetWindowPlacement(hWnd, ref lpwndpl);
   public static bool GetWindowPlacement_(IntPtr hWnd, out WindowPlacement lpwndpl) => GetWindowPlacement(hWnd, out lpwndpl);
 
-  [DllImport("user32.dll")] static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WindowPlacement lpwndpl);
-  [DllImport("user32.dll")] static extern bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private static partial bool SetWindowPlacement(IntPtr hWnd, /*[In]*/ ref WindowPlacement lpwndpl);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool GetWindowPlacement(IntPtr hWnd, out WindowPlacement lpwndpl);
 
   [Serializable]
   [StructLayout(LayoutKind.Sequential)]

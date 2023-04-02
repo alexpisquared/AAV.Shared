@@ -2,13 +2,13 @@
 using System.Windows.Forms;
 
 namespace WindowsFormsLib;
-public class TextSender
+public partial class TextSender
 {
   const int _disamb = 200;
-  [DllImport("User32.Dll")] static extern long SetCursorPos(int x, int y);
-  [DllImport("user32.dll", EntryPoint = "FindWindow", CharSet = CharSet.Unicode)] static extern IntPtr FindWindow(string? lp1, string lp2);
-  [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)][return: MarshalAs(UnmanagedType.Bool)] static extern bool SetForegroundWindow(IntPtr hWnd);
-  [DllImport("user32.dll")] static extern bool GetWindowRect(IntPtr hwnd, ref Rect1 rectangle);
+  [LibraryImport("User32.Dll")] private static partial long SetCursorPos(int x, int y);
+  [LibraryImport("user32.dll", EntryPoint = "FindWindow", StringMarshalling = StringMarshalling.Utf16)] private static partial IntPtr FindWindow(string? lp1, string lp2);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private static partial bool SetForegroundWindow(IntPtr hWnd);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool GetWindowRect(IntPtr hwnd, ref Rect1 rectangle);
 
   public struct Rect1
   {
@@ -82,7 +82,7 @@ public class TextSender
   delegate bool EnumThreadDelegate(IntPtr hWnd, IntPtr lParam);
 
   const uint WM_GETTEXT = 0x000D;
-  [DllImport("user32.dll")] static extern bool EnumThreadWindows(int dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam);
+  [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)]  private static partial bool EnumThreadWindows(int dwThreadId, EnumThreadDelegate lpfn, IntPtr lParam); 
   [DllImport("user32.dll", CharSet = CharSet.Auto)] static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, int wParam, StringBuilder lParam);
 
   List<IntPtr> EnumerateProcessWindowHandles(int processId)
@@ -200,7 +200,7 @@ public class TextSender
   }
 
   public delegate bool Win32Callback(IntPtr hwnd, IntPtr lParam); //utility function that will find a child window that matches a lambda (Predicate). Be easy to change to return a list. Multiple criteria are handled in the predicate.
-  [DllImport("user32.Dll")][return: MarshalAs(UnmanagedType.Bool)] static extern bool EnumChildWindows(IntPtr parentHandle, Win32Callback callback, IntPtr lParam);
+  [LibraryImport("user32.Dll")][return: MarshalAs(UnmanagedType.Bool)] private static partial bool EnumChildWindows(IntPtr parentHandle, Win32Callback callback, IntPtr lParam);
 
   /// <summary>
   /// Find a child window that matches a set of conditions specified as a Predicate that receives hWnd.  Returns IntPtr.Zero

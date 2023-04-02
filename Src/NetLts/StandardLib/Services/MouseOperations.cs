@@ -1,11 +1,11 @@
 ﻿namespace StandardLib.Services;
-public class MouseOperations
+public partial class MouseOperations
 {
-  [DllImport("user32.dll", EntryPoint = "SetCursorPos")][return: MarshalAs(UnmanagedType.Bool)] static extern bool SetCursorPos(int x, int y);
-  [DllImport("user32.dll")][return: MarshalAs(UnmanagedType.Bool)] static extern bool GetCursorPos(out MousePoint lpMousePoint);
-  [DllImport("user32.dll")] static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
-  [DllImport("user32.dll")] public static extern int SwapMouseButton(int bSwap);
-  [DllImport("user32.dll")] static extern int GetSystemMetrics(int abc);
+  [LibraryImport("user32.dll", EntryPoint = "SetCursorPos")][return: MarshalAs(UnmanagedType.Bool)] private static partial bool SetCursorPos(int x, int y);
+  [LibraryImport("user32.dll")][return: MarshalAs(UnmanagedType.Bool)] private static partial bool GetCursorPos(out MousePoint lpMousePoint);
+  [LibraryImport("user32.dll")] private static partial void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
+  [LibraryImport("user32.dll")] public static partial int SwapMouseButton(int bSwap);
+  [LibraryImport("user32.dll")] private static partial int GetSystemMetrics(int abc);
 
   public static bool IsMouseSwapped => GetSystemMetrics(SM_SWAPBUTTON) > 0;
   public static bool SwapMouseButton_()
