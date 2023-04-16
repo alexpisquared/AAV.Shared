@@ -8,7 +8,7 @@ namespace AAV.Sys.Helpers;
 
 public static class VerHelper
 {
-  public static string CurVerStr() => $"{getTimedVerString} - {CompileMode}";
+  public static string CurVerStr(string dotnetvernum="") => $"{dotnetvernum}{getTimedVerString} - {CompileMode}";
 
   public static string TimeAgo(DateTimeOffset max, bool versionMode = false)
   {
