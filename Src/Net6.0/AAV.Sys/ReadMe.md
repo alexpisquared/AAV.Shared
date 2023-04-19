@@ -1,5 +1,5 @@
-﻿# 17 Amazing Community Packages for .NET Developers
-https://www.youtube.com/watch?v=VwxickHIDhc&t=209s
+﻿# //todo: 17 Amazing Community Packages for .NET Developers
+> ###### https://www.youtube.com/watch?v=VwxickHIDhc&t=209s
 00:00 Community Packages Introduction
 00:24 Intellenum
 00:56 Vogen
