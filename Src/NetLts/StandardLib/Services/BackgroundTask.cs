@@ -1,6 +1,6 @@
 namespace StandardLib.Services;
 
-public class BackgroundTaskBase
+public class BackgroundTaskBase // the one and only!
 {
   protected readonly CancellationTokenSource _cts = new();
   protected PeriodicTimer? _timer;
