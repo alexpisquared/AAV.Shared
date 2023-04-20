@@ -44,6 +44,9 @@ namespace AAV.WPF.Base
     public WindowBase(ILogger<Window> logger)
     {
       _logger = logger;
+
+      Topmost = Debugger.IsAttached;
+
 #endif
 
       //todo: use the commented out code below!!!   //mar18: looks like Core 3 is fixed for this bug.
