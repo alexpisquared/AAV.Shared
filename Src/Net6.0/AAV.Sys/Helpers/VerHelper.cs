@@ -90,7 +90,7 @@ public static class VerHelper
         Assembly.GetEntryAssembly()?.GetName()?.Version ?? new Version("No Kidding...");       // BOM.OLP.DAQ -.EXE !!!//          Assembly.GetCallingAssembly().GetName().Version;		// BOM.OLP.ViewModel.DAQ - use this as the most likely to change, thus be reflective of the latest state.//          Assembly.GetExecutingAssembly().GetName().Version;	// BOM.OLP.Common// FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToString("MM.dd HH"); 
 
 #if DEBUG
-  public static string CompileMode => Debugger.IsAttached ? "Dbg-Atchd )(*&^%$" : "Dbg!!!";
+  public static string CompileMode => Debugger.IsAttached ? "Dbg-Atchd )(*&^%$" : "Dbg!!aav.sys";
 #else
   public static string CompileMode => Debugger.IsAttached ? "Rls-Atchd" : "Rls";
 #endif

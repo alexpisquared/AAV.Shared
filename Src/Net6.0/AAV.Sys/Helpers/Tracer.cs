@@ -17,7 +17,7 @@ public static partial class Tracer // .NET Core 3.*
       //Trace.WriteLine($" *** IsThreadSafe={listener.IsThreadSafe}.   UseGlobalLock={Trace.UseGlobalLock}.   Logging to '{logFilename}'."); => always this: "*** IsThreadSafe=False.   UseGlobalLock=True.   Logging to 'C:\Users\alexp\OneDrive\Public\Logs\AAV.WPF-le@RAZ~XPa.txt'."
       Trace.Listeners.Add(listener);
       Trace.AutoFlush = true;
-      Trace.Write("\r\n"); // between-runs separator.
+      Trace.Write("\r\n"); // between-runs separator. 2023-04-22
 
 #if NotPhasedOut // phased out in favour of DI's on Core 3.
       ReportErrorLevel(appTraceLvl, "* Current *");
@@ -87,9 +87,7 @@ public static partial class Tracer // .NET Core 3.*
     try
     {
 #if DEBUG
-   return OneDrive.Folder(@"Logs\dbg");
-#elif !true
-    return @"D:\PANTHER_PILOT\SrcPsv";
+      return OneDrive.Folder(@"C:\temp\logs");
 #else
       if (!isApp4wk && Environment.MachineName == "RAZER1") { } else { }
 

@@ -13,7 +13,7 @@ public static class VersionHelper
       $"{cmn}  " +
       $"arg:[{string.Join("|", Environment.GetCommandLineArgs().Skip(1))}]";        // $"cur:{Environment.CurrentDirectory}  ";
 
-  public static string Env()  {    var ary = Assembly.GetExecutingAssembly().Location.Split('\\');    return ary.Length > 2 ? ary[2] : ary.Length.ToString();  } // ???
+  public static string Env() { var ary = Assembly.GetExecutingAssembly().Location.Split('\\'); return ary.Length > 2 ? ary[2] : ary.Length.ToString(); } // ???
 
   public static (bool isObsolete, DateTime curExeTime) CheckForNewVersion(string pathToSetupExe, int buildTimeOffsetInMin = 3)
   {
@@ -22,10 +22,7 @@ public static class VersionHelper
     return (isObslete, curExeTime);
   }
 
-  public static string CompileMode =>
-    IsDbg ?
-    (Debugger.IsAttached ? "·Dbg-Atchd" : "Dbg!!!") :
-    (Debugger.IsAttached ? "·Rls-Atchd" : "Rls");
+  public static string CompileMode => Debugger.IsAttached ? (IsDbg ? "·Dbg-Atchd" : "·Rls-Atchd") : (IsDbg ? "Dbg!!sl" : "Rls");
 
   public static string TimeAgo(TimeSpan timespan, bool small = true, bool versionMode = false, string ago = "", string since = "") =>
     timespan < TimeSpan.Zero          /**/ ? "Never" :
