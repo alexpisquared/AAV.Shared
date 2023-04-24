@@ -23,7 +23,7 @@ public partial class WindowBase : Window
   protected bool IgnoreWindowPlacement { get; set; }
   public static readonly DependencyProperty ZVProperty = DependencyProperty.Register("ZV", typeof(double), typeof(WindowBase), new PropertyMetadata(_defaultZoomV)); public double ZV { get => (double)GetValue(ZVProperty); set => SetValue(ZVProperty, value); }
   public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_defaultTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }
-  public string? KeepOpenReason { get; set; } = """ [KeepOpenReason = "Changes have not been saved."] """;
+  public string? KeepOpenReason { get; set; } = null; // """ [KeepOpenReason = "Changes have not been saved."] """;
   protected void ApplyTheme(string themeName, [CallerMemberName] string? cmn = "")
   {
     _logger.Log(LogLevel.Trace, $"► WinBase  shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");

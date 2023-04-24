@@ -68,6 +68,8 @@ public partial class Bpr : StandardContractsLib.IBpr
     WriteLine($"[xx:xx:xx Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
   }
 
+  public async Task WakeAudio() => await BeepAsync(1, 1);
+
   public static async Task DevDbg() //  public App()  {    AmbienceLib.Bpr.DevDbg(); // ...
   {
     if (Debugger.IsAttached)
