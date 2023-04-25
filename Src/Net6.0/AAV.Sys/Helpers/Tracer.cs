@@ -2,9 +2,8 @@
 
 public static partial class Tracer // .NET Core 3.*
 {
-  static string LogFolder_OneDrive => Path.Combine(OneDrive.Root, @"Public\Logs");
+  static string LogFolder_OneDrive => Path.Combine(StandardLib.Helpers.OneDrive.Root, @"Public\Logs");
   static string LogFolder_FallbackZ => @".\Logs";
-  static string LogFolder_FileShare => @"\\ca03-filesrv1\Fdrive\alex.pigida\misc\logs"; //todo: using \\name\.. is SLOW !!! But also cannot use F:\... <= always false off dir.exists()
 
   public static string RemoteLogFolder => LogFolder_FallbackZ; // backward compat.
   public static string SetupTracingOptions(string appName, TraceSwitch appTraceLvl, bool is4wk = false)
@@ -87,14 +86,11 @@ public static partial class Tracer // .NET Core 3.*
     try
     {
 #if DEBUG
-      return OneDrive.Folder(@"C:\temp\logs");
+      return StandardLib.Helpers.OneDrive.Folder(@"C:\temp\logs");
 #else
       if (!isApp4wk && Environment.MachineName == "RAZER1") { } else { }
 
-      var path =
-        Environment.MachineName == "RAZER1"       /**/ ? LogFolder_OneDrive :
-        Environment.MachineName == "LR6WB43X"     /**/ ? (isApp4wk ? LogFolder_FileShare : LogFolder_OneDrive)
-                                                  /**/ : LogFolder_OneDrive; // Apr3: I think this cause err on Zoe's for AlexPi.Scr: LogFolder_FallbackZ;
+      var path = LogFolder_OneDrive; // Apr3: I think this cause err on Zoe's for AlexPi.Scr: LogFolder_FallbackZ;
       if (FSHelper.ExistsOrCreated(path)) return path;
 
       path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "DevLog");
