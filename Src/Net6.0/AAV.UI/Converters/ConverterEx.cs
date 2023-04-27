@@ -73,11 +73,7 @@ public class IsAfterAppStart : MarkupExtension, IValueConverter
 
   public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
-#if DEBUG_
-    var rv = (value is DateTime && (DateTime)value > AppStartAt.AddHours(-31));
-#else
     var rv = (value is DateTime && (DateTime)value > AppStartAt);
-#endif
 
     if (targetType == typeof(Brush))
     {

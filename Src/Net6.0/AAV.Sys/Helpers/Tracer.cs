@@ -85,9 +85,9 @@ public static partial class Tracer // .NET Core 3.*
   {
     try
     {
-#if DEBUG
-      return StandardLib.Helpers.OneDrive.Folder(@"C:\temp\logs");
-#else
+      if (DevOps.IsDbg)
+        return StandardLib.Helpers.OneDrive.Folder(@"C:\temp\logs");
+
       if (!isApp4wk && Environment.MachineName == "RAZER1") { } else { }
 
       var path = LogFolder_OneDrive; // Apr3: I think this cause err on Zoe's for AlexPi.Scr: LogFolder_FallbackZ;
@@ -98,7 +98,6 @@ public static partial class Tracer // .NET Core 3.*
 
       path = LogFolder_FallbackZ;
       if (FSHelper.ExistsOrCreated(path)) return path;
-#endif
     }
     catch (DirectoryNotFoundException ex) { ex.Log(); }
     catch (IOException ex) { ex.Log(); }
