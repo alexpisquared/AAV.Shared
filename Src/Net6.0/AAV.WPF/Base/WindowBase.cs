@@ -15,6 +15,7 @@ using System.Windows.Interop;
 using StandardLib.Extensions;
 //using AAV.Sys.Helpers;
 using AAV.WPF.Ext;
+using StandardLib.Helpers;
 
 namespace AAV.WPF.Base
 {

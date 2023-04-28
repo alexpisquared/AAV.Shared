@@ -1,4 +1,6 @@
-﻿namespace AAV.Sys.Helpers;
+﻿using StandardLib.Helpers;
+
+namespace AAV.Sys.Helpers;
 
 public static partial class Tracer // .NET Core 3.*
 {
