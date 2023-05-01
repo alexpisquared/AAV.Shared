@@ -151,6 +151,7 @@ public class SpeechSynth : IDisposable
       CreateNoWindow = true               // Set command to run in a hidden window
     }
   }.Start();
+  public void SpeakAsyncCancelAll() { }
 }
 public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
 public class CC
