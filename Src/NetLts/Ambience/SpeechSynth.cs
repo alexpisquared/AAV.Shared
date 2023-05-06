@@ -147,7 +147,7 @@ public class SpeechSynth : IDisposable
     {
       RedirectStandardOutput = true,
       RedirectStandardError = true,
-      UseShellExecute = false,
+      UseShellExecute = false,        //todo: use true if An error occurred trying to start process 'C:\Users\alexp\OneDrive\Documents\0\Ltd\Invoicing' with working directory 'c:\temp'. Access is denied.   
       CreateNoWindow = true               // Set command to run in a hidden window
     }
   }.Start();
