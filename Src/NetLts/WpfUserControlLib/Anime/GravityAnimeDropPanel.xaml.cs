@@ -1,5 +1,5 @@
 ﻿namespace WpfUserControlLib.Anime;
-public partial class GravityAnimeDropPanel : UserControl
+public partial class GravityAnimeDropPanel
 {
   public GravityAnimeDropPanel() => InitializeComponent();
 

@@ -1,6 +1,6 @@
 ﻿namespace WpfUserControlLib.Views;
 
-public partial class Zoomer : UserControl
+public partial class Zoomer
 {
   public Zoomer()
   {

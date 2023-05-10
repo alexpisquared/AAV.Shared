@@ -1,5 +1,5 @@
 ﻿namespace WpfUserControlLib.Anime;
-public partial class ArrivaLogoDropPanel : UserControl
+public partial class ArrivaLogoDropPanel
 {
   public ArrivaLogoDropPanel() => InitializeComponent();
 

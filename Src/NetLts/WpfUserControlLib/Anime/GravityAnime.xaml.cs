@@ -1,5 +1,5 @@
 ﻿namespace WpfUserControlLib.Anime;
-public partial class GravityAnime : UserControl
+public partial class GravityAnime
 {
   readonly Storyboard _sbGravity, _sbFadeOut;
   readonly Duration _fadeOuDuration;

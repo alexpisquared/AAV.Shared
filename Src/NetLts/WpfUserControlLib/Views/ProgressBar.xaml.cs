@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace WpfUserControlLib.Views
 {
-  public partial class ProgressBar : UserControl
+  public partial class ProgressBar
   {
     public ProgressBar() => InitializeComponent();
 

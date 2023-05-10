@@ -1,6 +1,6 @@
 ﻿namespace WpfUserControlLib.Anime;
 
-public partial class ArcPi : UserControl
+public partial class ArcPi
 {
   public ArcPi() => InitializeComponent();
   public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color", typeof(Brush), typeof(ArcPi), new PropertyMetadata(Brushes.Green)); public Brush Color { get => (Brush)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }

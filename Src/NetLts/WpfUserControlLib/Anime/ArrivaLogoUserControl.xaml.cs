@@ -1,6 +1,6 @@
 ﻿namespace WpfUserControlLib.Anime;
 
-public partial class ArrivaLogoUserControl : UserControl
+public partial class ArrivaLogoUserControl
 {
   public ArrivaLogoUserControl()
   {

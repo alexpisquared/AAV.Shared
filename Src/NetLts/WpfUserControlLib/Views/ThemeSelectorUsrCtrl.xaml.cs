@@ -1,6 +1,6 @@
 ﻿namespace WpfUserControlLib.Views;
 
-public partial class ThemeSelectorUsrCtrl : UserControl
+public partial class ThemeSelectorUsrCtrl
 {
   public delegate void ApplyThemeDelegate(string v, string? cmn);
   public ThemeSelectorUsrCtrl() => InitializeComponent();

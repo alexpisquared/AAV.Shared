@@ -4,7 +4,7 @@ using System.Windows.Controls.Primitives;
 
 namespace WpfUserControlLib.Views
 {
-  public partial class ThemeToggleUsrCtrl : UserControl
+  public partial class ThemeToggleUsrCtrl
   {
     public delegate void ApplyThemeDelegate(string v);
     public ThemeToggleUsrCtrl() => InitializeComponent();

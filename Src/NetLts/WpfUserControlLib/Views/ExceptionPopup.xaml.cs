@@ -1,5 +1,5 @@
 ﻿namespace WpfUserControlLib.Views;
-public partial class ExceptionPopup : WindowBase
+public partial class ExceptionPopup// : WindowBase
 {
   const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine\bin\Release\OpenInVsOnTheCulpritLine.exe""";
   readonly string? msg, cmn, cfp;

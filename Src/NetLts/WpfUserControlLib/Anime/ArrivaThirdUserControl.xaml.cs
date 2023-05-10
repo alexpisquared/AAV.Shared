@@ -1,5 +1,5 @@
 ﻿namespace WpfUserControlLib.Anime;
-public partial class ArrivaThirdUserControl : UserControl
+public partial class ArrivaThirdUserControl
 {
   public ArrivaThirdUserControl()
   {
