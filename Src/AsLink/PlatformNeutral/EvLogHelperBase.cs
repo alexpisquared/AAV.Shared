@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Security.Principal;
-using AAV.Sys.Ext;
-
-namespace AsLink;
+﻿namespace AsLink;
 
 public static partial class EvLogHelper //this is the latest copy as of 2021-09-10. 
 {
