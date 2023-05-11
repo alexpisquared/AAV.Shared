@@ -16,11 +16,11 @@ public partial class GravityAnimeDropPanel
     }
     catch (OperationCanceledException ex)
     {
-      WriteLine($"[xx:xx:xx Trc] --Ignore OperationCanceledException {ex.Message}");
+      WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore OperationCanceledException {ex.Message}");
     }
     catch (AggregateException ex) when (ex.InnerException is OperationCanceledException)
     {
-      WriteLine($"[xx:xx:xx Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
+      WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
     }
   }
 }

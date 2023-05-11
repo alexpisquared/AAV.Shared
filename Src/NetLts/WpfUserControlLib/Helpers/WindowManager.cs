@@ -14,12 +14,12 @@ namespace WpfUserControlLib.Helpers
       var processCollection = Process.GetProcesses(".").Where(p => p.MainWindowHandle != IntPtr.Zero
         //&& p.ProcessName != "explorer"
         ).OrderBy(p => p.ProcessName);
-      Trace.WriteLine($"[xx:xx:xx Trc] {processCollection.Count(),3}  total:");
+      Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] {processCollection.Count(),3}  total:");
 
       foreach (var p in processCollection)
-        Trace.WriteLine($"[xx:xx:xx Trc] {++i,3}  {p.ProcessName,-22}  {p.MainWindowTitle}");
+        Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] {++i,3}  {p.ProcessName,-22}  {p.MainWindowTitle}");
 
-      Trace.WriteLine($"[xx:xx:xx Trc] {processCollection.Count(),3}  total:");
+      Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] {processCollection.Count(),3}  total:");
     }
   }
 }

@@ -91,7 +91,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
       if (enforceCreation || !File.Exists(appsettingsPathFileExt))
       {
         File.WriteAllText(appsettingsPathFileExt, string.Format(_defaultAppSetValues, appsettingsPathFileExt.Replace(@"\", @"\\"), Assembly.GetEntryAssembly()?.GetName().Name, DateTimeOffset.Now.ToString()));
-        WriteLine($"[xx:xx:xx Trc] ■ WARNING: overwrote this {appsettingsPathFileExt}.");
+        WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] ■ WARNING: overwrote this {appsettingsPathFileExt}.");
       }
 
       return true;

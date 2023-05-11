@@ -25,11 +25,11 @@ public partial class GravityAnime
     }
     catch (OperationCanceledException ex)
     {
-      Trace.WriteLine($"[xx:xx:xx Trc] --Ignore OperationCanceledException {ex.Message}");
+      Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore OperationCanceledException {ex.Message}");
     }
     catch (AggregateException ex) when (ex.InnerException is OperationCanceledException)
     {
-      Trace.WriteLine($"[xx:xx:xx Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
+      Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
     }
   }
 

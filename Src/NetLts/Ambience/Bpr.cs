@@ -48,7 +48,7 @@ public partial class Bpr : StandardContractsLib.IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
-    WriteLine($"[xx:xx:xx Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
+    WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
   }
   public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
   {
@@ -65,7 +65,7 @@ public partial class Bpr : StandardContractsLib.IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
-    WriteLine($"[xx:xx:xx Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
+    WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
   }
 
   public async Task WakeAudio() => await BeepAsync(1, .1);
