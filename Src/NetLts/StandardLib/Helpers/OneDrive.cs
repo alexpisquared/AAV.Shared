@@ -7,7 +7,7 @@ public static class OneDrive // Core 3
     get
     {
       var rv = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "OneDrive");
-      return Environment.MachineName.Equals("ASUS2") ? rv.Replace("C:", "D:") : rv; // :'cause Asus2 is on D:
+      return (Environment.MachineName.Equals("ASUS2") && Environment.UserName.Contains("lex")) ? rv.Replace("C:", "D:") : rv; // :'cause Asus2 is on D:
     }
   }
 
