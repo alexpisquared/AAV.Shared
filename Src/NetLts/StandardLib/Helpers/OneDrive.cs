@@ -20,6 +20,8 @@ public static class OneDrive // Core 3
     return folder;
   }
 
+  public static Task<string[]> GetFileNamesAsync(string searchPattern = "*.*", string folder = @"Pictures\") => Task.Run(() => Directory.GetFiles(Folder(folder), searchPattern, SearchOption.AllDirectories));
+
   public static string VpdbFolder => DataFolder("vpdb");
   public static string WebCacheFolder => """C:\temp\web.cache""";// DataFolder("web.cache");
 }
