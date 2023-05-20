@@ -94,7 +94,7 @@ public class BackgroundTaskTest
     Write($"{Stopwatch.GetElapsedTime(_start).TotalMilliseconds:N0} ");
   }
   static Random rnd = new Random();
-  private static long _start;
+  static long _start;
 }
 
 /*
