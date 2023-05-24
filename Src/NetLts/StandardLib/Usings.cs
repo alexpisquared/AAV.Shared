@@ -11,7 +11,7 @@ global using System.Runtime.InteropServices;
 global using System.Runtime.Serialization;
 global using System.Runtime.Serialization.Json;
 global using System.Text;
-//obal using System.Text.Json; //tu: new and very performant Json lib (Dec 2021)
+global using System.Text.Json; //tu: new and very performant Json lib (Dec 2021)
 global using System.Threading;
 global using System.Threading.Tasks;
 global using System.Xml;
