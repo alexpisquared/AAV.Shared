@@ -19,7 +19,7 @@ public class SizeWeightedRandomPicker
     _totalSize = _files.Sum(file => file.Length);
     Count = _files.Count;
 
-    WriteLine($"Constructor execution time: {_files.Count} files {_totalSize * .000000001:N0} gb in {Stopwatch.GetElapsedTime(start).TotalSeconds:N2} s.");
+    WriteLine($"■ ■ ■ {_files.Count} {searchPattern} files of total {_totalSize * .000000001:N0} Gb loaded in {Stopwatch.GetElapsedTime(start).TotalSeconds:N2} s.");
   }
 
   public int Count { get; private set; }
