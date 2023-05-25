@@ -8,7 +8,7 @@ public class SizeWeightedRandomPicker
 
   public SizeWeightedRandomPicker(string directoryPath)
   {
-#if DEBUG
+#if DEBUG_
     var searchPattern = "*.mts";
 #else
     var searchPattern = "*";
