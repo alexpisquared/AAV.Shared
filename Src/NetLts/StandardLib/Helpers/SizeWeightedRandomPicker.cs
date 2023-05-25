@@ -3,7 +3,7 @@
 public class SizeWeightedRandomPicker
 {
   readonly Random _random = new(Guid.NewGuid().GetHashCode());
-  List<FileInfo> _files;
+  readonly List<FileInfo> _files;
   readonly long _totalSize;
 
   public SizeWeightedRandomPicker(string directoryPath)
