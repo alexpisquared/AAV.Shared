@@ -42,7 +42,7 @@ public class SizeWeightedRandomPicker
 
   public void Serialize(string filePath = _allFiles) => File.WriteAllText(filePath, JsonSerializer.Serialize(this));
 
-  public static SizeWeightedRandomPicker Deserialize(string filePath = _allFiles) => JsonSerializer.Deserialize<SizeWeightedRandomPicker>(File.ReadAllText(filePath)) ?? throw new ArgumentNullException("▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄");
+  public static SizeWeightedRandomPicker Deserialize(string filePath = _allFiles) => JsonSerializer.Deserialize<SizeWeightedRandomPicker>(File.ReadAllText(filePath)) ?? throw new ArgumentNullException(nameof(filePath), "▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄");
 
   const string _allFiles = (@"C:\g\Microsoft-Graph\Src\msgraph-training-uwp\DemoApp\Stuff\AllFiles.json");
 }
