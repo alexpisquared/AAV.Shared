@@ -49,7 +49,7 @@ public class SpeechSynth : IDisposable
     if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)    
       PlayWavFileAsync(file);    
     else if (await SpeakPlusCreateWavFile(msg, file, speak) == false)
-      Speak(orgMsg ?? msg);
+      SpeakFree(orgMsg ?? msg);
   }
   async Task<bool> SpeakPlusCreateWavFile(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
   {
@@ -139,8 +139,8 @@ public class SpeechSynth : IDisposable
     GC.SuppressFinalize(this);
   }
 
-  public static void Speak(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
-  [Obsolete("Use ..Speak()")]
+  public static void SpeakFree(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
+  [Obsolete("Use ..SpeakFree()")]
   public static void SayExe(string msg) => new Process
   {
     StartInfo = new ProcessStartInfo("say.exe", msg)
