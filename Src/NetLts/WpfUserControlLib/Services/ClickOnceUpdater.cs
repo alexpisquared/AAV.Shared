@@ -1,6 +1,6 @@
-﻿using CliWrap;
-using System.Text;
+﻿using System.Text;
 using System.Threading;
+using CliWrap;
 
 namespace WpfUserControlLib.Services;
 public class ClickOnceUpdater
@@ -26,7 +26,8 @@ public class ClickOnceUpdater
       _deplTrgExe = Environment.GetCommandLineArgs()[4];
       _lgr.Log(LogLevel.Trace, $"{string.Join('\n', Environment.GetCommandLineArgs().Skip(1))} \t\t <== SrcDir TrgDir TrgExe ==> Automatic args-based execution mode");
     }
-  }    public async Task CopyAndLaunch(Action<string> ReportProgress)
+  }
+  public async Task CopyAndLaunch(Action<string> ReportProgress)
   {
     try
     {
@@ -41,7 +42,7 @@ public class ClickOnceUpdater
       }
 
       ReportProgress("Re-Starting the Tool..."); await Task.Delay(2000);
-await      LaunchFromCDrive();
+      await LaunchFromCDrive();
 
       ReportProgress("Copying done! \n\n   Finalizing...");
 
@@ -106,11 +107,10 @@ await      LaunchFromCDrive();
     {
       _lgr.Log(LogLevel.Trace, "Copying... \n\n"); await Task.Delay(2000);
 
-      var r1 = await Run(_robocopy, new[] { _deplSrcDir, _deplTrgDir, "/MIR", "/NJH", "/NDL", "/NP", "/W:3" });
-      _lgr.Log(LogLevel.Trace, r1.rv + r1.er);
+      var (success, rv, er, runTime) = await Run(_robocopy, new[] { _deplSrcDir, _deplTrgDir, "/MIR", "/NJH", "/NDL", "/NP", "/W:3" });
+      _lgr.Log(LogLevel.Trace, rv + er);
 
-
-      var r2 = await Run(_robocopy, new[] { $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar", "*.lnk", "/XO"});
+      var r2 = await Run(_robocopy, new[] { $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar", "*.lnk", "/XO" });
       _lgr.Log(LogLevel.Trace, r2.rv + r2.er);
     }
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
@@ -119,10 +119,10 @@ await      LaunchFromCDrive();
   {
     try
     {
-      _lgr.Log(LogLevel.Trace, $"Launching {_deplTrgExe}... \n\n"); 
+      _lgr.Log(LogLevel.Trace, $"Launching {_deplTrgExe}... \n\n");
 
-      var r1 = await Run(_deplTrgExe, new[] {  "none" });
-      _lgr.Log(LogLevel.Trace, r1.rv + r1.er);
+      var (success, rv, er, runTime) = await Run(_deplTrgExe, new[] { "none" });
+      _lgr.Log(LogLevel.Trace, rv + er);
     }
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
   }
@@ -148,7 +148,6 @@ await      LaunchFromCDrive();
     catch (Exception ex) { _ = MessageBox.Show(ex.Message, "Warning / Error", MessageBoxButton.OK, MessageBoxImage.Error); }
   }
 
-
   async Task<(bool success, string rv, string er, TimeSpan runTime)> Run(string exe, string[] ee, int timeoutmin = 3) // https://www.youtube.com/watch?v=Pt-0KM5SxmI&t=418s
   {
     StringBuilder sbOut = new(), sbErr = new();
@@ -164,7 +163,6 @@ await      LaunchFromCDrive();
         .WithStandardErrorPipe(PipeTarget.ToStringBuilder(sbErr))
         .ExecuteAsync(cts.Token);
 
-      
       return (true, sbOut.ToString().Trim('\n').Trim('\r'), sbErr.ToString(), commandResult.RunTime);
     }
     catch (OperationCanceledException ex)
