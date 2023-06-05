@@ -16,8 +16,7 @@ public partial class Bpr : StandardContractsLib.IBpr
   public void Start(int stepHz = 4) => Task.Run(async () => await StartAsync(stepHz).ConfigureAwait(false));   /**/ public async Task StartAsync(int stepHz = 4) => await GradientAsync(300, 1100, stepHz).ConfigureAwait(false); // 4 - 300 ms
   public void Finish(int stepHz = 4) => Task.Run(async () => await FinishAsync(stepHz).ConfigureAwait(false)); /**/ public async Task FinishAsync(int stepHz = 4) => await GradientAsync(1100, 300, stepHz).ConfigureAwait(false); // 300 ms
   public void AppStart() => Task.Run(AppStartAsync);   /**/ public async Task AppStartAsync() => await GradientAsync(200, 600, 2).ConfigureAwait(false);  // 600 ms
-
-  public void AppFinish() => Task.Run(AppFinishAsync); /**/ public async Task AppFinishAsync() => await GradientAsync(799, 100, 1).ConfigureAwait(false); // 2.0 s (failed: 800 ) An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.
+  public void AppFinish() => Task.Run(AppFinishAsync); /**/ public async Task AppFinishAsync() => await GradientAsync(798, 100, 1).ConfigureAwait(false); // 2.0 s (800, 799 fail with: An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.)
 
   //was  void No() => Task.Run(async () => await NoAsync().ConfigureAwait(false)); public async Task NoAsync() => await BeepHzMks(new[] { FFD(6000, d1), FFD(5000, d1) }).ConfigureAwait(false); <== auto converted by the VS!!! to this:
   public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false); // Oh, Yes.
