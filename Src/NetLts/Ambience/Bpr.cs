@@ -1,6 +1,6 @@
 ﻿namespace AmbienceLib;
 
-public partial class Bpr : StandardContractsLib.IBpr
+public partial class Bpr : IBpr
 {
   public bool SuppressTicks { get; set; }
   public bool SuppressAlarm { get; set; }
@@ -47,8 +47,9 @@ public partial class Bpr : StandardContractsLib.IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
-    WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
+    Trace_(fromHz, tillHz, stepHz, vs, started);
   }
+
   public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
   {
     List<int[]> vs = new();
@@ -64,11 +65,9 @@ public partial class Bpr : StandardContractsLib.IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
-    WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] ::>>   from:{fromHz} - till:{tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} ==> {vs.Count} steps. === {Stopwatch.GetElapsedTime(started).TotalMilliseconds} ms");
+    Trace_(fromHz, tillHz, stepHz, vs, started);
   }
-
   public async Task WakeAudio() => await BeepAsync(1, .1);
-
   public static async Task DevDbg() //  public App()  {    AmbienceLib.Bpr.DevDbg(); // ...
   {
     if (Debugger.IsAttached)
@@ -119,7 +118,6 @@ public partial class Bpr : StandardContractsLib.IBpr
       }
     }
   }
-
   public static int[] FixDuration(int hz, int mks) // making sure whole wavelengths are sent to play.
   {
     var preciseTimesWavePlayed = mks * .000001 * hz;
@@ -130,6 +128,6 @@ public partial class Bpr : StandardContractsLib.IBpr
 
     return new int[] { hz, (int)(1000_000 * roundedTimesWavePlayed / hz) };
   }
-
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
+  static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}            Bpr.Wave()   Hz: from {fromHz} - till {tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
 }
