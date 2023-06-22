@@ -10,7 +10,7 @@
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Anime.xaml" />
         <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
-        <ResourceDictionary Source="/SmreV2.Views;component/ViewModelToViewMapping.xaml" />
+        <ResourceDictionary Source="/OleksaScrSvr.Views;component/ViewModelToViewMapping.xaml" />
         -->
       </ResourceDictionary.MergedDictionaries>
       <Storyboard x:Key="sbkFrvr" RepeatBehavior="Forever" BeginTime="0:0:1">
