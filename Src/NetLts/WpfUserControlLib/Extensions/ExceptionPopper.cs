@@ -2,13 +2,13 @@
 
 public static class ExnPopr
 {
-  public static void Pop(this Exception ex, UserControl u, string note = "", ILogger? lgr = null, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0) => ex.Pop(u.FindParentWindow(), note, lgr, cmn, cfp, cln);
   public static void Pop(this Exception ex, [CallerLineNumber] int cln = 0, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "") => ex.Pop(Application.Current.MainWindow, "", null, cmn, cfp, cln);
   public static void Pop(this Exception ex, string note, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0) => ex.Pop(Application.Current.MainWindow, note, null, cmn, cfp, cln);
   public static void Pop(this Exception ex, ILogger lgr, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0) => ex.Pop(Application.Current.MainWindow, "", lgr, cmn, cfp, cln);
-  public static void Pop(this Exception ex, string note, ILogger lgr, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0) => ex.Pop(Application.Current.MainWindow, note, lgr, cmn, cfp, cln);
+  public static void Pop(this Exception ex, string note, ILogger? lgr, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0) => ex.Pop(Application.Current.MainWindow, note, lgr, cmn, cfp, cln);
+  public static void Pop(this Exception ex, UserControl u, string note = "", ILogger? lgr = null, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0) => ex.Pop(u.FindParentWindow(), note, lgr, cmn, cfp, cln);
 
-  public static void Pop(this Exception ex, Window owner, string note = "", ILogger? lgr = null, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
+  public static void Pop(this Exception ex, Window owner, string note, ILogger? lgr, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
   {
     var msgForPopup = ex.Log(note, cmn, cfp, cln);
 

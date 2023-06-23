@@ -4,36 +4,26 @@ public static class UnhandledExceptionHndlr // Core 3
 {
   public static ILogger? Logger { get; set; }
 
-  public static void OnCurrentDispatcherUnhandledException(object s, DispatcherUnhandledExceptionEventArgs e)
+  public static void OnCurrentDispatcherUnhandledException(object s, DispatcherUnhandledExceptionEventArgs ea)
   {
-    if (e != null)
-      e.Handled = true;
+    if (ea != null)
+      ea.Handled = true;
 
-    var details = $"  {e?.Exception.InnerMessages()}\n{e?.Exception.StackTrace}";
+    var details = $"  {ea?.Exception.InnerMessages()}\n{ea?.Exception.StackTrace}";
 
     try
     {
-      Logger?.LogError(e?.Exception, details);
+      Logger?.LogError(ea?.Exception, details);
       Clipboard.SetText(details);
 
       if (Debugger.IsAttached)
       {
         WriteLine(details);
         Debugger.Break();
+        return;
       }
-      //else if (MessageBox.Show(details, "Unhandled Exception - Do you want to continue?", MessageBoxButton.YesNo, MessageBoxImage.Error, MessageBoxResult.Yes) == MessageBoxResult.No)
-      //{
-      //  Logger?.LogInformation("Safe decision: to aborrt execution.");
-      //  Application.Current.Shutdown(44);
-      //}
-      //else
-      //{
-      //  Logger?.LogInformation("Brave decision: to continue execution.");
-      //}
-      else
-      {
-        e?.Exception.Pop("Unhandled Exception - Auto continue if not aborted");
-      }
+
+      ea?.Exception.Pop("Unhandled Exception - Auto continue if not aborted", Logger);
     }
     catch (Exception ex)
     {
