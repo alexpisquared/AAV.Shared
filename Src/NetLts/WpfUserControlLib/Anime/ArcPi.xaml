@@ -9,7 +9,7 @@
         <TranslateTransform/>
       </TransformGroup>
     </Grid.RenderTransform>
-    <Ellipse StrokeThickness="8" Stroke="{Binding ElementName=wnd, Path=Bckgr}" />
-    <Path    StrokeThickness="8" Stroke="{Binding ElementName=wnd, Path=Color}" x:Name="arc_path" />
+    <Ellipse StrokeThickness="2.5" Stroke="{Binding ElementName=wnd, Path=Bckgr}" />
+    <Path    StrokeThickness="2.5" Stroke="{Binding ElementName=wnd, Path=Color}" x:Name="arc_path" />
   </Grid>
 </UserControl>
