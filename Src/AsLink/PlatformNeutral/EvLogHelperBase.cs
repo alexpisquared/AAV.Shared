@@ -1,4 +1,6 @@
-﻿namespace AsLink;
+﻿using StandardLib.Extensions;
+
+namespace AsLink;
 
 public static partial class EvLogHelper //this is the latest copy as of 2021-09-10. 
 {
