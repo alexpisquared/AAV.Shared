@@ -18,7 +18,7 @@ public static class UnhandledExceptionHndlr // Core 3
 
       if (Debugger.IsAttached)
       {
-        WriteLine(details);
+        WriteLine($"\n██\n{details}\n██\n");
         Debugger.Break();
         return;
       }
