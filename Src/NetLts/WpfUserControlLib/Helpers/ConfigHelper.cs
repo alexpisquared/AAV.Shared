@@ -140,8 +140,8 @@ public class ConfigRandomizer
 
   public ConfigRandomizer(string jsonFile = "appsettings.AlexPi.Scr.json") => _config = new ConfigurationBuilder()
       .SetBasePath(AppContext.BaseDirectory)
-      .AddJsonFile(jsonFile)  // the last overwrites!!!
-      .AddUserSecrets<ConfigRandomizer>()          // the last overwrites!!! <== <== <== <== <== <== <== 
+      .AddUserSecrets<ConfigRandomizer>()     // the last overwrites!!! <== <== <== <== <== <== <== 
+      .AddJsonFile(jsonFile)                  // the last overwrites!!!
       .Build();
 
   public IConfigurationRoot Config => _config;

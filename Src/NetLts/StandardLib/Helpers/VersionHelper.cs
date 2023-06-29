@@ -5,11 +5,12 @@ public static class VersionHelper
   public static string CurVerStrYYMMDD => $"v{TimedVer:yy.MM.dd}  {CompileMode}";
   public static string CurVerStrYMd => $"v{TimedVer:y.M.d}  {CompileMode}";
   public static string DotNetCoreVersion { get { try { return Environment.Version.ToString(); } catch (Exception ex) { return ex.Message; } } } // Gets a System.Version object that describes the major, minor, build, and revision numbers of the CLR (common language runtime). ---sadly, for/of the app only.
-  public static string DevDbgAudit(IConfigurationRoot cfg, [CallerMemberName] string? cmn = "") => $"{CurVerStrYYMMDD}  " +
+  public static string DevDbgAudit(IConfigurationRoot cfg, string msg, [CallerMemberName] string? cmn = "") => $"{CurVerStrYYMMDD}  " +
       @$"{Environment.MachineName}.{Environment.UserDomainName}\{Environment.UserName}  " +
       //tmi: $"exe:{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}  " +  // $"log:{cfg?["LogFolder"]}  " +     //nogo: no point
       $".dn:{DotNetCoreVersion}  " +                                                // $"·{DotNetCoreVersionCmd()}·  " +  //todo: flickers CMD window; remove when ..ready.
       $"wai:{cfg?["WhereAmI"]}  " +
+      $"{msg}  " +
       $"{cmn}  " +
       $"arg:[{string.Join("|", Environment.GetCommandLineArgs().Skip(1))}]";        // $"cur:{Environment.CurrentDirectory}  ";
 
