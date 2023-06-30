@@ -21,6 +21,7 @@ public partial class WindowBase : Window
   }
   protected bool IgnoreEscape { get; set; } = !VersionHelper.IsDbgOrRBD;
   protected bool IgnoreWindowPlacement { get; set; }
+  protected bool DragMovable { get; set; } = true;
   public static readonly DependencyProperty ZVProperty = DependencyProperty.Register("ZV", typeof(double), typeof(WindowBase), new PropertyMetadata(_defaultZoomV)); public double ZV { get => (double)GetValue(ZVProperty); set => SetValue(ZVProperty, value); }
   public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_defaultTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }
   public string? KeepOpenReason { get; set; } = null; // """ [KeepOpenReason = "Changes have not been saved."] """;
@@ -82,7 +83,7 @@ public partial class WindowBase : Window
   }
   void OnMouseLeftButtonDown_(MouseButtonEventArgs e) //tu: workaround for  "Can only call DragMove when primary mouse button is down." (2021-03-10: pre-opened dropdown seemingly caused the error)
   {
-    if (e.LeftButton == MouseButtonState.Pressed) DragMove();
+    if (DragMovable && e.LeftButton == MouseButtonState.Pressed) DragMove(); 
   }
   void OnMouseWheel_(MouseWheelEventArgs e)
   {
