@@ -2,6 +2,10 @@
 
 public class SeriLogHelper
 {
+  public static Microsoft.Extensions.Logging.ILogger CreateFallbackLogger<T>()
+  {
+    return InitLoggerFactory(@$"C:\temp\Logs\{Assembly.GetExecutingAssembly().GetName().Name}.{Environment.UserName[..3]}..log", "-Info +Verb +Infi").CreateLogger<T>();
+  }
   public static ILoggerFactory InitLoggerFactory(string logFile, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
   {
     FSHelper.GetCreateSafeLogFolderAndFile(logFile);
