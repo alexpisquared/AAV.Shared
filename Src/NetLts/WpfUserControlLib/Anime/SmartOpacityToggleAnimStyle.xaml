@@ -10,7 +10,7 @@
     <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="0.0"  Duration="0:0:8.0" />
   </Storyboard>
 
-  <Style x:Key="SmartOpacityToggleAnimStyle" TargetType="{x:Type StackPanel}">
+  <Style x:Key="SmartOpacityToggleAnimStyle" TargetType="{x:Type  Panel}">
     <Setter Property="Opacity" Value="1.0" />
     <Style.Triggers>
       <!-- nogo: overrides Triggers: <EventTrigger RoutedEvent="FrameworkElement.Loaded"><BeginStoryboard Storyboard="{StaticResource Opacity_1MinLowCpu}" /></EventTrigger>-->
