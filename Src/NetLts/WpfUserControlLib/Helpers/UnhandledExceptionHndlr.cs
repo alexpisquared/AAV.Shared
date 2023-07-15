@@ -19,6 +19,7 @@ public static class UnhandledExceptionHndlr // Core 3
       if (Debugger.IsAttached)
       {
         WriteLine($"\n██\n{details}\n██\n");
+        Beep.Play();
         Debugger.Break();
         return;
       }
