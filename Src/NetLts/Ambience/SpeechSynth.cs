@@ -1,7 +1,7 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", vn = "en-US-AriaNeural", vs = "whispering", vl = "uk-UA", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  const string _rgn = "canadacentral", _vName = "en-US-AriaNeural", _vStyle = CC.terrified, _vLanguage = "uk-UA", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 33;
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
@@ -9,8 +9,8 @@ public class SpeechSynth : IDisposable
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl) { return new SpeechSynth(speechKey, useCached, vn, speechSynthesisLanguage, lgr); }
-  public SpeechSynth(string speechKey, bool useCached = true, string voice = vn, string speechSynthesisLanguage = vl, ILogger? lgr = null, string pathToCache = _github)
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) { return new SpeechSynth(speechKey, useCached, _vName, speechSynthesisLanguage, lgr); }
+  public SpeechSynth(string speechKey, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage, ILogger? lgr = null, string pathToCache = _github)
   {
     _fallbackVoice = voice; //todo: 
     _pathToCache = pathToCache;
@@ -31,8 +31,8 @@ public class SpeechSynth : IDisposable
     try { if (Directory.Exists(pathToCache) == false) Directory.CreateDirectory(pathToCache); } catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); }
   }
 
-  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = vs) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
-  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = vs)
+  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
+  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle)
   {
     if (voice == "") voice = _fallbackVoice;
 
@@ -164,7 +164,7 @@ public class CC
     EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, Array.Empty<string>()),
     ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", new[] { cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious }, new[] { YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy });
 
-  const string
+  public const string
     affectionate = "affectionate",
     angry = "angry",
     calm = "calm",
