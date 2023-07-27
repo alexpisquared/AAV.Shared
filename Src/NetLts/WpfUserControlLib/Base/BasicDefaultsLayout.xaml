@@ -30,6 +30,18 @@
     <GradientStop Color="#04ffffff" Offset="0"/>
     <GradientStop Color="#04000000" Offset="1"/>
   </LinearGradientBrush>
+  <LinearGradientBrush x:Key="FlagUkraineBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#001D40"/>
+    <GradientStop Color="#004DB6" Offset=".46"/>
+    <GradientStop Color="#DCaF01" Offset=".54"/>
+    <GradientStop Color="#6C3001" Offset="1"/>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="FlagUkraineBackground0" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#002D46" />
+    <GradientStop Color="#004DB6" Offset=".4999"/>
+    <GradientStop Color="#DCaF01" Offset=".5000"/>
+    <GradientStop Color="#7C3F01" Offset="1"/>
+  </LinearGradientBrush>
 
   <Style TargetType="{x:Type TextBlock}"  x:Key="TbkVCenteredInfoClr">
     <Setter Property="Foreground"         Value="{StaticResource InfoForegroundBrush}" />
