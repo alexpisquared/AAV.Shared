@@ -180,16 +180,21 @@ public partial class WindowBase : Window
   }
   protected override void OnClosing(CancelEventArgs e) // WARNING - Not fired when Application.SessionEnding is fired
   {
-    _logger.Log(LogLevel.Trace, $"■ WinBase  OnClosing   {GetType().Name}   {(GetHashCode() == Application.Current.MainWindow?.GetHashCode() ? "Is App..MainWin!" : "")}   ShutdownMode:{Application.Current.ShutdownMode} (//memo: OnMainWindowClose causes double call of this method!!!)");
-
     try
     {
+      var report = $"WinBase.OnClosing  {GetType().Name}  {(GetHashCode() == Application.Current.MainWindow?.GetHashCode() ? "==App..MainWin" : ""),-16}  ShutdownMode:{Application.Current.ShutdownMode} (//note: OnMainWindowClose causes double call of this method!!!)   ";
+
       _ = NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var winPlcmnt);
 
       if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
-        _logger.Log(LogLevel.Trace, $"! WinBase  !!! Saved window placement NOT  <==  Window Positions - all zeros!      {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+        report += "Window placement NOT saved <==  Window Positions - all zeros!  ..cause it's been closed already, right? ^^";
       else
+      {
         JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);  // _logger.Log(LogLevel.Trace, $"### Saved window placement to  {WinFile}.");
+        report += "Window placement saved.";
+      }
+
+      _logger.Log(LogLevel.Trace, report);
 
       if (!string.IsNullOrEmpty(KeepOpenReason))
       {
@@ -206,7 +211,7 @@ public partial class WindowBase : Window
   {
     try
     {
-      _logger.Log(LogLevel.Trace, $"■ WinBase  OnClosed.");
+      //tmi: _logger.Log(LogLevel.Trace, $"■ WinBase  OnClosed.");
       base.OnClosed(e);
       KeyUp -= (s, e) => OnKeyUp_(e);
       MouseWheel -= (s, e) => OnMouseWheel_(e);
