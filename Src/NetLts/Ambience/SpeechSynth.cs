@@ -68,7 +68,7 @@ public class SpeechSynth : IDisposable
   async Task<bool> CreateWavFile(string file, SpeechSynthesisResult result)
   {
     if (result.Reason != ResultReason.Canceled)
-      _lgr?.Log(LogLevel.Trace, $"result.Reason '{result.Reason}'   Created wav file '{file}'.");
+      _lgr?.Log(LogLevel.Trace, $"tts result Reason '{result.Reason}'   Created wav file '{file}'.");
     else
     {
       var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);

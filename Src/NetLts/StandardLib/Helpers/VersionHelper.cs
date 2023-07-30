@@ -10,6 +10,8 @@ public static class VersionHelper
       //tmi: $"exe:{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}  " +  // $"log:{cfg?["LogFolder"]}  " +     //nogo: no point
       $".dn:{DotNetCoreVersion}  " +                                                // $"·{DotNetCoreVersionCmd()}·  " +  //todo: flickers CMD window; remove when ..ready.
       $"wai:{cfg?["WhereAmI"]}  " +
+      $"fus:{cfg?["FromUserSecretsOnly"]}  " +
+      $"fac:{cfg?["FromAppSettingsOnly"]}  " +
       $"{msg}  " +
       $"{cmn}  " +
       $"arg:[{string.Join("|", Environment.GetCommandLineArgs().Skip(1))}]";        // $"cur:{Environment.CurrentDirectory}  ";

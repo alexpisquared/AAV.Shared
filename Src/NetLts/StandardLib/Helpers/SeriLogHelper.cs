@@ -26,7 +26,12 @@ public class SeriLogHelper
     if (levels.Contains("+Warn")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Warn..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning);
     if (levels.Contains("+Info")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Info..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information);
     if (levels.Contains("+Verb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Verb..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
-    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
+    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, restrictedToMinimumLevel:
+      levels.Contains("+Erro") ? Serilog.Events.LogEventLevel.Error :
+      levels.Contains("+Warn") ? Serilog.Events.LogEventLevel.Warning :
+      levels.Contains("+Info") ? Serilog.Events.LogEventLevel.Information :
+      levels.Contains("+Verb") ? Serilog.Events.LogEventLevel.Verbose :
+      Serilog.Events.LogEventLevel.Verbose);
     if (levels.Contains("+11mb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".11mb..").Replace(".log", ".json")}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose, rollOnFileSizeLimit: true, fileSizeLimitBytes: 11000000, formatter: new Serilog.Formatting.Json.JsonFormatter()); // useful only with log aggregators.
 
     _ = builder.AddSerilog(loggerConfiguration.CreateLogger());
