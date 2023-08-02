@@ -46,8 +46,8 @@ public class SpeechSynth : IDisposable
 
   async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak, string? orgMsg = null)
   {
-    if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)    
-      PlayWavFileAsync(file);    
+    if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)
+      PlayWavFileSync(file);
     else if (await SpeakPlusCreateWavFile(msg, file, speak) == false)
       SpeakFree(orgMsg ?? msg);
   }
@@ -73,7 +73,7 @@ public class SpeechSynth : IDisposable
     {
       var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);
       if (cancellationDetails.Reason == CancellationReason.Error)
-        _lgr?.Log(LogLevel.Warning, $"result.Reason: '{result.Reason}'  Error: {cancellationDetails.ErrorCode}-{cancellationDetails.ErrorDetails}   CreateWavFile({file})");
+        _lgr?.Log(LogLevel.Warning, $"tts  {result.Reason}  {cancellationDetails.ErrorCode}  {cancellationDetails.ErrorDetails.Replace("\n", "  ")}  :CreateWavFile({file})");
     }
 
     using var stream = AudioDataStream.FromResult(result);
@@ -84,7 +84,7 @@ public class SpeechSynth : IDisposable
     if (len > 10)
     {
       File.Move(temp, file);
-      PlayWavFileAsync(file);
+      PlayWavFileSync(file);
       return true;
     }
     else
@@ -95,7 +95,7 @@ public class SpeechSynth : IDisposable
       return false;
     }
   }
-  void PlayWavFileAsync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
+  void PlayWavFileSync(string file) => new SoundPlayer(file).PlaySync();//_player.SoundLocation= file;//_player.Play();
   string RemoveIllegalCharacters(string file)
   {
     var r1 = Regex.Replace(file, "[" + Regex.Escape(new string(Path.GetInvalidFileNameChars())) + "]", "·");

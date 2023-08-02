@@ -20,7 +20,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
           return new ConfigurationBuilder()
             .SetBasePath(AppContext.BaseDirectory)
             .AddJsonFile(appsettingsFile)
-            .AddUserSecrets<WhatIsThatForType>() // :overrides value from the appsettings file above, but only for debug?local?etc. runs, right?
+            .AddUserSecrets<WhatIsThatForType>() //note: of this assenbly!!! // :overrides value from the appsettings file above, but only for debug?local?etc. runs, right?
             .Build();
         }
         catch (InvalidOperationException ex)
@@ -54,7 +54,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
     var svr = DevOps.IsDevMachineH ? @".\SqlExpress" : "mtDEVsqldb,1625";
     var cfg = new ConfigurationBuilder()
       .AddInMemoryCollection()
-      .AddUserSecrets<WhatIsThatForType>()
+      .AddUserSecrets<WhatIsThatForType>() //note: of this assenbly!!!
       .Build();
 
     cfg[CfgName.WhereAmAy] = "HardCODE in .\\WpfUserControlLib\\Helpers\\ConfigHelper.cs";
@@ -130,8 +130,9 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
         ""PreCreatedAt"":       ""{2}""
       }}
 }}";
-  class WhatIsThatForType { public string MyProperty { get; set; } = "<Default Value of Nothing Special>"; }
 }
+  
+class WhatIsThatForType { public string MyProperty { get; set; } = "<Default Value of Nothing Special>"; }
 
 public class ConfigRandomizer
 {
@@ -140,8 +141,8 @@ public class ConfigRandomizer
 
   public ConfigRandomizer(string jsonFile = "appsettings.json") => _config = new ConfigurationBuilder()
       .SetBasePath(AppContext.BaseDirectory)
-      //.AddJsonFile(jsonFile)                  // the last overwrites!!!
-      .AddUserSecrets<ConfigRandomizer>()     // the last overwrites!!! <== <== <== <== <== <== <== 
+      //.AddJsonFile(jsonFile)                                            // the last overwrites!!!
+      .AddUserSecrets<WhatIsThatForType>() //note: of this assenbly!!!    // the last overwrites!!!
       .Build();
 
   public IConfigurationRoot Config => _config;
