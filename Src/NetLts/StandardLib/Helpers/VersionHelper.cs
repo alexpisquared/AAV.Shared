@@ -59,7 +59,7 @@ public static class VersionHelper
     }
   }
 
-  public static Version CurVer => Assembly.GetEntryAssembly()?.GetName()?.Version ?? new Version("No Kidding...");
+  public static Version CurVer => Assembly.GetEntryAssembly()?.GetName()?.Version ?? new Version(1, 2, 3, 4);
 
   public static bool IsDbgOrRBD => IsDbg || IsRBD;
   public static bool IsRBD => Environment.UserName.EndsWith("lexp") || Environment.UserName.StartsWith("olepi"); // ran by dev.
