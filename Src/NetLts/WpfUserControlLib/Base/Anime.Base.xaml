@@ -20,8 +20,12 @@
   <ElasticEase x:Key="eo0s5"  EasingMode="EaseOut" Oscillations="0" Springiness="5" />
   <ElasticEase x:Key="eo2s5"  EasingMode="EaseOut" Oscillations="2" Springiness="5" />
   <BounceEase  x:Key="bb"     EasingMode="EaseInOut" />
+  <BounceEase  x:Key="bi"     EasingMode="EaseIn" />
+  <BounceEase  x:Key="bi1"    EasingMode="EaseIn" Bounces="1" />
+  <BounceEase  x:Key="bi2"    EasingMode="EaseIn" Bounces="2" />
   <BounceEase  x:Key="bo"     EasingMode="EaseOut" />
   <BounceEase  x:Key="bo1"    EasingMode="EaseOut" Bounces="1" />
+  <BounceEase  x:Key="bo2"    EasingMode="EaseOut" Bounces="2" />
 
   <Color x:Key="c">#1f00</Color>
   <Color x:Key="a">#3f00</Color>

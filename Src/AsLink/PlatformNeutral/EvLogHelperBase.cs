@@ -1,7 +1,9 @@
-﻿using StandardLib.Extensions;
+﻿using System.Security.Principal;
+using StandardLib.Extensions;
 
 namespace AsLink;
 
+[System.Runtime.Versioning.SupportedOSPlatform("windows")]
 public static partial class EvLogHelper //this is the latest copy as of 2021-09-10. 
 {
   const string _app = "Application", _sec = "Security", _sys = "System", _aavSource = "AavSource", _aavLogName = "AavNewLog";
