@@ -30,8 +30,8 @@ public static class VersionHelper
   public static string TimeAgo(TimeSpan timespan, bool small = true, bool versionMode = false, string ago = "", string since = "") =>
     timespan < TimeSpan.Zero          /**/ ? "Never" :
     timespan.TotalMilliseconds < 1    /**/ ? $"{timespan.TotalMilliseconds * 1000:N0} {(small ? "mks" : "microseconds")}{ago}" :
-    timespan.TotalMilliseconds < 10   /**/ ? $"{timespan.TotalMilliseconds:N2} {(small ? "ms" : "millseconds")}{ago}" :
-    timespan.TotalMilliseconds < 100  /**/ ? $"{timespan.TotalMilliseconds:N0} {(small ? "ms" : "millseconds")}{ago}" :
+    timespan.TotalMilliseconds < 10   /**/ ? $"{timespan.TotalMilliseconds:N2} {(small ? "ms" : "milliseconds")}{ago}" :
+    timespan.TotalMilliseconds < 100  /**/ ? $"{timespan.TotalMilliseconds:N0} {(small ? "ms" : "milliseconds")}{ago}" :
     timespan.TotalSeconds < 1         /**/ ? $"{timespan.TotalSeconds:N2} {(small ? "sec" : "seconds")}{ago}" :
     timespan.TotalSeconds < 10        /**/ ? $"{timespan.TotalSeconds:N1} {(small ? "sec" : "seconds")}{ago}" :
     timespan.TotalSeconds < 100       /**/ ? $"{timespan.TotalSeconds:N0} {(small ? "sec" : "seconds")}{ago}" :
