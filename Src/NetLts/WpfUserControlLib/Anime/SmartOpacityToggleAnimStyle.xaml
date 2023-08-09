@@ -1,12 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Storyboard Timeline.DesiredFrameRate="3" x:Key="Opacity_1MinLowCpu" >
+  <Storyboard x:Key="Opacity_1MinLowCpu"  Timeline.DesiredFrameRate="1" >
     <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="0.1"  Duration="0:1:0.0" />
   </Storyboard>
   <Storyboard x:Key="Opacity_On" >
     <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="1.0"  Duration="0:0:0.6" />
   </Storyboard>
-  <Storyboard x:Key="Opacity_Off" >
+  <Storyboard x:Key="Opacity_Off"         Timeline.DesiredFrameRate="8" >
     <DoubleAnimation Storyboard.TargetProperty="(FrameworkElement.Opacity)"  To="0.0"  Duration="0:0:8.0" />
   </Storyboard>
 
