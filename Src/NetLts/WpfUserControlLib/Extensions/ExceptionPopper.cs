@@ -10,10 +10,7 @@ public static class ExnPopr
 
   public static void Pop(this Exception ex, Window owner, string note, ILogger? lgr, [CallerMemberName] string cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
   {
-    var st = new StackTrace(ex, true);
-    var line = st.GetFrame(st.FrameCount - 1)?.GetFileLineNumber() ?? cln;
-
-    var msgForPopup = ex.Log(note, cmn, cfp, line);
+    var msgForPopup = ex.Log(note, cmn, cfp, cln);
 
     lgr?.LogError(ex, msgForPopup.Replace("\n", " ").Replace("\n", " ").Replace("\r", " "));
 
