@@ -13,7 +13,7 @@ public static partial class NativeMethods
       _ = Beep(freq, dur);
   }
 
-#if DEBUG // just in case.
+#if DEBUG_ // just in case.
   static bool Beep(int freq, int dur) { WriteLine($"Silent Beep({freq}, {dur})"); return true; }
 #else
   [LibraryImport("kernel32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool Beep(int freq, int dur);
