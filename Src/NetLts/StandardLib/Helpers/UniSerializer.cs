@@ -24,14 +24,19 @@ public static class JsonFileSerializer
     }
     catch (Exception ex) { ex.Log(); throw; }
   }
-  public static T? Load<T>(string filename) where T : new()
+  public static T Load<T>(string filename, bool saveFormatted = false) where T : new()
   {
     try
     {
       if (File.Exists(filename))
       {
-        using StreamReader? streamReader = new(filename);
-        return (T?)new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream);
+        if (saveFormatted)
+          return JsonSerializer.Deserialize<T>(File.ReadAllText(filename), new JsonSerializerOptions { WriteIndented = true }) ?? throw new ArgumentNullException("@123");
+        else
+        {
+          using StreamReader? streamReader = new(filename);
+          return (T?)new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream) ?? throw new ArgumentNullException("@432");
+        }
       }
     }
     catch (Exception ex) { _ = ex.Log(); }
