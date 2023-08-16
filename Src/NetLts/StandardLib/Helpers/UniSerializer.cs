@@ -1,8 +1,9 @@
-﻿namespace StandardLib.Helpers;
+﻿using System.IO;
 
+namespace StandardLib.Helpers;
 public static class JsonFileSerializer
 {
-  public static void Save<T>(T o, string filename)
+  public static void Save<T>(T obj, string filename, bool saveFormatted = false)
   {
     try
     {
@@ -11,9 +12,15 @@ public static class JsonFileSerializer
         if (!FSHelper.ExistsOrCreated(dir))
           throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
-      using StreamWriter? streamWriter = new(filename);
-      new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, o);
-      streamWriter.Close();
+      //Note: System.Windows.Forms.WindowPlacement type is not directly serializable by the System.Text.Json.JsonSerializer class: use DataContractJsonSerializer  :(       
+      if (saveFormatted)
+        File.WriteAllText(filename, JsonSerializer.Serialize(obj, new JsonSerializerOptions { WriteIndented = true }));
+      else
+      {
+        using StreamWriter? streamWriter = new(filename);
+        new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, obj);
+        streamWriter.Close();
+      }
     }
     catch (Exception ex) { ex.Log(); throw; }
   }
@@ -107,7 +114,7 @@ public static class JsonIsoFileSerializer
 
       using IsolatedStorageFileStream isoStream = new(IsoConst.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json"), FileMode.Create, isoStore);
       using StreamWriter streamWriter = new(isoStream);
-      new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, o); // new XmlSerializer(o.GetType()).Serialize(streamWriter, o);
+      new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, o); // new XmlSerializer(obj.GetType()).Serialize(streamWriter, obj);
       streamWriter.Close();
     }
     catch (Exception ex) { ex.Log(); throw; }
@@ -122,7 +129,7 @@ public static class JsonIsoFileSerializer
       {
         using IsolatedStorageFileStream? isoStream = new(IsoConst.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json"), FileMode.Open, FileAccess.Read, FileShare.Read, isoStore);
         using StreamReader? streamReader = new(isoStream);
-        var obj = (T?)(new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream)); // var o = (T)(new XmlSerializer(typeof(T)).Deserialize(streamReader));
+        var obj = (T?)(new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream)); // var obj = (T)(new XmlSerializer(typeof(T)).Deserialize(streamReader));
         streamReader.Close();
         return obj;
       }
