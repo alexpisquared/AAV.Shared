@@ -12,15 +12,13 @@ public static class ExnPopr
   {
     var msgForPopup = ex.Log(note, cmn, cfp, cln);
 
-    lgr?.LogError(ex, msgForPopup.Replace("\n", " ").Replace("\n", " ").Replace("\r", " "));
-
-    _ = GuiCapture.StoreActiveWindowToFile(msgForPopup); // move 4 lines down.
-
-    if (Debugger.IsAttached)
-      return;
-
+    lgr?.LogError(ex, msgForPopup.Replace("\n", " ").Replace("\n", " ").Replace("\r", " ") + "    StoreActiveWindowScreenshotToFile?!?!?!");
     try
     {
+      if (Debugger.IsAttached)
+        return;
+
+      _ = GuiCapture.StoreActiveWindowScreenshotToFile(msgForPopup);
       _ = WpfUtils.AutoInvokeOnUiThread(new ExceptionPopup(ex, note, cmn, cfp, cln, owner).ShowDialog);
     }
     catch (InvalidOperationException ex2) // for "Cannot set Owner property to a Window that has not been shown previously."

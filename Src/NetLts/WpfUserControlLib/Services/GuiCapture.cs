@@ -4,7 +4,7 @@ namespace WpfUserControlLib.Services;
 
 public partial class GuiCapture
 {
-  public static Bitmap StoreActiveWindowToFile(string shortNote)
+  public static Bitmap StoreActiveWindowScreenshotToFile(string shortNote)
   {
     var bmp = CaptureActiveWindow();
 
