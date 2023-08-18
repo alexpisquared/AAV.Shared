@@ -11,7 +11,7 @@ public partial class GuiCapture
 #if !VisualCapture
     const string lcl = """C:\Temp\Logs.Viz\""";
     const string frm = $"{{0}}{{1}}-{{2}}-{{3:MM.dd-HH.mm.ss}}-{{4}}.jpg";
-    var pfn = string.Format(frm, OneDrive.Folder("""Public\Logs.Viz"""), Assembly.GetEntryAssembly()?.GetName().Name ?? "Unkn", Environment.UserName[..3], DateTime.Now, string.Concat(shortNote.Split(Path.GetInvalidFileNameChars())));
+    var pfn = string.Format(frm, OneDrive.Folder("""Public\Logs.Viz\"""), Assembly.GetEntryAssembly()?.GetName().Name ?? "Unkn", Environment.UserName[..3], DateTime.Now, string.Concat(shortNote.Split(Path.GetInvalidFileNameChars())));
 
     FSHelper.ExistsOrCreated(Path.GetDirectoryName(pfn) ?? lcl);
 
