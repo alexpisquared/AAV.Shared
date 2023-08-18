@@ -4,39 +4,48 @@ namespace WpfUserControlLib.Services;
 
 public partial class GuiCapture
 {
-  public static Bitmap StoreActiveWindowScreenshotToFile(string shortNote)
+  readonly ILogger lgr;
+
+  public GuiCapture(ILogger lgr) => this.lgr = lgr;
+
+  public Bitmap StoreActiveWindowScreenshotToFile(string shortNote)
   {
     var bmp = CaptureActiveWindow();
 
-#if !VisualCapture
-    const string lcl = """C:\Temp\Logs.Viz\""";
-    const string frm = $"{{0}}{{1}}-{{2}}-{{3:MM.dd-HH.mm.ss}}-{{4}}.jpg";
-    var pfn = string.Format(frm, OneDrive.Folder("""Public\Logs.Viz\"""), Assembly.GetEntryAssembly()?.GetName().Name ?? "Unkn", Environment.UserName[..3], DateTime.Now, string.Concat(shortNote.Split(Path.GetInvalidFileNameChars())));
+    try
+    {
+      const int maxLen = 26;
+      var shortNote2 = shortNote.Length > maxLen ? shortNote[..maxLen] : shortNote;
 
-    FSHelper.ExistsOrCreated(Path.GetDirectoryName(pfn) ?? lcl);
+      const string lcl = """C:\Temp\Logs.Viz\""";
+      const string frm = $"{{0}}{{1}}-{{2}}-{{3:MM.dd-HH.mm.ss}}-{{4}}.jpg";
+      var pfn = string.Format(frm, OneDrive.Folder("""Public\Logs.Viz\"""), Assembly.GetEntryAssembly()?.GetName().Name ?? "Unkn", Environment.UserName[..3], DateTime.Now, string.Concat(shortNote2.Split(Path.GetInvalidFileNameChars())));
 
-    const int maxLen = 26;
-    if (shortNote.Length > maxLen)
-      shortNote = shortNote[..maxLen];
+      FSHelper.ExistsOrCreated(Path.GetDirectoryName(pfn) ?? lcl);
 
-    bmp.Save(pfn, System.Drawing.Imaging.ImageFormat.Jpeg);
-#endif
+      bmp.Save(pfn, System.Drawing.Imaging.ImageFormat.Jpeg);
+    }
+    catch (Exception ex2) { lgr.LogError(ex2, $"■175"); }
 
     return bmp;
   }
-  public static Bitmap CaptureActiveWindow() => CaptureWindow(GetForegroundWindow());
-  public static Bitmap CaptureWholeDesktop() => CaptureWindow(GetDesktopWindow());
-  public static Bitmap CaptureWindow(IntPtr handle)
+  public Bitmap CaptureActiveWindow() => CaptureWindow(GetForegroundWindow());
+  public Bitmap CaptureWholeDesktop() => CaptureWindow(GetDesktopWindow());
+  public Bitmap CaptureWindow(IntPtr handle)
   {
-    var rect = new Rect();
-    GetWindowRect(handle, ref rect);
-    var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-    var result = new Bitmap(bounds.Width, bounds.Height);
+    try
+    {
+      var rect = new Rect();
+      GetWindowRect(handle, ref rect);
+      var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
+      var result = new Bitmap(bounds.Width, bounds.Height);
 
-    using var graphics = Graphics.FromImage(result);
-    graphics.CopyFromScreen(new System.Drawing.Point(bounds.Left, bounds.Top), System.Drawing.Point.Empty, bounds.Size);
+      using var graphics = Graphics.FromImage(result);
+      graphics.CopyFromScreen(new System.Drawing.Point(bounds.Left, bounds.Top), System.Drawing.Point.Empty, bounds.Size);
 
-    return result;
+      return result;
+    }
+    catch (Exception ex2) { lgr.LogError(ex2, $"■188"); throw; }
   }
 
   [LibraryImport("user32.dll")] private static partial IntPtr GetForegroundWindow();
