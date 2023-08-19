@@ -14,18 +14,17 @@ public partial class GuiCapture
 
     try
     {
-      const int maxLen = 26;
+      const int maxLen = 52;
       var shortNote2 = shortNote.Length > maxLen ? shortNote[..maxLen] : shortNote;
 
-      const string lcl = """C:\Temp\Logs.Viz\""";
-      const string frm = $"{{0}}{{1}}-{{2}}-{{3:MM.dd-HH.mm.ss}}-{{4}}.jpg";
+      const string frm = $"{{0}}{{1}}-{{2}}-{{3:MMdd·HHmm}}-{{4}}.jpg";
       var pfn = string.Format(frm, OneDrive.Folder("""Public\Logs.Viz\"""), Assembly.GetEntryAssembly()?.GetName().Name ?? "Unkn", Environment.UserName[..3], DateTime.Now, string.Concat(shortNote2.Split(Path.GetInvalidFileNameChars())));
 
-      FSHelper.ExistsOrCreated(Path.GetDirectoryName(pfn) ?? lcl);
+      _ = FSHelper.ExistsOrCreated(Path.GetDirectoryName(pfn)!);
 
       bmp.Save(pfn, System.Drawing.Imaging.ImageFormat.Jpeg);
     }
-    catch (Exception ex2) { lgr.LogError(ex2, $"■175"); }
+    catch (Exception ex) { lgr.LogError(ex, $"■175"); }
 
     return bmp;
   }
@@ -36,7 +35,7 @@ public partial class GuiCapture
     try
     {
       var rect = new Rect();
-      GetWindowRect(handle, ref rect);
+      _ = GetWindowRect(handle, ref rect);
       var bounds = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
       var result = new Bitmap(bounds.Width, bounds.Height);
 
@@ -45,7 +44,7 @@ public partial class GuiCapture
 
       return result;
     }
-    catch (Exception ex2) { lgr.LogError(ex2, $"■188"); throw; }
+    catch (Exception ex) { lgr.LogError(ex, $"■188"); throw; }
   }
 
   [LibraryImport("user32.dll")] private static partial IntPtr GetForegroundWindow();
