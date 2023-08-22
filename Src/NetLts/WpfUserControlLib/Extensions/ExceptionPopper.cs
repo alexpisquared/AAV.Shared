@@ -20,7 +20,7 @@ public static class ExnPopr
         return;
 
       if (lgr is not null)
-        _ = new GuiCapture(lgr).StoreActiveWindowScreenshotToFile(msgForPopup); //? UI thread error happening or not?
+        new GuiCapture(lgr).StoreActiveWindowScreenshotToFile(msgForPopup); //? UI thread error happening or not?
 
       _ = WpfUtils.AutoInvokeOnUiThread(new ExceptionPopup(ex, note, cmn, cfp, cln, owner).ShowDialog);
     }
