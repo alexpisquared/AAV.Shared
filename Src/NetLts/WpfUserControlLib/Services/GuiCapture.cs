@@ -13,7 +13,7 @@ public class GuiCapture
     try
     {
       const int maxLen = 52;
-      var shorterNote = shortNote.Length > maxLen ? shortNote[..maxLen] : shortNote;
+      var shorterNote = shortNote.Length > maxLen ? $"{shortNote[..maxLen]}...{shortNote[maxLen..]}" : shortNote;
 
       var pfn = $"{OneDrive.Folder(@"Public\Logs.Viz\")}{Assembly.GetEntryAssembly()?.GetName().Name ?? "NUL"}-{Environment.MachineName[..3]}-{Environment.UserName[..3]}-{DateTime.Now:HHmmss.ffff}-{string.Concat(shorterNote.Split(Path.GetInvalidFileNameChars()))}.jpg";
         
