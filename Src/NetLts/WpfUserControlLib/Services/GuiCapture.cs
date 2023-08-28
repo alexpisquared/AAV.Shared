@@ -15,7 +15,7 @@ public class GuiCapture
       const int maxLen = 52;
       var shorterNote = shortNote.Length > maxLen ? shortNote[..maxLen] : shortNote;
 
-      var pfn = $"{OneDrive.Folder(@"Public\Logs.Viz\")}{Assembly.GetEntryAssembly()?.GetName().Name ?? "Unkn"}-{Environment.UserName[..3]}-{DateTime.Now:MMdd·HHmm}-{string.Concat(shorterNote.Split(Path.GetInvalidFileNameChars()))}.jpg";
+      var pfn = $"{OneDrive.Folder(@"Public\Logs.Viz\")}{Assembly.GetEntryAssembly()?.GetName().Name ?? "NUL"}-{Environment.MachineName[..3]}-{Environment.UserName[..3]}-{DateTime.Now:HHmmss.ffff}-{string.Concat(shorterNote.Split(Path.GetInvalidFileNameChars()))}.jpg";
         
       _ = FSHelper.ExistsOrCreated(Path.GetDirectoryName(pfn)!);
 
