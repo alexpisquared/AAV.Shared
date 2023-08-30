@@ -113,11 +113,11 @@ public partial class WindowBase : Window
 
     try
     {
-      WinAPI.WindowPlacement winPlcmnt;
+      StandardLib.Helpers.WinAPI.WindowPlacement winPlcmnt;
 
       try
       {
-        var wpContainer = JsonFileSerializer.Load<WinAPI.WPContainer>(WinFile);
+        var wpContainer = JsonFileSerializer.Load<StandardLib.Helpers.WinAPI.WPContainer>(WinFile);
         ZV = wpContainer.Zb == 0 ? 1 : wpContainer.Zb;
         winPlcmnt = wpContainer.WindowPlacement;
 
@@ -130,18 +130,18 @@ public partial class WindowBase : Window
         ZV = 1d;
         try
         {
-          winPlcmnt = JsonFileSerializer.Load<WinAPI.WindowPlacement>(WinFile);
+          winPlcmnt = JsonFileSerializer.Load<StandardLib.Helpers.WinAPI.WindowPlacement>(WinFile);
         }
         catch (Exception ex2)
         {
           var note = $"Apparently EventArgs: '{e}' is trouble.";
           ex2.Pop(owner: this, note, lgr: _logger);
-          winPlcmnt = new WinAPI.WindowPlacement { normalPosition = new WinAPI.Rect(40, 40, 1200, 800) };
+          winPlcmnt = new StandardLib.Helpers.WinAPI.WindowPlacement { normalPosition = new StandardLib.Helpers.WinAPI.Rect(40, 40, 1200, 800) };
         }
       }
       catch (Exception ex3) { ex3.Pop($"EventArgs: '{e}' is trouble.   I'm about to throw...", lgr: _logger); throw; }
 
-      winPlcmnt.length = Marshal.SizeOf(typeof(WinAPI.WindowPlacement));
+      winPlcmnt.length = Marshal.SizeOf(typeof(StandardLib.Helpers.WinAPI.WindowPlacement));
       winPlcmnt.flags = 0;
       winPlcmnt.showCmd = winPlcmnt.showCmd == _swShowMinimized ? _swShowNormal : winPlcmnt.showCmd;
 
@@ -190,7 +190,7 @@ public partial class WindowBase : Window
         report += "Window placement NOT saved <==  Window Positions - all zeros!  ..cause it's been closed already, right? ^^";
       else
       {
-        JsonFileSerializer.Save(new WinAPI.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);  // _logger.Log(LogLevel.Trace, $"### Saved window placement to  {WinFile}.");
+        JsonFileSerializer.Save(new StandardLib.Helpers.WinAPI.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);  // _logger.Log(LogLevel.Trace, $"### Saved window placement to  {WinFile}.");
         report += "Window placement saved.";
       }
 
