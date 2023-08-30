@@ -8,8 +8,10 @@ public class BprSilentMock : StandardContractsLib.IBpr
   public bool SuppressAlarm { get => suppressAlarm; set => suppressAlarm = value; }
 
   public void Beep(int hz, double sec) { }
+  public async Task BeepAsync(int hz, double sec, bool isAsync) => await Task.Yield();
+  public async Task BeepHzMks(int[][] HzMks, ushort volume = 21845, bool isAsync = true) => await Task.Yield();
   public async Task BeepAsync(int hz, double sec) => await Task.Yield();
-  public async Task BeepHzMks(int[][] HzMks, ushort volume = 21845) => await Task.Yield();
+  public async Task BeepHzMks(int[][] HzMks, bool isAsync) => await Task.Yield();
   public void Click() { }
   public async Task ClickAsync() => await Task.Yield();
   public void Enter() { }

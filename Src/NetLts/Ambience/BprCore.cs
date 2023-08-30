@@ -4,7 +4,7 @@ public partial class Bpr
   readonly SoundPlayer _p = new();
   const int d1 = 100_000, _dMin = 75_000; //below .075 sec nogo on razer1.
   const int d2 = d1 + d1;
-  readonly int[][] _bethoven6thWarn = new[] {
+  readonly int[][] _Beethoven6thWarn = new[] {
     FixDuration(392, d1), FixDuration(10, d1),
     FixDuration(392, d1), FixDuration(10, d1),
     FixDuration(392, d1), FixDuration(10, d1),
@@ -13,7 +13,7 @@ public partial class Bpr
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(294, d2), FixDuration(10, d2) };
-  readonly int[][] _bethoven6thErr = new[] {
+  readonly int[][] _Beethoven6thErr = new[] {
     FixDuration(3920, d1), FixDuration(10, d1),
     FixDuration(3920, d1), FixDuration(10, d1),
     FixDuration(3920, d1), FixDuration(10, d1),
@@ -31,8 +31,8 @@ public partial class Bpr
      _fd23 = FixDuration(5000, _dMin * 6);
   readonly ushort _smartVolume = ushort.MaxValue / 20; //  = (ushort)(ushort.MaxValue / (200 - 6 * DateTime.Today.Day)); // 194 - 14
 
-  public async Task BeepHzMks(int[][] HzMks) => await BeepHzMks(HzMks, _smartVolume);
-  public async Task BeepHzMks(int[][] HzMks, ushort volume)
+  public async Task BeepHzMks(int[][] HzMks, bool isAsync = true) => await BeepHzMks(HzMks, _smartVolume, isAsync);
+  public async Task BeepHzMks(int[][] HzMks, ushort volume, bool isAsync = true)
   {
     if (SuppressTicks || SuppressAlarm) return;
 
@@ -46,8 +46,8 @@ public partial class Bpr
     var dataChunkSize = samples * frameSize;
     var fileSize = waveSize + headerSize + formatChunkSize + headerSize + dataChunkSize;
 
-    using var mmStrm = new MemoryStream();
-    using var writer = new BinaryWriter(mmStrm);
+    using var stream = new MemoryStream();
+    using var writer = new BinaryWriter(stream);
     //                         var encoding = new System.Text.UTF8Encoding();
     writer.Write(0x46464952); // = encoding.GetBytes("RIFF")
     writer.Write(fileSize);
@@ -82,17 +82,24 @@ public partial class Bpr
       }
     }
 
-    _ = mmStrm.Seek(0, SeekOrigin.Begin);
-    _p.Stream = mmStrm;
+    _ = stream.Seek(0, SeekOrigin.Begin);
+    _p.Stream = stream;
 
     try //todo: the exceptions are not being caught here!!!
     {
-      _p.Play();       // _p.PlaySync(); <== pauses all animations!!!
-      await Task.Delay(ttlmks / 1000).ConfigureAwait(false);
-
-      writer.Close();
-      mmStrm.Close();
+      if (isAsync)
+      {
+        _p.Play();       //
+        await Task.Delay(ttlmks / 1000).ConfigureAwait(false);
+      }
+      else
+      {
+        _p.PlaySync(); // <== pauses all animations!!!
+      }
     }
     catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); } // Net7.0 started catching/showing.
+
+    writer.Close();
+    stream.Close();
   }
 }
