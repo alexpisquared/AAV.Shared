@@ -13,7 +13,7 @@ public partial class WindowBase : Window
   {
     _logger = logger;
 
-    Topmost = Debugger.IsAttached;
+    if (Debugger.IsAttached) Topmost = true;
 
     MouseLeftButtonDown += (s, e) => OnMouseLeftButtonDown_(e);
     MouseWheel += (s, e) => OnMouseWheel_(e);
