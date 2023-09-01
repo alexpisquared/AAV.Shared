@@ -33,7 +33,7 @@ public partial class ExceptionPopup// : WindowBase
     Hand.Play();
     await Task.Delay(((Duration)FindResource("animDuration")).TimeSpan + ((Duration)FindResource("preAnimnWait")).TimeSpan);
     Beep.Play();
-    await Task.Delay(1150); // 1250 a bit late (Aug 28)
+    await Task.Delay(950); // 1250 a bit late (Aug 28)
     Close(); // close popup and continue app execution
   }
   protected override void OnClosed(EventArgs e) { Loaded -= OnLoaded; base.OnClosed(e); }
