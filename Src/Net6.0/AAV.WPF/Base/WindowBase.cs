@@ -138,20 +138,20 @@ namespace AAV.WPF.Base
 
       if (IgnoreWindowPlacement) return;
 
-      NativeMethods.WindowPlacement winPlcmnt;
+      WinAPI.WindowPlacement winPlcmnt;
       try
       {
         try
         {
-          var wpc = JsonFileSerializer.Load<NativeMethods.WPContainer>(IsoFilenameONLY);
+          var wpc = JsonFileSerializer.Load<WinAPI.WPContainer>(IsoFilenameONLY);
           ZV = wpc.Zb == 0 ? 1 : wpc.Zb;
           winPlcmnt = wpc.WindowPlacement;
 
           ApplyTheme(string.IsNullOrEmpty(wpc.Thm) ? _defaultTheme : wpc.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
         }
-        catch (Exception ex) { _ = (ex?.Log()); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<NativeMethods.WindowPlacement>(IsoFilenameONLY); }
+        catch (Exception ex) { _ = (ex?.Log()); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<WinAPI.WindowPlacement>(IsoFilenameONLY); }
 
-        winPlcmnt.length = Marshal.SizeOf(typeof(NativeMethods.WindowPlacement));
+        winPlcmnt.length = Marshal.SizeOf(typeof(WinAPI.WindowPlacement));
         winPlcmnt.flags = 0;
         winPlcmnt.showCmd = winPlcmnt.showCmd == _swShowMinimized ? _swShowNormal : winPlcmnt.showCmd;
 
@@ -194,7 +194,7 @@ namespace AAV.WPF.Base
       base.OnClosing(e);
 
       _ = NativeMethods.GetWindowPlacement_(new WindowInteropHelper(this).Handle, out var wp);
-      JsonFileSerializer.Save(new NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, IsoFilenameONLY);
+      JsonFileSerializer.Save(new WinAPI.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, IsoFilenameONLY);
     }
     bool IsDbg =>
 #if DEBUG
