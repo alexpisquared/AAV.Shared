@@ -16,7 +16,7 @@ public class GuiCapture
 
       _ = FSHelper.ExistsOrCreated(Path.GetDirectoryName(file)!);
 
-      using var bmp = CaptureActiveWindow();
+      using var bmp = CaptureActiveWindow(isNew);
 
       bmp.Save(file, System.Drawing.Imaging.ImageFormat.Jpeg);
     }
