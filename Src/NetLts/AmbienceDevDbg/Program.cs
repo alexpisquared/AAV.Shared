@@ -9,7 +9,8 @@ var b = new AmbienceLib.Bpr();
 
 for (int i = 0; i < 999 && !Console.KeyAvailable; i++)
 {
-  Console.WriteLine($"{i,4}");
+  var started = Stopwatch.GetTimestamp();
+  Console.Write($"{i,4}... ");
   Debug.Write($"{i,4}  ");
 
   //await b.AppStartAsync();
@@ -19,21 +20,34 @@ for (int i = 0; i < 999 && !Console.KeyAvailable; i++)
 
   //b.GradientAsync(610, 201, 1); // works fine ...but not while debugging.
   //await b.GradientAsync(610, 201, 1).ConfigureAwait(false); // works fine ...but not while debugging.
-  
-  
+
+
   //await OneMinUp(b).ConfigureAwait(false);
 
-  var taskScream = b.GradientAsync(52, 9_000, 19, 120_000);
-  var taskDelay = Task.Delay(TimeSpan.FromMinutes(1));
-
-  await Task.WhenAll(taskScream, taskDelay);
+  Task taskDelay = M2(); // must go first, or else it will be scheduled AFTER! completion of the scream.
+  Task taskScream = M1(b);
+  await Task.WhenAll(taskDelay, taskScream);
 
 
   await Task.Delay(3);
 
   //await b.DevDbg();
+
+  Console.Write($"...{i,-4}   {Stopwatch.GetElapsedTime(started).TotalSeconds,5:N2} sec\n");
 }
 
 Console.ReadKey(true);
 
 static async Task OneMinUp(Bpr b) => await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
+
+static Task M1(Bpr b)
+{
+  Console.Write($"  started Audio  ");
+  return b.GradientAsync(52, 9_000, 19, 30_000);
+}
+
+static Task M2()
+{
+  Console.Write($"  started Delay  ");
+  return Task.Delay(TimeSpan.FromMinutes(.25));
+}
