@@ -50,17 +50,17 @@ public partial class Bpr : IBpr
     Trace_(fromHz, tillHz, stepHz, vs, started);
   }
 
-  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
+  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1) // 1sec
   {
     List<int[]> vs = new();
 
     if (fromHz < tillHz) //   /\
     {
-      for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, 1)); } //   /
+      for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, mks)); } //   /
     }
     else                 //   \/
     {
-      for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
+      for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, mks)); } //   \
     }
 
     var started = Stopwatch.GetTimestamp();
