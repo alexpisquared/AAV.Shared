@@ -1,9 +1,9 @@
-﻿
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using AmbienceLib;
 
 var b = new AmbienceLib.Bpr();
 
+//await _vm.Ssynth.SpeakAsync("1 Mississippi, 2 Mississippi, 3 Mississippi, 4 Mississippi, 5 Mississippi, 6 Mississippi, 7 Mississippi, 8 Mississippi");
 //await b.WarnAsync();
 //await b.ErrorAsync();
 
