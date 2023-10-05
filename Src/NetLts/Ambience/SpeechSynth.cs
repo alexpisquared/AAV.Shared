@@ -39,19 +39,19 @@ public class SpeechSynth : IDisposable
     var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
     var lang = (voice.Length > 5 ? voice[..5] : "en-US");
     var ssml = style == "" ?
-      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"" >{msg}</prosody></voice></speak>" :
-      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as role=""OlderAdultMale"" style=""calm"" >{msg}</mstts:express-as></prosody></voice></speak>";
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg}</prosody></voice></speak>" :
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg}</mstts:express-as></prosody></voice></speak>";
 
-    ssml = @"<speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""en-US"">
-    <voice name=""zh-CN-XiaomoNeural"">
-        <mstts:express-as >
-            Last minute!
-        </mstts:express-as>
-        <mstts:express-as style=""cheerful"" styledegree=""2"">
-            Last minute!
-        </mstts:express-as>
-    </voice>
-</speak>";
+    //    ssml = @"<speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""en-US"">
+    //    <voice name=""zh-CN-XiaomoNeural"">
+    //        <mstts:express-as >
+    //            Last minute!
+    //        </mstts:express-as>
+    //        <mstts:express-as style=""cheerful"" styledegree=""2"">
+    //            Last minute!
+    //        </mstts:express-as>
+    //    </voice>
+    //</speak>";
 
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
@@ -68,12 +68,9 @@ public class SpeechSynth : IDisposable
     try
     {
       using var result = await speak(msg);
-      if (_useCached)
-      {
-        return await CreateWavFile(file, result);
-      }
+      return (_useCached) ? await CreateWavFile(file, result) : true;
     }
-    catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
+    catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); /*else throw;*/ }
 
     return false;
   }

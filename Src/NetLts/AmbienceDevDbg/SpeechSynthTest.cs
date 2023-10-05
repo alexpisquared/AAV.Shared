@@ -18,22 +18,14 @@ public static class SpeechSynthTest
     //  "Last minute!";
     // "Wake Lock is off"
 
-    await TestLanguage("Last minute! 最后一分钟！", new SpeechSynth(key, useCached: false));
+    var useCached = true;
+
+    await TestAllStylesForTheVoice("Time to rotate! 是时候轮换了！", new SpeechSynth(key, useCached), CC.ZhcnXiaomoNeural);
+    await TestAllStylesForTheVoice("Last minute! 最后一分钟！", new SpeechSynth(key, useCached), CC.ZhcnXiaomoNeural);
 
     //await synth.SpeakAsync(msg, CC.EnusAriaNeural.Voice);
     //await synth.SpeakAsync(msg, CC.UkuaPolinaNeural.Voice);
     //await synth.SpeakAsync(msg, CC.ZhcnXiaomoNeural.Voice);
-  }
-
-  static async Task TestLanguage(string msg, SpeechSynth synth)
-  {
-    await synth.SpeakAsync("Last minute! 最后一分钟！", voice: "zh-CN-XiaomoNeural", style: "serious", role: "SeniorMale");
-
-    if (Debugger.IsAttached) return;
-
-    await TestAllStylesForTheVoice(msg, synth, CC.ZhcnXiaomoNeural);
-    //await TestAllStylesForTheVoice(msg, synth, CC.EnusAriaNeural);
-    //await synth.SpeakAsync(msg, voice: "en-US-AriaNeural", style: "terrified", speakingRate: .01); // same as .50
   }
 
   static async Task TestAllStylesForTheVoice(string msg, SpeechSynth synth, VoiceStylesRoles rr)
@@ -41,7 +33,7 @@ public static class SpeechSynthTest
     foreach (var style in rr.Styles)
     {
       WriteLine($"+++            {rr.Voice}  {style}.");
-      await synth.SpeakAsync(msg, voice: rr.Voice, style: style);
+      await synth.SpeakAsync(msg, voice: rr.Voice, style: style, role: "Boy"); // role seems to be ignored.
     }
   }
 }
