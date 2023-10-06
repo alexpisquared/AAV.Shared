@@ -1,7 +1,7 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable
 {
-  const string _rgn = "canadacentral", _vName = "en-US-AriaNeural", _vStyle = CC.friendly, _vLanguage = "uk-UA", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  const string _rgn = "canadacentral", _vName = "zh-CN-XiaomoNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 100;
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
@@ -32,7 +32,7 @@ public class SpeechSynth : IDisposable
   }
 
   public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
-  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = "OlderAdultMale")
+  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = CC.YoungAdultFemale)
   {
     if (voice == "") voice = _fallbackVoice;
 
@@ -41,17 +41,6 @@ public class SpeechSynth : IDisposable
     var ssml = style == "" ?
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg}</prosody></voice></speak>" :
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg}</mstts:express-as></prosody></voice></speak>";
-
-    //    ssml = @"<speak version=""1.0"" xmlns=""http://www.w3.org/2001/10/synthesis"" xmlns:mstts=""https://www.w3.org/2001/mstts"" xml:lang=""en-US"">
-    //    <voice name=""zh-CN-XiaomoNeural"">
-    //        <mstts:express-as >
-    //            Last minute!
-    //        </mstts:express-as>
-    //        <mstts:express-as style=""cheerful"" styledegree=""2"">
-    //            Last minute!
-    //        </mstts:express-as>
-    //    </voice>
-    //</speak>";
 
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
