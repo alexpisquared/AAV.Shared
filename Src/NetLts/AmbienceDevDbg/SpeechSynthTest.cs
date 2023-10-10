@@ -75,8 +75,14 @@ FOR %%A IN (*.wav) DO (
 )
 
 FOR %A IN (*.wav) DO C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe -i "%A" -c:a libopus -b:a 16k  "%~nA.16k.opus"
-FOR %A IN (*.wav) DO C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe -i "%A" -c:a libmp3lame -q:a 7 "%~nA.7.mp3"
 FOR %A IN (*.wav) DO C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe -i "%A" -c:a aac     -b:a 32k  "%~nA.32k.aac"
+FOR %A IN (*.wav) DO C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe -i "%A" -c:a libmp3lame -q:a 7 "%~nA.7.mp3"
+
+FOR %A IN (*.wav) DO C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe -i "%A" -c:a libmp3lame -q:a 7 "%~nA.7.mp3"
+  ===
+Get-ChildItem *.wav | Foreach-Object {
+    & 'C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe' -i $_.FullName -c:a libmp3lame -q:a 7 "$($_.BaseName).7.mp3"
+}
 
 C:\gh\yt\Vividl\Vividl\Lib\ffmpeg.exe -i "en-US-AriaNeural~1.00~100~whispering~Wake Lock released!.wav" -c:a aac     -b:a 32k "en-US-AriaNeural~1.00~100~whispering~Wake Lock released!.32k.aac"    
 
