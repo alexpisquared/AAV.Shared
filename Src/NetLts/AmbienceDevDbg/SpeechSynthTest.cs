@@ -1,5 +1,7 @@
 ﻿global using static System.Diagnostics.Trace;
 using System.Diagnostics;
+using AmbienceLib;
+using Microsoft.Extensions.Configuration;
 namespace AmbienceDevDbg;
 public static class SpeechSynthTest
 {
