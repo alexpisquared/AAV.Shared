@@ -137,6 +137,7 @@ public class SpeechSynth : IDisposable
     GC.SuppressFinalize(this);
   }
 
+  public static async Task SpeakFreeAsync(string msg) {    SpeakFree(msg);    await Task.Delay(msg.Length * 100);  }
   public static void SpeakFree(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
   [Obsolete("Use ..SpeakFree()")]
   public static void SayExe(string msg) => new Process
