@@ -29,7 +29,7 @@ public static class VersionHelper
     return (isObslete, curExeTime);
   }
 
-  public static string CompileMode => Debugger.IsAttached ? (IsDbg ? "·Dbg-Atchd" : "·Rls-Atchd") : (IsDbg ? "Dbg!!sl" : "Rls");
+  public static string CompileMode => Debugger.IsAttached ? (IsDbg ? "·Dbg-Atchd" : "·Rls-Atchd") : (IsDbg ? "Dbg" : "Rls");
 
   public static string TimeAgo(TimeSpan timespan, bool small = true, bool versionMode = false, string ago = "", string since = "") =>
     timespan < TimeSpan.Zero          /**/ ? "Never" :
