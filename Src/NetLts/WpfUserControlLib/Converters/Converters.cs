@@ -25,8 +25,7 @@ public class StringToColor : MarkupExtension, IValueConverter
         (str is not null && str.StartsWith("#")) ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(str)) :
         _inf :
         parameter;
-    }
-    catch
+    } catch
     {
       return parameter;
     }
@@ -133,18 +132,23 @@ public class SmartDateConverter : MarkupExtension, IValueConverter
 {
   public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
-    if (value is not DateTime dtVal)
-      return "";
+    DateTime? rv = null;
 
-    var dt = DateTime.Now - dtVal;
+    if (value is DateTime dtVal) rv = dtVal;
+
+    if (value is DateOnly doVal) rv = doVal.ToDateTime(TimeOnly.MinValue);
+
+    if (rv is null) return $"{value}";
+
+    var dt = DateTime.Now - rv;
 
     return
-      dt.TotalSeconds < 10 ? $"Now!!!" :
-      dt.TotalMinutes < 60 ? $"{dtVal:HH:mm:ss}" :
-      dt.TotalHours < 10.0 ? $"{dtVal:HH:mm}" :
-      dt.TotalDays < 3.000 ? $"{dtVal:ddd HH:mm}" :
-      dt.TotalDays < 183.0 ? $"{dtVal:MMM-d}" :
-                             $"{dtVal:yyyy-MMM}";
+      dt?.TotalSeconds < 10 ? $"Now!!!" :
+      dt?.TotalMinutes < 60 ? $"{rv:HH:mm:ss}" :
+      dt?.TotalHours < 10.0 ? $"{rv:HH:mm}" :
+      dt?.TotalDays < 3.000 ? $"{rv:ddd HH:mm}" :
+      dt?.TotalDays < 183.0 ? $"{rv:MMM-d}" :
+                              $"{rv:yyyy-MMM}";
   }
 
   public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => false;
@@ -181,8 +185,7 @@ public class UniMVConverter : MarkupExtension, IMultiValueConverter
           TypeCode.Int64 => InvertValue ? ((long)value == 0 ? Visibility.Visible : Visibility.Collapsed) : ((long)value != 0 ? Visibility.Visible : Visibility.Collapsed),
           _ => InvertValue ? Visibility.Collapsed : Visibility.Visible
         };
-      }
-      else if (targetType == typeof(Brush))
+      } else if (targetType == typeof(Brush))
       {
         return Type.GetTypeCode(value.GetType()) switch
         {
