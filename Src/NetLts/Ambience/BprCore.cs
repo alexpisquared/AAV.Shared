@@ -97,7 +97,7 @@ public partial class Bpr
         _p.PlaySync(); // <== pauses all animations!!!
       }
     }
-    catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); } // Net7.0 started catching/showing.
+    catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); }
 
     writer.Close();
     stream.Close();
