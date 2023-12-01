@@ -3,14 +3,14 @@ public static class DbqExt // replacing DbSaveLib and all others!!! (Aug 2018  .
 {
   public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbq, string? info = "", [CallerMemberName] string callerName = "")
   {
-    var report = $"■■ {info}.{callerName}()  records saved: ";
+    var report = $" · {info}.{callerName}()  records saved:";
 
     try
     {
       var stopwatch = Stopwatch.StartNew();
       var rowsSaved = await dbq.SaveChangesAsync();
 
-      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} ■■" : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps ■■";
+      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,3:N0} · " : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps · ";
 
       WriteLine(report);
 
