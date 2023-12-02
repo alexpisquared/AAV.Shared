@@ -1,5 +1,5 @@
 ﻿namespace AmbienceLib;
-public class SpeechSynth : IDisposable
+public class SpeechSynth : IDisposable, ISpeechSynth
 {
   const string _rgn = "canadacentral", _vName = "zh-CN-XiaomoNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 100;
@@ -137,7 +137,7 @@ public class SpeechSynth : IDisposable
     GC.SuppressFinalize(this);
   }
 
-  public static async Task SpeakFreeAsync(string msg) {    SpeakFree(msg);    await Task.Delay(msg.Length * 100);  }
+  public static async Task SpeakFreeAsync(string msg) { SpeakFree(msg); await Task.Delay(msg.Length * 100); }
   public static void SpeakFree(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
   [Obsolete("Use ..SpeakFree()")]
   public static void SayExe(string msg) => new Process
