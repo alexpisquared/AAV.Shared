@@ -9,7 +9,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) => new SpeechSynth(speechKey, useCached, _vName, speechSynthesisLanguage, lgr);
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) => new SpeechSynth(speechKey, useCached, voice, speechSynthesisLanguage, lgr);
   public SpeechSynth(string speechKey, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage, ILogger? lgr = null, string pathToCache = _github)
   {
     _fallbackVoice = voice; //todo: 
