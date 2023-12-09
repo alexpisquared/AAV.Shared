@@ -31,7 +31,7 @@
       <Grid>
         <Grid.Style>
           <Style TargetType="Grid">
-            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Opacity" Value=".2" />
             <Setter Property="RenderTransform">
               <Setter.Value>
                 <TranslateTransform Y="-800"/>
@@ -40,13 +40,13 @@
             <Style.Triggers>
               <DataTrigger Binding="{Binding IsBusy}" Value="True">
                 <DataTrigger.EnterActions>
-                  <StopStoryboard BeginStoryboardName="sbDropOu"/>
+                  <!--2023-12: bad stuff: brings circle to center <StopStoryboard BeginStoryboardName="sbDropOu"/>-->
                   <BeginStoryboard x:Name="sbDropIn" Storyboard="{StaticResource sbDropIn}"/>
                 </DataTrigger.EnterActions>
               </DataTrigger>
               <DataTrigger Binding="{Binding IsBusy}" Value="False">
                 <DataTrigger.EnterActions>
-                  <StopStoryboard BeginStoryboardName="sbDropIn"/>
+                  <!--2023-12: suspended; see if worth keeping off <StopStoryboard BeginStoryboardName="sbDropIn"/> -->
                   <BeginStoryboard x:Name="sbDropOu" Storyboard="{StaticResource sbDropOu}"/>
                 </DataTrigger.EnterActions>
               </DataTrigger>

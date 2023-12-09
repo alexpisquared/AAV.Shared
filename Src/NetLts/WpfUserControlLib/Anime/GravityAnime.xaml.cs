@@ -25,17 +25,18 @@ public partial class GravityAnime
     }
     catch (OperationCanceledException ex)
     {
-      Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore OperationCanceledException {ex.Message}");
+      WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore OperationCanceledException {ex.Message}");
     }
     catch (AggregateException ex) when (ex.InnerException is OperationCanceledException)
     {
-      Trace.WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
+      WriteLine($"[{DateTime.Now:HH:mm:ss} Trc] --Ignore AggregateException>>OperationCanceledException {ex.InnerException.Message}");
     }
   }
 
   void StartPlay()
   {
     Visibility = Visibility.Visible;
+    pnlRoot.Opacity = 0;
     _sbGravity.Begin();
   }
   async void StopPlaying()
