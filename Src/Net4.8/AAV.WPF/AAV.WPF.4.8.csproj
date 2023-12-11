@@ -258,9 +258,9 @@
     <Content Include="ReadMe.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\C\AAV\AAV.Sys\AAV.Sys.csproj">
+    <ProjectReference Include="..\..\..\..\..\C\AAV\AAV.Sys\AAV.Sys.4.8.csproj">
       <Project>{60bb75f4-e913-40f9-be60-d5e408f24751}</Project>
-      <Name>AAV.Sys</Name>
+      <Name>AAV.Sys.4.8</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
