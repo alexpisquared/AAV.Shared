@@ -105,7 +105,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
   }
 
   const string
-    _appSettingsFileNameOnly = "AppSettings.json",
+    _appSettingsFileNameOnly = "AppSettings.json", //tu: will be places to C:\ProgramData\AppSettings\[MinNavTpl]\
     _cs11_demo0 = "demo",
     _cs11_demo1 = $$"""
     {
@@ -123,13 +123,14 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
       ""LogFolder"":            ""C:\\Temp\\Logs\\WpfUsrCtrlLib..log"",
       ""ServerLst"":            "".\\sqlexpress .\\sqlexpress"",
       ""DtBsNmLst"":            ""QStatsDbg QStatsRls"",
-      ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=41;"",
+      ""NoteToConsider0"":      ""it is better to wait forever 00 than to fail a broadcast:"",
+      ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=00;"", 
       ""SqlConStrForma_"":      ""Server={{0}};Database={{1}};persist security info=True;user id={{2}};password={{3}};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=47"",
       ""SubDetails"": {{
         ""KeyVaultURL"":        ""<moved to a safe place>"",
         ""PreCreatedAt"":       ""{2}""
       }}
-}}";
+}}"; // let's wait for 9000 sec (15 min) lest fail a scheduled distribution.
 }
   
 class WhatIsThatForType { public string MyProperty { get; set; } = "<Default Value of Nothing Special>"; }
