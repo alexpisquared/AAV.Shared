@@ -1,9 +1,9 @@
 ﻿namespace EF.DbHelper.Lib; // org standalone AsLink for \c\...  for \g\ use C:\g\OneDriveAudit\Src\ODA\AAV.Db.EF\DbContextExt.cs   (2020-12) ...(2021-10)
 public static class DbqExt // replacing DbSaveLib and all others!!! (Aug 2018  ...2021-10  ...2022-05)
 {
-  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbq, string? info = "", [CallerMemberName] string callerName = "")
+  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbq, string? info = "", [CallerMemberName] string cmn = "")
   {
-    var report = $" · {info}.{callerName}()  records saved:";
+    var report = $" · {info} {cmn} calls {nameof(TrySaveReportAsync)}  on {dbq.GetType().Name}.  Records saved:";
 
     try
     {
