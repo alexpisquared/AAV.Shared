@@ -2,8 +2,11 @@
 using AmbienceDevDbg;
 using AmbienceLib;
 
-if (Debugger.IsAttached) { await SpeechSynthTest.TestTTS(); }
+var b = new AmbienceLib.Bpr();
 
+await OneMinUp(b); // works fine ...but not while debugging.
+
+//if (Debugger.IsAttached) { await SpeechSynthTest.TestTTS(); }
 
 //await BeepTest();
 static async Task OneMinUp(Bpr b) => await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
@@ -17,10 +20,9 @@ static Task M2()
   Console.Write($"  started Delay  ");
   return Task.Delay(TimeSpan.FromMinutes(.25));
 }
-static async Task BeepTest()
+async Task BeepTest()
 {
-  var b = new AmbienceLib.Bpr();
-
+  
   //await _vm.Ssynth.SpeakAsync("1 Mississippi, 2 Mississippi, 3 Mississippi, 4 Mississippi, 5 Mississippi, 6 Mississippi, 7 Mississippi, 8 Mississippi");
   //await b.WarnAsync();
   //await b.ErrorAsync();
