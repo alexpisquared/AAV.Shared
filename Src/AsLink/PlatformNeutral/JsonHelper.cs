@@ -39,11 +39,9 @@ namespace AsLink
       if (!string.IsNullOrEmpty(json))
         try
         {
-
-          var deserializer = new DataContractJsonSerializer(typeof(T));
           using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
           {
-            return (T)deserializer.ReadObject(ms);
+            return (T)new DataContractJsonSerializer(typeof(T)).ReadObject(ms);
           }
         }
         catch (Exception ex) { Debug.WriteLine(ex.Message); throw; /*ex.Pop(json);*/ }

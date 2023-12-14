@@ -1,7 +1,6 @@
 ﻿namespace WpfUserControlLib.Views;
 public partial class ExceptionPopup// : WindowBase
 {
-  const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine\bin\Release\OpenInVsOnTheCulpritLine.exe""";
   readonly string? msg, cmn, cfp;
   readonly Exception? ex;
   readonly int cln = 0;
@@ -30,13 +29,11 @@ public partial class ExceptionPopup// : WindowBase
     methodNm.Text = $"{cmn}()";
     optnlMsg.Text = msg;
     innrMsgs.Text = ex.InnerMessages();
-    if (VersionHelper.IsDbgOrRBD && cfp is not null)
-      OpenVsOnTheCulpritLine(cfp, cln);
 
     Hand.Play();
     await Task.Delay(((Duration)FindResource("animDuration")).TimeSpan + ((Duration)FindResource("preAnimnWait")).TimeSpan);
     Beep.Play();
-    await Task.Delay(1250);
+    await Task.Delay(950); // 1250 a bit late (Aug 28)
     Close(); // close popup and continue app execution
   }
   protected override void OnClosed(EventArgs e) { Loaded -= OnLoaded; base.OnClosed(e); }
@@ -48,25 +45,6 @@ public partial class ExceptionPopup// : WindowBase
     Close(); // close popup and continue app execution
   }
 
-  static void OpenVsOnTheCulpritLine(string filename, int fileline)
-  {
-#if DotNet4
-    EnvDTE80.DTE2 dte2 = (EnvDTE80.DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.17.0");
-    dte2.MainWindow.Activate();
-    EnvDTE.Window w = dte2.ItemOperations.OpenFile(filename, EnvDTE.Constants.vsViewKindTextView);
-    ((EnvDTE.TextSelection)dte2.ActiveDocument.Selection).GotoLine(fileline, true);
-
-    /* also see:
-    https://docs.microsoft.com/en-us/visualstudio/extensibility/launch-visual-studio-dte?view=vs-2022
-    https://github.com/diimdeep/VisualStudioFileOpenTool
-    */
-#else
-    if (File.Exists(_dotnet4exe))
-      Process.Start(_dotnet4exe, $"{filename} {fileline}");
-    else
-      _ = MessageBox.Show(_dotnet4exe, "Missing VS opener EXE");
-#endif
-  }
 
   void OnCopySection(object s, RoutedEventArgs e)
   {

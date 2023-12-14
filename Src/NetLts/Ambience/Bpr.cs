@@ -6,17 +6,17 @@ public partial class Bpr : IBpr
   public bool SuppressAlarm { get; set; }
 
   public void Beep(int hz, double sec) => Task.Run(async () => await BeepAsync(hz, sec).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }).ConfigureAwait(false);
-  public void Beep(int hz, double sec, ushort vol) => Task.Run(async () => await BeepAsync(hz, sec, vol).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec, ushort vol) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }, vol).ConfigureAwait(false);
+  public void Beep(int hz, double sec, ushort vol) => Task.Run(async () => await BeepAsync(hz, sec, vol).ConfigureAwait(false)); public async Task BeepAsync(int hz, double sec, ushort vol) => await BeepHzMks(new[] { FFD(hz, (int)(sec * 1000_000)) }, volume: vol).ConfigureAwait(false);
 
   public void Tick() => Task.Run(TickAsync); public async Task TickAsync() { if (!SuppressTicks) await BeepHzMks(new[] { FFD(400, _dMin) }).ConfigureAwait(false); }
   public void Click() => Task.Run(ClickAsync); public async Task ClickAsync() { if (!SuppressTicks) await BeepHzMks(new[] { FFD(800, _dMin) }).ConfigureAwait(false); }
-  public void Warn() => Task.Run(WarnAsync); public async Task WarnAsync() { if (!SuppressAlarm) await BeepHzMks(_bethoven6thWarn/*new[] { _fdw1, _fdw2 }*/).ConfigureAwait(false); }
-  public void Error() => Task.Run(ErrorAsync); public async Task ErrorAsync() { if (!SuppressAlarm) await BeepHzMks(_bethoven6thErr).ConfigureAwait(false); }
+  public void Warn() => Task.Run(WarnAsync); public async Task WarnAsync() { if (!SuppressAlarm) await BeepHzMks(_Beethoven6thWarn/*new[] { _fdw1, _fdw2 }*/).ConfigureAwait(false); }
+  public void Error() => Task.Run(ErrorAsync); public async Task ErrorAsync() { if (!SuppressAlarm) await BeepHzMks(_Beethoven6thErr).ConfigureAwait(false); }
 
   public void Start(int stepHz = 4) => Task.Run(async () => await StartAsync(stepHz).ConfigureAwait(false));   /**/ public async Task StartAsync(int stepHz = 4) => await GradientAsync(300, 1100, stepHz).ConfigureAwait(false); // 4 - 300 ms
   public void Finish(int stepHz = 4) => Task.Run(async () => await FinishAsync(stepHz).ConfigureAwait(false)); /**/ public async Task FinishAsync(int stepHz = 4) => await GradientAsync(1100, 300, stepHz).ConfigureAwait(false); // 300 ms
-  public void AppStart() => Task.Run(AppStartAsync);   /**/ public async Task AppStartAsync() => await GradientAsync(200, 600, 2).ConfigureAwait(false);  // 600 ms
-  public void AppFinish() => Task.Run(AppFinishAsync); /**/ public async Task AppFinishAsync() => await GradientAsync(798, 100, 1).ConfigureAwait(false); // 2.0 s (800, 799 fail with: An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.)
+  public void AppStart() => Task.Run(AppStartAsync);   /**/ public async Task AppStartAsync() => await GradientAsync(200, 601, 2).ConfigureAwait(false);  // 0.6 s
+  public void AppFinish() => Task.Run(AppFinishAsync); /**/ public async Task AppFinishAsync() => await GradientAsync(610, 201, 1).ConfigureAwait(false); // 1.6 s 610-201 pass on RAZER, others give: An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.)
 
   //was  void No() => Task.Run(async () => await NoAsync().ConfigureAwait(false)); public async Task NoAsync() => await BeepHzMks(new[] { FFD(6000, d1), FFD(5000, d1) }).ConfigureAwait(false); <== auto converted by the VS!!! to this:
   public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false); // Oh, Yes.
@@ -46,25 +46,25 @@ public partial class Bpr : IBpr
     }
 
     var started = Stopwatch.GetTimestamp();
-    await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
+    await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
     Trace_(fromHz, tillHz, stepHz, vs, started);
   }
 
-  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
+  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1) // 1sec
   {
     List<int[]> vs = new();
 
     if (fromHz < tillHz) //   /\
     {
-      for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, 1)); } //   /
+      for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, mks)); } //   /
     }
     else                 //   \/
     {
-      for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
+      for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, mks)); } //   \
     }
 
     var started = Stopwatch.GetTimestamp();
-    await BeepHzMks(vs.ToArray()).ConfigureAwait(false);
+    await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
     Trace_(fromHz, tillHz, stepHz, vs, started);
   }
   public async Task WakeAudio() => await BeepAsync(1, .1);
@@ -129,5 +129,5 @@ public partial class Bpr : IBpr
     return new int[] { hz, (int)(1000_000 * roundedTimesWavePlayed / hz) };
   }
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
-  static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}            Bpr.Wave()   Hz: from {fromHz} - till {tillHz} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
+  static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}            Bpr.Wave()   Hz: {fromHz,4} -> {tillHz,4} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
 }

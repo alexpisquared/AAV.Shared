@@ -4,7 +4,7 @@ public class SeriLogHelper
 {
   public static Microsoft.Extensions.Logging.ILogger CreateFallbackLogger<T>()
   {
-    return InitLoggerFactory(@$"C:\temp\Logs\{Assembly.GetCallingAssembly().GetName().Name}.{Environment.UserName[..3]}..log", "-Info +Verb +Infi").CreateLogger<T>();
+    return InitLoggerFactory(@$"C:\temp\Logs\{Assembly.GetCallingAssembly().GetName().Name}.{Environment.UserName[..3]}..log", "-Info -Verb +Infi").CreateLogger<T>();
   }
   public static ILoggerFactory InitLoggerFactory(string logFile, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
   {
@@ -20,13 +20,14 @@ public class SeriLogHelper
             .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
             .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
             .Enrich.FromLogContext(); // .Enrich.WithMachineName().Enrich.WithThreadId()                                       
-
+#if DEBUG
     if (levels.Contains("+ErNT")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".ErNT..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error); // ErNT == Error No Template.
     if (levels.Contains("+Erro")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Er▄▀..")}", rollingInterval: RollingInterval.Day, outputTemplate: _exnOnlyTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error);
     if (levels.Contains("+Warn")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Warn..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning);
     if (levels.Contains("+Info")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Info..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information);
     if (levels.Contains("+Verb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Verb..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
-    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, restrictedToMinimumLevel:
+#endif
+    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, outputTemplate: _infinitTemplate, restrictedToMinimumLevel:
       levels.Contains("+Erro") ? Serilog.Events.LogEventLevel.Error :
       levels.Contains("+Warn") ? Serilog.Events.LogEventLevel.Warning :
       levels.Contains("+Info") ? Serilog.Events.LogEventLevel.Information :
@@ -44,8 +45,9 @@ public class SeriLogHelper
   });
 
   const string
-    _optimalTemplate = "{Timestamp:HH:mm:ss.fff} [{Level:w3}]   {Message}   {Exception}{NewLine}", // slightly better than no template: time format + 1 line save.  
-    _exnOnlyTemplate = "{Timestamp:HH:mm:ss.fff}   {Exception}{NewLine}"; //tu: _exnOnlyTemplate outputTemplate is better than sans-outputTemplate message: it contains actual line of throwing (not the catch line!!!)
+    _infinitTemplate = "{Timestamp:MM-dd HH:mm:ss.fff} {Level:w3} {Message}  {Exception}{NewLine}", // slightly better than no template: time format + 1 line save.  
+    _optimalTemplate = "{Timestamp:HH:mm:ss.fff} {Level:w3} {Message}  {Exception}{NewLine}",       // slightly better than no template: time format + 1 line save.  
+    _exnOnlyTemplate = "{Timestamp:HH:mm:ss.fff} {Exception}{NewLine}"; //tu: _exnOnlyTemplate outputTemplate is better than sans-outputTemplate message: it contains actual line of throwing (not the catch line!!!)
 }
 /*  static Logger ConfigSerilogger()
   {

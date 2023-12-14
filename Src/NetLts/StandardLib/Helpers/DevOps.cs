@@ -14,6 +14,7 @@ public class DevOps
     }
   }
 
+  public static DateTimeOffset AppStartedAt = DateTimeOffset.Now;
   public static bool IsDevMachine => IsDevMachineO || IsDevMachineH;
   public static bool IsDevMachineO => HashString(Environment.MachineName).Equals(_devMachineO, StringComparison.OrdinalIgnoreCase);
   public static bool IsDevMachineH => HashString(Environment.MachineName).Equals(_devMachineH, StringComparison.OrdinalIgnoreCase);

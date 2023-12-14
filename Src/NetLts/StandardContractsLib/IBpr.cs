@@ -13,8 +13,8 @@ public interface IBpr
   void Beep(int hz, double sec, ushort vol);
   Task BeepAsync(int hz, double sec);
   Task BeepAsync(int hz, double sec, ushort vol);
-  Task BeepHzMks(int[][] HzMks);
-  Task BeepHzMks(int[][] HzMks, ushort volume);
+  Task BeepHzMks(int[][] HzMks, bool isAsync);
+  Task BeepHzMks(int[][] HzMks, ushort volume, bool isAsync);
   void Click();
   Task ClickAsync();
   void Enter();
@@ -26,7 +26,7 @@ public interface IBpr
   int[] FFD(int hz, int mks = 75000);
   void Finish(int stepHz = 4);
   Task FinishAsync(int stepHz = 4);
-  Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4);
+  Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1);
   void No();
   Task NoAsync();
   void Start(int stepHz = 4);

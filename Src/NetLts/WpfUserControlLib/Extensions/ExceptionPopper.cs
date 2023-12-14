@@ -12,15 +12,16 @@ public static class ExnPopr
   {
     var msgForPopup = ex.Log(note, cmn, cfp, cln);
 
-    lgr?.LogError(ex, msgForPopup.Replace("\n", " ").Replace("\n", " ").Replace("\r", " "));
-
-    _ = GuiCapture.StoreActiveWindowToFile(msgForPopup); // move 4 lines down.
-
-    if (Debugger.IsAttached)
-      return;
+    lgr?.LogError(ex, msgForPopup.Replace("\n", " ").Replace("\n", " ").Replace("\r", " ") + "    StoreActiveWindowScreenshotToFile?!?!?!");
 
     try
     {
+      if (Debugger.IsAttached)
+        return;
+
+      if (lgr is not null)
+        new GuiCapture(lgr).StoreActiveWindowScreenshotToFile(msgForPopup); //? UI thread error happening or not?
+
       _ = WpfUtils.AutoInvokeOnUiThread(new ExceptionPopup(ex, note, cmn, cfp, cln, owner).ShowDialog);
     }
     catch (InvalidOperationException ex2) // for "Cannot set Owner property to a Window that has not been shown previously."
@@ -32,7 +33,7 @@ public static class ExnPopr
     }
     catch (Exception ex2)
     {
-      lgr?.LogError(ex2, $"(org ex: {msgForPopup})");
+      lgr?.LogError(ex2, $"<< org ex: {msgForPopup}>>");
 
       if (Debugger.IsAttached)
         Debugger.Break();

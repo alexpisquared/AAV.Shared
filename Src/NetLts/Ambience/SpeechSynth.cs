@@ -1,15 +1,15 @@
 ﻿namespace AmbienceLib;
-public class SpeechSynth : IDisposable
+public class SpeechSynth : IDisposable, ISpeechSynth
 {
-  const string _rgn = "canadacentral", _vName = "en-US-AriaNeural", _vStyle = CC.terrified, _vLanguage = "uk-UA", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
-  const double _speechRate = 1.00, _volumePercent = 33;
+  const string _rgn = "canadacentral", _vName = "zh-CN-XiaomoNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  const double _speechRate = 1.00, _volumePercent = 100;
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) { return new SpeechSynth(speechKey, useCached, _vName, speechSynthesisLanguage, lgr); }
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) => new SpeechSynth(speechKey, useCached, voice, speechSynthesisLanguage, lgr);
   public SpeechSynth(string speechKey, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage, ILogger? lgr = null, string pathToCache = _github)
   {
     _fallbackVoice = voice; //todo: 
@@ -32,14 +32,15 @@ public class SpeechSynth : IDisposable
   }
 
   public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
-  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle)
+  public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = CC.YoungAdultFemale)
   {
     if (voice == "") voice = _fallbackVoice;
 
     var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
+    var lang = (voice.Length > 5 ? voice[..5] : "en-US");
     var ssml = style == "" ?
-      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       >{msg}</prosody></voice></speak>" :
-      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{(voice.Length > 5 ? voice[..5] : "en-US")}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" >{msg}</mstts:express-as></prosody></voice></speak>";
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg}</prosody></voice></speak>" :
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg}</mstts:express-as></prosody></voice></speak>";
 
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
@@ -56,12 +57,9 @@ public class SpeechSynth : IDisposable
     try
     {
       using var result = await speak(msg);
-      if (_useCached)
-      {
-        return await CreateWavFile(file, result);
-      }
+      return (_useCached) ? await CreateWavFile(file, result) : true;
     }
-    catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); else throw; }
+    catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); /*else throw;*/ }
 
     return false;
   }
@@ -139,6 +137,7 @@ public class SpeechSynth : IDisposable
     GC.SuppressFinalize(this);
   }
 
+  public static async Task SpeakFreeAsync(string msg) { SpeakFree(msg); await Task.Delay(msg.Length * 100); }
   public static void SpeakFree(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
   [Obsolete("Use ..SpeakFree()")]
   public static void SayExe(string msg) => new Process

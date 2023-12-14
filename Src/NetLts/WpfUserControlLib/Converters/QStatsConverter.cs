@@ -12,9 +12,9 @@ public class QStatsConverter : MarkupExtension, IValueConverter
 
   public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
   {
-    if (value is int valInt && targetType == typeof(Brush))
+    if (value is double valInt && targetType == typeof(Brush))
     {
-      const int min = 80, max = 106;
+      const int min = 80, max = 126;
       if (valInt is > min and < max) // corp rate
       {
         var rgb = (byte)((byte)255.0 * (valInt - min) / (max - min));

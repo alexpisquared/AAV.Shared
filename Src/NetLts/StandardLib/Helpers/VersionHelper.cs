@@ -1,14 +1,18 @@
 ﻿namespace StandardLib.Helpers;
 public static class VersionHelper
 {
-  public static string CurVerStr(string fmt) => $"v{TimedVer.ToString(fmt)}  {CompileMode}";
-  public static string CurVerStrYYMMDD => $"v{TimedVer:yy.MM.dd}  {CompileMode}";
-  public static string CurVerStrYMd => $"v{TimedVer:y.M.d}  {CompileMode}";
+
+  public static string CurVerStr => DateTime.Now - TimedVer < TimeSpan.FromHours(24) ? CurVerStrYYMMDDHHmm : CurVerStrYYMMDD;
+  static string CurVerStrFmt(string fmt) => $"v{TimedVer.ToString(fmt)}  {CompileMode}";
+  static string CurVerStrYYMMDD => $"v{TimedVer:yy.MM.dd}  {CompileMode}";
+  static string CurVerStrYYMMDDHH => $"v{TimedVer:yy.MM.dd.HH}  {CompileMode}";
+  static string CurVerStrYYMMDDHHmm => $"v{TimedVer:yy.MM.dd.HHmm}  {CompileMode}";
+  static string CurVerStrYMd => $"v{TimedVer:y.M.d}  {CompileMode}";
   public static string DotNetCoreVersion { get { try { return Environment.Version.ToString(); } catch (Exception ex) { return ex.Message; } } } // Gets a System.Version object that describes the major, minor, build, and revision numbers of the CLR (common language runtime). ---sadly, for/of the app only.
-  public static string DevDbgAudit(IConfigurationRoot cfg, string msg, [CallerMemberName] string? cmn = "") => $"{CurVerStrYYMMDD}  " +
+  public static string DevDbgAudit(IConfigurationRoot cfg, string msg, [CallerMemberName] string? cmn = "") => $"{CurVerStr}  " +
       @$"{Environment.MachineName}.{Environment.UserDomainName}\{Environment.UserName}  " +
       //tmi: $"exe:{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}  " +  // $"log:{cfg?["LogFolder"]}  " +     //nogo: no point
-      $".dn:{DotNetCoreVersion}  " +                                                // $"·{DotNetCoreVersionCmd()}·  " +  //todo: flickers CMD window; remove when ..ready.
+      $".net:{DotNetCoreVersion}  " +                                                // $"·{DotNetCoreVersionCmd()}·  " +  //todo: flickers CMD window; remove when ..ready.
       $"wai:{cfg?["WhereAmI"]}  " +
       $"fus:{cfg?["FromUserSecretsOnly"]}  " +
       $"fac:{cfg?["FromAppSettingsOnly"]}  " +
@@ -25,13 +29,13 @@ public static class VersionHelper
     return (isObslete, curExeTime);
   }
 
-  public static string CompileMode => Debugger.IsAttached ? (IsDbg ? "·Dbg-Atchd" : "·Rls-Atchd") : (IsDbg ? "Dbg!!sl" : "Rls");
+  public static string CompileMode => Debugger.IsAttached ? (IsDbg ? "·Dbg-Atchd" : "·Rls-Atchd") : (IsDbg ? "Dbg" : "Rls");
 
   public static string TimeAgo(TimeSpan timespan, bool small = true, bool versionMode = false, string ago = "", string since = "") =>
     timespan < TimeSpan.Zero          /**/ ? "Never" :
-    timespan.TotalMilliseconds < 1    /**/ ? $"{timespan.TotalMilliseconds * 1000:N0} {(small ? "mks" : "microseconds")}{ago}" :
-    timespan.TotalMilliseconds < 10   /**/ ? $"{timespan.TotalMilliseconds:N2} {(small ? "ms" : "millseconds")}{ago}" :
-    timespan.TotalMilliseconds < 100  /**/ ? $"{timespan.TotalMilliseconds:N0} {(small ? "ms" : "millseconds")}{ago}" :
+    timespan.TotalMilliseconds < 1    /**/ ? $"{timespan.TotalMicroseconds:N0} {(small ? "mks" : "microseconds")}{ago}" :
+    timespan.TotalMilliseconds < 10   /**/ ? $"{timespan.TotalMilliseconds:N2} {(small ? "ms" : "milliseconds")}{ago}" :
+    timespan.TotalMilliseconds < 100  /**/ ? $"{timespan.TotalMilliseconds:N0} {(small ? "ms" : "milliseconds")}{ago}" :
     timespan.TotalSeconds < 1         /**/ ? $"{timespan.TotalSeconds:N2} {(small ? "sec" : "seconds")}{ago}" :
     timespan.TotalSeconds < 10        /**/ ? $"{timespan.TotalSeconds:N1} {(small ? "sec" : "seconds")}{ago}" :
     timespan.TotalSeconds < 100       /**/ ? $"{timespan.TotalSeconds:N0} {(small ? "sec" : "seconds")}{ago}" :
@@ -41,10 +45,6 @@ public static class VersionHelper
     timespan.TotalDays < 10           /**/ ? $"{timespan.TotalDays:N1} {(small ? "day" : "days")}{ago}" :
                                       /**/ (versionMode ? $"{since}{DateTime.Now - timespan:yyyy.M.d}" : $"{since}{DateTime.Now - timespan:yyyy-MM-dd}");
 
-  public static DateTime TimedVer => new DateTime(2000, 1, 1).AddDays(CurVer.Build).AddSeconds(CurVer.Revision * 2); //AutoBuildVer: needs [assembly: AssemblyVersion("0.27.*")] in AssemblyInfo.cs and these 2 lines to CsProj:
-                                                                                                                     //    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-                                                                                                                     //    <Deterministic>false</Deterministic>
-                                                                                                                     //  </PropertyGroup>
   static string TimedVerStringTimeAgo => TimeAgo(DateTime.Now - new DateTime(2000, 1, 1).AddDays(CurVer.Build).AddSeconds(CurVer.Revision * 2), small: true, ago: " ago"); // based on [assembly: AssemblyVersion("0.8.*")] in AssemblyInfo.cs
   static string TimedVerStringFromPhysicalBinaries
   {
@@ -59,21 +59,14 @@ public static class VersionHelper
     }
   }
 
-  public static Version CurVer => Assembly.GetEntryAssembly()?.GetName()?.Version ?? new Version("No Kidding...");
-
   public static bool IsDbgOrRBD => IsDbg || IsRBD;
   public static bool IsRBD => Environment.UserName.EndsWith("lexp") || Environment.UserName.StartsWith("olepi"); // ran by dev.
-  public static bool IsDbg
-  {
-    get
-    {
+  public static bool IsDbg =>
 #if DEBUG
-      return true;
+      true;
 #else
-      return false;
+      false;
 #endif
-    }
-  }
 
   public static string DotNetCoreVersionCmd() // https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.useshellexecute?view=net-5.0
   {
@@ -105,8 +98,13 @@ public static class VersionHelper
   }
   static string? _dnv = null;
 
-  public static DateTime GetLastBuildTime => (new[] {
+  public static DateTime TimedVer => CurVer.Build == 0 ? GetLastBuildTime : new DateTime(2000, 1, 1).AddDays(CurVer.Build).AddSeconds(CurVer.Revision * 2); //AutoBuildVer: needs [assembly: AssemblyVersion("0.27.*")] in AssemblyInfo.cs and these 2 lines to CsProj:
+                                                                                                                                                            //    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+                                                                                                                                                            //    <Deterministic>false</Deterministic>
+                                                                                                                                                            //  </PropertyGroup>
+  public static Version CurVer => Assembly.GetEntryAssembly()?.GetName()?.Version ?? new Version(1, 2, 3, 4); //tu: Auto Build Version: add '<GenerateAssemblyInfo>false</GenerateAssemblyInfo><Deterministic>false</Deterministic>' to CsProj ... plus this line to AsseblyInfo.cs:  [assembly: AssemblyVersion("0.0.*")]   
+  public static DateTime GetLastBuildTime => new[] {
                 new FileInfo(Assembly.GetEntryAssembly()?.Location!).LastWriteTime,             // the startup exe/dll
                 new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime,             // the passthrough caller
-                new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime }.Max());  // this lib - StandardLib
+                new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime }.Max();   // this lib - StandardLib
 }

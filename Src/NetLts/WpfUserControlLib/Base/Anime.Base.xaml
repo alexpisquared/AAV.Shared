@@ -20,8 +20,12 @@
   <ElasticEase x:Key="eo0s5"  EasingMode="EaseOut" Oscillations="0" Springiness="5" />
   <ElasticEase x:Key="eo2s5"  EasingMode="EaseOut" Oscillations="2" Springiness="5" />
   <BounceEase  x:Key="bb"     EasingMode="EaseInOut" />
+  <BounceEase  x:Key="bi"     EasingMode="EaseIn" />
+  <BounceEase  x:Key="bi1"    EasingMode="EaseIn" Bounces="1" />
+  <BounceEase  x:Key="bi2"    EasingMode="EaseIn" Bounces="2" />
   <BounceEase  x:Key="bo"     EasingMode="EaseOut" />
   <BounceEase  x:Key="bo1"    EasingMode="EaseOut" Bounces="1" />
+  <BounceEase  x:Key="bo2"    EasingMode="EaseOut" Bounces="2" />
 
   <Color x:Key="c">#1f00</Color>
   <Color x:Key="a">#3f00</Color>
@@ -61,12 +65,12 @@
   <sys:TimeSpan x:Key="bt257">0:0:0.257</sys:TimeSpan>
   <sys:TimeSpan x:Key="bt757">0:0:0.757</sys:TimeSpan>
   <Storyboard x:Key="sbDropIn">
-    <DoubleAnimation Storyboard.TargetProperty="Opacity"                                From="0.00" To="1"    Duration="{StaticResource du757}" BeginTime="{StaticResource bt757}" EasingFunction="{StaticResource si}" />
-    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-400" To="0"    Duration="{StaticResource du757}" BeginTime="{StaticResource bt757}" EasingFunction="{StaticResource bo}" />
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                                            To="1"    Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" From="-300" To="0"    Duration="{StaticResource du757}" EasingFunction="{StaticResource bo}" />
   </Storyboard>
   <Storyboard x:Key="sbDropOu">
-    <!--<DoubleAnimation Storyboard.TargetProperty="Opacity"                                            To="0.00" Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />-->
-    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"             To="+999" Duration="{StaticResource du757}" EasingFunction="{StaticResource bo1}" />
+    <DoubleAnimation Storyboard.TargetProperty="Opacity"                                            To="0.00" Duration="{StaticResource du757}" EasingFunction="{StaticResource si}" />
+    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"             To="+300" Duration="{StaticResource du757}" EasingFunction="{StaticResource bo1}" />
   </Storyboard>
   <Storyboard x:Key="sbWiggle" RepeatBehavior="0:10:0">
     <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)"            To="40"   Duration="0:0:1" EasingFunction="{StaticResource so}"                   />

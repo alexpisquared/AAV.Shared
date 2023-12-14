@@ -1,16 +1,16 @@
 ﻿namespace EF.DbHelper.Lib; // org standalone AsLink for \c\...  for \g\ use C:\g\OneDriveAudit\Src\ODA\AAV.Db.EF\DbContextExt.cs   (2020-12) ...(2021-10)
-public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  ...2021-10  ...2022-05)
+public static class DbqExt // replacing DbSaveLib and all others!!! (Aug 2018  ...2021-10  ...2022-05)
 {
-  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbx, string? info = "", [CallerMemberName] string callerName = "")
+  public static async Task<(bool success, int rowsSavedCnt, string report)> TrySaveReportAsync(this DbContext dbq, string? info = "", [CallerMemberName] string cmn = "")
   {
-    var report = $"■■ {info}.{callerName}()  records saved: ";
+    var report = $" · {info} {cmn} calls {nameof(TrySaveReportAsync)}  on {dbq.GetType().Name}.  Records saved:";
 
     try
     {
       var stopwatch = Stopwatch.StartNew();
-      var rowsSaved = await dbx.SaveChangesAsync();
+      var rowsSaved = await dbq.SaveChangesAsync();
 
-      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,7:N0} ■■" : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps ■■";
+      report += stopwatch.ElapsedMilliseconds < 250 ? $"{rowsSaved,3:N0} · " : $"{rowsSaved,7:N0} / {VersionHelper.TimeAgo(stopwatch.Elapsed, small: true)} => {rowsSaved / stopwatch.Elapsed.TotalSeconds:N0} rps · ";
 
       WriteLine(report);
 
@@ -85,9 +85,9 @@ public static class DbxExt // replacing DbSaveLib and all others!!! (Aug 2018  .
     const int maxCombinedErrorMessageLength = 4000;
     return sb.Length < maxCombinedErrorMessageLength ? sb.ToString() : (sb.ToString()[..maxCombinedErrorMessageLength] + " ...");
   }
-  public static string ServerDatabase(this DbContext dbx)
+  public static string ServerDatabase(this DbContext dbq)
   {
-    var constr = dbx.Database.GetConnectionString() ?? "";
+    var constr = dbq.Database.GetConnectionString() ?? "";
     var kvpLst = constr.Split(';').ToList();
     return
       GetConStrValue(kvpLst, "data source") ??
