@@ -39,7 +39,7 @@ public class BprSilentMock : StandardContractsLib.IBpr
   public async Task BeepHzMks(int[][] HzMks) => await Task.Yield();
   public async Task EnterAsync() => await Task.Yield();
   public async Task ExitAsync() => await Task.Yield();
-  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1) => await Task.Yield();
+  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue) => await Task.Yield();
   public async Task WaveAsync3k8k4() => await Task.Yield();
   public async Task WaveAsync4k7k2() => await Task.Yield();
   public async Task WaveAsync7k5k1() => await Task.Yield();

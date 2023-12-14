@@ -26,7 +26,7 @@ public interface IBpr
   int[] FFD(int hz, int mks = 75000);
   void Finish(int stepHz = 4);
   Task FinishAsync(int stepHz = 4);
-  Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1);
+  Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue / 5);
   void No();
   Task NoAsync();
   void Start(int stepHz = 4);

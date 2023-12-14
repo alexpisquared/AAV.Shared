@@ -2,14 +2,19 @@
 using AmbienceDevDbg;
 using AmbienceLib;
 
-var b = new AmbienceLib.Bpr();
+var b = new Bpr();
 
 await OneMinUp(b); // works fine ...but not while debugging.
 
 //if (Debugger.IsAttached) { await SpeechSynthTest.TestTTS(); }
 
 //await BeepTest();
-static async Task OneMinUp(Bpr b) => await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
+static async Task OneMinUp(Bpr b)
+{
+  await b.GradientAsync(52, 9_000, 19, 30_000, ushort.MaxValue / 20 ).ConfigureAwait(false);
+  await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
+}
+
 static Task M1(Bpr b)
 {
   Console.Write($"  started Audio  ");

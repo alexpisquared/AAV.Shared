@@ -29,9 +29,7 @@ public partial class Bpr
      _fdw2 = FixDuration(2500, _dMin * 2),
      _fd21 = FixDuration(6000, _dMin),
      _fd23 = FixDuration(5000, _dMin * 6);
-  readonly ushort _smartVolume = ushort.MaxValue / 20; //  = (ushort)(ushort.MaxValue / (200 - 6 * DateTime.Today.Day)); // 194 - 14
-
-  public async Task BeepHzMks(int[][] HzMks, bool isAsync = true) => await BeepHzMks(HzMks, _smartVolume, isAsync);
+  public async Task BeepHzMks(int[][] HzMks, bool isAsync = true) => await BeepHzMks(HzMks, ushort.MaxValue, isAsync);
   public async Task BeepHzMks(int[][] HzMks, ushort volume, bool isAsync = true)
   {
     if (SuppressTicks || SuppressAlarm) return;

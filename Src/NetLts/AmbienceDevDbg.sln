@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmbienceDevDbg", "AmbienceD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AmbienceLib", "Ambience\AmbienceLib.csproj", "{2FD22DE4-13DF-44FD-BC8F-1BD002481010}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StandardContractsLib", "StandardContractsLib\StandardContractsLib.csproj", "{4AE31C18-2E3A-4F84-A823-909127254243}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{2FD22DE4-13DF-44FD-BC8F-1BD002481010}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2FD22DE4-13DF-44FD-BC8F-1BD002481010}.Release|x64.ActiveCfg = Release|x64
 		{2FD22DE4-13DF-44FD-BC8F-1BD002481010}.Release|x64.Build.0 = Release|x64
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Debug|x64.ActiveCfg = Debug|x64
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Debug|x64.Build.0 = Debug|x64
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Release|x64.ActiveCfg = Release|x64
+		{4AE31C18-2E3A-4F84-A823-909127254243}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

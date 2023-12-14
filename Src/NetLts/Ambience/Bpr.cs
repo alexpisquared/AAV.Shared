@@ -37,8 +37,7 @@ public partial class Bpr : IBpr
       for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, 1)); } //   /
 
       for (var hz = tillHz; hz > fromHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
-    }
-    else                 //   \/
+    } else                 //   \/
     {
       for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
 
@@ -50,21 +49,20 @@ public partial class Bpr : IBpr
     Trace_(fromHz, tillHz, stepHz, vs, started);
   }
 
-  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1) // 1sec
+  public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue) // 1sec
   {
     List<int[]> vs = new();
 
     if (fromHz < tillHz) //   /\
     {
       for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, mks)); } //   /
-    }
-    else                 //   \/
+    } else                 //   \/
     {
       for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, mks)); } //   \
     }
 
     var started = Stopwatch.GetTimestamp();
-    await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
+    await BeepHzMks(HzMks: vs.ToArray(), volume: vol, isAsync: false).ConfigureAwait(false);
     Trace_(fromHz, tillHz, stepHz, vs, started);
   }
   public async Task WakeAudio() => await BeepAsync(1, .1);
