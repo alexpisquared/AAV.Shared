@@ -32,7 +32,7 @@ public partial class Bpr
   public async Task BeepHzMks(int[][] HzMks, bool isAsync = true) => await BeepHzMks(HzMks, ushort.MaxValue, isAsync);
   public async Task BeepHzMks(int[][] HzMks, ushort volume, bool isAsync = true)
   {
-    if (SuppressTicks || SuppressAlarm) return;
+    //if (SuppressTicks || SuppressAlarm) return;
 
     const double TAU = 2 * Math.PI;
     const int formatChunkSize = 16, headerSize = 8, samplesPerSecond = 44100, waveSize = 4;
