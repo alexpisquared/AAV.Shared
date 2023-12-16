@@ -2,64 +2,59 @@
 using AmbienceDevDbg;
 using AmbienceLib;
 
-var b = new Bpr();
+var _bpr = new Bpr();
 
-await OneMinUp(b); // works fine ...but not while debugging.
 
-//if (Debugger.IsAttached) { await SpeechSynthTest.TestTTS(); }
+if (Debugger.IsAttached)
+{
+  await BeepTest();
+  await OneMinUp(_bpr); // works fine ...but not while debugging.
+  await SpeechSynthTest.TestTTS();
+}
 
-//await BeepTest();
 static async Task OneMinUp(Bpr b)
 {
-  await b.GradientAsync(52, 9_000, 19, 30_000, ushort.MaxValue / 20 ).ConfigureAwait(false);
+  Console.WriteLine("52, 9_000, 19, 30_000, ushort.MaxValue / 20 ");
+  await b.GradientAsync(52, 9_000, 19, 30_000, ushort.MaxValue / 20).ConfigureAwait(false);
+
+  Console.WriteLine("52, 9_000, 19, 30_000, ushort.MaxValue / 1 ");
   await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
 }
 
-static Task M1(Bpr b)
-{
-  Console.Write($"  started Audio  ");
-  return b.GradientAsync(52, 9_000, 19, 30_000);
-}
-static Task M2()
-{
-  Console.Write($"  started Delay  ");
-  return Task.Delay(TimeSpan.FromMinutes(.25));
-}
+static Task M1(Bpr b) { Console.Write($"  started Audio  "); return b.GradientAsync(52, 9_000, 19, 30_000); }
+static Task M2() { Console.Write($"  started Delay  "); return Task.Delay(TimeSpan.FromMinutes(.25)); }
+
 async Task BeepTest()
 {
-  
   //await _vm.Ssynth.SpeakAsync("1 Mississippi, 2 Mississippi, 3 Mississippi, 4 Mississippi, 5 Mississippi, 6 Mississippi, 7 Mississippi, 8 Mississippi");
-  //await b.WarnAsync();
-  //await b.ErrorAsync();
+  //await _bpr.WarnAsync();
+  //await _bpr.ErrorAsync();
 
-  for (int i = 0; i < 999 && !Console.KeyAvailable; i++)
+  for (var i = 0; i < 999 && !Console.KeyAvailable; i++)
   {
     var started = Stopwatch.GetTimestamp();
     Console.Write($"{i,4}... ");
-    Debug.Write($"{i,4}  ");
 
-    //await b.AppStartAsync();
-    //await b.StartAsync();
-    //await b.FinishAsync();
-    //await b.AppFinishAsync();
+    //await _bpr.AppStartAsync();
+    //await _bpr.StartAsync();
+    //await _bpr.FinishAsync();
+    //await _bpr.AppFinishAsync();
 
-    //b.GradientAsync(610, 201, 1); // works fine ...but not while debugging.
-    //await b.GradientAsync(610, 201, 1).ConfigureAwait(false); // works fine ...but not while debugging.
+    //_bpr.GradientAsync(610, 201, 1); // works fine ...but not while debugging.
+    //await _bpr.GradientAsync(610, 201, 1).ConfigureAwait(false); // works fine ...but not while debugging.
 
+    //await OneMinUp(_bpr).ConfigureAwait(false);
 
-    //await OneMinUp(b).ConfigureAwait(false);
-
-    Task taskDelay = M2(); // must go first, or else it will be scheduled AFTER! completion of the scream.
-    Task taskScream = M1(b);
+    var taskDelay = M2(); // must go first, or else it will be scheduled AFTER! completion of the scream.
+    var taskScream = M1(_bpr);
     await Task.WhenAll(taskDelay, taskScream);
-
 
     await Task.Delay(3);
 
-    //await b.DevDbg();
+    //await _bpr.DevDbg();
 
-    Console.Write($"...{i,-4}   {Stopwatch.GetElapsedTime(started).TotalSeconds,5:N2} sec\n");
+    Console.Write($"...{i,-4}   {Stopwatch.GetElapsedTime(started).TotalSeconds,5:N2} sec     Press any key to break for loop.\n");
   }
 
-  Console.ReadKey(true);
+  _ = Console.ReadKey(true);
 }
