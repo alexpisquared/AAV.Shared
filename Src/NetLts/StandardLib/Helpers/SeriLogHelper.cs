@@ -20,13 +20,15 @@ public class SeriLogHelper
             .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
             .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
             .Enrich.FromLogContext(); // .Enrich.WithMachineName().Enrich.WithThreadId()                                       
-#if DEBUG
+
+#if NEED_SEPARATE_DAILY_LOGS
     if (levels.Contains("+ErNT")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".ErNT..")}", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error); // ErNT == Error No Template.
     if (levels.Contains("+Erro")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Er▄▀..")}", rollingInterval: RollingInterval.Day, outputTemplate: _exnOnlyTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Error);
     if (levels.Contains("+Warn")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Warn..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Warning);
     if (levels.Contains("+Info")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Info..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information);
     if (levels.Contains("+Verb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Verb..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
 #endif
+
     if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, outputTemplate: _infinitTemplate, restrictedToMinimumLevel:
       levels.Contains("+Erro") ? Serilog.Events.LogEventLevel.Error :
       levels.Contains("+Warn") ? Serilog.Events.LogEventLevel.Warning :
