@@ -2,13 +2,14 @@
 
 public class SeriLogHelper
 {
-  public static Microsoft.Extensions.Logging.ILogger CreateFallbackLogger<T>()
+  const string MinLogLevel = "+Info -Verb +Infi";
+  public static Microsoft.Extensions.Logging.ILogger CreateLogger<T>(string minLogLevel = MinLogLevel) => InitLoggerFactory__(Assembly.GetCallingAssembly().GetName().Name ?? "NA", minLogLevel).CreateLogger<T>();
+
+  static ILoggerFactory InitLoggerFactory__(string callingAssemblyName, string minLogLevel = MinLogLevel) => InitLoggerFactory(OneDrive.Folder($@"Public\Logs\{callingAssemblyName}.{Environment.MachineName[..3]}.{Environment.UserName[..3]}..log"), minLogLevel);
+
+  static ILoggerFactory InitLoggerFactory(string logFile, string minLogLevel = MinLogLevel) => LoggerFactory.Create(builder =>
   {
-    return InitLoggerFactory(@$"C:\temp\Logs\{Assembly.GetCallingAssembly().GetName().Name}.{Environment.UserName[..3]}..log", "-Info -Verb +Infi").CreateLogger<T>();
-  }
-  public static ILoggerFactory InitLoggerFactory(string logFile, string levels = "+Verbose -Info +Warning +Error +ErNT -11mb -Infi") => LoggerFactory.Create(builder =>
-  {
-    WriteLine($"SeriLogHelper.InitLoggerFactory: logFile: {logFile}, levels: {levels}");
+    WriteLine($"SeriLogHelper.InitLoggerFactory__: logFile: {logFile}, minLogLevel: {minLogLevel}");
 
     FSHelper.GetCreateSafeLogFolderAndFile(logFile);
 
@@ -29,13 +30,13 @@ public class SeriLogHelper
     if (levels.Contains("+Verb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Verb..")}", rollingInterval: RollingInterval.Day, outputTemplate: _optimalTemplate, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose);
 #endif
 
-    if (levels.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, outputTemplate: _infinitTemplate, restrictedToMinimumLevel:
-      levels.Contains("+Erro") ? Serilog.Events.LogEventLevel.Error :
-      levels.Contains("+Warn") ? Serilog.Events.LogEventLevel.Warning :
-      levels.Contains("+Info") ? Serilog.Events.LogEventLevel.Information :
-      levels.Contains("+Verb") ? Serilog.Events.LogEventLevel.Verbose :
+    if (minLogLevel.Contains("+Infi")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".Infi..")}", rollingInterval: RollingInterval.Infinite, outputTemplate: _infinitTemplate, restrictedToMinimumLevel:
+      minLogLevel.Contains("+Erro") ? Serilog.Events.LogEventLevel.Error :
+      minLogLevel.Contains("+Warn") ? Serilog.Events.LogEventLevel.Warning :
+      minLogLevel.Contains("+Info") ? Serilog.Events.LogEventLevel.Information :
+      minLogLevel.Contains("+Verb") ? Serilog.Events.LogEventLevel.Verbose :
       Serilog.Events.LogEventLevel.Verbose);
-    if (levels.Contains("+11mb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".11mb..").Replace(".log", ".json")}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose, rollOnFileSizeLimit: true, fileSizeLimitBytes: 11000000, formatter: new Serilog.Formatting.Json.JsonFormatter()); // useful only with log aggregators.
+    if (minLogLevel.Contains("+11mb")) loggerConfiguration.WriteTo.File(path: @$"{logFile.Replace("..", ".11mb..").Replace(".log", ".json")}", restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Verbose, rollOnFileSizeLimit: true, fileSizeLimitBytes: 11000000, formatter: new Serilog.Formatting.Json.JsonFormatter()); // useful only with log aggregators.
 
     _ = builder.AddSerilog(loggerConfiguration.CreateLogger());
   });
