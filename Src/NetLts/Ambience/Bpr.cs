@@ -68,12 +68,12 @@ public partial class Bpr : IBpr
   public async Task WakeAudio() => await BeepAsync(1, .1);
   public static async Task DevDbg() //  public App()  {    AmbienceLib.Bpr.DevDbg(); // ...
   {
-    if (Debugger.IsAttached)
+    if (Debugger.IsAttached) // no way out !!!
     {
       Bpr bpr = new();
       while (true)
       {
-        await bpr.StartAsync(2).ConfigureAwait(false); await Task.Delay(800);
+        await bpr.StartAsync(2).ConfigureAwait(false); await Task.Delay(800);    // too slow - good for app
         await bpr.FinishAsync(2).ConfigureAwait(false); await Task.Delay(800);
 
         await bpr.StartAsync(4).ConfigureAwait(false); await Task.Delay(600);
@@ -83,7 +83,7 @@ public partial class Bpr : IBpr
         await bpr.FinishAsync(8).ConfigureAwait(false); await Task.Delay(400);
 
         await bpr.StartAsync(12).ConfigureAwait(false); await Task.Delay(200);
-        await bpr.FinishAsync(12).ConfigureAwait(false); await Task.Delay(200);
+        await bpr.FinishAsync(12).ConfigureAwait(false); await Task.Delay(200);  // - too fast - good for navigations
         //await bpr.StartAsync(1).ConfigureAwait(false); 
 
         //////await bpr.WaveAsync(100, 300, 4);
