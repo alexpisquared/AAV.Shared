@@ -4,8 +4,11 @@ using AmbienceLib;
 
 var _bpr = new Bpr();
 
-
-if (Debugger.IsAttached)
+if (!Debugger.IsAttached)
+{
+  Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");
+}
+else
 {
   await BeepTest();
   await OneMinUp(_bpr); // works fine ...but not while debugging.
@@ -22,6 +25,7 @@ static async Task OneMinUp(Bpr b)
 }
 
 static Task M1(Bpr b) { Console.Write($"  started Audio  "); return b.GradientAsync(52, 9_000, 19, 30_000); }
+
 static Task M2() { Console.Write($"  started Delay  "); return Task.Delay(TimeSpan.FromMinutes(.25)); }
 
 async Task BeepTest()
