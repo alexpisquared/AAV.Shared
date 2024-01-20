@@ -22,6 +22,17 @@ public partial class Bpr : IBpr
   public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false); // Oh, Yes.
   public void No() => Task.Run(NoAsync); public async Task NoAsync() => await BeepHzMks(new[] { FFD(5000, _dMin), FFD(50, _dMin / 2), FFD(4000, _dMin * 2) }).ConfigureAwait(false); // Hell, No.
 
+  public void UhHuh() => Task.Run(UhHuhAsync); public async Task UhHuhAsync()
+  {
+    await FinishAsync(16).ConfigureAwait(false);
+    await StartAsync(16).ConfigureAwait(false);
+  }
+  public void NuHuh() => Task.Run(NuHuhAsync); public async Task NuHuhAsync()
+  {
+    await StartAsync(16).ConfigureAwait(false);
+    await FinishAsync(16).ConfigureAwait(false);
+  }
+
   public void Enter() => Task.Run(EnterAsync); public async Task EnterAsync() => await BeepHzMks(new[] { FFD(1000, _dMin) }).ConfigureAwait(false);
   public void Exit() => Task.Run(ExitAsync); public async Task ExitAsync() => await BeepHzMks(new[] { FFD(1000, _dMin) }).ConfigureAwait(false);
 
@@ -37,7 +48,8 @@ public partial class Bpr : IBpr
       for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, 1)); } //   /
 
       for (var hz = tillHz; hz > fromHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
-    } else                 //   \/
+    }
+    else                 //   \/
     {
       for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
 
@@ -56,7 +68,8 @@ public partial class Bpr : IBpr
     if (fromHz < tillHz) //   /\
     {
       for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, mks)); } //   /
-    } else                 //   \/
+    }
+    else                 //   \/
     {
       for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, mks)); } //   \
     }

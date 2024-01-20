@@ -21,12 +21,12 @@ public class ChimerAlt
       .AddUserSecrets<ChimerAlt>()
       .Build();
 
-    _freqWhstl = _config.GetSection("FreqWhistle").Get<int[]>() ?? throw new ArgumentNullException("FreqWhistle is missing in cfg????");
-    _freqUp = _config.GetSection("FreqUp").Get<int?>() ?? 32;
+    _freqWhstl = _config.GetSection("FreqWhistle").Get<int[]>() ?? [2000, 7000, 3000, 9000];
+    _freqUp = _config.GetSection("FreqUp").Get<int?>() ?? 30;
     _freqDn = _config.GetSection("FreqDn").Get<int?>() ?? 8000;
-    _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 8000;
-    _stepDurnSec = _config.GetSection("StepDurnSec").Get<double?>() ?? .001;
-    _freqMultplr = _config.GetSection("FreqMultiplier").Get<double?>() ?? 1.021;
+    _wakeMks = _config.GetSection("WakeMks").Get<int?>() ?? 150111;
+    _stepDurnSec = _config.GetSection("StepDurnSec").Get<double?>() ?? .00725;
+    _freqMultplr = _config.GetSection("FreqMultiplier").Get<double?>() ?? 1.017;
   }
 
   public static async Task BeepFD(int freq = 98, int durationMks = 250111, ushort volume = ushort.MaxValue) => await Bpr.BeepMks(new[] { new[] { freq, Bpr.FixDuration(freq, durationMks) } }, volume);
