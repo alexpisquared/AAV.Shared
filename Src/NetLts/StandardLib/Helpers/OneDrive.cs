@@ -11,10 +11,10 @@ public static class OneDrive // Core 3
     }
   }
 
-  public static string Folder(string subFolder) => Path.Combine(Root, subFolder);
+  public static string Folder(string subFolder) => Path.Combine(Root, subFolder.TrimStart('\\'));
   public static string DataFolder(string subFolder, bool createIfNotExists = true)
   {
-    var folder = Path.Combine(Root, """Public\AppData\""", subFolder);
+    var folder = Path.Combine(Root, """Public\AppData\""", subFolder.TrimStart('\\'));
     if (createIfNotExists)
       _ = FSHelper.ExistsOrCreated(folder);
     return folder;
