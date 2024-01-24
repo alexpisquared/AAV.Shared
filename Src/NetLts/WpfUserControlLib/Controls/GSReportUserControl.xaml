@@ -22,7 +22,7 @@
           <DropShadowEffect BlurRadius="16" />
         </Border.Effect>
         <Grid>
-          <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FocusVisualStyle="{x:Null}" MaxHeight="160" MaxWidth="920" >
+          <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FocusVisualStyle="{x:Null}" MaxHeight="160" MaxWidth="920" x:Name="ScrollViewer1" >
             <TextBlock Text="{Binding ElementName=ths, Path=GSReport, FallbackValue='abc'}" Margin="12 8 26 5" VerticalAlignment="Top" HorizontalAlignment="Left" d:Text="Hello! Here it is." FocusVisualStyle="{x:Null}" />
             <!--<ListBox MaxHeight="160" MaxWidth="920" Background="Transparent" BorderThickness="0" Margin="5 8 15 5" ItemsSource="{Binding ValidationMessages}" VerticalAlignment="Top" HorizontalAlignment="Left" >                <ListBox.ItemContainerStyle>                  <Style TargetType="{x:Type ListBoxItem}" >                    <Setter Property="Template" Value="{StaticResource ColoredValidationMsgStyle}"/>                  </Style>                </ListBox.ItemContainerStyle>              </ListBox>              <ListBox Background="Transparent" BorderThickness="0" Margin="0 120 0 0" Visibility="Collapsed">                <ListBoxItem Content="123 wonderful color" Foreground="#f44" />                <ListBoxItem Content="123 wonderful color" Foreground="#f88" />                <ListBoxItem Content="123 wonderful color" Foreground="#faa" />              </ListBox>-->
           </ScrollViewer>
