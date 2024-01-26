@@ -2,6 +2,7 @@
 
 public partial class Bpr : IBpr
 {
+  const int _startFinishQuieter = 33, _appStartFinishQuieter = 11;
   public bool SuppressTicks { get; set; }
   public bool SuppressAlarm { get; set; }
 
@@ -13,14 +14,14 @@ public partial class Bpr : IBpr
   public void Warn() => Task.Run(WarnAsync); public async Task WarnAsync() { if (!SuppressAlarm) await BeepHzMks(_Beethoven6thWarn/*new[] { _fdw1, _fdw2 }*/).ConfigureAwait(false); }
   public void Error() => Task.Run(ErrorAsync); public async Task ErrorAsync() { if (!SuppressAlarm) await BeepHzMks(_Beethoven6thErr).ConfigureAwait(false); }
 
-  public void Start(int stepHz = 4) => Task.Run(async () => await StartAsync(stepHz).ConfigureAwait(false));   /**/ public async Task StartAsync(int stepHz = 4) => await GradientAsync(300, 1100, stepHz).ConfigureAwait(false); // 4 - 300 ms
-  public void Finish(int stepHz = 4) => Task.Run(async () => await FinishAsync(stepHz).ConfigureAwait(false)); /**/ public async Task FinishAsync(int stepHz = 4) => await GradientAsync(1100, 300, stepHz).ConfigureAwait(false); // 300 ms
-  public void AppStart() => Task.Run(AppStartAsync);   /**/ public async Task AppStartAsync() => await GradientAsync(200, 601, 2).ConfigureAwait(false);  // 0.6 s
-  public void AppFinish() => Task.Run(AppFinishAsync); /**/ public async Task AppFinishAsync() => await GradientAsync(610, 201, 1).ConfigureAwait(false); // 1.6 s 610-201 pass on RAZER, others give: An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.)
+  public void Start(int stepHz = 4, ushort vol = ushort.MaxValue / _startFinishQuieter) => Task.Run(async () => await StartAsync(stepHz, vol).ConfigureAwait(false));   /**/ public async Task StartAsync(int stepHz = 4, ushort vol = ushort.MaxValue / _startFinishQuieter) => await GradientAsync(300, 1100, stepHz, vol: vol).ConfigureAwait(false); // 4 - 300 ms
+  public void Finish(int stepHz = 4, ushort vol = ushort.MaxValue / _startFinishQuieter) => Task.Run(async () => await FinishAsync(stepHz, vol).ConfigureAwait(false)); /**/ public async Task FinishAsync(int stepHz = 4, ushort vol = ushort.MaxValue / _startFinishQuieter) => await GradientAsync(1100, 300, stepHz, vol: vol).ConfigureAwait(false); // 300 ms
+  public void AppStart(ushort vol = ushort.MaxValue / _appStartFinishQuieter) => Task.Run(() => AppStartAsync(vol));   /**/ public async Task AppStartAsync(ushort vol = ushort.MaxValue / _appStartFinishQuieter) => await GradientAsync(200, 601, 2, vol: vol).ConfigureAwait(false);  // 0.6 s
+  public void AppFinish(ushort vol = ushort.MaxValue / _appStartFinishQuieter) => Task.Run(() => AppFinishAsync(vol)); /**/ public async Task AppFinishAsync(ushort vol = ushort.MaxValue / _appStartFinishQuieter) => await GradientAsync(610, 201, 1, vol: vol).ConfigureAwait(false); // 1.6 s 610-201 pass on RAZER, others give: An unhandled exception of type 'System.AccessViolationException' occurred in System.Windows.Extensions.dll     Attempted to read or write protected memory.This is often an indication that other memory is corrupt.)
 
   //was  void No() => Task.Run(async () => await NoAsync().ConfigureAwait(false)); public async Task NoAsync() => await BeepHzMks(new[] { FFD(6000, d1), FFD(5000, d1) }).ConfigureAwait(false); <== auto converted by the VS!!! to this:
-  public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false); // Oh, Yes.
   public void No() => Task.Run(NoAsync); public async Task NoAsync() => await BeepHzMks(new[] { FFD(5000, _dMin), FFD(50, _dMin / 2), FFD(4000, _dMin * 2) }).ConfigureAwait(false); // Hell, No.
+  public void Yes() => Task.Run(YesAsync); public async Task YesAsync() => await BeepHzMks(new[] { FFD(4000, _dMin * 2), FFD(6000, _dMin) }).ConfigureAwait(false); // Oh, Yes.
 
   public void UhHuh() => Task.Run(UhHuhAsync); public async Task UhHuhAsync()
   {

@@ -1,6 +1,6 @@
 ﻿namespace AmbienceLib;
 
-public class BprSilentMock : StandardContractsLib.IBpr
+public class BprSilentMock : IBpr
 {
   public bool SuppressTicks { get; set; }
   public bool SuppressAlarm { get; set; }
@@ -19,12 +19,12 @@ public class BprSilentMock : StandardContractsLib.IBpr
   public async Task ErrorAsync() => await Task.Yield();
   public void Exit() { }
   public int[] FFD(int hz, int durationMks = 100111) => Array.Empty<int>();
-  public void Finish(int stepHz = 4) { }
-  public async Task FinishAsync(int stepHz = 4) => await Task.Yield();
+  public void Finish(int stepHz = 4, ushort vol = ushort.MaxValue / 33) { }
+  public async Task FinishAsync(int stepHz = 4, ushort vol = ushort.MaxValue / 33) => await Task.Yield();
   public void No() { }
   public async Task NoAsync() => await Task.Yield();
-  public void Start(int stepHz = 4) { }
-  public async Task StartAsync(int stepHz = 4) => await Task.Yield();
+  public void Start(int stepHz = 4, ushort vol = ushort.MaxValue / 33) { }
+  public async Task StartAsync(int stepHz = 4, ushort vol = ushort.MaxValue / 33) => await Task.Yield();
   public void Tick() { }
   public async Task TickAsync() => await Task.Yield();
   public async Task WaveAsync(int baseHz = 100, int plusHz = 300, int step = 4) => await Task.Yield();
@@ -43,4 +43,8 @@ public class BprSilentMock : StandardContractsLib.IBpr
   public async Task WaveAsync3k8k4() => await Task.Yield();
   public async Task WaveAsync4k7k2() => await Task.Yield();
   public async Task WaveAsync7k5k1() => await Task.Yield();
+  public void AppFinish(ushort vol) => throw new NotImplementedException();
+  public Task AppFinishAsync(ushort vol) => throw new NotImplementedException();
+  public void AppStart(ushort vol) => throw new NotImplementedException();
+  public Task AppStartAsync(ushort vol) => throw new NotImplementedException();
 }

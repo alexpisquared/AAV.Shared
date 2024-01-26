@@ -5,10 +5,10 @@ public interface IBpr
   bool SuppressAlarm { get; set; }
   bool SuppressTicks { get; set; }
 
-  void AppFinish();
-  Task AppFinishAsync();
-  void AppStart();
-  Task AppStartAsync();
+  void AppFinish(ushort vol);
+  Task AppFinishAsync(ushort vol);
+  void AppStart(ushort vol);
+  Task AppStartAsync(ushort vol);
   void Beep(int hz, double sec);
   void Beep(int hz, double sec, ushort vol);
   Task BeepAsync(int hz, double sec);
@@ -24,13 +24,13 @@ public interface IBpr
   void Exit();
   Task ExitAsync();
   int[] FFD(int hz, int mks = 75000);
-  void Finish(int stepHz = 4);
-  Task FinishAsync(int stepHz = 4);
-  Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue / 5);
+  void Finish(int stepHz = 4, ushort vol = ushort.MaxValue / 133);
+  Task FinishAsync(int stepHz = 4, ushort vol = ushort.MaxValue / 133);
+  Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue / 115);
   void No();
   Task NoAsync();
-  void Start(int stepHz = 4);
-  Task StartAsync(int stepHz = 4);
+  void Start(int stepHz = 4, ushort vol = ushort.MaxValue / 133);
+  Task StartAsync(int stepHz = 4, ushort vol = ushort.MaxValue / 133);
   void Tick();
   Task TickAsync();
   void Warn();

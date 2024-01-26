@@ -31,9 +31,7 @@ public class PhoneBrushConverter : MarkupExtension, IValueConverter
       8 => Brushes.DarkCyan,
       9 => Brushes.Pink,        // Intrnational
       _ => Brushes.Gray         // Not found
-    }
-
-    : value;
+    } : Brushes.Fuchsia;        // null or empty
   public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => "";
   public override object ProvideValue(IServiceProvider serviceProvider) => this;
   public PhoneBrushConverter() { }
