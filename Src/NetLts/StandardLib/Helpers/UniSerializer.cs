@@ -17,7 +17,7 @@ public static class JsonFileSerializer
         File.WriteAllText(filename, JsonSerializer.Serialize(obj, new JsonSerializerOptions { WriteIndented = true }));
       else
       {
-        using StreamWriter? streamWriter = new(filename);
+        using StreamWriter streamWriter = new(filename);
         new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, obj);
         streamWriter.Close();
       }
@@ -35,8 +35,8 @@ public static class JsonFileSerializer
           return JsonSerializer.Deserialize<T>(File.ReadAllText(filename), new JsonSerializerOptions { WriteIndented = true }) ?? throw new ArgumentNullException("@123");
         else
         {
-          using StreamReader? streamReader = new(filename);
-          return (T?)new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream) ?? throw new ArgumentNullException("@432");
+          using var streamReader = new StreamReader(filename);
+          return (T)(new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream) ?? throw new ArgumentNullException("@432"));
         }
       }
     }
@@ -54,7 +54,7 @@ public static class XmlFileSerializer
       if (!FSHelper.ExistsOrCreated(Path.GetDirectoryName(filename) ?? throw new ArgumentNullException("▄▀")))
         throw new DirectoryNotFoundException(Path.GetDirectoryName(filename));
 
-      using StreamWriter? streamWriter = new(filename);
+      using StreamWriter streamWriter = new(filename);
       new XmlSerializer(typeof(T)).Serialize(streamWriter, obj);
     }
     catch (Exception ex) { ex.Log(); throw; }
@@ -134,7 +134,7 @@ public static class JsonIsoFileSerializer
       if (isoStore.FileExists(IsoConst.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json")))
       {
         using IsolatedStorageFileStream? isoStream = new(IsoConst.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json"), FileMode.Open, FileAccess.Read, FileShare.Read, isoStore);
-        using StreamReader? streamReader = new(isoStream);
+        using StreamReader streamReader = new(isoStream);
         var obj = (T?)(new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream)); // var obj = (T)(new XmlSerializer(typeof(T)).Deserialize(streamReader));
         streamReader.Close();
         return obj;
