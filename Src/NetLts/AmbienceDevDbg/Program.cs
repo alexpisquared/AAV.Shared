@@ -4,6 +4,10 @@ using AmbienceLib;
 
 var _bpr = new Bpr();
 
+_bpr.ClickAsync().Wait();
+_bpr.AppStartAsync().Wait();
+_bpr.AppFinishAsync().Wait();
+
 if (!Debugger.IsAttached)
 {
   Console.ForegroundColor = ConsoleColor.Red;

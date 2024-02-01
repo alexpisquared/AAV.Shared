@@ -2,13 +2,14 @@
 
 public interface IBpr
 {
+  const int _startFinishQuieter = 33, _appStartFinishQuieter = 11;
   bool SuppressAlarm { get; set; }
   bool SuppressTicks { get; set; }
 
-  void AppFinish(ushort vol);
-  Task AppFinishAsync(ushort vol);
-  void AppStart(ushort vol);
-  Task AppStartAsync(ushort vol);
+  void AppFinish(ushort vol = ushort.MaxValue / _appStartFinishQuieter);
+  Task AppFinishAsync(ushort vol = ushort.MaxValue / _appStartFinishQuieter);
+  void AppStart(ushort vol = ushort.MaxValue / _appStartFinishQuieter);
+  Task AppStartAsync(ushort vol = ushort.MaxValue / _appStartFinishQuieter);
   void Beep(int hz, double sec);
   void Beep(int hz, double sec, ushort vol);
   Task BeepAsync(int hz, double sec);
