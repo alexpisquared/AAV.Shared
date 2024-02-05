@@ -1,5 +1,4 @@
-﻿
-namespace AmbienceLib;
+﻿namespace AmbienceLib;
 
 public interface ISpeechSynth
 {
@@ -7,4 +6,5 @@ public interface ISpeechSynth
   Task SpeakAsync(string msg, double speakingRate = 1, double volumePercent = 100, string voice = "", string style = "friendly", string role = "YoungAdultFemale");
   void SpeakAsyncCancelAll();
   void SpeakFAF(string msg, double speakingRate = 1, double volumePercent = 100, string voice = "", string style = "friendly");
+  void SpeakFree(string msg); // does not use the Azure Cognitive Services.
 }
