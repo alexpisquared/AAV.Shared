@@ -1,15 +1,18 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable, ISpeechSynth
 {
-  const string _rgn = "canadacentral", _vName = "zh-CN-XiaomoNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+  const string _rgn = "canadacentral", _vName = "en-GB-SoniaNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 100;
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
   readonly SpeechSynthesizer _synthesizer;
   readonly bool _useCached;
   bool _disposedValue;
+  System.Speech.Synthesis.SpeechSynthesizer? speechSynth0;
 
-  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) => new SpeechSynth(speechKey, useCached, voice, speechSynthesisLanguage, lgr);
+  public System.Speech.Synthesis.SpeechSynthesizer SpeechSynth0 => speechSynth0 ??= new System.Speech.Synthesis.SpeechSynthesizer();
+
+  public static SpeechSynth Factory(string speechKey, ILogger lgr, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage) => new(speechKey, useCached, voice, speechSynthesisLanguage, lgr);
   public SpeechSynth(string speechKey, bool useCached = true, string voice = _vName, string speechSynthesisLanguage = _vLanguage, ILogger? lgr = null, string pathToCache = _github)
   {
     _fallbackVoice = voice; //todo: 
@@ -28,7 +31,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
 
     _synthesizer = _useCached ? new SpeechSynthesizer(speechConfig, null) : new SpeechSynthesizer(speechConfig);
 
-    try { if (Directory.Exists(pathToCache) == false) Directory.CreateDirectory(pathToCache); } catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); }
+    try { if (Directory.Exists(pathToCache) == false) _ = Directory.CreateDirectory(pathToCache); } catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); }
   }
 
   public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
@@ -36,8 +39,8 @@ public class SpeechSynth : IDisposable, ISpeechSynth
   {
     if (voice == "") voice = _fallbackVoice;
 
-    var file = @$"{_pathToCache}{(voice)}~{speakingRate:N2}~{volumePercent:0#}~{(style)}~{RemoveIllegalCharacters(msg)}.wav";
-    var lang = (voice.Length > 5 ? voice[..5] : "en-US");
+    var file = @$"{_pathToCache}{voice}~{speakingRate:N2}~{volumePercent:0#}~{style}~{RemoveIllegalCharacters(msg)}.wav";
+    var lang = voice.Length > 5 ? voice[..5] : "en-US";
     var ssml = style == "" ?
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg}</prosody></voice></speak>" :
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg}</mstts:express-as></prosody></voice></speak>";
@@ -57,7 +60,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     try
     {
       using var result = await speak(msg);
-      return (_useCached) ? await CreateWavFile(file, result) : true;
+      return !_useCached || await CreateWavFile(file, result);
     }
     catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); /*else throw;*/ }
 
@@ -115,6 +118,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
         _ = result.Append(c);
       }
     }
+
     return result.ToString();
   }
 
@@ -138,7 +142,13 @@ public class SpeechSynth : IDisposable, ISpeechSynth
   }
 
   public async Task SpeakFreeAsync(string msg) { SpeakFree(msg); await Task.Delay(msg.Length * 100); }
-  public void SpeakFree(string msg) => new System.Speech.Synthesis.SpeechSynthesizer().Speak(msg);
+  public void SpeakFree(string msg, int volumePercent = (int)_volumePercent)
+  {
+    var prev = SpeechSynth0.Volume;
+    SpeechSynth0.Volume = volumePercent;
+    SpeechSynth0.Speak(msg);
+    SpeechSynth0.Volume = prev;
+  }
 
   [Obsolete("Use ..SpeakFree()")]
   public static void SayExe(string msg) => new Process
@@ -152,53 +162,54 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     }
   }.Start();
   public void SpeakAsyncCancelAll() { }
-}
-public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
-public class CC
-{
-  public static VoiceStylesRoles
-    UkuaPolinaNeural = new("uk-UA-PolinaNeural", Array.Empty<string>(), Array.Empty<string>()),
-    UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
-    EnusAriaNeural = new("en-US-AriaNeural", new[] { cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful }, Array.Empty<string>()),
-    EngbRyanNeural = new("en-GB-RyanNeural", new[] { cheerful, chat }, Array.Empty<string>()),
-    EngbSoniaNeural = new("en-GB-SoniaNeural", new[] { cheerful, sad }, Array.Empty<string>()),
-    ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", new[] { cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious }, new[] { YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy });
 
-  public const string
-    affectionate = "affectionate",
-    angry = "angry",
-    calm = "calm",
-    chat = "chat",
-    cheerful = "cheerful",
-    customerservice = "customerservice",
-    disgruntled = "disgruntled",
-    depressed = "depressed",
-    envious = "envious",
-    excited = "excited",
-    embarrassed = "embarrassed",
-    empathetic = "empathetic",
-    fearful = "fearful",
-    friendly = "friendly",
-    gentle = "gentle",
-    hopeful = "hopeful",
-    narration_professional = "narration-professional",
-    newscast_casual = "newscast-casual",
-    newscast_formal = "newscast-formal",
-    sad = "sad",
-    serious = "serious",
-    shouting = "shouting",
-    terrified = "terrified",
-    unfriendly = "unfriendly",
-    whispering = "whispering",
+  public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
+  public class CC
+  {
+    public static VoiceStylesRoles
+      UkuaPolinaNeural = new("uk-UA-PolinaNeural", Array.Empty<string>(), Array.Empty<string>()),
+      UkuaOstapNeural = new("uk-UA-OstapNeural", Array.Empty<string>(), Array.Empty<string>()),
+      EnusAriaNeural = new("en-US-AriaNeural", [cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful], Array.Empty<string>()),
+      EngbRyanNeural = new("en-GB-RyanNeural", [cheerful, chat], Array.Empty<string>()),
+      EngbSoniaNeural = new("en-GB-SoniaNeural", [cheerful, sad], Array.Empty<string>()),
+      ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", [cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious], [YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy]);
 
-    YoungAdultFemale = "YoungAdultFemale",
-    YoungAdultMale = "YoungAdultMale",
-    OlderAdultFemale = "OlderAdultFemale",
-    OlderAdultMale = "OlderAdultMale",
-    SeniorFemale = "SeniorFemale",
-    SeniorMale = "SeniorMale",
-    Girl = "Girl",
-    Boy = "Boy";
+    public const string
+      affectionate = "affectionate",
+      angry = "angry",
+      calm = "calm",
+      chat = "chat",
+      cheerful = "cheerful",
+      customerservice = "customerservice",
+      disgruntled = "disgruntled",
+      depressed = "depressed",
+      envious = "envious",
+      excited = "excited",
+      embarrassed = "embarrassed",
+      empathetic = "empathetic",
+      fearful = "fearful",
+      friendly = "friendly",
+      gentle = "gentle",
+      hopeful = "hopeful",
+      narration_professional = "narration-professional",
+      newscast_casual = "newscast-casual",
+      newscast_formal = "newscast-formal",
+      sad = "sad",
+      serious = "serious",
+      shouting = "shouting",
+      terrified = "terrified",
+      unfriendly = "unfriendly",
+      whispering = "whispering",
+
+      YoungAdultFemale = "YoungAdultFemale",
+      YoungAdultMale = "YoungAdultMale",
+      OlderAdultFemale = "OlderAdultFemale",
+      OlderAdultMale = "OlderAdultMale",
+      SeniorFemale = "SeniorFemale",
+      SeniorMale = "SeniorMale",
+      Girl = "Girl",
+      Boy = "Boy";
+  }
 }
 
 /*
