@@ -1,17 +1,30 @@
-﻿global using static System.Diagnostics.Trace;
-using System.Diagnostics;
-using AmbienceLib;
-using Microsoft.Extensions.Configuration;
-namespace AmbienceDevDbg;
-public static class SpeechSynthTest
+﻿namespace AmbienceDevDbg;
+public class SpeechSynthTest
 {
+  readonly string key;
+  private SpeechSynth synth;
+
+  public SpeechSynthTest()
+  {
+    key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
+  }
   public static async Task TestTTS()
+  {
+    SpeechSynthTest sst = new();
+
+    await sst.TestFree();
+  }
+  public async Task TestFree()
+  {
+    synth = new SpeechSynth(key, useCached: false);
+    await synth.SpeakFreeAsync0("A big brown dog jumped over the green crocodile.");
+  }
+  public async Task Test1()
   {
     if (!Debugger.IsAttached) return;
 
-    var key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
 
-    var synth = new SpeechSynth(key, useCached: true);
+    synth = new SpeechSynth(key, useCached: true);
     await synth.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
     await synth.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
 
@@ -32,7 +45,7 @@ public static class SpeechSynthTest
     await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Boy);
   }
 
-  static async Task TestAllStylesForTheVoice(string msg, SpeechSynth synth, VoiceStylesRoles rr)
+  async Task TestAllStylesForTheVoice(string msg, SpeechSynth synth, VoiceStylesRoles rr)
   {
     foreach (var style in rr.Styles)
     {

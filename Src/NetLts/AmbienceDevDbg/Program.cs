@@ -1,12 +1,10 @@
-﻿using System.Diagnostics;
-using AmbienceDevDbg;
-using AmbienceLib;
+﻿  await SpeechSynthTest.TestTTS();
 
 var _bpr = new Bpr();
 
-_bpr.ClickAsync().Wait();
-_bpr.AppStartAsync().Wait();
-_bpr.AppFinishAsync().Wait();
+//_bpr.ClickAsync().Wait();
+//_bpr.AppStartAsync().Wait();
+//_bpr.AppFinishAsync().Wait();
 
 if (!Debugger.IsAttached)
 {
@@ -19,7 +17,6 @@ else
   await UhHuh();
   //await BeepTest();
   //await OneMinUp(_bpr); // works fine ...but not while debugging.
-  //await SpeechSynthTest.TestTTS();
 }
 
 async Task UhHuh() {
