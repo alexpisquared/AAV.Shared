@@ -54,7 +54,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)
       PlayWavFileSync(file);
     else if (await SpeakPlusCreateWavFile(msg, file, speak) == false)
-      SpeakFree(orgMsg ?? msg);
+      SpeakFreeFAF(orgMsg ?? msg);
   }
   async Task<bool> SpeakPlusCreateWavFile(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
   {
@@ -164,24 +164,23 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     await Task.Delay(msg.Length * 50);
     Console.WriteLine($"Async {sw.ElapsedMilliseconds,12} ms   {Synthesizer.Rate,4}");
   }
-  public async Task SpeakFreeAsync(string msg) { _ = Synthesizer.SpeakAsync(msg); await Task.Delay((int)(Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length * 3659.8 / 48.0)); }
-  public void SpeakFree(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent)
+  public async Task SpeakFreeAsync(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent)
   {
-    var prev = Synthesizer.Volume;
+    Synthesizer.Rate = speakingRate;
     Synthesizer.Volume = volumePercent;
-    Synthesizer.Speak(msg);
-    Synthesizer.Volume = prev;
+    _ = Synthesizer.SpeakAsync(msg); // not awaitable and not blocking: essentially - FAF.
+    await Task.Delay((int)(Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length * 3659.8 / 48.0));
   }
   public void SpeakFreeFAF(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent)
   {
     var prev = Synthesizer.Volume;
     Synthesizer.Rate = speakingRate;
     Synthesizer.Volume = volumePercent;
-    Synthesizer.SpeakAsync(msg);
+    _ = Synthesizer.SpeakAsync(msg); // not awaitable and not blocking: essentially - FAF.
     Synthesizer.Volume = prev;
   }
 
-  [Obsolete("Use ..SpeakFree()")]
+  [Obsolete("Use ..SpeakFreeFAF()")]
   public static void SayExe(string msg) => new Process
   {
     StartInfo = new ProcessStartInfo("say.exe", msg)
@@ -193,6 +192,8 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     }
   }.Start();
   public void SpeakAsyncCancelAll() { }
+
+  public void SpeakFree(string msg, int speakingRate = 0, int volumePercent = 100) => throw new NotImplementedException();
 
   public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
   public class CC
