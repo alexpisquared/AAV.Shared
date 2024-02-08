@@ -27,7 +27,7 @@ public static class DbqExt // replacing DbSaveLib and all others!!! (Aug 2018  .
   public static bool HasUnsavedChanges(this DbContext db) => db != null && db.ChangeTracker.Entries().Any(e => e.State is EntityState.Added or EntityState.Modified or EntityState.Deleted);
   public static string GetDbChangesReport(this DbContext db, int maxLinesToShow = 33)
   {
-    var sb = new StringBuilder($"{db.GetType().Name}.{db.GetType().GetHashCode()}:  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
+    var sb = new StringBuilder($"{db.GetType().Name}:  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Deleted),5} Del  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Added),5} Ins  {db.ChangeTracker.Entries().Count(e => e.State == EntityState.Modified),5} Upd");
 
     var lineCounter = 0;
     foreach (var modifieds in db.ChangeTracker.Entries().Where(e => e.State == EntityState.Modified))
