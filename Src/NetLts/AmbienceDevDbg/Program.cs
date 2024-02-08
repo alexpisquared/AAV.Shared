@@ -1,4 +1,4 @@
-﻿  await SpeechSynthTest.TestTTS();
+﻿await SpeechSynthTest.TestTTS();
 
 var _bpr = new Bpr();
 
@@ -19,11 +19,12 @@ else
   //await OneMinUp(_bpr); // works fine ...but not while debugging.
 }
 
-async Task UhHuh() {
+async Task UhHuh()
+{
   do
   {
     await _bpr.UhHuhAsync();
-  } while (Console.ReadKey().Key!= ConsoleKey.Escape);
+  } while (Console.ReadKey().Key != ConsoleKey.Escape);
 }
 
 async Task NuHUh()
@@ -38,8 +39,8 @@ Console.ResetColor();
 
 static async Task OneMinUp(Bpr b)
 {
-  Console.WriteLine("52, 9_000, 19, 30_000, ushort.MaxValue / 20 ");  await b.GradientAsync(52, 9_000, 19, 30_000, ushort.MaxValue / 20).ConfigureAwait(false);
-  Console.WriteLine("52, 9_000, 19, 30_000, ushort.MaxValue / 1  ");  await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
+  Console.WriteLine("52, 9_000, 19, 30_000, ushort.MaxValue / 20 "); await b.GradientAsync(52, 9_000, 19, 30_000, ushort.MaxValue / 20).ConfigureAwait(false);
+  Console.WriteLine("52, 9_000, 19, 30_000, ushort.MaxValue / 1  "); await b.GradientAsync(52, 9_000, 19, 30_000).ConfigureAwait(false);
 }
 
 static Task Play(Bpr b) { try { Console.ForegroundColor = ConsoleColor.Green; Console.Write($"  started Audio  "); return b.GradientAsync(52, 9_000, 85, 30_000); } finally { Console.ResetColor(); } }
@@ -71,7 +72,7 @@ async Task BeepTest()
     var taskDelay = Wait(); // must go first, or else it will be scheduled AFTER! completion of the scream.
     Console.Write($"  111  ");
     var taskScream = Play(_bpr); // it is blocking!?!?!?!?
-    
+
     Console.Write($"  222  ");
     await Task.WhenAll(taskDelay, taskScream);
     Console.Write($"  333  ");

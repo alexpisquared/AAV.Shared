@@ -1,9 +1,10 @@
 ﻿namespace AmbienceLib;
 public class SpeechSynth : IDisposable, ISpeechSynth
 {
-  const string _rgn = "canadacentral", _vName = "en-GB-SoniaNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
-  const double _speechRate = 1.00, _volumePercent = 100;
-  const int _rateMinusPlus10 = 0;
+  const string _rgn = "canadacentral", _vName = "en-GB-SoniaNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\",
+    _voice = "Microsoft Zira Desktop";
+  const double _speechRate = 1.00, _volumePercent = 33;
+  const int _rateMinusPlus10 = 3;
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
   readonly bool _useCached;
@@ -149,13 +150,15 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     Synthesizer.Rate = 10; var sw = Stopwatch.StartNew();
     Synthesizer.Speak(msg); Console.WriteLine($"Synch {msg.Length,12} {sw.ElapsedMilliseconds / msg.Length,12} ms   {Synthesizer.Rate,4}");
 
-    for (var i = 10; i >= -10; i--)
+    for (var i = 10; i >= 6; i--)
     {
       Synthesizer.Rate = i; sw = Stopwatch.StartNew(); Synthesizer.Speak(msg); var el = sw.ElapsedMilliseconds;
 
       var y = 3659.8 * Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length / 48.0;
 
       Console.WriteLine($"{Synthesizer.Rate,4}  {el,6:N0} - {y,6:N0} = {el - y,6:N0}   {new string('■', (int)(el / msg.Length)),12}");
+
+      Synthesizer.SelectVoice(_voice);
     }
 
     sw = Stopwatch.StartNew();
@@ -164,18 +167,20 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     await Task.Delay(msg.Length * 50);
     Console.WriteLine($"Async {sw.ElapsedMilliseconds,12} ms   {Synthesizer.Rate,4}");
   }
-  public async Task SpeakFreeAsync(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent)
+  public async Task SpeakFreeAsync(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent, string voice = _voice)
   {
     Synthesizer.Rate = speakingRate;
     Synthesizer.Volume = volumePercent;
+    Synthesizer.SelectVoice(voice);
     _ = Synthesizer.SpeakAsync(msg); // not awaitable and not blocking: essentially - FAF.
     await Task.Delay((int)(Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length * 3659.8 / 48.0));
   }
-  public void SpeakFreeFAF(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent)
+  public void SpeakFreeFAF(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent, string voice = _voice)
   {
     var prev = Synthesizer.Volume;
     Synthesizer.Rate = speakingRate;
     Synthesizer.Volume = volumePercent;
+    Synthesizer.SelectVoice(voice);
     _ = Synthesizer.SpeakAsync(msg); // not awaitable and not blocking: essentially - FAF.
     Synthesizer.Volume = prev;
   }

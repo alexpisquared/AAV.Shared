@@ -2,7 +2,7 @@
 public class SpeechSynthTest
 {
   readonly string key;
-  private SpeechSynth synth;
+  SpeechSynth? synth;
 
   public SpeechSynthTest()
   {
