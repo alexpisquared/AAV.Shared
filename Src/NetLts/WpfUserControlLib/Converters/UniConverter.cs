@@ -44,6 +44,9 @@ public class UniConverter : MarkupExtension, IValueConverter
         TypeCode.Int32 => InvertValue ? ((int)value == 0 ? BrushTrue : BrushFalse) : ((int)value != 0 ? BrushTrue : BrushFalse),
         TypeCode.Int64 => InvertValue ? ((long)value == 0 ? BrushTrue : BrushFalse) : ((long)value != 0 ? BrushTrue : BrushFalse),
         TypeCode.Boolean => InvertValue ? ((bool)value ? BrushFalse : BrushTrue) : ((bool)value ? BrushTrue : BrushFalse),
+        TypeCode.String =>
+            (string)value == TextTrue ? BrushTrue :
+            (string)value == TextFalse ? BrushFalse : Brushes.Gray,
         _ => Brushes.YellowGreen
       };
     }
