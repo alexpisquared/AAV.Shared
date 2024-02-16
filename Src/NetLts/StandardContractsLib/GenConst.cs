@@ -24,5 +24,7 @@ public class GenderApiConst
     "]*IsBadName*[",        // 7
     "limit reached."        // 8
   ];
+
+  public static bool IsLimitReached(string? val) => val == Retries[3] || val == Retries[8];
 }
 
