@@ -25,6 +25,8 @@ public class GenderApiConst
     "limit reached."        // 8
   ];
 
-  public static bool IsLimitReached(string? val) => val == Retries[3] || val == Retries[8];
+  public static bool IsLimitReached(string? val) => val == LimitReachedOld || val == LimitReachedNew;
+  public static string LimitReachedOld => Retries[3];
+  public static string LimitReachedNew => Retries[8];
 }
 
