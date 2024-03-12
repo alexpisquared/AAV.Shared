@@ -1,4 +1,5 @@
-﻿namespace WpfUserControlLib.Converters;
+﻿
+namespace WpfUserControlLib.Converters;
 
 public class PhoneFormatConverter : MarkupExtension, IValueConverter
 {

@@ -1,9 +1,36 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!--
-    <TargetFramework>netstandard2.0</TargetFramework> :record is not available !!!-->
     <TargetFramework>net8.0</TargetFramework>
+    <!-- <TargetFramework>netstandard2.0</TargetFramework> 
+    to use ^^, move the following to a separate .net8 project:
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\EvLogHelper.cs(3,28,3,47): error CS0122: 'SupportedOSPlatformAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(4,129,4,141): error CS8795: Partial method 'MouseOperations.SetCursorPos(int, int)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(5,100,5,112): error CS8795: Partial method 'MouseOperations.GetCursorPos(out MouseOperations.MousePoint)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(6,61,6,72): error CS8795: Partial method 'MouseOperations.mouse_event(int, int, int, int, int)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(7,59,7,74): error CS8795: Partial method 'MouseOperations.SwapMouseButton(int)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(8,60,8,76): error CS8795: Partial method 'MouseOperations.GetSystemMetrics(int)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(5,59,5,70): error CS8795: Partial method 'WinAPI.SendMessage(int, uint, uint, uint)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(6,128,6,146): error CS8795: Partial method 'WinAPI.SendMessageTimeout(IntPtr, int, IntPtr, string, uint, uint, IntPtr)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(8,104,8,124): error CS8795: Partial method 'WinAPI.SystemParametersInfo(uint, uint, string, uint)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(10,101,10,105): error CS8795: Partial method 'WinAPI.Beep(int, int)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(11,99,11,117): error CS8795: Partial method 'WinAPI.GetWindowPlacement(IntPtr, out WinAPI.WindowPlacement)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(12,99,12,117): error CS8795: Partial method 'WinAPI.SetWindowPlacement(IntPtr, ref WinAPI.WindowPlacement)' must have an implementation part because it has accessibility modifiers.
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\BackgroundTask.cs(6,13,6,26): error CS0246: The type or namespace name 'PeriodicTimer' could not be found (are you missing a using directive or an assembly reference?)
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(4,4,4,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(5,4,5,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(5,4,5,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(6,4,6,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(7,4,7,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Services\MouseOperations.cs(8,4,8,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(6,4,6,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(6,73,6,90): error CS0122: 'StringMarshalling' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(8,4,8,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(8,52,8,69): error CS0122: 'StringMarshalling' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(10,4,10,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(11,4,11,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    C:\g\AAV.Shared\Src\NetLts\StandardLib\Helpers\WinAPI.cs(12,4,12,17): error CS0122: 'LibraryImportAttribute' is inaccessible due to its protection level
+    Done building project "StandardLib.csproj"  FAILED.    -->
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
