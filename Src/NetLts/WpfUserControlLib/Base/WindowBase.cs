@@ -1,4 +1,6 @@
-﻿namespace WpfUserControlLib.Base;
+﻿using LibraryImportLib;
+
+namespace WpfUserControlLib.Base;
 public partial class WindowBase : Window
 {
   protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
