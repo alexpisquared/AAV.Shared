@@ -103,9 +103,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\C\AAV\AAV.Sys\AAV.Sys.4.8.csproj">
-      <Project>{60bb75f4-e913-40f9-be60-d5e408f24751}</Project>
-      <Name>AAV.Sys.4.8</Name>
+    <ProjectReference Include="..\..\NetLts\StandardLib\StandardLib.csproj">
+      <Project>{b798878d-752e-45c0-8b93-57660f7a4c90}</Project>
+      <Name>StandardLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
