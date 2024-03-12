@@ -14,12 +14,12 @@ public class SizeWeightedRandomPicker
     var searchPattern = "*";
 #endif
 
-    var start = Stopwatch.GetTimestamp();
+    var start = Stopwatch.StartNew();
     _files = new List<FileInfo>(new DirectoryInfo(directoryPath).GetFiles(searchPattern, SearchOption.AllDirectories));
     _totalSize = _files.Sum(file => file.Length);
     Count = _files.Count;
 
-    WriteLine($"{DateTime.Now} ■ ■ ■ loaded {_files.Count:N0} {searchPattern} files of total {_totalSize * .000000001:N0} Gb in {Stopwatch.GetElapsedTime(start).TotalSeconds:N2} s.");
+    WriteLine($"{DateTime.Now} ■ ■ ■ loaded {_files.Count:N0} {searchPattern} files of total {_totalSize * .000000001:N0} Gb in {start.Elapsed.TotalSeconds:N2} s.");
   }
 
   public int Count { get; private set; }
@@ -27,7 +27,7 @@ public class SizeWeightedRandomPicker
 
   public FileInfo PickRandomFile()
   {
-    var randomNumber = _random.NextInt64(_totalSize);
+    var randomNumber = _random.NextDouble() * _totalSize; // .net8:  var randomNumber = _random.NextInt64(_totalSize);
     long sum = 0;
 
     foreach (var file in _files)

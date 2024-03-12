@@ -1,11 +1,13 @@
-﻿namespace StandardLib.Helpers;
+﻿using LibraryImportLib;
+
+namespace StandardLib.Helpers;
 
 [Obsolete( "■ only for exceptional situations when proper beeper is not available ■", false)]
 internal class BprKernel32Internal
 {
   public static void Start() { Beep(_7kHz, _msA); Beep(_8kHz, _msB); }
   public static void Finish() { Beep(_8kHz, _msB); Beep(_7kHz, _msA); }
-  public static void Click() => NativeMethods.BeepIf(600, 120);
+  public static void Click() => LibraryImportLib.NativeMethods.BeepIf(600, 120);
   public static void Tick() => NativeMethods.BeepIf(400, 120);
   public static void Warn() => NativeMethods.BeepIf(8000, 120);
   public static void Error() // CI-RDP-adjusted.
