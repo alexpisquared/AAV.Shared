@@ -100,4 +100,7 @@ public partial class Bpr
     writer.Close();
     stream.Close();
   }
+
+  public static void Beep1of2() => throw new NotImplementedException();
+  public static void Beep2of2() => throw new NotImplementedException();
 }
