@@ -59,7 +59,7 @@ public static class VersionHelper
     }
   }
 
-  public static bool IsDbgOrRBD => IsDbg || IsRBD;
+  public static bool IsDbgOrRBD => IsDbg || IsRBD; // Ran by Dev.
   public static bool IsRBD => Environment.UserName.EndsWith("lexp") || Environment.UserName.StartsWith("olepi"); // ran by dev.
   public static bool IsDbg =>
 #if DEBUG
