@@ -96,11 +96,18 @@ namespace AsLink
   {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      var rv = value is DateTime time && time >= DateTime.Today && time < DateTime.Today.AddDays(1);
+      if (value is DateTime time)
+      {
+        var isToday = time >= DateTime.Today && time < DateTime.Today.AddDays(1);
 
-      if (targetType == typeof(Brush))        /**/ return rv ? Brushes.DarkOrange : Brushes.Gray;
-      if (targetType == typeof(bool))         /**/ return rv;
-      return targetType == typeof(FontWeight) ? rv ? FontWeights.Bold : FontWeights.Normal : null;
+        var dt = (byte)(255 / (1 + 0.03 * (DateTime.Now - time).TotalDays));
+
+        if (targetType == typeof(Brush)) return isToday ? Brushes.Magenta : new SolidColorBrush(Color.FromRgb(dt, 160, (byte)(255 - dt)));
+
+        if (targetType == typeof(bool))         /**/ return isToday;
+      }
+
+      return targetType == typeof(FontWeight) ? FontWeights.Bold : null;
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
     public override object ProvideValue(IServiceProvider serviceProvider) => this;
