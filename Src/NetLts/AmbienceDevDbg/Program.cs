@@ -33,7 +33,7 @@ async Task WaveAsync()
       40, 600, 
       50, 700, 
       60, 500, 
-      40], [8, 4]);
+      40], [8, 8]);
     Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick Escape to exit"); Console.ResetColor();
   } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 }
