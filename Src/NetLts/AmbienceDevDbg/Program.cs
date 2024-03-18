@@ -1,4 +1,4 @@
-﻿await SpeechSynthTest.TestTTS();
+﻿// await SpeechSynthTest.TestTTS();
 
 var _bpr = new Bpr();
 
@@ -6,19 +6,37 @@ var _bpr = new Bpr();
 //_bpr.AppStartAsync().Wait();
 //_bpr.AppFinishAsync().Wait();
 
+//await _bpr.WaveAsync3k8k4();
+//await _bpr.WaveAsync7k5k1();
+
+await WaveAsync();
+
 if (!Debugger.IsAttached)
 {
-  Console.ForegroundColor = ConsoleColor.Red;
-  Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");
+  Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");
 }
 else
 {
+  Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick Escape to exit");
   await NuHUh();
   await UhHuh();
-  //await BeepTest();
-  //await OneMinUp(_bpr); // works fine ...but not while debugging.
+  await BeepTest();
+  await OneMinUp(_bpr); // works fine ...but not while debugging.
 }
 
+async Task WaveAsync()
+{
+  do
+  {
+    await _bpr.Wave2Async([
+      30, 500,
+      40, 600, 
+      50, 700, 
+      60, 500, 
+      40], [8, 4]);
+    Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick Escape to exit"); Console.ResetColor();
+  } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+}
 async Task UhHuh()
 {
   do

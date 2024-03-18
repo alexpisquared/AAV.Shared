@@ -40,9 +40,33 @@ public partial class Bpr : IBpr
   public async Task WaveAsync4k7k2() => await WaveAsync(4000, 7000, 2);
   public async Task WaveAsync3k8k4() => await WaveAsync(5000, 7000, 4); // quick  ~200ms
   public async Task WaveAsync7k5k1() => await WaveAsync(7000, 5000, 1); // longer ~400ms
+  public async Task Wave2Async(int[] freqs, int[] stepsHz)
+  {
+    List<int[]> vs = [];
+
+    for (var i = 0; i < freqs.Length - 1; i++)
+    {
+      var fromHz = freqs[i + 0];
+      var tillHz = freqs[i + 1];
+      var stepHz = stepsHz[i % stepsHz.Length];
+
+      if (fromHz < tillHz)
+        for (var hz = fromHz; hz < tillHz; hz += stepHz) { vs.Add(FixDuration(hz, 1)); } //   /
+      else
+        for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
+
+      Console.ForegroundColor = ConsoleColor.DarkCyan;
+      Console.WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}       Hz: {fromHz,6} ->{tillHz,6} = {Math.Abs(fromHz - tillHz),6} /{stepHz,3} Hz step   ==>{vs.Count,5} steps. ");
+      Console.ResetColor();
+    }
+
+    //var started = Stopwatch.GetTimestamp();
+    await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
+    //Trace_(fromHz, tillHz, stepHz, vs, started);
+  }
   public async Task WaveAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
   {
-    List<int[]> vs = new();
+    List<int[]> vs = [];
 
     if (fromHz < tillHz) //   /\
     {
@@ -64,7 +88,7 @@ public partial class Bpr : IBpr
 
   public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue) // 1sec
   {
-    List<int[]> vs = new();
+    List<int[]> vs = [];
 
     if (fromHz < tillHz) //   /\
     {
@@ -132,13 +156,13 @@ public partial class Bpr : IBpr
   }
   public static int[] FixDuration(int hz, int mks) // making sure whole wavelengths are sent to play.
   {
-    var preciseTimesWavePlayed = mks * .000001 * hz;
+    var preciseTimesWavePlayed = mks * .000_001 * hz;
     var roundedTimesWavePlayed = Math.Round(preciseTimesWavePlayed);
 
     if (roundedTimesWavePlayed <= 0) // make sure at least one wave is played.
       roundedTimesWavePlayed = 1;
 
-    return new int[] { hz, (int)(1000_000 * roundedTimesWavePlayed / hz) };
+    return [hz, (int)(1_000_000 * roundedTimesWavePlayed / hz)];
   }
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
   static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}            Bpr.Wave()   Hz: {fromHz,4} -> {tillHz,4} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
