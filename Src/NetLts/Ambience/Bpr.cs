@@ -56,13 +56,12 @@ public partial class Bpr : IBpr
         for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
 
       Console.ForegroundColor = ConsoleColor.DarkCyan;
-      Console.WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}       Hz: {fromHz,6} ->{tillHz,6} = {Math.Abs(fromHz - tillHz),6} /{stepHz,3} Hz step   ==>{vs.Count,5} steps. ");
-      Console.ResetColor();
+      Console.WriteLine($"{DateTime.Now:HH:mm:ss.fff}       Hz: {fromHz,6} ->{tillHz,6} = {Math.Abs(fromHz - tillHz),6} /{stepHz,3} Hz step   ==>{vs.Count,5} steps. ");
     }
 
-    //var started = Stopwatch.GetTimestamp();
+    var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
-    //Trace_(fromHz, tillHz, stepHz, vs, started);
+    Console.WriteLine($"                                                        {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec"); Console.ResetColor();
   }
   public async Task WaveAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
   {

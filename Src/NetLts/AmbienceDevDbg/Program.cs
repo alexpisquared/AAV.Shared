@@ -29,11 +29,7 @@ async Task WaveAsync()
   do
   {
     await _bpr.Wave2Async([
-      30, 500,
-      40, 600, 
-      50, 700, 
-      60, 500, 
-      40], [8, 8]);
+      1000, 2020, 1500, 2500, 1500, 3500, 2500, 4500, 1033, 50], [8, 1, 8, 3, 8, 5, 12, 7, 5]);
     Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick Escape to exit"); Console.ResetColor();
   } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 }
