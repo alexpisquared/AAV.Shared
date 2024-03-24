@@ -8,6 +8,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
   readonly string _pathToCache, _fallbackVoice;
   readonly ILogger? _lgr;
   readonly bool _useCached;
+  readonly Bpr _bpr = new();
   readonly SpeechSynthesizer _synthesizer;
   Old.SpeechSynthesizer? speechSynth0;
   bool _disposedValue;
@@ -93,7 +94,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     else
     {
       _lgr?.Log(LogLevel.Warning, $"Wav-file length is {len}. Check the key. ");
-      await new Bpr().NoAsync();
+      await _bpr.NoAsync();
       File.Delete(temp);
       return false;
     }
