@@ -82,7 +82,7 @@ public partial class Bpr : IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
-    Trace_(fromHz, tillHz, stepHz, vs, started);
+    //tmi: Trace_(fromHz, tillHz, stepHz, vs, started);
   }
 
   public async Task GradientAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4, int mks = 1, ushort vol = ushort.MaxValue) // 1sec
@@ -100,7 +100,7 @@ public partial class Bpr : IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(HzMks: vs.ToArray(), volume: vol, isAsync: false).ConfigureAwait(false);
-    Trace_(fromHz, tillHz, stepHz, vs, started);
+    //tmi: Trace_(fromHz, tillHz, stepHz, vs, started);
   }
   public async Task WakeAudio() => await BeepAsync(1, .1);
   public static async Task DevDbg() //  public App()  {    AmbienceLib.Bpr.DevDbg(); // ...

@@ -87,8 +87,7 @@ public static partial class Tracer // .NET Core 3.*
   {
     try
     {
-      if (DevOps.IsDbg)
-        return StandardLib.Helpers.OneDrive.Folder(@"C:\temp\logs");
+      //if (DevOps.IsDbg)        return StandardLib.Helpers.OneDrive.Folder(@"Public\Logs");
 
       if (!isApp4wk && Environment.MachineName == "RAZER1") { } else { }
 
