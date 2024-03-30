@@ -1,4 +1,8 @@
-﻿// await SpeechSynthTest.TestTTS();
+﻿
+await new SpeechSynthTest().TestPaidVoices();
+//await new SpeechSynthTest().TestMeasureTimedCoeficientForSpeakFreeAsync();
+
+return;
 
 var _bpr = new Bpr();
 
@@ -33,6 +37,7 @@ async Task WaveAsync()
     Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick Escape to exit"); Console.ResetColor();
   } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 }
+
 async Task UhHuh()
 {
   do
@@ -58,6 +63,7 @@ static async Task OneMinUp(Bpr b)
 }
 
 static Task Play(Bpr b) { try { Console.ForegroundColor = ConsoleColor.Green; Console.Write($"  started Audio  "); return b.GradientAsync(52, 9_000, 85, 30_000); } finally { Console.ResetColor(); } }
+
 static Task Wait() { try { Console.ForegroundColor = ConsoleColor.DarkYellow; Console.Write($"  started Delay  "); return Task.Delay(TimeSpan.FromSeconds(5)); } finally { Console.ResetColor(); } }
 
 async Task BeepTest()

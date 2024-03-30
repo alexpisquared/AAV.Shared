@@ -144,7 +144,7 @@ public class SpeechSynth : IDisposable, ISpeechSynth
     GC.SuppressFinalize(this);
   }
 
-  public async Task SpeakFreeAsync0(string msg)
+  public async Task TestMeasureTimedCoeficientForSpeakFreeAsync(string msg)
   {
     _ = Stopwatch.StartNew();
 

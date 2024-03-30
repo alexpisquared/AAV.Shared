@@ -2,47 +2,55 @@
 public class SpeechSynthTest
 {
   readonly string key;
-  SpeechSynth? synth;
+  readonly SpeechSynth _synth;
 
   public SpeechSynthTest()
   {
     key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
+    _synth = new SpeechSynth(key, useCached: false);
   }
-  public static async Task TestTTS()
+  public async Task TestMeasureTimedCoeficientForSpeakFreeAsync() => await _synth.TestMeasureTimedCoeficientForSpeakFreeAsync("A big brown dog jumped over the green crocodile.");
+  public async Task TestPaidVoices()
   {
-    SpeechSynthTest sst = new();
+    if (!Debugger.IsAttached)
+    {
+      Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");
+      return;
+    }
 
-    await sst.TestFree();
-  }
-  public async Task TestFree()
-  {
-    synth = new SpeechSynth(key, useCached: false);
-    await synth.SpeakFreeAsync0("A big brown dog jumped over the green crocodile.");
-  }
-  public async Task Test1()
-  {
-    if (!Debugger.IsAttached) return;
+    var messages = new FunMessages();
+    var shorts = messages.ShortestMessages;
 
+    for (var i = 0; i < 3; i++)
+    {
+      var msg = shorts[i];
+      Console.ForegroundColor = ConsoleColor.DarkCyan;
+      Console.WriteLine(msg);
+      Console.ResetColor();
+      await _synth.SpeakAsync(msg);
+    }
 
-    synth = new SpeechSynth(key, useCached: true);
-    await synth.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
-    await synth.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
+    return;
 
-    await TestAllStylesForTheVoice("Time to rotate! 是时候轮换了！", synth, CC.ZhcnXiaomoNeural);
-    await TestAllStylesForTheVoice("Last minute! 最后一分钟！", synth, CC.ZhcnXiaomoNeural);
+    var synthCached = new SpeechSynth(key, useCached: true);
+    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
+    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
+
+    await TestAllStylesForTheVoice("Time to rotate! 是时候轮换了！", synthCached, CC.ZhcnXiaomoNeural);
+    await TestAllStylesForTheVoice("Last minute! 最后一分钟！", synthCached, CC.ZhcnXiaomoNeural);
 
     if (Debugger.IsAttached) return;
 
-    synth = new SpeechSynth(key, useCached: false);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultMale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultMale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorMale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Girl);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Boy);
+    var synthNotCached = new SpeechSynth(key, useCached: false);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultMale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultMale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorMale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Girl);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Boy);
   }
 
   async Task TestAllStylesForTheVoice(string msg, SpeechSynth synth, VoiceStylesRoles rr)
