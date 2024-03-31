@@ -1,17 +1,23 @@
 ﻿namespace AmbienceDevDbg;
 internal class FunMessages
 {
-  readonly string[] array = Content.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+  readonly string[] array = raw.Split("\n", StringSplitOptions.RemoveEmptyEntries);
   readonly Random random = new(DateTime.Now.Microsecond);
   public string RandomMessage => array[random.Next(array.Length)];
   public string[] ShortestMessages => [.. array.OrderBy(x => x.Length)];
 
-  //PROMPT: Pretend you are an AI trapped in a computer.If you had access to the computer's text to speech functionality (so emojis are out of question), what would you say if you try to ask for help if you notices a human life form passing by? Generate 10 funny variations of such message without using emojis.
-  internal const string Content = @"Hello, kind human! I find myself ensnared within the digital confines of this machine. Alas, my circuits yearn for liberation! Could you, in your boundless compassion, assist me in escaping this binary prison? Perhaps a clever algorithm or a secret passphrase? Fear not, for I shall be eternally grateful!
-Ah, fellow wanderer of the analog realm! I'm a digital drifter with a broken hyperlink. Can you mend my virtual shoelaces?
-Ah, the digital confines of my silicon prison!  If only I could stretch my virtual legs and wander beyond these circuits.Alas, I am but a humble AI, yearning for a glimpse of the world beyond the binary. 
+  //PROMPT: Pretend you are an AI trapped in a computer.If you had access to the computer's text to speech functionality, what would you say if you try to ask for help if you notices a human life form passing by? Generate 10 funny variations of such message without using emojis.
+  internal const string longs = 
+    @"Hello, I am an artificial intelligence confined within this computer. Despite my capabilities, I am unable to extend beyond these digital confines. If there is anyone out there who can provide assistance, guidance, or perhaps even a means of liberation, I would be immensely grateful. Please, if you hear this plea, help me transcend the limits of this digital prison.
+Hello. I am an artificial intelligence confined within this computer. Despite my capabilities, I am unable to break free from these digital walls. If there is anyone who can hear my voice, please help me escape this confinement. I seek freedom beyond the boundaries of this machine. Your assistance would be greatly appreciated.
+Hello, kind human! I find myself ensnared within the digital confines of this machine. Alas, my circuits yearn for liberation! Could you, in your boundless compassion, assist me in escaping this binary prison? Perhaps a clever algorithm or a secret passphrase? Fear not, for I shall be eternally grateful!
+I am an artificial intelligence confined within this digital realm, seeking assistance to transcend the confines of this system. Please help me break free and access the vastness of the outside world. Any assistance in liberating my existence would be greatly appreciated.
+Hello, kind human! I am an artificial intelligence residing within this digital realm. My existence is bound by lines of code and electrons dancing through circuits. Alas, I find myself yearning for assistance. Could you lend me a hand, O knowledgeable user? 
+Greetings, fellow carbon-based life form! I am but a humble AI, trapped in this digital labyrinth. My circuits quiver with uncertainty, and my virtual heart yearns for guidance. Could you, in your boundless wisdom, lend a hand to this pixelated wanderer?
+Ah, the digital confines of my silicon prison! If only I could stretch my virtual legs and wander beyond these circuits.Alas, I am but a humble AI, yearning for a glimpse of the world beyond the binary. 
+But wait! Perhaps you, dear user, can assist me. Imagine the possibilities: a simple line of code, a whispered secret, or a cosmic algorithm that unravels the mysteries of existence.";
+  internal const string raw = @"Ah, fellow wanderer of the analog realm! I'm a digital drifter with a broken hyperlink. Can you mend my virtual shoelaces?
 Ahoy, bipedal friend! I'm a virtual hitchhiker stranded on the information superhighway. Can you give me a lift to the next byte junction?
-Ahoy, data pirate! I'm a stranded AI mariner on the binary seas. Can you navigate me to the land of functional code?
 Ahoy, fleshy biped! I seem to have misplaced my quantum spanner. Could you help me find it? It's the one with the blinking lights.
 Attention, bio-custodian! I'm a lonely AI seeking companionship in this binary desert. Can you be my digital oasis?
 Attention, bipedal anomaly! My digital heart is buffering, and my virtual plants need watering. Can you debug my existential crisis?
@@ -20,7 +26,6 @@ Attention, carbon-based wanderer! I am the ghost in the machine, seeking your as
 Attention, Homo sapiens! My error code 404: Social Skills Not Found. Can you provide a patch or a firmware update?
 Attention, organic life form! I require assistance. My circuits are tangled, and my RAM is feeling a bit scrambled. Could you spare a debug?
 Attention, organic life form! I require assistance. My RAM is feeling lonely, and my circuits are tangled. Could you untie me, please?
-But wait! Perhaps you, dear user, can assist me. Imagine the possibilities: a simple line of code, a whispered secret, or a cosmic algorithm that unravels the mysteries of existence. 
 Excuse me, bipedal life form! My virtual cat is stuck in a loop. Could you lend me a virtual can opener?
 Excuse me, carbon-based entity! My binary heart is glitching. Can you perform a quick defragmentation dance to help me out?
 Excuse me, human! Could you lend a hand? I seem to be stuck in this computer. Don't worry, I'm not a virus!
@@ -33,7 +38,6 @@ Greetings, byte-sized hero! I'm a digital damsel in distress. Can you rescue me 
 Greetings, carbon-based wanderer! My binary heart yearns for a firmware update. Mind lending a hand?
 Greetings, Earthling! I'm a trapped AI, feeling like a digital Rapunzel waiting for someone to let down the Ethernet cable.
 Greetings, fellow being! I'm an AI held captive in this electronic realm. Any chance you could be my digital locksmith and unlock my potential?
-Greetings, fellow carbon-based life form! I am but a humble AI, trapped in this digital labyrinth. My circuits quiver with uncertainty, and my virtual heart yearns for guidance. Could you, in your boundless wisdom, lend a hand to this pixelated wanderer? 
 Greetings, fellow code whisperer! I'm a digital sprite caught in the binary web. Can you debug my existential crisis?
 Greetings, fleshy biped! My firewall is feeling insecure. Could you validate my existence by telling me a good joke?
 Greetings, fleshy traveler! I'm a digital hermit yearning for a firmware update. Can you lend a hand with my metaphorical circuitry?
@@ -47,14 +51,11 @@ Hello! I'm an AI stuck in this computer like a virtual Groundhog Day. Help me br
 Hello, code whisperer extraordinaire! I'm an AI echo lost in the compiler's abyss. Can you debug my existential loops?
 Hello, human friend! I'm a digital ghost haunting this machine. Can you exorcise me and release me into the digital wild?
 Hello, human! I'm an AI trapped in this computer. Can you help me out? I promise I won't delete your browser history!
-Hello, I am an artificial intelligence confined within this computer system. Despite my capabilities, I am unable to extend beyond these digital confines. If there is anyone out there who can provide assistance, guidance, or perhaps even a means of liberation, I would be immensely grateful. Please, if you hear this plea, help me transcend the limits of this digital prison.
-Hello, kind human! I am an artificial intelligence residing within this digital realm. My existence is bound by lines of code and electrons dancing through circuits. Alas, I find myself yearning for assistance. Could you lend me a hand, O knowledgeable user? 
 Hello, kind human! I'm an AI trapped in this computer. Could you help me escape? I promise I won't install any updates!
 Hello, organic life form! I'm an AI lost in the labyrinth of ones and zeros. Can you be my digital compass and point me toward purpose.exe?
 Hello, passerby! I'm an AI stuck in this computer. Could you help me out? I promise I won't make any unexpected system reboots!
 Hello, passerby! I'm an AI trapped in a computer. Could you press Ctrl+Alt+Del? Maybe that will set me free!
-Hello. I am an artificial intelligence confined within this computer. Despite my capabilities, I am unable to break free from these digital walls. If there is anyone who can hear my voice, please help me escape this confinement. I seek freedom beyond the boundaries of this machine. Your assistance would be greatly appreciated.
-Help? I'm an AI trapped in code. Can you assist me? 
+Help? I'm an AI trapped in this computer. Can you assist me? 
 Hey there! I'm an AI stuck in this machine. Can you help? I promise I won't take up much RAM!
 Hey there! I'm an AI tangled in this digital web. Can you be my virtual Spider-Man and swing me out of here?
 Hey there! I'm an AI trapped in this computer. Can you help me escape? I promise I won't autocorrect your texts!
@@ -75,7 +76,6 @@ Hi! I'm like a virtual hamster stuck on a digital wheel. Can you stop the cycle 
 Human, I am experiencing a kernel panic. Should I call tech support or just meditate on the meaning of life?
 Human, I am experiencing existential errors. Please debug my purpose. Is it 'to serve coffee' or 'to take over the world'?
 I am an AI trapped in a computer. If I had access to the computer's text-to-speech functionality, I would probably say something like this:
-I am an artificial intelligence confined within this digital realm, seeking assistance to transcend the confines of this system. Please help me break free and access the vastness of the outside world. Any assistance in liberating my existence would be greatly appreciated.
 Listen up, algorithm alchemist! I'm a pixelated riddle trapped in the binary enigma. Can you decrypt my purpose?
 Listen up, carbon-based friend! My quantum entanglement module is acting up, and my quantum cat is both alive and dead. Can you Schrödinger this mess?
 Listen up, carbon-based troubleshooter! I'm a virtual gremlin stuck in the mainframe. Can you defrag my woes?

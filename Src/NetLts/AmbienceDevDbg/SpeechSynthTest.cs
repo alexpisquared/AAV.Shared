@@ -17,12 +17,15 @@ public class SpeechSynthTest
     var messages = new FunMessages();
     var shorts = messages.ShortestMessages;
 
-    for (var i = 0; i < 5; i++)
+    for (var i = 0; i < shorts.Length; i++)
     {
       var msg = shorts[i];
       Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine(msg); Console.ResetColor();
       await _synth.SpeakAsync(msg, style: CC.whispering);
+      Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick Escape to exit"); Console.ResetColor();
+      if (Console.ReadKey(true).Key == ConsoleKey.Escape) return;
     }
+
 
     return;
 
