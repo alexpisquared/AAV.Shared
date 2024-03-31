@@ -37,16 +37,18 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     try { if (Directory.Exists(pathToCache) == false) _ = Directory.CreateDirectory(pathToCache); } catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); }
   }
 
-  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style));
+  public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = CC.YoungAdultFemale) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style, role));
   public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = CC.YoungAdultFemale)
   {
-    if (voice == "") voice = _fallbackVoice;
+    var voicE = voice == "" ? _fallbackVoice : voice;
 
-    var file = @$"{_pathToCache}{voice}~{speakingRate:N2}~{volumePercent:0#}~{style}~{RemoveIllegalCharacters(msg)}.wav";
-    var lang = voice.Length > 5 ? voice[..5] : "en-US";
+    var file = role == CC.YoungAdultFemale ?
+      $"{_pathToCache}{voicE}~{speakingRate:N2}~{volumePercent:0#}~{style}~{RemoveIllegalCharacters(msg)}.wav" :
+      $"{_pathToCache}{voicE}~{speakingRate:N2}~{volumePercent:0#}~{style}~{role}~{RemoveIllegalCharacters(msg)}.wav";
+    var lang = voicE.Length > 5 ? voicE[..5] : "en-US";
     var ssml = style == "" ?
-      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg}</prosody></voice></speak>" :
-      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voice}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg}</mstts:express-as></prosody></voice></speak>";
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voicE}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg}</prosody></voice></speak>" :
+      $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voicE}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg}</mstts:express-as></prosody></voice></speak>";
 
     await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg);
   }
@@ -77,7 +79,7 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     {
       var cancellationDetails = SpeechSynthesisCancellationDetails.FromResult(result);
       if (cancellationDetails.Reason == CancellationReason.Error)
-        _lgr?.Log(LogLevel.Warning, $"tts  {result.Reason}  {cancellationDetails.ErrorCode}  {cancellationDetails.ErrorDetails.Replace("\n", "  ")}  :CreateWavFile({file})");
+        _lgr?.Log(LogLevel.Warning, $"TTS failed:  Reason:{result.Reason}  ErrorCode:{cancellationDetails.ErrorCode}  Details:{cancellationDetails.ErrorDetails.Replace("\n", "  ")}  :CreateWavFile({file})");
     }
 
     using var stream = AudioDataStream.FromResult(result);

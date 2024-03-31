@@ -1,5 +1,5 @@
 ﻿
-await new SpeechSynthTest().TestPaidVoices();
+await new SpeechSynthTest().TestVoice();
 //await new SpeechSynthTest().TestMeasureTimedCoeficientForSpeakFreeAsync();
 
 return;

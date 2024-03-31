@@ -4,14 +4,21 @@ public partial class SpeechSynth
   public class CC
   {
     public static VoiceStylesRoles
-      UkuaPolinaNeural = new("uk-UA-PolinaNeural", [], []),
-      UkuaOstapNeural = new("uk-UA-OstapNeural", [], []),
-      EnusAriaNeural = new("en-US-AriaNeural", [cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful], []),
-      EngbRyanNeural = new("en-GB-RyanNeural", [cheerful, chat], []),
-      EngbSoniaNeural = new("en-GB-SoniaNeural", [cheerful, sad], []),
-      ZhcnXiaomoNeural = new("zh-CN-XiaomoNeural", [cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious], [YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy]);
+      UkuaPolinaNeural = new(Polina, [], []),
+      UkuaOstapNeural = new(Ostap, [], []),
+      EnusAriaNeural = new(Aria, [cheerful, chat, customerservice, narration_professional, newscast_casual, newscast_formal, empathetic, angry, sad, excited, friendly, terrified, shouting, unfriendly, whispering, hopeful], []),
+      EngbRyanNeural = new(Ryan, [cheerful, chat], []),
+      EngbSoniaNeural = new(Sonia, [cheerful, sad], []),
+      ZhcnXiaomoNeural = new(Xiaomo, [cheerful, embarrassed, calm, fearful, disgruntled, serious, angry, sad, depressed, affectionate, gentle, envious], [YoungAdultFemale, YoungAdultMale, OlderAdultFemale, OlderAdultMale, SeniorFemale, SeniorMale, Girl, Boy]);
 
     public const string
+      Polina = "uk-UA-PolinaNeural",
+      Ostap = "uk-UA-OstapNeural",
+      Aria = "en-US-AriaNeural",
+      Ryan = "en-GB-RyanNeural",
+      Sonia = "en-GB-SoniaNeural",
+      Xiaomo = "zh-CN-XiaomoNeural",
+
       affectionate = "affectionate",
       angry = "angry",
       calm = "calm",

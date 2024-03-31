@@ -1,4 +1,6 @@
-﻿namespace AmbienceDevDbg;
+﻿using System.Windows.Interop;
+
+namespace AmbienceDevDbg;
 public class SpeechSynthTest
 {
   readonly string key;
@@ -7,14 +9,23 @@ public class SpeechSynthTest
   public SpeechSynthTest()
   {
     key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
-    _synth = new SpeechSynth(key, useCached: true, voice: "en-US-AriaNeural");
+    _synth = new SpeechSynth(key, useCached: true, voice: CC.Xiaomo);
   }
   public async Task TestMeasureTimedCoeficientForSpeakFreeAsync() => await _synth.TestMeasureTimedCoeficientForSpeakFreeAsync("A big brown dog jumped over the green crocodile.");
-  public async Task TestPaidVoices()
+  public async Task TestVoice()
   {
     //if (!Debugger.IsAttached)    {      Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");      return;    }
 
     var messages = new FunMessages();
+    var shorts = messages.ShortestMessages;
+
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.YoungAdultMale);  // does not sound like a male voice
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.OlderAdultMale);  // does not sound like a male voice
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Boy);             // does not sound like a male voice
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.sad, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.affectionate, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Aria, style: CC.whispering);
 
     do
     {
@@ -24,7 +35,6 @@ public class SpeechSynthTest
       Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick here ... then Escape to exit"); Console.ResetColor();
     } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 
-    var shorts = messages.ShortestMessages;
     for (var i = 0; i < shorts.Length; i++)
     {
       var msg = shorts[i];
@@ -34,14 +44,16 @@ public class SpeechSynthTest
       if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
     }
 
-    return;
-
+  }
+  public async Task TestPaidVoices_Old()
+  {
     var synthCached = new SpeechSynth(key, useCached: true);
-    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
-    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
 
     await TestAllStylesForTheVoice("Time to rotate! 是时候轮换了！", synthCached, CC.ZhcnXiaomoNeural);
     await TestAllStylesForTheVoice("Last minute! 最后一分钟！", synthCached, CC.ZhcnXiaomoNeural);
+
+    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
+    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
 
     if (Debugger.IsAttached) return;
 
