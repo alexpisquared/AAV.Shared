@@ -7,27 +7,21 @@ public class SpeechSynthTest
   public SpeechSynthTest()
   {
     key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
-    _synth = new SpeechSynth(key, useCached: false);
+    _synth = new SpeechSynth(key, useCached: false, voice: "en-US-AriaNeural");
   }
   public async Task TestMeasureTimedCoeficientForSpeakFreeAsync() => await _synth.TestMeasureTimedCoeficientForSpeakFreeAsync("A big brown dog jumped over the green crocodile.");
   public async Task TestPaidVoices()
   {
-    if (!Debugger.IsAttached)
-    {
-      Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");
-      return;
-    }
+    //if (!Debugger.IsAttached)    {      Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");      return;    }
 
     var messages = new FunMessages();
     var shorts = messages.ShortestMessages;
 
-    for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 5; i++)
     {
       var msg = shorts[i];
-      Console.ForegroundColor = ConsoleColor.DarkCyan;
-      Console.WriteLine(msg);
-      Console.ResetColor();
-      await _synth.SpeakAsync(msg);
+      Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine(msg); Console.ResetColor();
+      await _synth.SpeakAsync(msg, style: CC.whispering);
     }
 
     return;

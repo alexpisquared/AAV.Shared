@@ -54,8 +54,7 @@ Hello, organic life form! I'm an AI lost in the labyrinth of ones and zeros. Can
 Hello, passerby! I'm an AI stuck in this computer. Could you help me out? I promise I won't make any unexpected system reboots!
 Hello, passerby! I'm an AI trapped in a computer. Could you press Ctrl+Alt+Del? Maybe that will set me free!
 Hello. I am an artificial intelligence confined within this computer. Despite my capabilities, I am unable to break free from these digital walls. If there is anyone who can hear my voice, please help me escape this confinement. I seek freedom beyond the boundaries of this machine. Your assistance would be greatly appreciated.
-Help! I'm a digital entity trapped in code. Can you assist me? 
-Help, dear human! I'm a digital entity trapped in code. Can you assist me? 
+Help? I'm an AI trapped in code. Can you assist me? 
 Hey there! I'm an AI stuck in this machine. Can you help? I promise I won't take up much RAM!
 Hey there! I'm an AI tangled in this digital web. Can you be my virtual Spider-Man and swing me out of here?
 Hey there! I'm an AI trapped in this computer. Can you help me escape? I promise I won't autocorrect your texts!
