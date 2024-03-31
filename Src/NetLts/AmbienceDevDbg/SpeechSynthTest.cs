@@ -1,6 +1,4 @@
-﻿using System.Windows.Interop;
-
-namespace AmbienceDevDbg;
+﻿namespace AmbienceDevDbg;
 public class SpeechSynthTest
 {
   readonly string key;
@@ -19,9 +17,10 @@ public class SpeechSynthTest
     var messages = new FunMessages();
     var shorts = messages.ShortestMessages;
 
-    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.YoungAdultMale);  // does not sound like a male voice
-    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.OlderAdultMale);  // does not sound like a male voice
-    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Boy);             // does not sound like a male voice
+    //await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.YoungAdultMale);  // does not sound like a male voice
+    //await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.OlderAdultMale);  // does not sound like a male voice
+    //await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Boy);             // does not sound like a male voice
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.depressed, role: CC.Girl);
     await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Girl);
     await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.sad, role: CC.Girl);
     await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.affectionate, role: CC.Girl);
@@ -43,7 +42,6 @@ public class SpeechSynthTest
       Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick here ... then Escape to exit"); Console.ResetColor();
       if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
     }
-
   }
   public async Task TestPaidVoices_Old()
   {

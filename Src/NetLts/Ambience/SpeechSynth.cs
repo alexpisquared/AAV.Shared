@@ -1,8 +1,9 @@
 ﻿namespace AmbienceLib;
 public partial class SpeechSynth : IDisposable, ISpeechSynth
 {
-  const string _rgn = "canadacentral", _vName = "en-GB-SoniaNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\", _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\",
-    _voice = "Microsoft Zira Desktop";
+  const string _rgn = "CanadaCentral", _vName = "en-GB-SoniaNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _voice = "Microsoft Zira Desktop",
+    _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\",
+    _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 33;
   const int _rateMinusPlus10 = 3;
   readonly string _pathToCache, _fallbackVoice;
@@ -12,6 +13,7 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
   readonly SpeechSynthesizer _synthesizer;
   Old.SpeechSynthesizer? speechSynth0;
   bool _disposedValue;
+  public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
 
   public Old.SpeechSynthesizer Synthesizer => speechSynth0 ??= new Old.SpeechSynthesizer();
 
@@ -37,6 +39,9 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     try { if (Directory.Exists(pathToCache) == false) _ = Directory.CreateDirectory(pathToCache); } catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); }
   }
 
+  public void SpeakFree(string msg, int speakingRate = 0, int volumePercent = 100) => _ = SpeakFreeTask(msg, speakingRate, volumePercent, _voice, false);
+  public void SpeakFreeFAF(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent, string voice = _voice) => _ = SpeakFreeTask(msg, speakingRate, volumePercent, voice, false);
+  public async Task SpeakFreeAsync(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent, string voice = _voice) => await SpeakFreeTask(msg, speakingRate, volumePercent, voice, true);
   public void    /**/ SpeakFAF(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = CC.YoungAdultFemale) => _ = Task.Run(() => SpeakAsync(msg, speakingRate, volumePercent, voice, style, role));
   public async Task SpeakAsync(string msg, double speakingRate = _speechRate, double volumePercent = _volumePercent, string voice = "", string style = _vStyle, string role = CC.YoungAdultFemale)
   {
@@ -170,21 +175,15 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     await Task.Delay(msg.Length * 50);
     Console.WriteLine($"Async {sw.ElapsedMilliseconds,12} ms   {Synthesizer.Rate,4}");
   }
-  public async Task SpeakFreeAsync(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent, string voice = _voice)
-  {
-    Synthesizer.Rate = speakingRate;
-    Synthesizer.Volume = volumePercent;
-    Synthesizer.SelectVoice(voice);
-    _ = Synthesizer.SpeakAsync(msg); // not awaitable and not blocking: essentially - FAF.
-    await Task.Delay((int)(Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length * 3659.8 / 48.0));
-  }
-  public void SpeakFreeFAF(string msg, int speakingRate = _rateMinusPlus10, int volumePercent = (int)_volumePercent, string voice = _voice)
+  async Task SpeakFreeTask(string msg, int speakingRate, int volumePercent, string voice, bool isAsync)
   {
     var prev = Synthesizer.Volume;
     Synthesizer.Rate = speakingRate;
     Synthesizer.Volume = volumePercent;
     Synthesizer.SelectVoice(voice);
-    _ = Synthesizer.SpeakAsync(msg); // not awaitable and not blocking: essentially - FAF.
+    _ = Synthesizer.SpeakAsync(msg); // not await-able and not blocking: essentially - FAF.
+    if (isAsync)
+      await Task.Delay((int)(Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length * 3659.8 / 48.0));
     Synthesizer.Volume = prev;
   }
 
@@ -200,13 +199,7 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     }
   }.Start();
   public void SpeakAsyncCancelAll() { }
-
-  public void SpeakFree(string msg, int speakingRate = 0, int volumePercent = 100) => throw new NotImplementedException();
-
-  public record VoiceStylesRoles(string Voice, string[] Styles, string[] Roles);
-}
-
-/*
+}/*
 Quickstart 
   https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windows%2Cterminal&pivots=programming-language-csharp
   https://learn.microsoft.com/en-us/azure/cognitive-services/cognitive-services-apis-create-account?tabs=multiservice%2Canomaly-detector%2Clanguage-service%2Ccomputer-vision%2Cwindows#get-the-keys-for-your-resource
