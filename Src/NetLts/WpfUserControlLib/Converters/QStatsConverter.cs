@@ -14,14 +14,13 @@ public class QStatsConverter : MarkupExtension, IValueConverter
   {
     if (value is double valInt && targetType == typeof(Brush))
     {
-      const int min = 80, max = 126;
-      if (valInt is > min and < max) // corp rate
+      const int min = 700, max = 850, ddd = max - min;
+      return valInt switch
       {
-        var rgb = (byte)((byte)255.0 * (valInt - min) / (max - min));
-        return new SolidColorBrush(Color.FromRgb(rgb, 0 / 1, 256 - 255));
-      }
-      else
-        return value;
+        < min => new SolidColorBrush(Color.FromRgb(0, 0, 128)),
+        > max => new SolidColorBrush(Color.FromRgb(255, 255, 0)),
+        _ => new SolidColorBrush(Color.FromRgb((byte)(255.0 * (valInt - min) / ddd), 0, 0)),
+      };
     }
     else if (value is string valStr)
       switch (valStr)

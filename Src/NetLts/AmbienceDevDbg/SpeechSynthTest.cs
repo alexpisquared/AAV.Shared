@@ -1,38 +1,73 @@
-﻿global using static System.Diagnostics.Trace;
-using System.Diagnostics;
-using AmbienceLib;
-using Microsoft.Extensions.Configuration;
-namespace AmbienceDevDbg;
-public static class SpeechSynthTest
+﻿namespace AmbienceDevDbg;
+public class SpeechSynthTest
 {
-  public static async Task TestTTS()
+  readonly string key;
+  readonly SpeechSynth _synth;
+
+  public SpeechSynthTest()
   {
-    if (!Debugger.IsAttached) return;
+    key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
+    _synth = new SpeechSynth(key, useCached: true, voice: CC.Xiaomo);
+  }
+  public async Task TestMeasureTimedCoeficientForSpeakFreeAsync() => await _synth.TestMeasureTimedCoeficientForSpeakFreeAsync("A big brown dog jumped over the green crocodile.");
+  public async Task TestVoice()
+  {
+    //if (!Debugger.IsAttached)    {      Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine("Only when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\nOnly when  Debugger.IsAttached !!!\n");      return;    }
 
-    var key = new ConfigurationBuilder().AddUserSecrets<Program>().Build()["AppSecrets:MagicSpeech"] ?? "no key"; //tu: adhoc usersecrets for Console app :: program!!!
+    var messages = new FunMessages();
+    var shorts = messages.ShortestMessages;
 
-    var synth = new SpeechSynth(key, useCached: true);
-    await synth.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
-    await synth.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
+    //await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.YoungAdultMale);  // does not sound like a male voice
+    //await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.OlderAdultMale);  // does not sound like a male voice
+    //await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Boy);             // does not sound like a male voice
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.depressed, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.fearful, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.sad, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Xiaomo, style: CC.affectionate, role: CC.Girl);
+    await _synth.SpeakAsync(shorts[0], voice: CC.Aria, style: CC.whispering);
 
-    await TestAllStylesForTheVoice("Time to rotate! 是时候轮换了！", synth, CC.ZhcnXiaomoNeural);
-    await TestAllStylesForTheVoice("Last minute! 最后一分钟！", synth, CC.ZhcnXiaomoNeural);
+    do
+    {
+      var msg = messages.RandomMessage;
+      Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine(msg); Console.ResetColor();
+      await _synth.SpeakAsync(msg, style: CC.whispering);
+      Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick here ... then Escape to exit"); Console.ResetColor();
+    } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+
+    for (var i = 0; i < shorts.Length; i++)
+    {
+      var msg = shorts[i];
+      Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine(msg); Console.ResetColor();
+      await _synth.SpeakAsync(msg, style: CC.whispering);
+      Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick here ... then Escape to exit"); Console.ResetColor();
+      if (Console.ReadKey(true).Key == ConsoleKey.Escape) break;
+    }
+  }
+  public async Task TestPaidVoices_Old()
+  {
+    var synthCached = new SpeechSynth(key, useCached: true);
+
+    await TestAllStylesForTheVoice("Time to rotate! 是时候轮换了！", synthCached, CC.ZhcnXiaomoNeural);
+    await TestAllStylesForTheVoice("Last minute! 最后一分钟！", synthCached, CC.ZhcnXiaomoNeural);
+
+    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.whispering, role: CC.Girl); ;
+    await synthCached.SpeakAsync("Wake Lock released!", voice: "en-US-AriaNeural", style: CC.cheerful, role: CC.Girl); ;
 
     if (Debugger.IsAttached) return;
 
-    synth = new SpeechSynth(key, useCached: false);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultMale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultMale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorFemale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorMale);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Girl);
-    await synth.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Boy);
+    var synthNotCached = new SpeechSynth(key, useCached: false);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.YoungAdultMale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.OlderAdultMale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorFemale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.SeniorMale);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Girl);
+    await synthNotCached.SpeakAsync("Time to rotate! 是时候轮换了！", role: CC.Boy);
   }
 
-  static async Task TestAllStylesForTheVoice(string msg, SpeechSynth synth, VoiceStylesRoles rr)
+  async Task TestAllStylesForTheVoice(string msg, SpeechSynth synth, VoiceStylesRoles rr)
   {
     foreach (var style in rr.Styles)
     {

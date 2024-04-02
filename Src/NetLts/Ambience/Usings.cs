@@ -12,3 +12,4 @@ global using Microsoft.CognitiveServices.Speech;
 global using Microsoft.Extensions.Logging;
 global using StandardContractsLib;
 global using static System.Diagnostics.Trace;
+global using Old = System.Speech.Synthesis;

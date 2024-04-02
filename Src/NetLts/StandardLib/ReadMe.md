@@ -1,14 +1,3 @@
-﻿# Useful information 
-## Useful information 
-### Useful information 
-#### Useful information 
-Useful information  
-Useful information  
-Useful information  
-Useful information  
-Useful information  
+﻿# .NET Standard 2.0 class library. 
 
-Useful information  
-
-Useful information  
-
+Why not 2.1?  <== 2.1 does not compile for .NET4 !!!!!!!!

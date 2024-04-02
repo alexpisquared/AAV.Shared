@@ -48,7 +48,7 @@ namespace AAV.WPF.Base
     {
       _logger = logger;
 
-      Topmost = Debugger.IsAttached;
+      //inconvenient: Topmost = Debugger.IsAttached;
 
 #endif
 

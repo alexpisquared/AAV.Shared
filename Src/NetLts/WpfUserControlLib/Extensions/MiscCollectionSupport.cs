@@ -7,17 +7,16 @@ public static class MiscCollectionSupport
     try
     {
       if (Application.Current.Dispatcher.CheckAccess()) // if on UI thread
-      {
-        trg.Clear();
-        src.ToList().ForEach(trg.Add);
-      }
+        ClearAddRange(trg, src);
       else
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
-        {
-          trg.Clear();
-          src.ToList().ForEach(trg.Add);
-        }));
+        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => ClearAddRange(trg, src)));
     }
     catch (Exception ex) { ex.Log(); throw; }
+  }
+
+  static void ClearAddRange<T>(Collection<T> trg, IEnumerable<T> src)
+  {
+    trg.Clear();
+    src.ToList().ForEach(trg.Add);
   }
 }

@@ -12,8 +12,9 @@
 
   <Style TargetType="{x:Type TextBlock}" >
     <!-- WARNING: tbk affects all derived controls:
-    <Setter Property="Background"           Value="{StaticResource ButnBackgroundBrush}" />-->
+    <Setter Property="Background"           Value="{StaticResource ButnBackgroundBrush}" />
     <Setter Property="Foreground"           Value="{StaticResource InfoForegroundBrush}" />
+    -->
     <Setter Property="VerticalAlignment"    Value="Center" />
     <Setter Property="Margin"               Value="3 0" />
   </Style>
@@ -106,6 +107,7 @@
     <Setter Property="Padding"              Value="6" />
   </Style>
 
+  <!--
   <Style TargetType="{x:Type Menu}"      >
     <Setter Property="Background"           Value="{DynamicResource BackBackgroundBrush}" />
   </Style>
@@ -113,7 +115,7 @@
   <Style TargetType="{x:Type MenuItem}"      >
     <Setter Property="Background"           Value="{DynamicResource BackBackgroundBrush}" />
     <Setter Property="BorderBrush"          Value="{DynamicResource BackBackgroundBrush}" />
-  </Style>
+  </Style>-->
 
   <Style TargetType="{x:Type TabControl}" >
     <Setter Property="Background"           Value="{DynamicResource BackBackgroundBrush}" />

@@ -5,7 +5,7 @@ public class SeriLogHelper
   const string MinLogLevel = "+Info -Verb +Infi";
   public static Microsoft.Extensions.Logging.ILogger CreateLogger<T>(string minLogLevel = MinLogLevel) => InitLoggerFactory__(Assembly.GetCallingAssembly().GetName().Name ?? "NA", minLogLevel).CreateLogger<T>();
 
-  static ILoggerFactory InitLoggerFactory__(string callingAssemblyName, string minLogLevel = MinLogLevel) => InitLoggerFactory(OneDrive.Folder($@"Public\Logs\{callingAssemblyName}.{Environment.MachineName[..3]}.{Environment.UserName[..3]}..log"), minLogLevel);
+  static ILoggerFactory InitLoggerFactory__(string callingAssemblyName, string minLogLevel = MinLogLevel) => InitLoggerFactory(OneDrive.Folder($@"Public\Logs\{callingAssemblyName}.{Environment.MachineName.Substring(0,3)}.{Environment.UserName.Substring(0, 3)}..log"), minLogLevel);
 
   static ILoggerFactory InitLoggerFactory(string logFile, string minLogLevel = MinLogLevel) => LoggerFactory.Create(builder =>
   {
