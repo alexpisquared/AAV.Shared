@@ -1,8 +1,8 @@
-﻿using AAV.Sys.Ext;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Threading;
+using AAV.Sys.Ext;
 
 namespace AAV.WPF.Helpers
 {
