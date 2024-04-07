@@ -13,15 +13,15 @@ public partial class Bpr
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(294, d2), FixDuration(10, d2) };
-  readonly int[][] _Beethoven6thErr = new[] {
-    FixDuration(3920, d1), FixDuration(10, d1),
-    FixDuration(3920, d1), FixDuration(10, d1),
-    FixDuration(3920, d1), FixDuration(10, d1),
-    FixDuration(3110, d2), FixDuration(10, d2),
-    FixDuration(3490, d1), FixDuration(10, d1),
-    FixDuration(3490, d1), FixDuration(10, d1),
-    FixDuration(3490, d1), FixDuration(10, d1),
-    FixDuration(2940, d2), FixDuration(10, d2) };
+  readonly int[][] _Beethoven6thErr = new[] { //April 2024: *2 :quieter for office!!!
+    FixDuration(392*2, d1), FixDuration(10, d1),
+    FixDuration(392*2, d1), FixDuration(10, d1),
+    FixDuration(392*2, d1), FixDuration(10, d1),
+    FixDuration(311*2, d2), FixDuration(10, d2),
+    FixDuration(349*2, d1), FixDuration(10, d1),
+    FixDuration(349*2, d1), FixDuration(10, d1),
+    FixDuration(349*2, d1), FixDuration(10, d1),
+    FixDuration(294*2, d2), FixDuration(10, d2) };
   readonly int[]
      _fd11 = FixDuration(5000, _dMin),
      _fd22 = FixDuration(6000, _dMin * 2),
