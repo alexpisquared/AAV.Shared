@@ -5,6 +5,15 @@ public partial class Bpr
   const int d1 = 100_000, _dMin = 50_000; //below .075 sec nogo on razer1.
   const int d2 = d1 + d1;
   readonly int[][] _Beethoven6thWarn = new[] {
+    FixDuration(392/2, d1), FixDuration(10, d1),
+    FixDuration(392/2, d1), FixDuration(10, d1),
+    FixDuration(392/2, d1), FixDuration(10, d1),
+    FixDuration(311/2, d2), FixDuration(10, d2),
+    FixDuration(349/2, d1), FixDuration(10, d1),
+    FixDuration(349/2, d1), FixDuration(10, d1),
+    FixDuration(349/2, d1), FixDuration(10, d1),
+    FixDuration(294/2, d2), FixDuration(10, d2) };
+  readonly int[][] _Beethoven6thErr = new[] { //April 2024: 3920=>392 :quieter for office!!!
     FixDuration(392, d1), FixDuration(10, d1),
     FixDuration(392, d1), FixDuration(10, d1),
     FixDuration(392, d1), FixDuration(10, d1),
@@ -13,15 +22,6 @@ public partial class Bpr
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(294, d2), FixDuration(10, d2) };
-  readonly int[][] _Beethoven6thErr = new[] { //April 2024: *2 :quieter for office!!!
-    FixDuration(392*2, d1), FixDuration(10, d1),
-    FixDuration(392*2, d1), FixDuration(10, d1),
-    FixDuration(392*2, d1), FixDuration(10, d1),
-    FixDuration(311*2, d2), FixDuration(10, d2),
-    FixDuration(349*2, d1), FixDuration(10, d1),
-    FixDuration(349*2, d1), FixDuration(10, d1),
-    FixDuration(349*2, d1), FixDuration(10, d1),
-    FixDuration(294*2, d2), FixDuration(10, d2) };
   readonly int[]
      _fd11 = FixDuration(5000, _dMin),
      _fd22 = FixDuration(6000, _dMin * 2),
