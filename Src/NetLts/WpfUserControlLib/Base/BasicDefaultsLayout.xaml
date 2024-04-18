@@ -198,6 +198,25 @@
   </Style>
   <Style TargetType="{x:Type Button}"  BasedOn="{StaticResource BtnBase}" />
 
+  <LinearGradientBrush x:Key="BananaButtonBackgroung" EndPoint="0.5,1" StartPoint="0.5,0">
+    <GradientStop Color="#5a0" Offset="0.00"/>
+    <GradientStop Color="#6c0" Offset="0.05"/>
+    <GradientStop Color="#490" Offset="0.22"/>
+    <GradientStop Color="#370" Offset="0.78"/>
+    <GradientStop Color="#240" Offset="1.00"/>
+  </LinearGradientBrush>
+  <Color x:Key="BananaButtonForegroundColor">#f00</Color>
+  <SolidColorBrush x:Key="BananaButtonForeground" Color="{StaticResource BananaButtonForegroundColor}" />
+  <Style TargetType="{x:Type Button}"  x:Key="BananaButton" BasedOn="{StaticResource BtnBase}">
+    <Setter Property="Foreground"           Value="{StaticResource BananaButtonForeground}" />
+    <Setter Property="Background"           Value="{StaticResource BananaButtonBackgroung}" />
+    <Setter Property="Effect">
+      <Setter.Value>
+        <DropShadowEffect ShadowDepth="4" Color="{StaticResource InfoForegroundColor}" BlurRadius="8" Opacity=".5" />
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <Style TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource BtnBase}" />
 
   <Style TargetType="{x:Type RadioButton}" x:Key="RBnBase">
