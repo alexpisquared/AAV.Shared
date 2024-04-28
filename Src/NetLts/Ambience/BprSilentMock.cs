@@ -43,8 +43,8 @@ public class BprSilentMock : IBpr
   public async Task WaveAsync3k8k4() => await Task.Yield();
   public async Task WaveAsync4k7k2() => await Task.Yield();
   public async Task WaveAsync7k5k1() => await Task.Yield();
-  public void AppFinish(ushort vol) => throw new NotImplementedException();
-  public Task AppFinishAsync(ushort vol) => throw new NotImplementedException();
-  public void AppStart(ushort vol) => throw new NotImplementedException();
-  public Task AppStartAsync(ushort vol) => throw new NotImplementedException();
+  public void AppStart(ushort vol) => Console.Beep(3456, 1200);
+  public void AppFinish(ushort vol) => Console.Beep(3456, 1200);
+  public Task AppStartAsync(ushort vol) => throw new NotImplementedException("@888");
+  public Task AppFinishAsync(ushort vol) => throw new NotImplementedException("@888");
 }

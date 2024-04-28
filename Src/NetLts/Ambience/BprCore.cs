@@ -101,6 +101,6 @@ public partial class Bpr
     stream.Close();
   }
 
-  public static void Beep1of2() => throw new NotImplementedException();
-  public static void Beep2of2() => throw new NotImplementedException();
+  public static void Beep1of2() => Console.Beep(3456, 120);
+  public static void Beep2of2() => Console.Beep(3456, 120);
 }
