@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>latest</LangVersion>
 	  <Nullable>enable</Nullable>
     <UserSecretsId>c4aa9078-8bb8-4a36-a986-609bbda91aac</UserSecretsId>
