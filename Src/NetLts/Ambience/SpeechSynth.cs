@@ -100,8 +100,8 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     }
     else
     {
-      _lgr?.Log(LogLevel.Warning, $"Wav-file length is {len}. Check the key. ");
-      await _bpr.NoAsync();
+      _lgr?.Log(LogLevel.Warning, $"Length is {len} for wav-file  '{file}'. Check the key. ");
+      await _bpr.WarnAsync();
       File.Delete(temp);
       return false;
     }
