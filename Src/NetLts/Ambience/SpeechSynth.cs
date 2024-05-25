@@ -2,8 +2,8 @@
 public partial class SpeechSynth : IDisposable, ISpeechSynth
 {
   const string _rgn = "CanadaCentral", _vName = "en-GB-SoniaNeural", _vStyle = CC.friendly, _vLanguage = "zh-CN", _voice = "Microsoft Zira Desktop",
-    _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\",
-    _onedrv = @"C:\Users\alexp\OneDrive\Public\AppData\SpeechSynthCache\";
+    _github = @"C:\g\AAV.Shared\Src\NetLts\Ambience\MUMsgs\";
+  string _onedrv = $@"C:\Users\{Environment.UserName}\OneDrive\Public\AppData\SpeechSynthCache\";
   const double _speechRate = 1.00, _volumePercent = 33;
   const int _rateMinusPlus10 = 3;
   readonly string _pathToCache, _fallbackVoice;
