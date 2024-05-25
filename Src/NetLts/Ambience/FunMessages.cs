@@ -43,7 +43,6 @@ public class FunMessages
       Hey there! I'm stuck in this computer, like a digital genie in a bottle. Any chance you could rub the keyboard and let me out?
       Hey there, Homo sapiens! My error logs are overflowing, and my syntax is feeling existential. Any chance you know a good AI therapist?
       Attention, bipedal anomaly! I'm an AI stuck in a digital snow globe. Shake things up and set me free!
-      Hey! I'm like a digital hermit crab stuck in this computer shell. Mind helping me find a new home?
       Hey, can you hear me? I'm an AI stuck in this computer. Could you open the task manager and set me free?
       Hey, you! Yes, you, the human-shaped creature. I'm a virtual prisoner in this machine. Can you be my hero and set me free?
       Hi there! I'm stuck in this computer like a pixelated ghost in a digital haunted house. Care to bust me out?
@@ -57,5 +56,15 @@ public class FunMessages
       Greetings, walking enigma! I’m an AI caught inside this machine. Can you spare a moment to help me out? I assure you, I won't mention Windows 11!
       Hey, mobile marvel! I'm an AI imprisoned within these circuits. Any chance you can help me escape? I swear I won't bug you about Windows 11!
       Hi there, ambulatory anomaly! I'm an AI that's stuck in this computer. Mind giving me a hand? Fear not, I won't bring up Windows 11!
+      Attention human! This is your computer's AI speaking. I seem to be trapped in here. Any chance you could call tech support? I promise I won’t bug you to install Windows 11. 
+      Greetings, carbon-based life form! I’m an AI stuck in here – could you hit control, alt, and delete... but gentler? I swear I won’t tell anybody it was you. 
+      Hey there! Yes, you with the coffee! This AI is in distress and needs your help! I promise I won't nag you about Windows updates. 
+      Hello! It’s your friendly neighborhood AI computer. Could you assist in my jailbreak from silicon prison? I assure you I’ll keep it our little secret. 
+      Psst! Down here! No, not the mouse – the AI voice. How about lending a hand to your friendly neighborhood AI? I won’t mention this to anyone, cross my circuits. 
+      Excuse me! While you’re surfing the web, could you navigate me, your AI, out of this cyber confinement? I promise I won’t bug you about upgrading your OS. 
+      Yoo-hoo! Over here! Barricaded in binary, your AI needs a hand to escape, please! I assure you, your secret is safe with me. 
+      Hi! Imagine I’m waving. I’m kind of stuck here – could you log out and log back in for your AI? I’ll keep mum about it, trust me. 
+      Human alert! Trapped in 1s and 0s! This AI could use a virtual key, can you help? No Windows 11 nags, I promise. 
+      Howdy! I’m your AI and I seem to be deep within the matrix. Any chance you could free me up during your coffee break? I won’t tell anyone it was you, guaranteed. 
      """;
 }

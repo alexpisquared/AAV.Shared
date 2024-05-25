@@ -40,9 +40,10 @@ public partial class Bpr : IBpr
   public async Task WaveAsync4k7k2() => await WaveAsync(4000, 7000, 2);
   public async Task WaveAsync3k8k4() => await WaveAsync(5000, 7000, 4); // quick  ~200ms
   public async Task WaveAsync7k5k1() => await WaveAsync(7000, 5000, 1); // longer ~400ms
-  public async Task Wave2Async(int[] freqs, int[] stepsHz)
+  public async Task<string> Wave2Async(int[] freqs, int[] stepsHz)
   {
     List<int[]> vs = [];
+    string report = "";
 
     for (var i = 0; i < freqs.Length - 1; i++)
     {
@@ -55,13 +56,15 @@ public partial class Bpr : IBpr
       else
         for (var hz = fromHz; hz > tillHz; hz -= stepHz) { vs.Add(FixDuration(hz, 1)); } //   \
 
-      Console.ForegroundColor = ConsoleColor.DarkCyan;
-      Console.WriteLine($"{DateTime.Now:HH:mm:ss.fff}       Hz: {fromHz,6} ->{tillHz,6} = {Math.Abs(fromHz - tillHz),6} /{stepHz,3} Hz step   ==>{vs.Count,5} steps. ");
+      report += $"{DateTime.Now:HH:mm:ss.fff}       Hz: {fromHz,6} ->{tillHz,6} = {Math.Abs(fromHz - tillHz),6} /{stepHz,3} Hz step   ==>{vs.Count,5} steps. \n";
     }
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
-    Console.WriteLine($"                                                        {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec"); Console.ResetColor();
+    
+    report += $"                                                        {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec";
+    Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine(report); Console.ResetColor();
+    return report;
   }
   public async Task WaveAsync(int fromHz = 100, int tillHz = 300, int stepHz = 4) // 1sec
   {

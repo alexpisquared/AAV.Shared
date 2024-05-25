@@ -1,19 +1,29 @@
-﻿
-await new SpeechSynthTest().TestVoice();
+﻿var _bpr = new Bpr();
+
+//await new SpeechSynthTest().TestVoice();
 //await new SpeechSynthTest().TestMeasureTimedCoeficientForSpeakFreeAsync();
 
+await WaveAsync();
 return;
 
-var _bpr = new Bpr();
 
 //_bpr.ClickAsync().Wait();
-//_bpr.AppStartAsync().Wait();
-//_bpr.AppFinishAsync().Wait();
+await _bpr.AppStartAsync();
+await _bpr.StartAsync();
+await _bpr.FinishAsync();
+await _bpr.AppFinishAsync();
 
+await _bpr.StartAsync();
+await _bpr.FinishAsync();
+
+await _bpr.StartAsync();
+await _bpr.FinishAsync();
+
+await _bpr.AppStartAsync();
+await _bpr.AppFinishAsync();
 //await _bpr.WaveAsync3k8k4();
 //await _bpr.WaveAsync7k5k1();
 
-await WaveAsync();
 
 if (!Debugger.IsAttached)
 {
@@ -32,7 +42,8 @@ async Task WaveAsync()
 {
   do
   {
-    await _bpr.Wave2Async([      1000, 2020, 1500, 2500, 1500, 3500, 2500, 4500, 1033, 50], [8, 1, 8, 3, 8, 5, 12, 7, 5]);
+    await _bpr.Wave2Async([      500, 3000, 1500, 5000], [10, 5, 2]);
+    //await _bpr.Wave2Async([      1000, 2020, 1500, 2500, 1500, 3500, 2500, 4500, 1033, 50], [8, 1, 8, 3, 8, 5, 12, 7, 5]);
     Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine("CLick here ... then Escape to exit"); Console.ResetColor();
   } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
 }
