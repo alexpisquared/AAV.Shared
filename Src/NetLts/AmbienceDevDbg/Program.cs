@@ -117,3 +117,5 @@ async Task BeepTest()
   Console.Write($"   {__} was pressed \n");
 }
 async Task BulkWhistle() => await _bpr.Wave2Async([200, 3000, 1000, 8000], [15, 15, 15]);
+async Task Bulk_500_1000_110ms() => await _bpr.Wave2Async([500, 1000], [20]);
+async Task Bulk_250_500_110ms() => await _bpr.Wave2Async([250, 500], [20]);
