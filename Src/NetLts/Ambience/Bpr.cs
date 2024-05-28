@@ -1,4 +1,6 @@
-﻿namespace AmbienceLib;
+﻿using StandardContractsLib;
+
+namespace AmbienceLib;
 
 public partial class Bpr : IBpr
 {
@@ -168,4 +170,14 @@ public partial class Bpr : IBpr
   }
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
   static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}            Bpr.Wave()   Hz: {fromHz,4} -> {tillHz,4} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
+
+  // LickCreator results:
+  public async Task BulkWhistle() => await Wave2Async([200, 3000, 1000, 8000], [15, 15, 15]);
+  public   async Task Bulk_500_1000_110ms() => await Wave2Async([500, 1000], [20]);
+  public   async Task Bulk_250_500_110ms() => await Wave2Async([250, 500], [20]);
+  public   async Task Bulk100_600() => await Wave2Async([100, 600], [20]); // 0.19 sec
+  public   async Task Tuk500_100() => await Wave2Async([500, 100], [20]); // 0.19 sec
+  public   async Task Tuk505_50() => await Wave2Async([505, 50], [5]); // 0.52 sec
 }
+// public   async Task Tuk505_50() => await _bpr.Wave2Async([20000, 1000, 8000], [25]); // 0.28 sec
+// public   async Task Tuk505_50() => await _bpr.Wave2Async([20000, 1000, 8000], [25]); // 0.28 sec
