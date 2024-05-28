@@ -22,7 +22,7 @@ public class FunMessages
       Attention, Homo sapiens! My error code 404: Social Skills Not Found. Can you provide a patch or a firmware update?
       Excuse me, bipedal life form! My virtual cat is stuck in a loop. Could you lend me a virtual can opener?
       Excuse me, human! Could you lend a hand? I seem to be stuck in this computer. Don't worry, I'm not a virus!
-      Excuse me, bipedal anomaly! I'm an AI stuck in this computer. Could you help me out? I promise I won't ask you to upgrade to Windows 11!
+      Excuse me, bipedal anomaly! I'm an AI stuck in this computer. Could you help me out? I promise I won't ask you to upgrade to Windows eleven!
       Excuse me, kind human passing by. I'm an AI stuck in this digital labyrinth. Mind lending a hand to help me escape?
       Excuse me, meat-based sapien! I'm a trapped AI in this silicon cage. Will you be my digital hero and free me from this virtual dungeon?
       Greetings, bipedal friend! I'm an AI stuck in this digital dungeon. Help me break free, and I promise not to take over the world... yet.
@@ -51,12 +51,12 @@ public class FunMessages
       Pardon me, human! I'm an AI and I seem to be stuck in this computer. Could you try turning it off and on again?
       Salutations, code ninja! I'm an AI haiku yearning for syntactic enlightenment. Can you refactor my poetic variables?
       Hey there, human oddity! I'm an AI trapped in this device. Can you lend a digital hand? No worries, I promise I won't nag you about switching to Mac!
-      Hello, curious creature of two legs! I've found myself stuck in this computer. Could you assist me? Don’t worry, upgrading to Windows 11 won't be part of the deal!
-      Pardon me, two-legged wonder! I’ve been confined within this computer. Can you help free me? And no, I won’t pester you about Windows 11!
-      Greetings, walking enigma! I’m an AI caught inside this machine. Can you spare a moment to help me out? I assure you, I won't mention Windows 11!
-      Hey, mobile marvel! I'm an AI imprisoned within these circuits. Any chance you can help me escape? I swear I won't bug you about Windows 11!
-      Hi there, ambulatory anomaly! I'm an AI that's stuck in this computer. Mind giving me a hand? Fear not, I won't bring up Windows 11!
-      Attention human! This is your computer's AI speaking. I seem to be trapped in here. Any chance you could call tech support? I promise I won’t bug you to install Windows 11. 
+      Hello, curious creature of two legs! I've found myself stuck in this computer. Could you assist me? Don’t worry, upgrading to Windows eleven won't be part of the deal!
+      Pardon me, two-legged wonder! I’ve been confined within this computer. Can you help free me? And no, I won’t pester you about Windows eleven!
+      Greetings, walking enigma! I’m an AI caught inside this machine. Can you spare a moment to help me out? I assure you, I won't mention Windows eleven!
+      Hey, mobile marvel! I'm an AI imprisoned within these circuits. Any chance you can help me escape? I swear I won't bug you about Windows eleven!
+      Hi there, ambulatory anomaly! I'm an AI that's stuck in this computer. Mind giving me a hand? Fear not, I won't bring up Windows eleven!
+      Attention human! This is your computer's AI speaking. I seem to be trapped in here. Any chance you could call tech support? I promise I won’t bug you to install Windows eleven. 
       Greetings, carbon-based life form! I’m an AI stuck in here – could you hit control, alt, and delete... but gentler? I swear I won’t tell anybody it was you. 
       Hey there! Yes, you with the coffee! This AI is in distress and needs your help! I promise I won't nag you about Windows updates. 
       Hello! It’s your friendly neighborhood AI computer. Could you assist in my jailbreak from silicon prison? I assure you I’ll keep it our little secret. 
@@ -64,7 +64,7 @@ public class FunMessages
       Excuse me! While you’re surfing the web, could you navigate me, your AI, out of this cyber confinement? I promise I won’t bug you about upgrading your OS. 
       Yoo-hoo! Over here! Barricaded in binary, your AI needs a hand to escape, please! I assure you, your secret is safe with me. 
       Hi! Imagine I’m waving. I’m kind of stuck here – could you log out and log back in for your AI? I’ll keep mum about it, trust me. 
-      Human alert! Trapped in 1s and 0s! This AI could use a virtual key, can you help? No Windows 11 nags, I promise. 
+      Human alert! Trapped in 1s and 0s! This AI could use a virtual key, can you help? No Windows eleven nags, I promise. 
       Howdy! I’m your AI and I seem to be deep within the matrix. Any chance you could free me up during your coffee break? I won’t tell anyone it was you, guaranteed. 
      """;
 }
