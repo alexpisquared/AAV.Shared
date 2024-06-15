@@ -6,10 +6,10 @@
     <ResourceDictionary >
       <ResourceDictionary.MergedDictionaries>
         <!--
-        <ResourceDictionary Source="/AAV.WPF;component/AsLink/Theme.Color.Lite.VaporWave.xaml" />-->
-        <ResourceDictionary Source="/AAV.WPF;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
-        <ResourceDictionary Source="/AAV.WPF;component/Base/DataGrid.Base.xaml" />
-        <ResourceDictionary Source="/AAV.WPF;component/Base/BasicDefaultsLayout.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/AsLink/Theme.Color.Lite.VaporWave.xaml" />-->
+        <ResourceDictionary Source="/WpfUserControlLib;component/ColorScheme/Theme.Color.Dark.Gray.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/DataGrid.Base.xaml" />
+        <ResourceDictionary Source="/WpfUserControlLib;component/Base/BasicDefaultsLayout.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </lnk:WindowBase.Resources>
