@@ -15,7 +15,7 @@ public static partial class Tracer // .NET Core 3.*
     try
     {
       var listener = new TextWriterTraceListener(logFilename) { Filter = new ErrorFilter() };
-      //Trace.WriteLine($" *** IsThreadSafe={listener.IsThreadSafe}.   UseGlobalLock={Trace.UseGlobalLock}.   Logging to '{logFilename}'."); => always this: "*** IsThreadSafe=False.   UseGlobalLock=True.   Logging to 'C:\Users\alexp\OneDrive\Public\Logs\AAV.WPF-le@RAZ~XPa.txt'."
+      //Trace.WriteLine($" *** IsThreadSafe={listener.IsThreadSafe}.   UseGlobalLock={Trace.UseGlobalLock}.   Logging to '{logFilename}'."); => always this: "*** IsThreadSafe=False.   UseGlobalLock=True.   Logging to 'C:\Users\alexp\OneDrive\Public\Logs\AAV-WPF-le@RAZ~XPa.txt'."
       Trace.Listeners.Add(listener);
       Trace.AutoFlush = true;
       Trace.Write("\r\n"); // between-runs separator. 2023-04-22
