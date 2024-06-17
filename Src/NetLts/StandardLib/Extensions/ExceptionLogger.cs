@@ -21,13 +21,26 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     if (Debugger.IsAttached)
       Debugger.Break();
     else if (VersionHelper.IsDbgOrRBD && cfp is not null)
-      OpenVsOnTheCulpritLine(cfp, line);
+      msgForPopup += OpenVsOnTheCulpritLine(cfp, line);
 
     return msgForPopup; //todo: catch (Exception fatalEx) { Environment.FailFast("An error occured whilst reporting an error.", fatalEx); }//tu: http://blog.functionalfun.net/2013/05/how-to-debug-silent-crashes-in-net.html //tu: Capturing dump files with Windows Error Reporting: Db a key at HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps\[Your Application Exe FileName]. In that key, create a string value called DumpFolder, and set it to the folder where you want dumps to be written. Then create a DWORD value called DumpType with a value of 2.
   }
 
-  static void OpenVsOnTheCulpritLine(string filename, int fileline)
+  public static string OpenVsOnTheCulpritLine(string callStackEntryLine)
   {
+    var parts = callStackEntryLine.Split(new[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
+    if (parts.Length < 2)
+      return $"■ Bad callStackEntryLine: {callStackEntryLine}";
+
+    var filename = parts[parts.Length - 3];
+    var fileline = int.Parse(parts.Last().Trim('\r'));
+    return OpenVsOnTheCulpritLine(filename, fileline);
+  }
+
+  static string OpenVsOnTheCulpritLine(string filename, int fileline)
+  {
+    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
+
 #if DotNet4
     EnvDTE80.DTE2 dte2 = (EnvDTE80.DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.17.0");
     dte2.MainWindow.Activate();
@@ -38,13 +51,19 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     https://docs.microsoft.com/en-us/visualstudio/extensibility/launch-visual-studio-dte?view=vs-2022
     https://github.com/diimdeep/VisualStudioFileOpenTool
     */
+#elif true
+    var result = CliWrap.Cli.Wrap(_dotnet4exe)
+        .WithArguments([filename, fileline.ToString()])
+        //.WithWorkingDirectory("work/dir/path")
+        .ExecuteAsync();
 #else
-    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine\bin\Release\OpenInVsOnTheCulpritLine.exe""";
     if (File.Exists(_dotnet4exe))
       Process.Start(_dotnet4exe, $"{filename} {fileline}");
-    //else
-    //  _ = MessageBox.Show(_dotnet4exe, "Missing VS opener EXE");
+    else
+      return $"  Missing VS opener EXE: {_dotnet4exe}";
 #endif
+
+    return $"";
   }
 
   static void TraceStackIfVerbose(Exception? ex)

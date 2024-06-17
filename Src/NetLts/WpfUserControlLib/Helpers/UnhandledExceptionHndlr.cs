@@ -24,6 +24,8 @@ public static class UnhandledExceptionHndlr // Core 3
         return;
       }
 
+      StandardLib.Extensions.ExnLogr.OpenVsOnTheCulpritLine(ea?.Exception.StackTrace?.Split('\n').Where(r => r.Contains(".cs")).ToList().FirstOrDefault() ?? "■ 321");
+
       ea?.Exception.Pop("Unhandled Exception - Auto continue if not aborted", Logger);
     }
     catch (Exception ex)
