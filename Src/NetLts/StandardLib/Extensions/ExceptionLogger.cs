@@ -39,6 +39,8 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
 
   static string OpenVsOnTheCulpritLine(string filename, int fileline)
   {
+    //todo: call the opener directly - not through EXE (Jun 2024)
+
     const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
 
 #if DotNet4
@@ -51,11 +53,13 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     https://docs.microsoft.com/en-us/visualstudio/extensibility/launch-visual-studio-dte?view=vs-2022
     https://github.com/diimdeep/VisualStudioFileOpenTool
     */
-#elif true
+#elif false
     var result = CliWrap.Cli.Wrap(_dotnet4exe)
         .WithArguments([filename, fileline.ToString()])
         //.WithWorkingDirectory("work/dir/path")
         .ExecuteAsync();
+#elif true
+    VsOpenerAttacher.OpenVsOnTheCulpritLine(filename, fileline);
 #else
     if (File.Exists(_dotnet4exe))
       Process.Start(_dotnet4exe, $"{filename} {fileline}");
