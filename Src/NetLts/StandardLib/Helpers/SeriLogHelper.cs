@@ -1,4 +1,6 @@
-﻿namespace StandardLib.Helpers;
+﻿using Serilog;
+
+namespace StandardLib.Helpers;
 
 public class SeriLogHelper
 {

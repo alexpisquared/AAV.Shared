@@ -6,12 +6,12 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
 
   public static string Log(this Exception ex, string? optl = null, [CallerMemberName] string? cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
   {
-    var st = new StackTrace(ex, true);
-    var line = st.GetFrame(st.FrameCount - 1)?.GetFileLineNumber() ?? cln;
+    var culpritLine = ex.StackTrace?.Split('\n').Where(r => r.Contains(".cs")).ToList().FirstOrDefault() ?? $"{cfp}:line {333}";
+    var (csFilename, csFileline) = GetCulpritLineDetails(culpritLine);
 
-    var msgForPopup = $"{ex?.InnerMessages()}\r\n{ex?.GetType().Name} at {cfp}({line}): {cmn}() {optl}";
+    var msgForPopup = $"{ex?.InnerMessages()}  {ex?.GetType().Name} at {csFilename}({csFileline}): {cmn}() {optl}\n  try {{  }} catch ({ex?.GetType().Name} ex) {{ ex.Log(); }} // {ex?.Message}";
 
-    WriteLine($"{DateTimeOffset.Now:HH:mm:ss.f}  {msgForPopup.Replace("\n", "  "/*, StringComparison.Ordinal*/).Replace("\r", "  "/*, StringComparison.Ordinal*/)}"); // .TraceError just adds the "ProgName.exe : Error : 0" line <= no use.
+    WriteLine(msgForPopup); // WriteLine($"{DateTimeOffset.Now:HH:mm:ss.f}  {msgForPopup.Replace("\n", "  ").Replace("\r", "  ")}"); // .TraceError just adds the "ProgName.exe : Error : 0" line <= no use.
 
     TraceStackIfVerbose(ex);
 
@@ -20,27 +20,29 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
 
     if (Debugger.IsAttached)
       Debugger.Break();
-    else if (VersionHelper.IsDbgOrRBD && cfp is not null)
-      msgForPopup += OpenVsOnTheCulpritLine(cfp, line);
+    else if (VersionHelper.IsDbgOrRBD && (culpritLine is not null || cfp is not null))
+      msgForPopup += OpenVsOnTheCulpritLine(culpritLine ?? cfp);
 
     return msgForPopup; //todo: catch (Exception fatalEx) { Environment.FailFast("An error occured whilst reporting an error.", fatalEx); }//tu: http://blog.functionalfun.net/2013/05/how-to-debug-silent-crashes-in-net.html //tu: Capturing dump files with Windows Error Reporting: Db a key at HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\Windows Error Reporting\LocalDumps\[Your Application Exe FileName]. In that key, create a string value called DumpFolder, and set it to the folder where you want dumps to be written. Then create a DWORD value called DumpType with a value of 2.
   }
 
   public static string OpenVsOnTheCulpritLine(string callStackEntryLine)
   {
+    var (csFilename, csFileline) = GetCulpritLineDetails(callStackEntryLine);
+    return OpenVsOnTheCulpritLine(csFilename, csFileline);
+  }
+
+  private static (string csFilename, int csFileline) GetCulpritLineDetails(string callStackEntryLine)
+  {
     var parts = callStackEntryLine.Split(new[] { ' ', ':' }, StringSplitOptions.RemoveEmptyEntries);
     if (parts.Length < 2)
-      return $"■ Bad callStackEntryLine: {callStackEntryLine}";
-
-    var filename = parts[parts.Length - 3];
-    var fileline = int.Parse(parts.Last().Trim('\r'));
-    return OpenVsOnTheCulpritLine(filename, fileline);
+      return ($"■ Bad callStackEntryLine: {callStackEntryLine}", -1);
+    else
+      return (parts[parts.Length - 3], int.Parse(parts.Last().Trim('\r')));
   }
 
   static string OpenVsOnTheCulpritLine(string filename, int fileline)
   {
-    //todo: call the opener directly - not through EXE (Jun 2024)
-
     const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
 
 #if DotNet4
@@ -59,7 +61,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
         //.WithWorkingDirectory("work/dir/path")
         .ExecuteAsync();
 #elif true
-    VsOpenerAttacher.OpenVsOnTheCulpritLine(filename, fileline);
+    VsOpenerAttacher.OpenVsOnTheCulpritLine(filename, fileline);     //todo: test this call of the opener directly - not through EXE (Jun 2024)
 #else
     if (File.Exists(_dotnet4exe))
       Process.Start(_dotnet4exe, $"{filename} {fileline}");
