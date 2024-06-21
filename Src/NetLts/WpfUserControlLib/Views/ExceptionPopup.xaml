@@ -87,22 +87,23 @@
           <Setter Property="FontSize"           Value="16" />
           <Setter Property="Foreground"         Value="#eee" />
           <Setter Property="VerticalAlignment"  Value="Center" />
-          <Setter Property="Margin" Value="20 30 10 10" />
+          <Setter Property="Margin" Value="20 10 10 10" />
         </Style>
       </Grid.Resources>
 
       <Grid.RowDefinitions>
-        <RowDefinition Height="75"  />
-        <RowDefinition Height="Auto"    />
-        <RowDefinition Height="Auto"    />
-        <RowDefinition Height="Auto"  />
-        <RowDefinition Height="Auto"  />
+        <RowDefinition Height="75" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
 
       <Image RenderOptions.BitmapScalingMode="HighQuality" Height="50" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Left"  Source="/WpfUserControlLib;component/Assets/error.gif" />
 
-      <TextBlock Grid.Row="0" HorizontalAlignment="Center" Foreground="#FF4A4D" FontSize="26" VerticalAlignment="Top"    Margin="8" Text="Exception ORG!!!" x:Name="ExType"                />
-      <TextBlock Grid.Row="0" HorizontalAlignment="Right"  Foreground="#0080e0" FontSize="14" VerticalAlignment="Bottom" Margin="0" Text="Press any key to continue...   &#xA;         ...or any other key to quit" />
+      <TextBlock Grid.Row="0" HorizontalAlignment="Center" Foreground="#F88" FontSize="26" VerticalAlignment="Top"    Margin="8" Text="Exception ORG!!!" x:Name="ExType"                />
+      <TextBlock Grid.Row="0" HorizontalAlignment="Right"  Foreground="#08e" FontSize="14" VerticalAlignment="Bottom" Margin="0" Text="Press any key to continue...   &#xA;         ...or any other key to quit" />
       <TextBlock Grid.RowSpan="10" Foreground="#0080e0" FontSize="14" Margin="-70 51 0 0" Text="2021-12-22 22:33" FontStyle="Oblique" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="tbkNow" FontWeight="Medium">
         <TextBlock.RenderTransform>
           <TransformGroup>
@@ -114,15 +115,17 @@
         </TextBlock.RenderTransform>
       </TextBlock>
 
-      <TextBlock Grid.Row="1" Style="{StaticResource tb}" FontSize="16" x:Name="optnlMsg" Text="[optnl text]"       Margin="20 10" Foreground="#ee0" />
-      <TextBlock Grid.Row="2" Style="{StaticResource tb}" FontSize="16" x:Name="innrMsgs" Text="Exception message"  Margin="20 10" ToolTip="Click to copy to clipboard." TextWrapping="Wrap" />
-      <TextBlock Grid.Row="3" Style="{StaticResource tb}" FontSize="12" x:Name="callerFL" Text="C:\c\folder\file.cs: 12" />
-      <TextBlock Grid.Row="4" Style="{StaticResource tb}" FontSize="12" x:Name="methodNm" Text="MethodName()"       Margin="20 10"/>
+      <TextBlock Grid.Row="1" Style="{StaticResource tb}" FontSize="16" x:Name="Msg0" Text="[optnl text]"       Foreground="#ee0" />
+      <TextBlock Grid.Row="2" Style="{StaticResource tb}" FontSize="16" x:Name="Msg1" Text="Exception message"  ToolTip="Click to copy to clipboard." TextWrapping="Wrap" />
+      <TextBlock Grid.Row="3" Style="{StaticResource tb}" FontSize="12" x:Name="Msg2" Text="C:\c\folder\file.cs: 12" />
+      <TextBlock Grid.Row="4" Style="{StaticResource tb}" FontSize="12" x:Name="Msg3" Text="MethodName()"       />
+      <TextBlock Grid.Row="5" Style="{StaticResource tb}" FontSize="12" x:Name="Msg4" Text="MethodName()"       />
 
-      <Button Grid.Row="1" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="optnlMsg" />
-      <Button Grid.Row="2" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="innrMsgs" />
-      <Button Grid.Row="3" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="callerFL" />
-      <Button Grid.Row="4" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="methodNm" />
+      <Button Grid.Row="1" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="Msg0" />
+      <Button Grid.Row="2" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="Msg1" />
+      <Button Grid.Row="3" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="Msg2" />
+      <Button Grid.Row="4" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="Msg3" />
+      <Button Grid.Row="5" Content=" Copy " HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="OnCopySection" Tag="Msg4" />
 
       <Grid Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" >
         <Button Content=" _Abort " IsCancel="True" Click="OnAppShutdown"     Foreground="#06f" FontSize="16" Margin="5 5 55 5" ToolTip="Shutdown the app"/>

@@ -22,7 +22,8 @@ public static class ExnPopr
       if (lgr is not null)
         new GuiCapture(lgr).StoreActiveWindowScreenshotToFile(msgForPopup); //? UI thread error happening or not?
 
-      _ = WpfUtils.AutoInvokeOnUiThread(new ExceptionPopup(ex, note, cmn, cfp, cln, owner).ShowDialog);
+      _ = WpfUtils.AutoInvokeOnUiThread(new ExceptionPopup(ex, msgForPopup.Split(ExnLogr.CRLF), owner).ShowDialog);
+
     }
     catch (InvalidOperationException ex2) // for "Cannot set Owner property to a Window that has not been shown previously."
     {

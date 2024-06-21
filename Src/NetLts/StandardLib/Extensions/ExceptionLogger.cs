@@ -2,6 +2,7 @@
 
 public static class ExnLogr // the one and only .net core 3 (Dec2019)
 {
+  public const string CRLF = "\n   ";
   public static TraceSwitch AppTraceLevelCfg => new("CfgTraceLevelSwitch", "Switch in config file:  <system.diagnostics><switches><!--0-off, 1-error, 2-warn, 3-info, 4-verbose. --><add name='CfgTraceLevelSwitch' value='3' /> ");
 
   public static string Log(this Exception ex, string? optl = null, [CallerMemberName] string? cmn = "", [CallerFilePath] string cfp = "", [CallerLineNumber] int cln = 0)
@@ -9,7 +10,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     var culpritLine = ex.StackTrace?.Split('\n').Where(r => r.Contains(".cs")).ToList().FirstOrDefault() ?? $"{cfp}:line {333}";
     var (csFilename, csFileline) = GetCulpritLineDetails(culpritLine);
 
-    var msgForPopup = $"{ex?.InnerMessages()}  {ex?.GetType().Name} at {csFilename}({csFileline}): {cmn}() {optl}\n  try {{  }} catch ({ex?.GetType().Name} ex) {{ ex.Log(); }} // {ex?.Message}";
+    var msgForPopup = $"{ex?.InnerMessages()}  {ex?.GetType().Name} at {CRLF}{csFilename} ({csFileline}):    {CRLF}{cmn}()    {CRLF}{optl}{CRLF}try {{  }} catch ({ex?.GetType().Name} ex) {{ ex.Log(); }} // insert around {Path.GetFileName(csFilename)} ({csFileline})";
 
     WriteLine(msgForPopup); // WriteLine($"{DateTimeOffset.Now:HH:mm:ss.f}  {msgForPopup.Replace("\n", "  ").Replace("\r", "  ")}"); // .TraceError just adds the "ProgName.exe : Error : 0" line <= no use.
 
