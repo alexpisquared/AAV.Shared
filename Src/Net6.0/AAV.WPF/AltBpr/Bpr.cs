@@ -86,7 +86,7 @@ namespace AAV.WPF.AltBpr
       catch (Exception ex) { ex.Log(); throw; }
     }
 
-    [Obsolete]
+    // [Obsolete] :why Copilot decides to mark it such?
     public static async Task BeepMiliSec(int[][] HzMs, ushort volume = ushort.MaxValue)
     {
       using (var mStrm = new MemoryStream())
