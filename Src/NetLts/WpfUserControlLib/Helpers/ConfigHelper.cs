@@ -7,7 +7,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
     int tryCntr;
 
     foreach (var appsettingsFile in new[] {
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{_appSettingsFileNameOnly}"),
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{_appSettingsFileNameOnly}"),
         @$"C:\Temp\Publish\{Assembly.GetExecutingAssembly().GetName().Name}\Config\{_appSettingsFileNameOnly}",
         @$"AppSettings\{_appSettingsFileNameOnly}",
         @$"{_appSettingsFileNameOnly}",

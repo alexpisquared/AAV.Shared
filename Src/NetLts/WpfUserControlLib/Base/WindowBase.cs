@@ -9,7 +9,7 @@ public partial class WindowBase : Window
   const string _defaultTheme = "No Theme";
   const int _swShowNormal = 1, _swShowMinimized = 2, _margin = 0;
   static int _currentTop = 0, _currentLeft = 0;
-  string WinFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}{(VersionHelper.IsDbg ? ".dbg" : "")}.json");
+  string WinFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}{(VersionHelper.IsDbg ? ".dbg" : "")}.json");
   public WindowBase() : this(new LoggerFactory().CreateLogger<Window>()) { } // no logging needed; for cases like error popups, etc.
   public WindowBase(ILogger logger)
   {
