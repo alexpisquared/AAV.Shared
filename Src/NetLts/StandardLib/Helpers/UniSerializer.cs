@@ -28,7 +28,7 @@ public static class JsonFileSerializer
     {
       if (File.Exists(filename))
       {
-        WriteLine($"[--:--:-- ---]     UserSettings.Ctor(): Deserialized => Loading in Load<T>({filename}) ...");
+        WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss.f}  Load<{typeof(T).Name}>({filename})");
         if (saveFormatted)
           return JsonSerializer.Deserialize<T>(File.ReadAllText(filename), new JsonSerializerOptions { WriteIndented = true }) ?? throw new ArgumentNullException("@123");
         else
