@@ -57,7 +57,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     https://github.com/diimdeep/VisualStudioFileOpenTool
     */
 #elif false
-    var result = CliWrap.Cli.Wrap(_dotnet4exe)
+    var result = CliWrap.Cli.Wrap(_dotnet4exe)  //tu: process.start alternative
         .WithArguments([filename, fileline.ToString()])
         //.WithWorkingDirectory("work/dir/path")
         .ExecuteAsync();
