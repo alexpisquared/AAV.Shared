@@ -44,8 +44,6 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
 
   static string OpenVsOnTheCulpritLine(string filename, int fileline)
   {
-    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
-
 #if DotNet4
     EnvDTE80.DTE2 dte2 = (EnvDTE80.DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.17.0");
     dte2.MainWindow.Activate();
@@ -57,6 +55,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     https://github.com/diimdeep/VisualStudioFileOpenTool
     */
 #elif false
+    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
     var result = CliWrap.Cli.Wrap(_dotnet4exe)  //tu: process.start alternative
         .WithArguments([filename, fileline.ToString()])
         //.WithWorkingDirectory("work/dir/path")
@@ -64,6 +63,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
 #elif true
     VsOpenerAttacher.OpenVsOnTheCulpritLine(filename, fileline);     //todo: test this call of the opener directly - not through EXE (Jun 2024)
 #else
+    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
     if (File.Exists(_dotnet4exe))
       Process.Start(_dotnet4exe, $"{filename} {fileline}");
     else
