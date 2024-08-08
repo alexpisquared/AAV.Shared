@@ -4,9 +4,9 @@ public static class VersionHelper
 
   public static string CurVerStr => DateTime.Now - TimedVer < TimeSpan.FromHours(24) ? CurVerStrYYMMDDHHmm : CurVerStrYYMMDD;
   static string CurVerStrFmt(string fmt) => $"v{TimedVer.ToString(fmt)}  {CompileMode}";
-  static string CurVerStrYYMMDD => $"v{TimedVer:yy.MM.dd}  {CompileMode}";
-  static string CurVerStrYYMMDDHH => $"v{TimedVer:yy.MM.dd.HH}  {CompileMode}";
-  static string CurVerStrYYMMDDHHmm => $"v{TimedVer:yy.MM.dd.HHmm}  {CompileMode}";
+  static string CurVerStrYYMMDD => $"v{TimedVer:yy-MM-dd}  {CompileMode}";
+  static string CurVerStrYYMMDDHH => $"v{TimedVer:yy-MM-dd.HH}  {CompileMode}";
+  static string CurVerStrYYMMDDHHmm => $"v{TimedVer:yy-MM-dd.HHmm}  {CompileMode}";
   static string CurVerStrYMd => $"v{TimedVer:y.M.d}  {CompileMode}";
   public static string DotNetCoreVersion { get { try { return Environment.Version.ToString(); } catch (Exception ex) { return ex.Message; } } } // Gets a System.Version object that describes the major, minor, build, and revision numbers of the CLR (common language runtime). ---sadly, for/of the app only.
   public static string DevDbgAudit(IConfigurationRoot cfg, string msg, [CallerMemberName] string? cmn = "") => $"{CurVerStr}  " +

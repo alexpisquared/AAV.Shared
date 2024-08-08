@@ -169,7 +169,7 @@ public partial class Bpr : IBpr
     return [hz, (int)(1_000_000 * roundedTimesWavePlayed / hz)];
   }
   public int[] FFD(int hz, int mks = _dMin) => FixDuration(hz, mks);
-  static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy.MM.dd HH:mm:ss.f}            Bpr.Wave()   Hz: {fromHz,4} -> {tillHz,4} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
+  static void Trace_(int fromHz, int tillHz, int stepHz, List<int[]> vs, long started) => WriteLine($"{DateTime.Now:yy-MM-dd HH:mm:ss.f}            Bpr.Wave()   Hz: {fromHz,4} -> {tillHz,4} = {Math.Abs(fromHz - tillHz)} / step:{stepHz} Hz ==> {vs.Count} steps. ==> {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec");
 
   // LickCreator results:
   public async Task BulkWhistle() => await Wave2Async([200, 3000, 1000, 8000], [15, 15, 15]);
