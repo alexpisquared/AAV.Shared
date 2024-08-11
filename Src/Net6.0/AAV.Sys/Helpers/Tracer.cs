@@ -1,10 +1,8 @@
-﻿using StandardLib.Helpers;
-
-namespace AAV.Sys.Helpers;
+﻿namespace AAV.Sys.Helpers;
 
 public static partial class Tracer // .NET Core 3.*
 {
-  static string LogFolder_OneDrive => Path.Combine(StandardLib.Helpers.OneDrive.Root, @"Public\Logs");
+  static string LogFolder_OneDrive => Path.Combine(OneDrive.Root, @"Public\Logs");
   static string LogFolder_FallbackZ => @".\Logs";
 
   public static string RemoteLogFolder => LogFolder_FallbackZ; // backward compat.
