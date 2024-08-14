@@ -43,10 +43,11 @@ public static partial class Tracer // .NET Core 3.*
   public static string GetLogPathFileName(string appName, bool is4wk)
   {
     var filename = getLogPathFileName(appName, false, is4wk);
-    if (FileExistAndIsLocked(new FileInfo(filename)))
-      filename = getLogPathFileName(appName, true, is4wk);
 
-    return $"{filename}-";
+    if (FileExistAndIsLocked(new FileInfo(filename)))
+      return getLogPathFileName(appName, true, is4wk);
+
+    return filename;
   }
 
   static string getLogPathFileName(string appName, bool isRandom, bool is4wk, bool is1FilePerSession = false)
@@ -55,7 +56,7 @@ public static partial class Tracer // .NET Core 3.*
     var nm2 = len > 4 ? Environment.UserName.Substring(3, 2) : Environment.UserName.Substring(len - 2);
     var filename = Path.Combine(getLogPath(is4wk), appName +
       (is1FilePerSession ? $"-{DateTimeOffset.Now:MMdd.HHmm}" : "") +
-      $"-{Environment.UserName.Substring(1, 2)}@{Environment.MachineName.Substring(0, 3)}~{nm2.ToUpperInvariant()}{Environment.UserName.Substring(0, 1).ToLowerInvariant()}{(isRandom ? Path.GetRandomFileName().Replace(".", "") : "")}.log"); // .log extension has better color coding in VSCode (2021-03)
+      $"-{Environment.UserName.Substring(1, 2)}@{Environment.MachineName[..3]}~{nm2.ToUpperInvariant()}{Environment.UserName[..1].ToLowerInvariant()}~{(isRandom ? Path.GetRandomFileName().Replace(".", "") : "")}-.log"); // .log extension has better color coding in VSCode (2021-03)
     return filename;
   }
 
