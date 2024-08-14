@@ -46,7 +46,7 @@ public static partial class Tracer // .NET Core 3.*
     if (FileExistAndIsLocked(new FileInfo(filename)))
       filename = getLogPathFileName(appName, true, is4wk);
 
-    return filename;
+    return $"{filename}-";
   }
 
   static string getLogPathFileName(string appName, bool isRandom, bool is4wk, bool is1FilePerSession = false)
