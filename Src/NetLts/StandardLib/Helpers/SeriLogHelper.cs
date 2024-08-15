@@ -5,7 +5,8 @@ namespace StandardLib.Helpers;
 public class SeriLogHelper
 {
   const string MinLogLevel = "+Info -Verb +Infi";
-  public static Microsoft.Extensions.Logging.ILogger CreateLogger<T>(string minLogLevel = MinLogLevel) => InitLoggerFactory__(Assembly.GetCallingAssembly().GetName().Name ?? "NA", minLogLevel).CreateLogger<T>();
+  public static Microsoft.Extensions.Logging.ILogger CreateLogger<T>(string exeName, string minLogLevel = MinLogLevel) => InitLoggerFactory__(exeName, minLogLevel).CreateLogger<T>(); 
+  public static Microsoft.Extensions.Logging.ILogger CreateLogger<T>(string minLogLevel = MinLogLevel) => InitLoggerFactory__(Assembly.GetCallingAssembly().GetName().Name ?? "NA", minLogLevel).CreateLogger<T>(); // creates Microsoft.Extensions.DependencyInjection.RAZ.ale.Infi.log when ready to run compilation is set in Publish profile.
 
   static ILoggerFactory InitLoggerFactory__(string callingAssemblyName, string minLogLevel = MinLogLevel) => InitLoggerFactory(OneDrive.Folder($@"Public\Logs\{callingAssemblyName}.{Environment.MachineName.Substring(0,3)}.{Environment.UserName.Substring(0, 3)}..log"), minLogLevel);
 
