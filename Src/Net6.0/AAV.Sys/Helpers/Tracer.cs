@@ -13,17 +13,16 @@ public static partial class Tracer // .NET Core 3.*
     try
     {
       var listener = new TextWriterTraceListener(logFilename) { Filter = new ErrorFilter() };
-      //Trace.WriteLine($" *** IsThreadSafe={listener.IsThreadSafe}.   UseGlobalLock={Trace.UseGlobalLock}.   Logging to '{logFilename}'."); => always this: "*** IsThreadSafe=False.   UseGlobalLock=True.   Logging to 'C:\Users\alexp\OneDrive\Public\Logs\AAV-WPF-le@RAZ~XPa.txt'."
-      Trace.Listeners.Add(listener);
-      Trace.AutoFlush = true;
-      Trace.Write("\r\n"); // between-runs separator. 2023-04-22
+      //WriteLine($" *** IsThreadSafe={listener.IsThreadSafe}.   UseGlobalLock={UseGlobalLock}.   Logging to '{logFilename}'."); => always this: "*** IsThreadSafe=False.   UseGlobalLock=True.   Logging to 'C:\Users\alexp\OneDrive\Public\Logs\AAV-WPF-le@RAZ~XPa.txt'."
+      Listeners.Add(listener);
+      AutoFlush = true;
 
 #if NotPhasedOut // phased out in favour of DI's on Core 3.
       ReportErrorLevel(appTraceLvl, "* Current *");
       ReportErrorLevel(ExnLogr.AppTraceLevelCfg, "AAV.Sys.CFG");
 #endif
     }
-    catch { Trace.Listeners.Clear(); throw; } // https://www.codeguru.com/csharp/.net/article.php/c19405/Tracing-in-NET-and-Implementing-Your-Own-Trace-Listeners.htm
+    catch { Listeners.Clear(); throw; } // https://www.codeguru.com/csharp/.net/article.php/c19405/Tracing-in-NET-and-Implementing-Your-Own-Trace-Listeners.htm
 
     return logFilename;
   }
@@ -31,12 +30,12 @@ public static partial class Tracer // .NET Core 3.*
   public static void ReportErrorLevel(TraceSwitch appTraceLvl, string src)
   {
     src = appTraceLvl.ToString();
-    Trace.Write($" *** TraceLevel by  {src,-14}  includes:  ");
-    Trace.WriteIf(true == appTraceLvl?.TraceError,     /**/ $"{TraceLevel.Error}   ");
-    Trace.WriteIf(true == appTraceLvl?.TraceWarning,   /**/ $"{TraceLevel.Warning}   ");
-    Trace.WriteIf(true == appTraceLvl?.TraceInfo,      /**/ $"{TraceLevel.Info}   ");
-    Trace.WriteIf(true == appTraceLvl?.TraceVerbose,   /**/ $"{TraceLevel.Verbose}");
-    Trace.Write("\n");
+    Write($" *** TraceLevel by  {src,-14}  includes:  ");
+    WriteIf(true == appTraceLvl?.TraceError,     /**/ $"{TraceLevel.Error}   ");
+    WriteIf(true == appTraceLvl?.TraceWarning,   /**/ $"{TraceLevel.Warning}   ");
+    WriteIf(true == appTraceLvl?.TraceInfo,      /**/ $"{TraceLevel.Info}   ");
+    WriteIf(true == appTraceLvl?.TraceVerbose,   /**/ $"{TraceLevel.Verbose}");
+    Write("\n");
   }
 #endif
 
@@ -44,16 +43,13 @@ public static partial class Tracer // .NET Core 3.*
   {
     var filename = getLogPathFileName(appName, false, is4wk);
 
-    if (FileExistAndIsLocked(new FileInfo(filename)))
-      return getLogPathFileName(appName, true, is4wk);
-
-    return filename;
+    return FileExistAndIsLocked(new FileInfo(filename)) ? getLogPathFileName(appName, true, is4wk) : filename;
   }
 
   static string getLogPathFileName(string appName, bool isRandom, bool is4wk, bool is1FilePerSession = false)
   {
     var len = Environment.UserName.Length;
-    var nm2 = len > 4 ? Environment.UserName.Substring(3, 2) : Environment.UserName.Substring(len - 2);
+    var nm2 = len > 4 ? Environment.UserName.Substring(3, 2) : Environment.UserName[(len - 2)..];
     var filename = Path.Combine(getLogPath(is4wk), appName +
       (is1FilePerSession ? $"-{DateTimeOffset.Now:MMdd.HHmm}" : "") +
       $"-{Environment.UserName.Substring(1, 2)}@{Environment.MachineName[..3]}~{nm2.ToUpperInvariant()}{Environment.UserName[..1].ToLowerInvariant()}~{(isRandom ? Path.GetRandomFileName().Replace(".", "") : "")}-.log"); // .log extension has better color coding in VSCode (2021-03)
@@ -99,9 +95,9 @@ public static partial class Tracer // .NET Core 3.*
       path = LogFolder_FallbackZ;
       if (FSHelper.ExistsOrCreated(path)) return path;
     }
-    catch (DirectoryNotFoundException ex) { ex.Log(); }
-    catch (IOException ex) { ex.Log(); }
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (DirectoryNotFoundException ex) { _ = ex.Log(); }
+    catch (IOException ex) { _ = ex.Log(); }
+    catch (Exception ex) { _ = ex.Log(); throw; }
 
     return @".\";
   }
