@@ -12,7 +12,7 @@ public class SeriLogHelper
 
   static ILoggerFactory InitLoggerFactory(string logFile, string minLogLevel = MinLogLevel) => LoggerFactory.Create(builder =>
   {
-    WriteLine($"SeriLogHelper.InitLoggerFactory__: logFile: {logFile}, minLogLevel: {minLogLevel}");
+    if (VersionHelper.IsDbg) WriteLine($"SeriLogHelper.InitLoggerFactory__: logFile: {logFile}, minLogLevel: {minLogLevel}");
 
     FSHelper.GetCreateSafeLogFolderAndFile(logFile);
 
