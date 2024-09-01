@@ -1,5 +1,6 @@
 ﻿namespace WinFormsControlLib;
-public partial class WindowClicker // https://chat.openai.com/chat : better to use the OpenAI's tried method, than this unknown piece (2022-12)
+
+public partial class WindowTopMoster // https://chat.openai.com/chat : better to use the OpenAI's tried method, than this unknown piece (2022-12)
 {
   [LibraryImport("user32.dll", StringMarshalling = StringMarshalling.Utf16)] private static partial IntPtr FindWindow(string? lpClassName, string lpWindowName);
   [LibraryImport("user32.dll")]  [return: MarshalAs(UnmanagedType.Bool)] private  static partial bool SetForegroundWindow(IntPtr hWnd);
@@ -8,7 +9,7 @@ public partial class WindowClicker // https://chat.openai.com/chat : better to u
   const int WM_LBUTTONDOWN = 0x0201;
   const int WM_LBUTTONUP = 0x0202;
 
-  public void ClickWindow(string windowTitle)
+  public void PostMouseDownUpToWindow(string windowTitle)
   {
     var windowHandle = FindWindow(null, windowTitle);
     if (windowHandle == IntPtr.Zero)
@@ -24,7 +25,7 @@ public partial class WindowClicker // https://chat.openai.com/chat : better to u
     _ = PostMessage(windowHandle, WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
   }
 
-  public void ClickOtherWindow(string processName)
+  public void SendTabKeyToWindow(string processName)
   {
     var process = Process.GetProcessesByName(processName)[0];
 

@@ -55,7 +55,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
     https://github.com/diimdeep/VisualStudioFileOpenTool
     */
 #elif false
-    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
+    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net9.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
     var result = CliWrap.Cli.Wrap(_dotnet4exe)  //tu: process.start alternative
         .WithArguments([filename, fileline.ToString()])
         //.WithWorkingDirectory("work/dir/path")
@@ -63,7 +63,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
 #elif true
     VsOpenerAttacher.OpenVsOnTheCulpritLine(filename, fileline);     //todo: test this call of the opener directly - not through EXE (Jun 2024)
 #else
-    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net8.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
+    const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net9.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";
     if (File.Exists(_dotnet4exe))
       Process.Start(_dotnet4exe, $"{filename} {fileline}");
     else
