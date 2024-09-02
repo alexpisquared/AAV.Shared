@@ -62,7 +62,8 @@
     <Setter Property="Foreground"      Value="{StaticResource LablForegroundBrush}" />    -->
     <Setter Property="VerticalAlignment"        Value="Center" />
     <Setter Property="HorizontalAlignment"      Value="Right" />
-    <Setter Property="Foreground"               Value="{StaticResource LablForegroundBrush}" />
+    <!-- !!!!! Sep 1, 2024 !!!!! finally culprit found for messing up underscored color !!!!!
+    <Setter Property="Foreground"               Value="{StaticResource LablForegroundBrush}" />-->
   </Style>
 
   <Style TargetType="{x:Type Control}"          BasedOn="{StaticResource FweBase}" x:Key="CrlBase" >
@@ -71,7 +72,9 @@
     <Setter Property="BorderThickness"          Value="1" />
     <Setter Property="Padding"                  Value="2" />
   </Style>
-  <Style TargetType="{x:Type TextBox}"          BasedOn="{StaticResource CrlBase}" x:Key="TbxBase"/>
+  <Style TargetType="{x:Type TextBox}"          BasedOn="{StaticResource CrlBase}" x:Key="TbxBase">
+    <Setter Property="BorderThickness"          Value=".7" />
+  </Style>
   <Style TargetType="{x:Type TextBox}"          BasedOn="{StaticResource TbxBase}" />
   <Style TargetType="{x:Type PasswordBox}"      BasedOn="{StaticResource CrlBase}" x:Key="PBxBase"/>
   <Style TargetType="{x:Type PasswordBox}"      BasedOn="{StaticResource PBxBase}" />
