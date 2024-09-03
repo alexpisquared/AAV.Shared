@@ -54,7 +54,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
     var svr = DevOps.IsDevMachineH ? @".\SqlExpress" : "mtDEVsqldb,1625";
     var cfg = new ConfigurationBuilder()
       .AddInMemoryCollection()
-      .AddUserSecrets<WhatIsThatForType>() //note: of this assenbly!!!
+      .AddUserSecrets<WhatIsThatForType>() //note: of this assembly!!!
       .Build();
 
     cfg[CfgName.WhereAmAy] = "HardCODE in .\\WpfUserControlLib\\Helpers\\ConfigHelper.cs";
