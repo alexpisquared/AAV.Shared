@@ -7,3 +7,4 @@ global using System.Linq;
 global using System.Reflection;
 global using System.Threading.Tasks;
 global using StandardLib.Extensions;
+global using static System.Diagnostics.Trace;
