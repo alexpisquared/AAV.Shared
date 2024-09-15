@@ -22,11 +22,11 @@ public partial class MouseOperations
     if (!gotPoint) currentMousePoint = new MousePoint(0, 0);
     return currentMousePoint;
   }
-  public static async Task MouseClickEventAsync(int x, int y)
+  public static async Task MouseClickEventAsync(int x, int y, bool isRightClick)
   {
     _ = SetCursorPos(x, y); // without actually moving cursor does not seem to be clicking on the indicated spot.
 
-    MouseEvent(x, y, IsMouseSwapped ? (MouseEventFlags.RightDown | MouseEventFlags.RightUp) : (MouseEventFlags.LeftDown | MouseEventFlags.LeftUp));
+    MouseEvent(x, y, IsMouseSwapped && !isRightClick ? (MouseEventFlags.RightDown | MouseEventFlags.RightUp) : (MouseEventFlags.LeftDown | MouseEventFlags.LeftUp));
 
     await Task.Delay(200); // needs time to realize that ~at the new spot already; at after ~100 ms all is good. Works on the big screen on Of.
   }
