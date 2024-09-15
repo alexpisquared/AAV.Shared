@@ -28,7 +28,7 @@ public partial class MouseOperations
 
     MouseEvent(x, y, IsMouseSwapped ? (MouseEventFlags.RightDown | MouseEventFlags.RightUp) : (MouseEventFlags.LeftDown | MouseEventFlags.LeftUp));
 
-    await Task.Delay(200); // needs time to realise that ~at the new spot already; at after ~100 ms all is good. Works on the big screen on Of.
+    await Task.Delay(200); // needs time to realize that ~at the new spot already; at after ~100 ms all is good. Works on the big screen on Of.
   }
   public static void MouseEvent(MouseEventFlags value)
   {
