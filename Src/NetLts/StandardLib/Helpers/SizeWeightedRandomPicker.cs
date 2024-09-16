@@ -27,7 +27,7 @@ public class SizeWeightedRandomPicker
 
   public FileInfo PickRandomFile()
   {
-    var randomNumber = _random.NextDouble() * _totalSize; // .net8:  var randomNumber = _random.NextInt64(_totalSize);
+    var randomNumber = _random.NextDouble() * _totalSize; // .net9:  var randomNumber = _random.NextInt64(_totalSize);
     long sum = 0;
 
     foreach (var file in _files)
