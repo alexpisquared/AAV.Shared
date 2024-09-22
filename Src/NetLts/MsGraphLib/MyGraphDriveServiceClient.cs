@@ -1,11 +1,12 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Graph.Models;
+using MSGraphGetPhotoToTheLatestVersionPOC;
 using Pastel;
 using System.Diagnostics;
 using System.Drawing;
 using static System.Console;
 
-namespace MSGraphGetPhotoToTheLatestVersionPOC;
+namespace MsGraphLib;
 
 public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
 {
@@ -30,18 +31,14 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
     string? line;
     using var reader = new StreamReader(memoryStream);
     while ((line = reader?.ReadLine()) != null)
-    {
       Write(line.Pastel(Color.Magenta));
-    }
   }
   static void RealTimeStreamOutputting(Stream stream)
   {
     string? line;
     using var reader = new StreamReader(stream);
     while ((line = reader?.ReadLine()) != null)
-    {
       Write(line.Pastel(Color.Green));      //Beep(8000, 11);
-    }
   }
 
   public async Task<Stream> GetGraphFileStream(string file)
