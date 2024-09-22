@@ -9,10 +9,40 @@ namespace MSGraphGetPhotoToTheLatestVersionPOC;
 
 public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
 {
-  Drive? _drive;
+  Drive? _drive; public Drive Drive => _drive ?? throw new InvalidOperationException("■ Drive not initialized");
+  public GraphServiceClient DriveClient => _graphServiceClient ?? throw new InvalidOperationException("■ GraphServiceClient not initialized");
 
-  public Drive Drive => _drive ?? throw new InvalidOperationException("Drive not initialized");
-  public GraphServiceClient DriveClient => _graphServiceClient ?? throw new InvalidOperationException("Drive not initialized");
+  public async Task TestStreamDirect(string filePath)
+  {
+    using var stream = await GetGraphFileStream(filePath);
+
+    RealTimeStreamOutputting(stream);
+  }
+  public async Task TestMemoryStream(string filePath)
+  {
+    using var stream = await GetGraphFileStream(filePath);
+
+    var memoryStream = new MemoryStream();
+    await stream.CopyToAsync(memoryStream);
+    _ = memoryStream.Seek(0, SeekOrigin.Begin); //tu: JPG images fix!!!
+    stream.Close();
+
+    string? line;
+    using var reader = new StreamReader(memoryStream);
+    while ((line = reader?.ReadLine()) != null)
+    {
+      Write(line.Pastel(Color.Magenta));
+    }
+  }
+  static void RealTimeStreamOutputting(Stream stream)
+  {
+    string? line;
+    using var reader = new StreamReader(stream);
+    while ((line = reader?.ReadLine()) != null)
+    {
+      Write(line.Pastel(Color.Green));      //Beep(8000, 11);
+    }
+  }
 
   public async Task<Stream> GetGraphFileStream(string file)
   {

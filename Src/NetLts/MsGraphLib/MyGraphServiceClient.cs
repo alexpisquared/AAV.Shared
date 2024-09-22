@@ -14,7 +14,7 @@ public class MyGraphServiceClient
 
   protected async Task<(bool success, string report, AuthenticationResult? authResult)> InitializeGraphClientIfNeeded(string clientId)
   {
-    if (_graphServiceClient is not null) return (true, "already done", null);
+    if (_graphServiceClient is not null) return (true, "already done initialization for _graphServiceClient.", null);
 
     string[] _scopes = ["User.Read", "Mail.Read", "Mail.Send", "Mail.ReadWrite", "Files.Read"]; // ReadWrite for convoluted mode only.
 
