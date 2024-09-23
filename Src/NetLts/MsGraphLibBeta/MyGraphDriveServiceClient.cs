@@ -55,7 +55,14 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
       ArgumentNullException.ThrowIfNull(_drive, nameof(_drive));
 
       var driveItem = await _graphServiceClient.Drives[_drive.Id].Root.ItemWithPath(file).GetAsync() ?? throw new FileNotFoundException($"File not found: {file}");
-      var rawStream = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].ContentStream.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!");
+      var rawStream = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].Content.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!");
+
+      ///todo: ContentStream:
+      /// https://learn.microsoft.com/en-us/graph/api/driveitem-get-contentstream?view=graph-rest-beta&tabs=http
+      /// Download a partial range of bytes --- looks like it is much better ... at least promising.
+      /// ==> wait for Beta to take over and hope it fixes streaming of videos 
+      /// Microsoft.Graph.Beta" Version="5.81.0-preview"  does not work.
+      var rawStrea3 = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].ContentStream.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!"); // Download the contents of the primary stream (file) of a driveItem. Only driveItem objects with the file property can be downloaded.
 
       return rawStream;
     }
