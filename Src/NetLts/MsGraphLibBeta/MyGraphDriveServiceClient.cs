@@ -1,5 +1,5 @@
-﻿using Microsoft.Graph;
-using Microsoft.Graph.Models;
+﻿using Microsoft.Graph.Beta;
+using Microsoft.Graph.Beta.Models;
 using MSGraphGetPhotoToTheLatestVersionPOC;
 using Pastel;
 using System.Diagnostics;
@@ -47,7 +47,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
     {
       var (success, report, authResult) = await InitializeGraphClientIfNeeded(clientId);
       WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
-      Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
+      Trace.WriteLine(report);
 
       ArgumentNullException.ThrowIfNull(_graphServiceClient, nameof(_graphServiceClient));
 
@@ -55,15 +55,15 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
       ArgumentNullException.ThrowIfNull(_drive, nameof(_drive));
 
       var driveItem = await _graphServiceClient.Drives[_drive.Id].Root.ItemWithPath(file).GetAsync() ?? throw new FileNotFoundException($"File not found: {file}");
-      var rawStream = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].Content.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!");
+      var rawStream = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].ContentStream.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!");
 
       return rawStream;
     }
     catch (Exception ex)
     {
       WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
-      Trace.WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
-      Beep(5555,555);
+      Trace.WriteLine($"▒▒ Error: {ex.Message}");
+      Beep(5000, 750);
       throw;
     }
   }
