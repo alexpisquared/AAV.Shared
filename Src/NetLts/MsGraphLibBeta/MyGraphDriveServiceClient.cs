@@ -1,6 +1,5 @@
 ﻿using Microsoft.Graph.Beta;
 using Microsoft.Graph.Beta.Models;
-using MSGraphGetPhotoToTheLatestVersionPOC;
 using MsGraphLibContract;
 using Pastel;
 using System.Diagnostics;

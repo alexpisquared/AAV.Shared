@@ -1,11 +1,12 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
+using MSGraphGetPhotoToTheLatestVersionPOC;
 using Pastel;
 using System.Drawing;
 using static System.Console;
 
-namespace MSGraphGetPhotoToTheLatestVersionPOC;
+namespace MsGraphLibVer1;
 
 public class MyGraphServiceClient
 {
@@ -15,7 +16,13 @@ public class MyGraphServiceClient
   {
     if (_graphServiceClient is not null) return (true, "already done initialization for _graphServiceClient.", null);
 
-    string[] _scopes = ["User.Read", "Mail.Read", "Mail.Send", "Mail.ReadWrite", "Files.Read"]; // ReadWrite for convoluted mode only.
+    string[] _scopes = [
+      "User.Read",
+      "Mail.Read",
+      "Mail.Send",
+      "Mail.ReadWrite", // ReadWrite for convoluted mode only.
+      "Files.Read",
+      "Calendar.Read"];
 
     try
     {
@@ -40,7 +47,7 @@ public class MyGraphServiceClient
         {
           authResult = await publicClientApplication.AcquireTokenInteractive(_scopes)
               .WithAccount(account1)
-              .WithPrompt(Microsoft.Identity.Client.Prompt.SelectAccount)
+              .WithPrompt(Prompt.SelectAccount)
               .ExecuteAsync();
         }
         catch (MsalException msalEx)
