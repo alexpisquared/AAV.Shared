@@ -14,6 +14,10 @@ public class MyGraphServiceClient
       //"Mail.Send",
       //"Mail.ReadWrite", // ReadWrite for convoluted mode only.
       "Calendars.Read",
+      "Calendars.ReadBasic",
+      "Calendars.Read.Shared",
+      "Calendars.ReadBasic",
+      "Calendars.ReadWrite"
       //"Files.Read"
       ];
 
