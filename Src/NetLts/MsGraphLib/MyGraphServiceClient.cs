@@ -1,5 +1,4 @@
 ﻿using Microsoft.Graph;
-using Microsoft.Graph.Models;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Pastel;

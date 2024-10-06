@@ -12,7 +12,17 @@ namespace MsGraphLibVer1;
 public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, IMyGraphDriveServiceClient
 {
   Drive? _drive; public Drive Drive => _drive ?? throw new InvalidOperationException("■ Drive not initialized");
-  public GraphServiceClient DriveClient => _graphServiceClient ?? throw new InvalidOperationException("■ GraphServiceClient not initialized");
+  public GraphServiceClient DriveClient
+  {
+    get
+    {
+      var (success, report, authResult) = InitializeGraphClientIfNeeded(clientId).Result;
+      WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
+      Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
+
+      return _graphServiceClient ?? throw new InvalidOperationException("■ GraphServiceClient not initialized");
+    }
+  }
 
   public async Task TestStreamDirect(string filePath)
   {
