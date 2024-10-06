@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\MsGraphLib\MyGraphServiceClient.cs" Link="MyGraphServiceClient.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\MsGraphLib\README.md" Link="README.md" />
   </ItemGroup>
 
