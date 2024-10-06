@@ -9,9 +9,9 @@ public class MyGraphServiceClient
     if (_graphServiceClient is not null) return (true, "already done initialization for _graphServiceClient.", null);
 
     string[] _scopes = [
-      "User.Read", 
-      "Mail.Read", 
-      "Mail.Send", 
+      "User.Read",
+      "Mail.Read",
+      "Mail.Send",
       "Mail.ReadWrite", // ReadWrite for convoluted mode only.
       //"Calendar.Read",
       "Files.Read"];
