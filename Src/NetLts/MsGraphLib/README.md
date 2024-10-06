@@ -11,3 +11,7 @@ misc:
 ## ==> wait for Beta to take over and hope it fixes streaming of videos 
 ## Microsoft.Graph.Beta" 5.81.0-preview  does not work.  ...nor:
 ## Microsoft.Graph       5.58.0  
+
+### 2024-10-05  tested:
+5.59: up to 50 mb works fine 
+5.81 gives "API not found" error for all movie and doc files.
