@@ -1,22 +1,27 @@
-﻿using Microsoft.Graph.Beta;
-using Microsoft.Graph.Beta.Models;
-using MsGraphLibContract;
-using Pastel;
-using System.Diagnostics;
-using System.Drawing;
+﻿using Microsoft.Graph.Beta.Models;
 using MsGraphLib____;
-using static System.Console;
+using MsGraphLibContract;
+using System.Diagnostics;
 
 namespace MsGraphLibBeta;
 
 public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, IMyGraphDriveServiceClient
 {
-  Drive? _drive; public Drive Drive => _drive ?? throw new InvalidOperationException("■ Drive not initialized");
+  Drive? _drive; public Drive Drive
+  {
+    get
+    {
+      _drive = _graphServiceClient?.Me.Drive.GetAsync().Result;
+
+      return _drive ?? throw new InvalidOperationException("■ Drive not initialized");
+    }
+  }
+
   public GraphServiceClient DriveClient
   {
     get
     {
-      var (success, report, authResult) = InitializeGraphClientIfNeeded(clientId).Result;
+      var (success, report, _) = InitializeGraphClientIfNeeded(clientId).Result;
       WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
 
@@ -54,6 +59,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     Write("\n");
   }
 
+  [Obsolete]
   public async Task<Stream> GetGraphFileStream(string file)
   {
     try

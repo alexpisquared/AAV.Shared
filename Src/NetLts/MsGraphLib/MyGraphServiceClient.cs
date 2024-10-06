@@ -6,7 +6,7 @@ public class MyGraphServiceClient
 
   protected async Task<(bool success, string report, AuthenticationResult? authResult)> InitializeGraphClientIfNeeded(string clientId)
   {
-    if (_graphServiceClient is not null) return (true, "already done initialization for _graphServiceClient.", null);
+    if (_graphServiceClient is not null) return (true, "  already done initialization for _graphServiceClient.", null);
 
     string[] _scopes = [ //tu: manage apps:  https://portal.azure.com/?feature.quickstart=true#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/af27ddbb-f29b-4588-af5f-4d03c03c03d0/isMSAApp~/false
       "User.Read",
