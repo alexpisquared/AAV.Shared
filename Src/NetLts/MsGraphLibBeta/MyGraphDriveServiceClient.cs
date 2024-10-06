@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graph.Beta;
 using Microsoft.Graph.Beta.Models;
 using MSGraphGetPhotoToTheLatestVersionPOC;
+using MsGraphLibContract;
 using Pastel;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,7 +9,7 @@ using static System.Console;
 
 namespace MsGraphLibBeta;
 
-public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
+public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, IMyGraphDriveServiceClient
 {
   Drive? _drive; public Drive Drive => _drive ?? throw new InvalidOperationException("■ Drive not initialized");
   public GraphServiceClient DriveClient => _graphServiceClient ?? throw new InvalidOperationException("■ GraphServiceClient not initialized");

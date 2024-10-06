@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Graph.Models;
 using MSGraphGetPhotoToTheLatestVersionPOC;
+using MsGraphLibContract;
 using Pastel;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,7 +9,7 @@ using static System.Console;
 
 namespace MsGraphLib;
 
-public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
+public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, IMyGraphDriveServiceClient
 {
   Drive? _drive; public Drive Drive => _drive ?? throw new InvalidOperationException("■ Drive not initialized");
   public GraphServiceClient DriveClient => _graphServiceClient ?? throw new InvalidOperationException("■ GraphServiceClient not initialized");
@@ -63,7 +64,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
     {
       WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
       Trace.WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
-      Beep(5555,555);
+      Beep(5555, 555);
       throw;
     }
   }

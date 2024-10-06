@@ -16,4 +16,8 @@
     <PackageReference Include="Pastel" Version="5.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\AiGen\Sln1\MsGraphLibContract\MsGraphLibContract.csproj" />
+  </ItemGroup>
+
 </Project>
