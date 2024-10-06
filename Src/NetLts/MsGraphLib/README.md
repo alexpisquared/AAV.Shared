@@ -15,3 +15,5 @@ misc:
 ### 2024-10-05  tested:
 5.59: up to 50 mb works fine 
 5.81: beta gives "API not found" error for all movie and doc files.
+
+See for more code samples: https://developer.microsoft.com/en-us/graph/graph-explorer
