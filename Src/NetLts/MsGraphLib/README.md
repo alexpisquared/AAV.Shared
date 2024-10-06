@@ -1,4 +1,4 @@
-### 2024-09-22
+﻿### 2024-09-22
 
 misc:  
   https://learn.microsoft.com/en-us/graph/sdks/choose-authentication-providers?tabs=csharp
@@ -17,3 +17,14 @@ misc:
 5.81: beta gives "API not found" error for all movie and doc files.
 
 See for more code samples: https://developer.microsoft.com/en-us/graph/graph-explorer
+
+### 2024-10-06  Trying Calendar:
+The App
+  https://portal.azure.com/?feature.quickstart=true#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/af27ddbb-f29b-4588-af5f-4d03c03c03d0/isMSAApp~/false
+Permission fot the App:
+  https://portal.azure.com/?feature.quickstart=true#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/CallAnAPI/appId/af27ddbb-f29b-4588-af5f-4d03c03c03d0/isMSAApp~/false
+ Add POermission:
+  - Microsoft Graph (top big button)
+  - Applicatoin Permissinn
+  - Calendars - add all three
+  -   Still getting the error: ▒▒ Error: Access is denied. Check credentials and try again.

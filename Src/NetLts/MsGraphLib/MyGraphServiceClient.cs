@@ -8,13 +8,14 @@ public class MyGraphServiceClient
   {
     if (_graphServiceClient is not null) return (true, "already done initialization for _graphServiceClient.", null);
 
-    string[] _scopes = [
+    string[] _scopes = [ //tu: manage apps:  https://portal.azure.com/?feature.quickstart=true#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/af27ddbb-f29b-4588-af5f-4d03c03c03d0/isMSAApp~/false
       "User.Read",
-      "Mail.Read",
-      "Mail.Send",
-      "Mail.ReadWrite", // ReadWrite for convoluted mode only.
-      //"Calendar.Read",
-      "Files.Read"];
+      //"Mail.Read",
+      //"Mail.Send",
+      //"Mail.ReadWrite", // ReadWrite for convoluted mode only.
+      "Calendars.Read",
+      //"Files.Read"
+      ];
 
     try
     {
@@ -94,6 +95,4 @@ public class MyGraphServiceClient
        {result.AccessToken[..12]}...{result.AccessToken[^12..]}
  """;
 }
-
-//todo: manage apps:  https://account.live.com/consent/Manage?uaid=80c30464e3c748239e49630886b523d4&fn=email&guat=1
 //todo: manage apps:  https://account.live.com/consent/Manage?uaid=80c30464e3c748239e49630886b523d4&fn=email&guat=1
