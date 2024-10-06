@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using static System.Console;
 
-namespace MsGraphLib;
+namespace MsGraphLibVer1;
 
 public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, IMyGraphDriveServiceClient
 {
@@ -33,6 +33,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     using var reader = new StreamReader(memoryStream);
     while ((line = reader?.ReadLine()) != null)
       Write(line.Pastel(Color.Magenta));
+    Write("\n");
   }
   static void RealTimeStreamOutputting(Stream stream)
   {
@@ -40,6 +41,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     using var reader = new StreamReader(stream);
     while ((line = reader?.ReadLine()) != null)
       Write(line.Pastel(Color.Green));      //Beep(8000, 11);
+    Write("\n");
   }
 
   public async Task<Stream> GetGraphFileStream(string file)
@@ -47,7 +49,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     try
     {
       var (success, report, authResult) = await InitializeGraphClientIfNeeded(clientId);
-      WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
+      WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 96 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
 
       ArgumentNullException.ThrowIfNull(_graphServiceClient, nameof(_graphServiceClient));

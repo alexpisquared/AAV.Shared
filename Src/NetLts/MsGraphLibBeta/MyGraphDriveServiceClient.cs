@@ -33,6 +33,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     using var reader = new StreamReader(memoryStream);
     while ((line = reader?.ReadLine()) != null)
       Write(line.Pastel(Color.Magenta));
+    Write("\n");
   }
   static void RealTimeStreamOutputting(Stream stream)
   {
@@ -40,6 +41,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     using var reader = new StreamReader(stream);
     while ((line = reader?.ReadLine()) != null)
       Write(line.Pastel(Color.Green));      //Beep(8000, 11);
+    Write("\n");
   }
 
   public async Task<Stream> GetGraphFileStream(string file)
