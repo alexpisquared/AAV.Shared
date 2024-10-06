@@ -14,4 +14,4 @@ misc:
 
 ### 2024-10-05  tested:
 5.59: up to 50 mb works fine 
-5.81 gives "API not found" error for all movie and doc files.
+5.81: beta gives "API not found" error for all movie and doc files.

@@ -62,7 +62,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
       /// Download a partial range of bytes --- looks like it is much better ... at least promising.
       /// ==> wait for Beta to take over and hope it fixes streaming of videos 
       /// Microsoft.Graph.Beta" Version="5.81.0-preview"  does not work.
-      var rawStrea3 = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].ContentStream.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!"); // Download the contents of the primary stream (file) of a driveItem. Only driveItem objects with the file property can be downloaded.
+      //var rawStrea3 = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].ContentStream.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!"); // Download the contents of the primary stream (file) of a driveItem. Only driveItem objects with the file property can be downloaded.
 
       return rawStream;
     }
