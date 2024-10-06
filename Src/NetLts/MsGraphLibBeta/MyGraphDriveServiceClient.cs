@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using static System.Console;
 
-namespace MsGraphLib;
+namespace MsGraphLibBeta;
 
 public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient
 {
