@@ -1,4 +1,4 @@
-﻿global using Microsoft.Graph;
+﻿global using Microsoft.Graph.Beta;
 global using Microsoft.Identity.Client;
 global using Microsoft.Identity.Client.Extensions.Msal;
 global using MSGraphGetPhotoToTheLatestVersionPOC;

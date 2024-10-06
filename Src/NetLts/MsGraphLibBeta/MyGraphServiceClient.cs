@@ -1,12 +1,4 @@
-﻿using Microsoft.Graph.Beta;
-using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extensions.Msal;
-using MSGraphGetPhotoToTheLatestVersionPOC;
-using Pastel;
-using System.Drawing;
-using static System.Console;
-
-namespace MsGraphLibBeta;
+﻿namespace MsGraphLib____;
 
 public class MyGraphServiceClient
 {
@@ -21,8 +13,8 @@ public class MyGraphServiceClient
       "Mail.Read", 
       "Mail.Send", 
       "Mail.ReadWrite", // ReadWrite for convoluted mode only.
-      "Files.Read", 
-      "Calendar.Read"]; 
+      //"Calendar.Read",
+      "Files.Read"];
 
     try
     {
