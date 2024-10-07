@@ -93,10 +93,7 @@ public class MyGraphServiceClient
     }
   }
   static string ReportResult(AuthenticationResult result) => $""" 
-  Got a token for:  {result.Account.Username} 
-     Token source:  {result.AuthenticationResultMetadata.TokenSource}     
-       Expires on:  {result.ExpiresOn.ToLocalTime()}     
-       {result.AccessToken[..12]}...{result.AccessToken[^12..]}
+  Got a token for:{result.Account.Username}   Source:{result.AuthenticationResultMetadata.TokenSource}   Expires:{result.ExpiresOn.ToLocalTime():yyyy-MM-dd HH:mm}   {result.AccessToken[..6]}...{result.AccessToken[^6..]}
  """;
 }
 //todo: manage apps:  https://account.live.com/consent/Manage?uaid=80c30464e3c748239e49630886b523d4&fn=email&guat=1
