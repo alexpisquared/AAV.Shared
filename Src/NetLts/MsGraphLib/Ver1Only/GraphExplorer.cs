@@ -43,7 +43,7 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
       Beep(5000, 750);
     }
   }
-  public static async Task ExploreGraph_Calendar_Post(MyGraphDriveServiceClient msGraphLibVer1, DateTime start0, DateTime end0, string[] attendeeEmails, string facility = "North Thornhill Community Centre")
+  public static async Task ExploreGraph_Calendar_Post(MyGraphDriveServiceClient msGraphLibVer1, DateTime start0, DateTime end0, string[] attendeeEmails, string locationAddress = "300 Pleasant Ridge Ave, Vaughan, ON l4j 9b3")
   {
     try
     {
@@ -52,16 +52,21 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
 
       var requestBody = new Event
       {
-        Subject = $"Swim at {facility}",
+        Subject = $"Swim at {locationAddress}",
         Start = new DateTimeTimeZone { DateTime = start, TimeZone = "UTC", },
         End = new DateTimeTimeZone { DateTime = finish, TimeZone = "UTC", },
         Attendees = [],
         Location = new Location
         {
-          DisplayName =
-            facility.Contains("Outdoor") ? "31 Old Yonge St, Vaughan, ON L4J 9B3" :
-            facility.Contains("North Thornhill Community Centre") ? "300 Pleasant Ridge Ave, Vaughan, ON L4J 9B3" : facility
+          DisplayName = locationAddress,
+          //Address = new PhysicalAddress { City = "Vaughan", CountryOrRegion = "Canada", PostalCode = "L4J 9B3", Street = "300 Pleasant Ridge Ave", },
         },
+        Body = new ItemBody { Content = $"Created by MS Graph way at {DateTime.Now:yyyy-MM-dd ddd  HH:mm} \n\n" }, 
+        ReminderMinutesBeforeStart = 90,
+        IsAllDay = false,
+        IsReminderOn = true,
+        //ReminderPlaySound = true,
+        //ReminderSoundFile = @"C:\Windows\Media\Rinse Repeat - DivKid.wav" // $"C:\Users\alexp\OneDrive\Downloads\Unsorted.bin\victims-of-society-dark-electronic-nostalgic-melodic-trance-music-124650.wav",
       };
 
       attendeeEmails.ToList().ForEach(email => requestBody.Attendees.Add(new() { EmailAddress = new EmailAddress { Address = email } })); // foreach (var email in attendeeEmails)      {        requestBody.Attendees.Add(new() { EmailAddress = new EmailAddress { Address = email } });      }
