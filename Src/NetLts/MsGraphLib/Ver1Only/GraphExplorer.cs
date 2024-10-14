@@ -65,8 +65,7 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
         ReminderMinutesBeforeStart = 90,
         IsAllDay = false,
         IsReminderOn = true,
-        //ReminderPlaySound = true,
-        //ReminderSoundFile = @"C:\Windows\Media\Rinse Repeat - DivKid.wav" // $"C:\Users\alexp\OneDrive\Downloads\Unsorted.bin\victims-of-society-dark-electronic-nostalgic-melodic-trance-music-124650.wav",
+        ResponseRequested = false, //*new: see what happens here        //not supported by MSGraph: ReminderPlaySound = true,        //ReminderSoundFile = @"C:\Windows\Media\Rinse Repeat - DivKid.wav" // $"C:\Users\alexp\OneDrive\Downloads\Unsorted.bin\victims-of-society-dark-electronic-nostalgic-melodic-trance-music-124650.wav",
       };
 
       attendeeEmails.ToList().ForEach(email => requestBody.Attendees.Add(new() { EmailAddress = new EmailAddress { Address = email } })); // foreach (var email in attendeeEmails)      {        requestBody.Attendees.Add(new() { EmailAddress = new EmailAddress { Address = email } });      }
