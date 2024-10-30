@@ -2,18 +2,6 @@
 
 public class DevOps
 {
-  public static bool IsDbg
-  {
-    get
-    {
-#if DEBUG
-      return true;
-#else
-      return false;
-#endif
-    }
-  }
-
   public static DateTimeOffset AppStartedAt = DateTimeOffset.Now;
   public static bool IsDevMachine => IsDevMachineO || IsDevMachineH;
   public static bool IsDevMachineO => HashString(Environment.MachineName).Equals(_devMachineO, StringComparison.OrdinalIgnoreCase);
@@ -34,6 +22,12 @@ public class DevOps
 
     return sb.ToString();
   }
+
+#if DEBUG
+  public static bool IsDbg => true;
+#else
+  public static bool IsDbg => false;
+#endif
 
   static readonly string[] _selects = new[] {
   //"06f8aa28c4c328ccb33b1c595ab1b39d27ed9ddb2bbfc2fc51d556f56d2e699f", // test only of a..xp temp
