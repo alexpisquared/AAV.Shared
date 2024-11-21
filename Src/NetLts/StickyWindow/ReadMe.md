@@ -1,0 +1,1 @@
+﻿# ...actually, this looks like a crazy overkill: it is way simpler to outsource this task to the MianVM like in the Interactibles.sln at github.Intuit.com repo.
