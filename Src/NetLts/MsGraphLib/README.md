@@ -61,3 +61,7 @@ Run the script manually whenever you need to prepare a commit message:
 These methods should help you get around the chmod error on Windows. Let me know if you need further assistance!
 
 forget it for now.  It is not working.  I will try it later.
+
+
+### 2024-12-03  Tested latest versions of MSGraph:
+  Looks like it is a bit better as almost all videos are playing.  But still 500 mb is not not.  I will wait for the next version to see if it is fixed.
