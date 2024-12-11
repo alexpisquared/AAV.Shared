@@ -292,7 +292,7 @@ namespace AsLink
         32 => "Off ignore",
         64 => "On  ignore",
         1024 => "1024",
-        _ => value.ToString(),
+        _ => value.ToString() ?? "NUL",
       };
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
@@ -307,7 +307,7 @@ namespace AsLink
     {
       try
       {
-        var s = value.ToString();
+        var s = value.ToString() ?? "";
         s = s.Replace("<br>", "\n").Replace("<br/>", "\n").Replace("<br />", "\n");
         s = s.Replace("</me1>", "\n").Replace("< /me1>", "\n");
         s = Regex.Replace(s, @"<(.|\n)*?>", string.Empty); //http://www.osherove.com/blog/2003/5/13/strip-html-tags-from-a-string-using-regular-expressions.html
@@ -398,7 +398,7 @@ namespace AsLink
       catch (Exception ex)
       {
         System.Diagnostics.Trace.WriteLine(
-            $"\n***{ex.GetType().Name} in {GetType().Name}.{System.Reflection.MethodInfo.GetCurrentMethod().Name}:\n {ex.Message}\n {(ex.InnerException == null ? "" : ex.InnerException.Message)}\n");
+            $"\n***{ex.GetType().Name} in {GetType().Name}.{System.Reflection.MethodInfo.GetCurrentMethod()?.Name}:\n {ex.Message}\n {(ex.InnerException == null ? "" : ex.InnerException.Message)}\n");
       }
 
       return DateTime.MaxValue;//returning null is not an option.
@@ -418,7 +418,7 @@ namespace AsLink
     {
       var maskedText = value as string;
 
-      var hhmm = maskedText.Replace("_", "").Split(':');
+      var hhmm = maskedText?.Replace("_", "").Split(':') ?? [];
       int h = 0, m = 0;
       if (hhmm.Length == 0) return DependencyProperty.UnsetValue;
       if (hhmm.Length > 0 && int.TryParse(hhmm[0], out var dcm)) { h = dcm; }
