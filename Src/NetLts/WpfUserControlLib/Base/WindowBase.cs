@@ -9,7 +9,7 @@ public partial class WindowBase : Window
   const string _defaultTheme = "No Theme";
   const int _swShowNormal = 1, _swShowMinimized = 2, _margin = 0;
   static int _currentTop = 0, _currentLeft = 0;
-  string WinFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}{(VersionHelper.IsDbg ? ".dbg" : "")}.json");
+  string _windowPlacementFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}{(VersionHelper.IsDbg ? ".dbg" : "")}.json"); // C:\Users\alexp\AppData\Local\AppSettings\MainViewmodelAsSettings\[MainWindow].dbg.json
   public WindowBase() : this(new LoggerFactory().CreateLogger<Window>()) { } // no logging needed; for cases like error popups, etc.
   public WindowBase(ILogger logger)
   {
@@ -119,7 +119,7 @@ public partial class WindowBase : Window
 
       try
       {
-        var wpContainer = JsonFileSerializer.Load<StandardLib.Helpers.WinAPI.WPContainer>(WinFile);
+        var wpContainer = JsonFileSerializer.Load<StandardLib.Helpers.WinAPI.WPContainer>(_windowPlacementFile);
         ZV = wpContainer.Zb == 0 ? 1 : wpContainer.Zb;
         winPlcmnt = wpContainer.WindowPlacement;
 
@@ -132,7 +132,7 @@ public partial class WindowBase : Window
         ZV = 1d;
         try
         {
-          winPlcmnt = JsonFileSerializer.Load<StandardLib.Helpers.WinAPI.WindowPlacement>(WinFile);
+          winPlcmnt = JsonFileSerializer.Load<StandardLib.Helpers.WinAPI.WindowPlacement>(_windowPlacementFile);
         }
         catch (Exception ex2)
         {
@@ -149,7 +149,7 @@ public partial class WindowBase : Window
 
       if (winPlcmnt.normalPosition.Bottom == 0 && winPlcmnt.normalPosition.Top == 0 && winPlcmnt.normalPosition.Left == 0 && winPlcmnt.normalPosition.Right == 0)
       {
-        _logger.Log(LogLevel.Trace, $"~~WinBase   {WinFile,20}: 1st time: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
+        _logger.Log(LogLevel.Trace, $"~~WinBase   {_windowPlacementFile,20}: 1st time: Window Positions - all zeros!   {SystemParameters.WorkArea.Width}x{SystemParameters.WorkArea.Height} is this the screen dims?");
 
         winPlcmnt.normalPosition.Left = _currentLeft + _margin;
         winPlcmnt.normalPosition.Top = _currentTop + _margin;
@@ -192,7 +192,7 @@ public partial class WindowBase : Window
         report += "Window placement NOT saved <==  Window Positions - all zeros!  ..cause it's been closed already, right? ^^";
       else
       {
-        JsonFileSerializer.Save(new StandardLib.Helpers.WinAPI.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, WinFile);  // _logger.Log(LogLevel.Trace, $"### Saved window placement to  {WinFile}.");
+        JsonFileSerializer.Save(new StandardLib.Helpers.WinAPI.WPContainer { WindowPlacement = winPlcmnt, Zb = ZV, Thm = Thm }, _windowPlacementFile);  // _logger.Log(LogLevel.Trace, $"### Saved window placement to  {WinFile}.");
         report += "Window placement saved.";
       }
 
