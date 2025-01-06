@@ -95,7 +95,7 @@ public partial class Bpr
         _p.PlaySync(); // <== pauses all animations!!!
       }
     }
-    catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); }
+    catch (Exception ex) { WriteLine($"Hz: {HzMks.Length} tones   {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); Console.Beep(5555, 750); }
 
     writer.Close();
     stream.Close();
