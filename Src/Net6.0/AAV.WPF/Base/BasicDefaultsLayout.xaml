@@ -20,8 +20,9 @@
   </Style>
 
   <Style TargetType="{x:Type AccessText}">
-    <!-- INFO: Label without '_' acquires the style from the TextBlock; to overcome, use AccessText; in case Label's Target functionality needed, use:       <AccessText Text="_AccessText:"  AccessKeyManager.AccessKeyPressed="onAccessKeyPressed_focusT2" /> -->
-    <Setter Property="Foreground"           Value="{StaticResource LablForegroundBrush}" />
+    <!--  //tu: _ This applies to all the Label + Button with '_'           (INFO: Label without '_' acquires the style from the TextBlock; to overcome, use AccessText; in case Label's Target functionality needed, use:       <AccessText Text="_AccessText:" AccessKeyManager.AccessKeyPressed="onAccessKeyPressed_focusT2" /> ) 
+          //tu: Solution: do not set the next line:
+    <Setter Property="Foreground"               Value="{StaticResource LablForegroundBrush}" />    -->
     <Setter Property="VerticalAlignment"    Value="Center" />
     <Setter Property="HorizontalAlignment"  Value="Right" />
   </Style>
