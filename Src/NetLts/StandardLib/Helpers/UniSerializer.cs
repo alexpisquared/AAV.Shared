@@ -20,7 +20,7 @@ public static class JsonFileSerializer
         streamWriter.Close();
       }
     }
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (Exception ex) { _ = ex.Log(); throw; }
   }
   public static T Load<T>(string filename, bool saveFormatted = false) where T : new()
   {
@@ -55,7 +55,7 @@ public static class XmlFileSerializer
       using StreamWriter streamWriter = new(filename);
       new XmlSerializer(typeof(T)).Serialize(streamWriter, obj);
     }
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (Exception ex) { _ = ex.Log(); throw; }
   }
   public static T? Load<T>(string filename) where T : new()
   {
@@ -67,8 +67,8 @@ public static class XmlFileSerializer
         return (T?)new XmlSerializer(typeof(T))?.Deserialize(streamReader);
       }
     }
-    catch (InvalidOperationException ex) { if (ex.HResult != -2146233079) ex.Log(); throw; } // "Root element is missing." ==> create new at the bottom
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (InvalidOperationException ex) { if (ex.HResult != -2146233079) _ = ex.Log(); throw; } // "Root element is missing." ==> create new at the bottom
+    catch (Exception ex) { _ = ex.Log(); throw; }
 
     return (T)(Activator.CreateInstance(typeof(T)) ?? new T());
   }
@@ -121,7 +121,7 @@ public static class JsonIsoFileSerializer
       new DataContractJsonSerializer(typeof(T)).WriteObject(streamWriter.BaseStream, o); // new XmlSerializer(obj.GetType()).Serialize(streamWriter, obj);
       streamWriter.Close();
     }
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (Exception ex) { _ = ex.Log(); throw; }
   }
   public static T? Load<T>(string? filenameONLY = null, IsolatedStorageScope iss = IsoConst.PdFls) where T : new()
   {
@@ -133,14 +133,14 @@ public static class JsonIsoFileSerializer
       {
         using IsolatedStorageFileStream? isoStream = new(IsoConst.GetSetFilename<T>(filenameONLY ?? typeof(T).Name, "json"), FileMode.Open, FileAccess.Read, FileShare.Read, isoStore);
         using StreamReader streamReader = new(isoStream);
-        var obj = (T?)(new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream)); // var obj = (T)(new XmlSerializer(typeof(T)).Deserialize(streamReader));
+        var obj = (T?)new DataContractJsonSerializer(typeof(T)).ReadObject(streamReader.BaseStream); // var obj = (T)(new XmlSerializer(typeof(T)).Deserialize(streamReader));
         streamReader.Close();
         return obj;
       }
     }
-    catch (InvalidOperationException /**/ ex) { if (ex.HResult != -2146233079) { ex.Log(); throw; } }  // "Root element is missing." ==> create new at the bottom
-    catch (SerializationException    /**/ ex) { if (ex.HResult != -2146233076) { ex.Log(); throw; } }  // "There was an error deserializing the object of type AlexPi.Scr.Logic.AppSettings. End element 'LastSave' from namespace '' expected. Found element 'DateTimeOffset' from namespace ''."	string
-    catch (Exception                 /**/ ex) { ex.Log(typeof(T).Name); throw; }
+    catch (InvalidOperationException /**/ ex) { if (ex.HResult != -2146233079) { _ = ex.Log(); throw; } }  // "Root element is missing." ==> create new at the bottom
+    catch (SerializationException    /**/ ex) { if (ex.HResult != -2146233076) { _ = ex.Log(); throw; } }  // "There was an error deserializing the object of type AlexPi.Scr.Logic.AppSettings. End element 'LastSave' from namespace '' expected. Found element 'DateTimeOffset' from namespace ''."	string
+    catch (Exception                 /**/ ex) { _ = ex.Log(typeof(T).Name); throw; }
 
     return (T)(Activator.CreateInstance(typeof(T)) ?? new T());
   }
@@ -159,7 +159,7 @@ public static class XmlIsoFileSerializer
       using StreamWriter? streamWriter = new(isoStream);
       new XmlSerializer(typeof(T))?.Serialize(streamWriter, o);
     }
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (Exception ex) { _ = ex.Log(); throw; }
   }
   public static T Load<T>(string filenameONLY = "", IsolatedStorageScope iss = IsoConst.f33) where T : new()
   {
@@ -167,18 +167,17 @@ public static class XmlIsoFileSerializer
     {
       var isoStore = IsolatedStorageFile.GetStore(iss, null, null);
 
-
       if (isoStore.FileExists(IsoConst.GetSetFilename<T>(filenameONLY, "xml")))
       {
         using IsolatedStorageFileStream? stream = new(IsoConst.GetSetFilename<T>(filenameONLY, "xml"), FileMode.Open, FileAccess.Read, FileShare.Read, isoStore);
         using var streamReader = XmlReader.Create(stream);//ing (var streamReader = new StreamReader(stream))
-        var o = (T?)(new XmlSerializer(typeof(T)).Deserialize(streamReader));
+        var o = (T?)new XmlSerializer(typeof(T)).Deserialize(streamReader);
         streamReader.Close();
         return o ?? (T)(Activator.CreateInstance(typeof(T)) ?? new T());
       }
     }
-    catch (InvalidOperationException ex) { if (ex.HResult != -2146233079) ex.Log(); throw; } // "Root element is missing." ==> create new at the bottom
-    catch (Exception ex) { ex.Log(); throw; }
+    catch (InvalidOperationException ex) { if (ex.HResult != -2146233079) _ = ex.Log(); throw; } // "Root element is missing." ==> create new at the bottom
+    catch (Exception ex) { _ = ex.Log(); throw; }
 
     return (T)(Activator.CreateInstance(typeof(T)) ?? new T());
   }
