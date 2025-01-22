@@ -70,8 +70,10 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
   {
     try
     {
+      var max = 160;
+      var fileSafe = file.Length > max ? file[..max] : file;
       using var result = await speak(msg);
-      return !_useCached || await CreateWavFile(file, result);
+      return !_useCached || await CreateWavFile(fileSafe, result);
     }
     catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); /*else throw;*/ }
 
