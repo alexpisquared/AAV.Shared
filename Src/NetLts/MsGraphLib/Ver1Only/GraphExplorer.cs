@@ -101,7 +101,7 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
   }
   public static async Task<(bool success, string report)> ExploreGraph_SendEmailHtml(GraphServiceClient graphClient, string trgEmailAdrs, string msgSubject, string msgBody, string[]? attachedFilenames = null, string? signatureImage = null)
   {
-    try
+    try // a fallback; This one C:\g\GigaHunt\Src\sln\Emailing.NET6\Emailer2025.cs is the main one and more used.
     {
       await graphClient.Me.SendMail.PostAsync(new Microsoft.Graph.Me.SendMail.SendMailPostRequestBody       //await graphClient.Users["alex.pigida@outlook.com"].SendMail.PostAsync(new Microsoft.Graph.Users.Item.SendMail.SendMailPostRequestBody
       {
