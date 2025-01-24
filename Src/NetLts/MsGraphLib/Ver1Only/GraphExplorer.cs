@@ -1,8 +1,4 @@
 ﻿using Microsoft.Graph.Models;
-using Pastel;
-using System.Diagnostics;
-using System.Drawing;
-using static System.Console;
 
 namespace MsGraphLibVer1.Ver1Only;
 
@@ -38,8 +34,7 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
     }
     catch (Exception ex)
     {
-      WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
-      Trace.WriteLine($"▒▒ Error: {ex.Message}");
+      WriteLine($"▒▒ Error: {ex.Message}");
       Beep(5000, 750);
     }
   }
@@ -77,12 +72,11 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
     }
     catch (Exception ex)
     {
-      WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
-      Trace.WriteLine($"▒▒ Error: {ex.Message}");
+      WriteLine($"▒▒ Error: {ex.Message}");
       Beep(5000, 750);
     }
   }
-  public static async Task ExploreGraph_SendEmail(MyGraphDriveServiceClient msGraphLibVer1, string trgEmailAdrs = "pigida@gmail.com", string msgSubject = "test 12312", string msgBody = "Message body.", string[]? attachedFilenames = null, string? signatureImage = null)
+  public static async Task<(bool success, string report)> ExploreGraph_SendEmail(MyGraphDriveServiceClient msGraphLibVer1, string trgEmailAdrs = "pigida@gmail.com", string msgSubject = "test 12312", string msgBody = "Message body.", string[]? attachedFilenames = null, string? signatureImage = null)
   {
     try
     {
@@ -97,12 +91,36 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
         },
         SaveToSentItems = true
       });
+      return (true, $"OK...");
     }
     catch (Exception ex)
     {
-      WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
-      Trace.WriteLine($"▒▒ Error: {ex.Message}");
-      Beep(5000, 750);
+      WriteLine($"▒▒ Error: {ex.Message}");
+      return (false, $"▒▒ Error: {ex.Message}");
+    }
+  }
+  public static async Task<(bool success, string report)> ExploreGraph_SendEmailHtml(GraphServiceClient graphClient, string trgEmailAdrs, string msgSubject, string msgBody, string[]? attachedFilenames = null, string? signatureImage = null)
+  {
+    try
+    {
+      await graphClient.Me.SendMail.PostAsync(new Microsoft.Graph.Me.SendMail.SendMailPostRequestBody       //await graphClient.Users["alex.pigida@outlook.com"].SendMail.PostAsync(new Microsoft.Graph.Users.Item.SendMail.SendMailPostRequestBody
+      {
+        Message = new Message
+        {
+          Subject = msgSubject,
+          Body = new ItemBody { Content = msgBody, ContentType = BodyType.Html },
+          ToRecipients = [new Recipient { EmailAddress = new EmailAddress { Address = trgEmailAdrs } }],
+          Attachments = attachedFilenames?.Select(file => new FileAttachment { Name = Path.GetFileName(file), ContentBytes = File.ReadAllBytes(file), OdataType = "#microsoft.graph.fileAttachment" }).Cast<Attachment>().ToList()
+        },
+        SaveToSentItems = true
+      });
+
+      return (true, $"OK...");
+    }
+    catch (Exception ex)
+    {
+      WriteLine($"▒▒ Error: {ex.Message}");
+      return (false, $"▒▒ Error: {ex.Message}");
     }
   }
 }
