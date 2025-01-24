@@ -61,7 +61,7 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
           DisplayName = locationAddress,
           //Address = new PhysicalAddress { City = "Vaughan", CountryOrRegion = "Canada", PostalCode = "L4J 9B3", Street = "300 Pleasant Ridge Ave", },
         },
-        Body = new ItemBody { Content = $"Created by MS Graph way at {DateTime.Now:yyyy-MM-dd ddd  HH:mm} \n\n" }, 
+        Body = new ItemBody { Content = $"Created by MS Graph way at {DateTime.Now:yyyy-MM-dd ddd  HH:mm} \n\n" },
         ReminderMinutesBeforeStart = 90,
         IsAllDay = false,
         IsReminderOn = true,
@@ -74,6 +74,29 @@ public class GraphExplorer // https://developer.microsoft.com/en-us/graph/graph-
 
       WriteLine($" * Calendar:".Pastel(Color.DarkCyan));
       WriteLine($" ■ {bookedEvent?.Start?.DateTime} {bookedEvent?.Subject}".Pastel(Color.Cyan));
+    }
+    catch (Exception ex)
+    {
+      WriteLine($"▒▒ Error: {ex.Message}".Pastel(Color.FromArgb(255, 160, 0)));
+      Trace.WriteLine($"▒▒ Error: {ex.Message}");
+      Beep(5000, 750);
+    }
+  }
+  public static async Task ExploreGraph_SendEmail(MyGraphDriveServiceClient msGraphLibVer1, string trgEmailAdrs = "pigida@gmail.com", string msgSubject = "test 12312", string msgBody = "Message body.", string[]? attachedFilenames = null, string? signatureImage = null)
+  {
+    try
+    {
+      await msGraphLibVer1.DriveClient.Me.SendMail.PostAsync(new Microsoft.Graph.Me.SendMail.SendMailPostRequestBody       //await graphClient.Users["alex.pigida@outlook.com"].SendMail.PostAsync(new Microsoft.Graph.Users.Item.SendMail.SendMailPostRequestBody
+      {
+        Message = new Message
+        {
+          Subject = msgSubject,
+          Body = new ItemBody { Content = msgBody, ContentType = BodyType.Html },
+          ToRecipients = [new Recipient { EmailAddress = new EmailAddress { Address = trgEmailAdrs } }],
+          Attachments = attachedFilenames?.Select(file => new FileAttachment { Name = Path.GetFileName(file), ContentBytes = File.ReadAllBytes(file), OdataType = "#microsoft.graph.fileAttachment" }).Cast<Attachment>().ToList()
+        },
+        SaveToSentItems = true
+      });
     }
     catch (Exception ex)
     {
