@@ -2,7 +2,7 @@
 public partial class Bpr
 {
   readonly SoundPlayer _p = new();
-  const int d1 = 100_000, _dMin = 50_000; //below .075 sec nogo on razer1.
+  const int d1 = 100_000, _dMin = 80_000; //below .075 sec nogo on razer1.
   const int d2 = d1 + d1;
   readonly int[][] _Beethoven6thWarn = new[] {
     FixDuration(392/2, d1), FixDuration(10, d1),
