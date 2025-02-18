@@ -127,7 +127,7 @@ public class ConfigHelper //todo: appsettings as user prefs: https://makolyte.co
       ""SqlConStrFormat"":      ""Server={{0}};Database={{1}};Trusted_Connection=True;Encrypt=False;Connection Timeout=00;"", 
       ""SqlConStrForma_"":      ""Server={{0}};Database={{1}};persist security info=True;user id={{2}};password={{3}};MultipleActiveResultSets=True;App=EntityFramework;Connection Timeout=47"",
       ""SubDetails"": {{
-        ""KeyVaultURL"":        ""<moved to a safe place>"",
+        ""KvUrl"":        ""<moved to a safe place>"",
         ""PreCreatedAt"":       ""{2}""
       }}
 }}"; // let's wait for 9000 sec (15 min) lest fail a scheduled distribution.
