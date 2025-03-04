@@ -65,3 +65,6 @@ forget it for now.  It is not working.  I will try it later.
 
 ### 2024-12-03  Tested latest versions of MSGraph:
   Looks like it is a bit better as almost all videos are playing.  But still 500 mb is not not.  I will wait for the next version to see if it is fixed.
+
+### 2025-03-04  Email alarm:
+  I have to set up an email alarm for the next week.
