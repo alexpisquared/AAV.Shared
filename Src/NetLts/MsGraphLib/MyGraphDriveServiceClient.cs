@@ -21,8 +21,8 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
     get
     {
       var (success, report, _) = InitializeGraphClientIfNeeded(clientId).Result;
-      WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
-      Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
+      WriteLine($"{DateTime.Now:HH:mm:ss}  {report}".Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
+      Trace.WriteLine(report.Pastel(Color.FromArgb(200, 100, 100)));
 
       return _graphServiceClient ?? throw new InvalidOperationException("■ GraphServiceClient not initialized");
     }
