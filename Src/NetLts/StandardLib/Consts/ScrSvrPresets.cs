@@ -8,5 +8,5 @@ public class ScrSvrPresets
     Environment.MachineName == "ASUS2" ? 16 :   // see the logs if 10 min limit kicks in here
     Environment.MachineName == "YOGA1" ? 16 :   // see the logs if 10 min limit kicks in here
     Environment.MachineName.Contains("33") ? 56 + 60 + 60 :  // Mar 2025: not sure I need to sleep it here. Apr 3: better turn it off .. along with the monitor. Apr 4: ScrSvr puts it to some sort of deep sleep which takes forever to wake up from: let's keep it off for 3 hours at least.
-    8.5; // something closes the app exactly on 10 min mark: "inf ╘══10.0 min OnExit"  ==> keep it under 10 > 9.5=8.5+1+.5  
+    56 + 60; 
 }
