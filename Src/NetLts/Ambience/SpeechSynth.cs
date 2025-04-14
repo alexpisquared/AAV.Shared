@@ -212,7 +212,7 @@ Quick Start: https://learn.microsoft.com/en-us/azure/cognitive-services/speech-s
 Synthesize speech to a file ++: https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/how-to-speech-synthesis?tabs=browserjs%2Cterminal&pivots=programming-language-csharp
 Microsoft Cognitive Services Speech SDK Samples: https://learn.microsoft.com/en-us/samples/azure-samples/cognitive-services-speech-sdk/sample-repository-for-the-microsoft-cognitive-services-speech-sdk/
 
-See C:\g\ScSv\Src\AlexPi.Scr\TtsVoicesPocConsoleApp\VoiceTester.cs for detail.
+See C:\g\AAV.ScrSvr\Src\AlexPi.Scr\TtsVoicesPocConsoleApp\VoiceTester.cs for detail.
  
 https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support?tabs=stt-tts#voice-styles-and-roles 
 
