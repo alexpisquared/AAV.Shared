@@ -1,6 +1,4 @@
-﻿using StandardContractsLib;
-
-namespace AmbienceLib;
+﻿namespace AmbienceLib;
 
 public partial class Bpr : IBpr
 {
@@ -63,7 +61,7 @@ public partial class Bpr : IBpr
 
     var started = Stopwatch.GetTimestamp();
     await BeepHzMks(vs.ToArray(), isAsync: false).ConfigureAwait(false);
-    
+
     report += $"                                                        {Stopwatch.GetElapsedTime(started).TotalSeconds:N2} sec";
     Console.ForegroundColor = ConsoleColor.DarkCyan; Console.WriteLine(report); Console.ResetColor();
     return report;
@@ -108,57 +106,7 @@ public partial class Bpr : IBpr
     //tmi: Trace_(fromHz, tillHz, stepHz, vs, started);
   }
   public async Task WakeAudio() => await BeepAsync(1, .1);
-  public static async Task DevDbg() //  public App()  {    AmbienceLib.Bpr.DevDbg(); // ...
-  {
-    if (Debugger.IsAttached) // no way out !!!
-    {
-      Bpr bpr = new();
-      while (true)
-      {
-        await bpr.StartAsync(2).ConfigureAwait(false); await Task.Delay(800);    // too slow - good for app
-        await bpr.FinishAsync(2).ConfigureAwait(false); await Task.Delay(800);
-
-        await bpr.StartAsync(4).ConfigureAwait(false); await Task.Delay(600);
-        await bpr.FinishAsync(4).ConfigureAwait(false); await Task.Delay(600);
-
-        await bpr.StartAsync(8).ConfigureAwait(false); await Task.Delay(400);
-        await bpr.FinishAsync(8).ConfigureAwait(false); await Task.Delay(400);
-
-        await bpr.StartAsync(12).ConfigureAwait(false); await Task.Delay(200);
-        await bpr.FinishAsync(12).ConfigureAwait(false); await Task.Delay(200);  // - too fast - good for navigations
-        //await bpr.StartAsync(1).ConfigureAwait(false); 
-
-        //////await bpr.WaveAsync(100, 300, 4);
-        //////await bpr.WaveAsync(100, 300, 4);
-        //////await bpr.WaveAsync(100, 300, 4);
-
-        //////await bpr.WaveAsync(150, 51, 3);
-        //////await bpr.WaveAsync(300, 100, 10);
-        ////await bpr.WaveAsync(141, 100, 7);
-        ////await bpr.WaveAsync(60, 101, 7); // noiseless pair
-
-        ////bpr.Tick(); await Task.Delay(333);
-
-        ////await bpr.TickAsync(); await Task.Delay(333);
-
-        ////bpr.Click(); await Task.Delay(333);
-
-        //var f = 5000;
-        //var d = .075;
-        //await bpr.BeepAsync(f, d);
-        //await Task.Delay(300);
-
-        //await bpr.TickAsync();
-        //await Task.Delay(300);
-
-        //await bpr.ClickAsync();
-        //await Task.Delay(300);
-
-        //WriteLine($"**************** {f}   {d}");
-      }
-    }
-  }
-  public static int[] FixDuration(int hz, int mks) // making sure whole wavelengths are sent to play.
+  public  int[] FixDuration(int hz, int mks) // making sure whole wavelengths are sent to play.
   {
     var preciseTimesWavePlayed = mks * .000_001 * hz;
     var roundedTimesWavePlayed = Math.Round(preciseTimesWavePlayed);
@@ -173,11 +121,18 @@ public partial class Bpr : IBpr
 
   // LickCreator results:
   public async Task BulkWhistle() => await Wave2Async([200, 3000, 1000, 8000], [15, 15, 15]);
-  public   async Task Bulk_500_1000_110ms() => await Wave2Async([500, 1000], [20]);
-  public   async Task Bulk_250_500_110ms() => await Wave2Async([250, 500], [20]);
-  public   async Task Bulk100_600() => await Wave2Async([100, 600], [20]); // 0.19 sec
-  public   async Task Tuk500_100() => await Wave2Async([500, 100], [20]); // 0.19 sec
-  public   async Task Tuk505_50() => await Wave2Async([505, 50], [5]); // 0.52 sec
+  public async Task Bulk_500_1000_110ms() => await Wave2Async([500, 1000], [20]);
+  public async Task Bulk_250_500_110ms() => await Wave2Async([250, 500], [20]);
+  public async Task Bulk100_600() => await Wave2Async([100, 600], [20]); // 0.19 sec
+  public async Task Tuk500_100() => await Wave2Async([500, 100], [20]); // 0.19 sec
+  public async Task Tuk505_50() => await Wave2Async([505, 50], [5]); // 0.52 sec
+  public async Task Wh_WhatAsync() => await Wave2Async([200, 1000, 100, 4000], [16]); // 0.54 sec  	 2025-04-17 09:38
+  public async Task OhWowAsync() => await Wave2Async([1000, 100, 4000, 200], [16]); // 0.61 sec  	 2025-04-17 09:40
+  public async Task WovAsync() => await Wave2Async([80, 800, 160], [16]); // 0.31 sec  	 2025-04-17 09:43
+  public async Task TwitAsync() => await Wave2Async([6555, 1111, 3555], [16]); // 0.24 sec  	 2025-04-17 09:45
+  public async Task ChockingUhmAsync() => await Wave2Async([655, 111, 355], [16]); // 0.26 sec  	 2025-04-17 09:49
+  public async Task YouSureAsync() => await Wave2Async([5000, 800, 6000, 500], [16]); // 0.46 sec  	 2025-04-17 09:54
+  public async Task AreYouSureAsync() => await Wave2Async([4000, 600, 5000, 500, 4000, 300], [16]); // 0.77 sec  	 2025-04-17 09:56
+  public void Beep1of2() => throw new NotImplementedException();
+  public void Beep2of2() => throw new NotImplementedException();
 }
-// public   async Task Tuk505_50() => await _bpr.Wave2Async([20000, 1000, 8000], [25]); // 0.28 sec
-// public   async Task Tuk505_50() => await _bpr.Wave2Async([20000, 1000, 8000], [25]); // 0.28 sec

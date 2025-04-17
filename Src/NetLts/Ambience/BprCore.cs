@@ -4,7 +4,13 @@ public partial class Bpr
   readonly SoundPlayer _p = new();
   const int d1 = 100_000, _dMin = 80_000; //below .075 sec nogo on razer1.
   const int d2 = d1 + d1;
-  readonly int[][] _Beethoven6thWarn = new[] {
+  readonly int[][] _Beethoven6thWarn;
+  readonly int[][] _Beethoven6thErr;
+  readonly int[]     _fd11 ,     _fd22 ,     _fdw1 ,     _fdw2 ,     _fd21 ,     _fd23 ;
+
+  public Bpr()
+  {
+    _Beethoven6thWarn = new[] {
     FixDuration(392/2, d1), FixDuration(10, d1),
     FixDuration(392/2, d1), FixDuration(10, d1),
     FixDuration(392/2, d1), FixDuration(10, d1),
@@ -13,7 +19,7 @@ public partial class Bpr
     FixDuration(349/2, d1), FixDuration(10, d1),
     FixDuration(349/2, d1), FixDuration(10, d1),
     FixDuration(294/2, d2), FixDuration(10, d2) };
-  readonly int[][] _Beethoven6thErr = new[] { //April 2024: 3920=>392 :quieter for office!!!
+    _Beethoven6thErr = new[] { //April 2024: 3920=>392 :quieter for office!!!
     FixDuration(392, d1), FixDuration(10, d1),
     FixDuration(392, d1), FixDuration(10, d1),
     FixDuration(392, d1), FixDuration(10, d1),
@@ -22,13 +28,14 @@ public partial class Bpr
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(349, d1), FixDuration(10, d1),
     FixDuration(294, d2), FixDuration(10, d2) };
-  readonly int[]
-     _fd11 = FixDuration(5000, _dMin),
-     _fd22 = FixDuration(6000, _dMin * 2),
-     _fdw1 = FixDuration(2000, _dMin),
-     _fdw2 = FixDuration(2500, _dMin * 2),
-     _fd21 = FixDuration(6000, _dMin),
-     _fd23 = FixDuration(5000, _dMin * 6);
+    _fd11 = FixDuration(5000, _dMin);
+    _fd22 = FixDuration(6000, _dMin * 2);
+    _fdw1 = FixDuration(2000, _dMin);
+    _fdw2 = FixDuration(2500, _dMin * 2);
+    _fd21 = FixDuration(6000, _dMin);
+    _fd23 = FixDuration(5000, _dMin * 6);
+
+  }
   public async Task BeepHzMks(int[][] HzMks, bool isAsync = true) => await BeepHzMks(HzMks, ushort.MaxValue, isAsync);
   public async Task BeepHzMks(int[][] HzMks, ushort volume, bool isAsync = true)
   {
@@ -101,6 +108,6 @@ public partial class Bpr
     stream.Close();
   }
 
-  public static void Beep1of2() => Console.Beep(3456, 120);
-  public static void Beep2of2() => Console.Beep(3456, 120);
+  //public static void Beep1of2() => Console.Beep(3456, 120);
+  //public static void Beep2of2() => Console.Beep(3456, 120);
 }
