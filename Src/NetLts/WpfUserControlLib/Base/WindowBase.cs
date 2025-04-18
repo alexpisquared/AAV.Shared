@@ -6,7 +6,7 @@ public partial class WindowBase : Window
   protected readonly DateTimeOffset _mvwStarted = DateTimeOffset.Now;
   protected readonly ILogger _logger;
   const double _defaultZoomV = 1.25;
-  const string _defaultTheme = "No Theme";
+  const string _noTheme = "No Theme";
   const int _swShowNormal = 1, _swShowMinimized = 2, _margin = 0;
   static int _currentTop = 0, _currentLeft = 0;
   string _windowPlacementFile => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @$"AppSettings\{AppDomain.CurrentDomain.FriendlyName}\{GetType().Name}{(VersionHelper.IsDbg ? ".dbg" : "")}.json"); // C:\Users\alexp\AppData\Local\AppSettings\MainViewmodelAsSettings\[MainWindow].dbg.json
@@ -25,42 +25,36 @@ public partial class WindowBase : Window
   protected bool IgnoreWindowPlacement { get; set; }
   protected bool DragMovable { get; set; } = true;
   public static readonly DependencyProperty ZVProperty = DependencyProperty.Register("ZV", typeof(double), typeof(WindowBase), new PropertyMetadata(_defaultZoomV)); public double ZV { get => (double)GetValue(ZVProperty); set => SetValue(ZVProperty, value); }
-  public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_defaultTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }
+  public static readonly DependencyProperty ThmProperty = DependencyProperty.Register("Thm", typeof(string), typeof(WindowBase), new PropertyMetadata(_noTheme)); public string Thm { get => (string)GetValue(ThmProperty); set => SetValue(ThmProperty, value); }
   public string? KeepOpenReason { get; set; } = null; // """ [KeepOpenReason = "Changes have not been saved."] """;
   protected void ApplyTheme(string themeName, [CallerMemberName] string? cmn = "")
   {
     _logger.Log(LogLevel.Trace, $"► WinBase  shw{(DateTimeOffset.Now - _mvwStarted).TotalSeconds,4:N1}s  {themeName,-26}{cmn} -> {nameof(WindowBase)}.{nameof(ApplyTheme)}().");
 
-    const string pref = "/WpfUserControlLib;component/ColorScheme/Theme.Color.";
+    const string prefix = "/WpfUserControlLib;component/ColorScheme/Theme.Color.";
 
     try
     {
-      if (_defaultTheme.Equals(themeName, StringComparison.Ordinal) || Thm.Equals(themeName, StringComparison.Ordinal))
+      if (_noTheme.Equals(themeName, StringComparison.Ordinal) || Thm.Equals(themeName, StringComparison.Ordinal))
       {
         return;
       }
 
       //~Write($"TrcW:>     ~> ThemeApplier()   '{themeName}'  to  '{WinFile}' ... Dicts --/++:\r\n");
-      //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => _logger.Log(LogLevel.Trace, $"~~WinBase       ~> -- Removing: {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
+      //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => _logger.Log(LogLevel.Trace, $"~~WinBase       ~> -- Removing: {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(prefix, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
 
-      var suri = $"{pref}{themeName}.xaml";
-      if (Application.LoadComponent(new Uri(suri, UriKind.RelativeOrAbsolute)) is ResourceDictionary dict)
+      if (Application.LoadComponent(new Uri($"{prefix}{themeName}.xaml", UriKind.RelativeOrAbsolute)) is ResourceDictionary dict)
       {
         ResourceDictionary? rd;
-        while ((rd = Application.Current.Resources.MergedDictionaries.FirstOrDefault(r => ((IUriContext)r)?.BaseUri?.AbsolutePath?.Contains(pref
-#if MockingCore3
-#else
-          , StringComparison.OrdinalIgnoreCase
-#endif
-          ) == true)) != null)
-          Application.Current.Resources.MergedDictionaries.Remove(rd);
+        while ((rd = Application.Current.Resources.MergedDictionaries.FirstOrDefault(r => ((IUriContext)r)?.BaseUri?.AbsolutePath?.Contains(prefix, StringComparison.OrdinalIgnoreCase) == true)) != null)
+          _ = Application.Current.Resources.MergedDictionaries.Remove(rd);
 
         Application.Current.Resources.MergedDictionaries.Add(dict);
       }
 
       Thm = themeName;
 
-      //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => _logger.Log(LogLevel.Trace, $"~~WinBase       ~> ++ Adding:   {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(pref, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
+      //~Application.Current.Resources.MergedDictionaries.ToList().ForEach(r => _logger.Log(LogLevel.Trace, $"~~WinBase       ~> ++ Adding:   {((System.Windows.Markup.IUriContext)r)?.BaseUri?.AbsolutePath.Replace(prefix, "..."/*, StringComparison.OrdinalIgnoreCase*/)}"));
       //~Write($"TrcW:>     ~> ThemeApplier()   '{themeName}'  to  '{WinFile}' is done. \r\n");
     }
     catch (Exception ex) { ex.Pop(this, $"New theme '{themeName}' is trouble.", lgr: _logger); }
@@ -68,7 +62,7 @@ public partial class WindowBase : Window
   protected async void CloseBaseWindow(object s, RoutedEventArgs e)
   {
     _logger.Log(LogLevel.Trace, $"██WinBase  ..CloseBaseWindow({s.GetType().Name}) ");
-    await Task.Delay(333); 
+    await Task.Delay(333);
     Close();
   }
   void CloseShutdown(string from, [CallerMemberName] string? cmn = "")
@@ -85,7 +79,7 @@ public partial class WindowBase : Window
   }
   void OnMouseLeftButtonDown_(MouseButtonEventArgs e) //tu: workaround for  "Can only call DragMove when primary mouse button is down." (2021-03-10: pre-opened dropdown seemingly caused the error)
   {
-    if (DragMovable && e.LeftButton == MouseButtonState.Pressed) DragMove(); 
+    if (DragMovable && e.LeftButton == MouseButtonState.Pressed) DragMove();
   }
   void OnMouseWheel_(MouseWheelEventArgs e)
   {
@@ -123,7 +117,7 @@ public partial class WindowBase : Window
         ZV = wpContainer.Zb == 0 ? 1 : wpContainer.Zb;
         winPlcmnt = wpContainer.WindowPlacement;
 
-        ApplyTheme(string.IsNullOrEmpty(wpContainer.Thm) ? _defaultTheme : wpContainer.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
+        ApplyTheme(string.IsNullOrEmpty(wpContainer.Thm) ? _noTheme : wpContainer.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
       }
       catch (InvalidOperationException ex1)
       {
