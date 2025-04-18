@@ -16,7 +16,7 @@ public static class UnhandledExceptionHndlrUI // Core 3
       {
         WriteLine($"\n██\n{innerMessages}\n██\n");
         Beep.Play();
-        Debugger.Break();
+        //Debugger.Break();
         return;
       }
 
