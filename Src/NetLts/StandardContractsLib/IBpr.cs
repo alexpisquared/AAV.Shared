@@ -10,6 +10,8 @@ public interface IBpr
   void AppStart(ushort vol = 5957);
   Task AppStartAsync(ushort vol = 5957);
   Task AreYouSureAsync();
+  Task AreYouSure2kAsync();
+  Task AreYouSure1kAsync();
   void Beep(int hz, double sec);
   void Beep(int hz, double sec, ushort vol);
   void Beep1of2();

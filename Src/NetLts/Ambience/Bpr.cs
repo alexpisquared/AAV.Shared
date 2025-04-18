@@ -106,7 +106,7 @@ public partial class Bpr : IBpr
     //tmi: Trace_(fromHz, tillHz, stepHz, vs, started);
   }
   public async Task WakeAudio() => await BeepAsync(1, .1);
-  public  int[] FixDuration(int hz, int mks) // making sure whole wavelengths are sent to play.
+  public int[] FixDuration(int hz, int mks) // making sure whole wavelengths are sent to play.
   {
     var preciseTimesWavePlayed = mks * .000_001 * hz;
     var roundedTimesWavePlayed = Math.Round(preciseTimesWavePlayed);
@@ -133,6 +133,8 @@ public partial class Bpr : IBpr
   public async Task ChockingUhmAsync() => await Wave2Async([655, 111, 355], [16]); // 0.26 sec  	 2025-04-17 09:49
   public async Task YouSureAsync() => await Wave2Async([5000, 800, 6000, 500], [16]); // 0.46 sec  	 2025-04-17 09:54
   public async Task AreYouSureAsync() => await Wave2Async([4000, 600, 5000, 500, 4000, 300], [16]); // 0.77 sec  	 2025-04-17 09:56
+  public async Task AreYouSure2kAsync() => await Wave2Async([2000, 300, 2500, 250, 2000, 200], [16]); // 0.76 sec  	 2025-04-18 10:25
+  public async Task AreYouSure1kAsync() => await Wave2Async([33, 1000, 150, 1100, 150, 1000, 100], [16]); // 0.92 sec  	 2025-04-18 10:28
   public void Beep1of2() => throw new NotImplementedException();
   public void Beep2of2() => throw new NotImplementedException();
 }
