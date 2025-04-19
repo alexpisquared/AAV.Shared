@@ -135,6 +135,6 @@ public partial class Bpr : IBpr
   public async Task AreYouSureAsync() => await Wave2Async([4000, 600, 5000, 500, 4000, 300], [16]); // 0.77 sec  	 2025-04-17 09:56
   public async Task AreYouSure2kAsync() => await Wave2Async([2000, 300, 2500, 250, 2000, 200], [16]); // 0.76 sec  	 2025-04-18 10:25
   public async Task AreYouSure1kAsync() => await Wave2Async([33, 1000, 150, 1100, 150, 1000, 100], [16]); // 0.92 sec  	 2025-04-18 10:28
-  public void Beep1of2() => throw new NotImplementedException();
-  public void Beep2of2() => throw new NotImplementedException();
+  public void Beep1of2() => Start();
+  public void Beep2of2() => Finish();
 }
