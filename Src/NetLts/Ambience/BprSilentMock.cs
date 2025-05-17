@@ -43,8 +43,8 @@
 //  public async Task WaveAsync3k8k4() => await Task.Yield();
 //  public async Task WaveAsync4k7k2() => await Task.Yield();
 //  public async Task WaveAsync7k5k1() => await Task.Yield();
-//  public void AppStart(ushort vol) => Console.Beep(3456, 1200);
-//  public void AppFinish(ushort vol) => Console.Beep(3456, 1200);
+//  public void AppStart(ushort vol) => WinAPI.Beep(3456, 1200);
+//  public void AppFinish(ushort vol) => WinAPI.Beep(3456, 1200);
 //  public Task AppStartAsync(ushort vol) => throw new NotImplementedException("@888");
 //  public Task AppFinishAsync(ushort vol) => throw new NotImplementedException("@888");
 //  public void Beep1of2() => throw new NotImplementedException();
