@@ -1,4 +1,6 @@
-﻿namespace AAV.Sys.Helpers;
+﻿using AAV.Sys.Helpers;
+
+namespace Helpers;
 
 [Obsolete("Use  AmbienceLib.Bpr  instead.")]
 public static class Bpr
@@ -6,12 +8,12 @@ public static class Bpr
   static void beep(int freq, int dur) => NativeMethods.Beep(freq, dur);
 
   public static void WakeAudio() => NativeMethods.Beep(11111, 333);
-  public static void OkFaF() => Task.Run(() => BeepOk());
-  public static void OKbFaF() => Task.Run(() => BeepOkB());
-  public static void ErrorFaF() => Task.Run(() => ErrorSynch());
-  public static void Begin1FaF() => Task.Run(() => Begin1Sync());
-  public static void Begin2FaF() => Task.Run(() => Begin2Sync());
-  public static void ShortFaF() => Task.Run(() => BeepShort());
+  public static void OkFaF() => Task.Run(BeepOk);
+  public static void OKbFaF() => Task.Run(BeepOkB);
+  public static void ErrorFaF() => Task.Run(ErrorSynch);
+  public static void Begin1FaF() => Task.Run(Begin1Sync);
+  public static void Begin2FaF() => Task.Run(Begin2Sync);
+  public static void ShortFaF() => Task.Run(BeepShort);
 
   public static void ErrorSynch()
   {
@@ -39,7 +41,7 @@ public static class Bpr
   public static void Beep2of2() { beep(highest, _minDurn140); beep(higher, _210ms); }
 
   public static void No() { beep(4211, _minDurn140); beep(4000, _minDurn140); }
-  public static void BeepBigError() { for (double i = 1000; i < 5000; i *= 1.5) { beep((int)i, (int)(higher / i)); } }
+  public static void BeepBigError() { for (double i = 1000; i < 5000; i *= 1.5) beep((int)i, (int)(higher / i)); }
   public static void BeepBgn2() { var v = 300; beep(v + 200, _minDurn140); beep(v + 300, _minDurn140 * 6); }
   public static void BeepEnd2() { var v = 300; beep(v + 200, _minDurn140); beep(v + 100, _minDurn140 * 6); }
   public static void BeepBgn3() { var v = 300; beep(v + 100, _minDurn140); beep(v + 200, _minDurn140); beep(v + 300, _minDurn140 * 6); }

@@ -104,6 +104,7 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     else
     {
       _lgr?.Log(LogLevel.Warning, $"Length is {len} for wav-file  '{file}'. Check the key. ");
+      Trace.WriteLine(LogLevel.Warning, $"Length is {len} for wav-file  '{file}'. Check the key. ");
       await _bpr.WarnAsync();
       File.Delete(temp);
       return false;
