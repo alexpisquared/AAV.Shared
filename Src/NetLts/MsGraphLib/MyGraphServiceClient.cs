@@ -1,12 +1,14 @@
-﻿namespace MsGraphLib____;
+﻿using Azure.Core;
+
+namespace MsGraphLib____;
 
 public class MyGraphServiceClient
 {
   protected GraphServiceClient? _graphServiceClient;
 
-  protected async Task<(bool success, string report, AuthenticationResult? authResult)> InitializeGraphClientIfNeeded(string clientId)
+  public async Task<(bool success, string report, AuthenticationResult? authResult, TokenCredential? tokenCredential)> InitializeGraphClientIfNeeded(string clientId)
   {
-    if (_graphServiceClient is not null) return (true, "  already done initialization for _graphServiceClient.", null);
+    if (_graphServiceClient is not null) return (true, "  already done initialization for _graphServiceClient.", null, null);
 
     string[] _scopes = [ //tu: manage apps:  https://portal.azure.com/?feature.quickstart=true#view/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/~/Overview/appId/af27ddbb-f29b-4588-af5f-4d03c03c03d0/isMSAApp~/false
       "User.Read",
@@ -50,16 +52,17 @@ public class MyGraphServiceClient
         catch (MsalException msalEx)
         {
           WriteLine($"■ Error Acquiring Token INTERACTIVELY:   \n  {msalEx.Message}".Pastel(Color.IndianRed));
-          return (false, $"■ Error Acquiring Token INTERACTIVELY:   {msalEx}", null);
+          return (false, $"■ Error Acquiring Token INTERACTIVELY:   {msalEx}", null, null);
         }
       }
-      catch (Exception ex) { return (false, $"Error Acquiring Token Silently:   {ex}", null); }
+      catch (Exception ex) { return (false, $"Error Acquiring Token Silently:   {ex}", null, null); }
 
-      _graphServiceClient = new GraphServiceClient(new MyTokenCredential(authResult.AccessToken), _scopes);
+      var t = new MyTokenCredential(authResult.AccessToken);
+      _graphServiceClient = new GraphServiceClient(t, _scopes);
 
-      return (true, ReportResult(authResult), authResult);
+      return (true, ReportResult(authResult), authResult, t);
     }
-    catch (Exception ex) { return (false, $"Error Acquiring Token Silently:   {ex}", null); }
+    catch (Exception ex) { return (false, $"Error Acquiring Token Silently:   {ex}", null, null); }
   }
 
   static async Task<MsalCacheHelper> CreateCacheHelperAsync(string clientId)
