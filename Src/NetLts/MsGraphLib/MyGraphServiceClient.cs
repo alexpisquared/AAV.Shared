@@ -2,11 +2,11 @@
 
 namespace MsGraphLib____;
 
-public class MyGraphServiceClient
+public class MyGraphServiceClient(string clientId)
 {
   protected GraphServiceClient? _graphServiceClient;
 
-  public async Task<(bool success, string report, AuthenticationResult? authResult, TokenCredential? tokenCredential)> InitializeGraphClientIfNeeded(string clientId)
+  public async Task<(bool success, string report, AuthenticationResult? authResult, TokenCredential? tokenCredential)> InitializeGraphClientIfNeeded()
   {
     if (_graphServiceClient is not null) return (true, "  already done initialization for _graphServiceClient.", null, null);
 

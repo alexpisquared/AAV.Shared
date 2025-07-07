@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace MsGraphLibVer1;
 
-public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, IMyGraphDriveServiceClient
+public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(clientId), IMyGraphDriveServiceClient
 {
   Drive? _drive; public Drive Drive
   {
@@ -20,7 +20,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
   {
     get
     {
-      var (success, report, _, _) = InitializeGraphClientIfNeeded(clientId).Result;
+      var (success, report, _, _) = InitializeGraphClientIfNeeded().Result;
       WriteLine($"{DateTime.Now:HH:mm:ss}  {report}".Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(200, 100, 100)));
 
@@ -62,7 +62,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient, 
   {
     try
     {
-      var (success, report, authResult, _) = await InitializeGraphClientIfNeeded(clientId);
+      var (success, report, authResult, _) = await InitializeGraphClientIfNeeded();
       WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 96 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
 
