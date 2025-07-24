@@ -25,13 +25,13 @@ public class MyGraphServiceClient(string clientId)
 
     try
     {
-      var publicClientApplication = PublicClientApplicationBuilder.Create(clientId)
+      IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(clientId)
             .WithAuthority(AzureCloudInstance.AzurePublic, tenant: "common")
             .WithRedirectUri("http://localhost").Build();
 
       (await CreateCacheHelperAsync(clientId).ConfigureAwait(false)).RegisterCache(publicClientApplication.UserTokenCache); //without this line, account1 is null => then it ALWAYS goes interactive !!! => use for testing it.
 
-      var account1 = (await publicClientApplication.GetAccountsAsync().ConfigureAwait(false)).FirstOrDefault();
+      IAccount? account1 = (await publicClientApplication.GetAccountsAsync().ConfigureAwait(false)).FirstOrDefault();
 
       AuthenticationResult authResult;
       try
@@ -69,7 +69,7 @@ public class MyGraphServiceClient(string clientId)
   {
     try
     {
-      var storageProperties = new StorageCreationPropertiesBuilder(AppSettings.CacheFileName, AppSettings.CacheDir)
+      StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(AppSettings.CacheFileName, AppSettings.CacheDir)
         .WithLinuxKeyring(
           AppSettings.LinuxKeyRingSchema,
           AppSettings.LinuxKeyRingCollection,
@@ -83,14 +83,14 @@ public class MyGraphServiceClient(string clientId)
           clientId,
           AppSettings.Authority).Build();
 
-      var cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
+      MsalCacheHelper cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
       cacheHelper.VerifyPersistence();
       return cacheHelper;
     }
     catch (MsalCachePersistenceException)
     {
-      var storageProperties = new StorageCreationPropertiesBuilder(AppSettings.CacheFileNam2, AppSettings.CacheDir).WithUnprotectedFile().Build();
-      var cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
+      StorageCreationProperties storageProperties = new StorageCreationPropertiesBuilder(AppSettings.CacheFileNam2, AppSettings.CacheDir).WithUnprotectedFile().Build();
+      MsalCacheHelper cacheHelper = await MsalCacheHelper.CreateAsync(storageProperties).ConfigureAwait(false);
       cacheHelper.VerifyPersistence();
       return cacheHelper;
     }

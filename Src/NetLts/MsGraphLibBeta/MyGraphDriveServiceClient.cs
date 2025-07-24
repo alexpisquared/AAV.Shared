@@ -21,7 +21,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
   {
     get
     {
-      var (success, report, _, _) = InitializeGraphClientIfNeeded().Result;
+      (bool success, string report, AuthenticationResult _, Azure.Core.TokenCredential _) = InitializeGraphClientIfNeeded().Result;
       WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
 
@@ -29,15 +29,18 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
     }
   }
 
+  [Obsolete]
   public async Task TestStreamDirect(string filePath)
   {
-    using var stream = await GetGraphFileStream(filePath);
+    using Stream stream = await GetGraphFileStream(filePath);
 
     RealTimeStreamOutputting(stream);
   }
+
+  [Obsolete]
   public async Task TestMemoryStream(string filePath)
   {
-    using var stream = await GetGraphFileStream(filePath);
+    using Stream stream = await GetGraphFileStream(filePath);
 
     var memoryStream = new MemoryStream();
     await stream.CopyToAsync(memoryStream);
@@ -64,7 +67,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
   {
     try
     {
-      var (success, report, authResult, _) = await InitializeGraphClientIfNeeded();
+      (bool success, string report, AuthenticationResult authResult, Azure.Core.TokenCredential _) = await InitializeGraphClientIfNeeded();
       WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
       Trace.WriteLine(report);
 
@@ -73,8 +76,8 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
       _drive = await _graphServiceClient.Me.Drive.GetAsync();
       ArgumentNullException.ThrowIfNull(_drive, nameof(_drive));
 
-      var driveItem = await _graphServiceClient.Drives[_drive.Id].Root.ItemWithPath(file).GetAsync() ?? throw new FileNotFoundException($"File not found: {file}");
-      var rawStream = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].Content.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!");
+      DriveItem driveItem = await _graphServiceClient.Drives[_drive.Id].Root.ItemWithPath(file).GetAsync() ?? throw new FileNotFoundException($"File not found: {file}");
+      Stream rawStream = await _graphServiceClient.Drives[_drive.Id].Items[driveItem.Id].Content.GetAsync() ?? throw new FileNotFoundException($"File found {file} .. but getting content for {driveItem.Id} failed?!?!?!");
 
       ///todo: ContentStream:
       /// https://learn.microsoft.com/en-us/graph/api/driveitem-get-contentstream?view=graph-rest-beta&tabs=http
