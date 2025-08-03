@@ -1,6 +1,7 @@
 ﻿<lnk:WindowBase xmlns:lnk="clr-namespace:WpfUserControlLib.Base" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
                 xmlns:system="clr-namespace:System;assembly=mscorlib"
-                xmlns:Anime="clr-namespace:WpfUserControlLib.Anime" x:Name="wnd" x:Class="WpfUserControlLib.Views.ExceptionPopup" mc:Ignorable="d"
+                xmlns:Anime="clr-namespace:ArcLib;assembly=ArcLib" 
+                x:Name="wnd" x:Class="WpfUserControlLib.Views.ExceptionPopup" mc:Ignorable="d"
                 Width="900" SizeToContent="Height" MinHeight="320" MaxHeight="1200" Style="{DynamicResource WindowStyle_Aav0}" Topmost="True" Loaded="OnLoaded">
   <lnk:WindowBase.Resources>
     <ResourceDictionary>
@@ -31,23 +32,29 @@
         </Style.Triggers>
       </Style>
 
-      <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BtnBase}" x:Key="RoundButton">
-        <Setter Property="Width"                Value="28"/>
-        <Setter Property="Height"               Value="28"/>
+      <Style TargetType="{x:Type Button}" x:Key="RoundButton">
         <Style.Resources>
-          <Style TargetType="Border">
+          <Style TargetType="{x:Type Border}">
             <Setter Property="CornerRadius"     Value="20" />
           </Style>
         </Style.Resources>
+        <Setter Property="Width"                Value="28"/>
+        <Setter Property="Height"               Value="28"/>
+        <Style.BasedOn>
+          <StaticResource ResourceKey="BtnBase"/>
+        </Style.BasedOn>
       </Style>
 
-      <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BtnBase}">
-        <Setter Property="BorderThickness"      Value="0" />
+      <Style TargetType="{x:Type Button}">
         <Style.Resources>
-          <Style TargetType="Border">
+          <Style TargetType="{x:Type Border}">
             <Setter Property="CornerRadius"     Value="8" />
           </Style>
         </Style.Resources>
+        <Setter Property="BorderThickness"      Value="0" />
+        <Style.BasedOn>
+          <StaticResource ResourceKey="BtnBase"/>
+        </Style.BasedOn>
       </Style>
 
     </ResourceDictionary>

@@ -1,9 +1,9 @@
-﻿namespace WpfUserControlLib.Anime;
+﻿namespace ArcLib;
 
 public partial class ArcPi
 {
   public ArcPi() => InitializeComponent();
-  public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color", typeof(Brush), typeof(ArcPi), new PropertyMetadata(Brushes.Green)); public Brush Color { get => (Brush)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
+  public static readonly DependencyProperty ColorProperty = DependencyProperty.Register("Color", typeof(Brush), typeof(ArcPi), new PropertyMetadata(Brushes.LightPink)); public Brush Color { get => (Brush)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
   public static readonly DependencyProperty BckgrProperty = DependencyProperty.Register("Bckgr", typeof(Brush), typeof(ArcPi), new PropertyMetadata(Brushes.Fuchsia)); public Brush Bckgr { get => (Brush)GetValue(BckgrProperty); set => SetValue(BckgrProperty, value); }
   public static readonly DependencyProperty RadiuProperty = DependencyProperty.Register("Radiu", typeof(double), typeof(ArcPi), new PropertyMetadata(50d)); public double Radiu { get => (double)GetValue(RadiuProperty); set => SetValue(RadiuProperty, value); }
   public static readonly DependencyProperty AngleProperty = DependencyProperty.Register("Angle", typeof(double), typeof(ArcPi), new PropertyMetadata(0d, PropertyChangedCallback)); public double Angle { get => (double)GetValue(AngleProperty); set => SetValue(AngleProperty, value); }

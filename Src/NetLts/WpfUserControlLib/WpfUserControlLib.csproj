@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ArcLib\ArcLib.csproj" />
     <ProjectReference Include="..\LibraryImportLib\LibraryImportLib.csproj" />
     <ProjectReference Include="..\PhoneAreaCoder\PhoneAreaCoder.csproj" />
     <ProjectReference Include="..\StandardContractsLib\StandardContractsLib.csproj" />
@@ -66,19 +67,12 @@
 
 
   <ItemGroup>
-    <Compile Update="Anime\ArcPi.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Anime\GravityAnimeDropPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Anime\ArcPi.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Anime\ArrivaLogoDropPanel.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
