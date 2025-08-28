@@ -2,6 +2,7 @@
 
 namespace StandardLib.Helpers;
 
+[Obsolete(@"Use instead: C:\g\AAV.Shared\Src\NetLts\SerilogHelperLib\", true)]
 public class SeriLogHelper
 {
   const string MinLogLevel = "+Info -Verb +Infi";

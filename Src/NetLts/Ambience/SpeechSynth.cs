@@ -56,26 +56,27 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}""                                              ><voice name=""{voicE}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""                                                       role=""{role}"">{msg2}</prosody></voice></speak>" :
       $@"<speak version=""1.0"" xmlns=""https://www.w3.org/2001/10/synthesis"" xml:lang=""{lang}"" xmlns:mstts=""https://www.w3.org/2001/mstts""><voice name=""{voicE}""><prosody volume=""{volumePercent}"" rate=""{speakingRate}""><mstts:express-as style=""{style}"" styledegree=""2"" role=""{role}"">{msg2}</mstts:express-as></prosody></voice></speak>";
 
-    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg2);
+    await SpeakOr(ssml, file, _synthesizer.SpeakSsmlAsync, msg2, (int)volumePercent);
   }
 
-  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak, string? orgMsg = null)
+  async Task SpeakOr(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak, string? orgMsg = null, int volumePercent = 26)
   {
     if (_useCached && File.Exists(file) && new FileInfo(file).Length > 10)
       PlayWavFileSync(file);
     else if (await SpeakPlusCreateWavFile(msg, file, speak) == false)
-      SpeakFreeFAF(orgMsg ?? msg);
+      SpeakFreeFAF(orgMsg ?? msg, volumePercent: volumePercent);
   }
   async Task<bool> SpeakPlusCreateWavFile(string msg, string file, Func<string, Task<SpeechSynthesisResult>> speak)
   {
     try
     {
-      var max = 160;
-      var fileSafe = file.Length > max ? file[..max] : file;
+      _lgr?.Log(LogLevel.Warning, $"■■■ Creating missing  '{file}' ...");
+      var maxFileNameLength = 160;
+      var fileSafe = file.Length > maxFileNameLength ? file[..maxFileNameLength] : file;
       using var result = await speak(msg);
       return !_useCached || await CreateWavFile(fileSafe, result);
     }
-    catch (Exception ex) { _lgr?.Log(LogLevel.Warning, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); /*else throw;*/ }
+    catch (Exception ex) { _lgr?.Log(LogLevel.Error, $"■■■ {ex.Message}"); if (Debugger.IsAttached) Debugger.Break(); /*else throw;*/ }
 
     return false;
   }
