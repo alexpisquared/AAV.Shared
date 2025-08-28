@@ -30,13 +30,11 @@ public class SeriLogHelper
 
   static string GetLogFilePath(string assemblyName)
   {
-    var basePath = Constants.IsDbg
-        ? $@"\temp\bak\Logs"
-        : $@"\\actcosys.com\cetaris\Home\APigida\Downloads\bak\Logs{(Environment.UserName == "apigida" ? @".dev" : "")}\";
+    var basePath = Constants.IsDbg ? $@"\temp\bak\Logs" : $@"C:\Users\{Environment.UserName}\OneDrive\Public\Logs\";
 
     var fileName = Constants.IsDbg
-        ? $"{assemblyName}-{DateTime.Now:MM.dd·HH.mm.ss}.log"
-        : $"{assemblyName}.{Environment.MachineName[^3..]}.{Environment.UserName[..1]}.{DateTime.Now:MMdd.HHmm}.log";
+        ? $"{assemblyName}-{DateTime.Now:MM.dd·HH.mm.ss.f}.log"
+        : $"{assemblyName}.{DateTime.Now:MMdd.HHmm}.log";
 
     return Path.Combine(basePath, fileName);
   }
