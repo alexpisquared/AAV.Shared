@@ -189,7 +189,7 @@ public partial class SpeechSynth : IDisposable, ISpeechSynth
     _ = Synthesizer.SpeakAsync(msg); // not await-able and not blocking: essentially - FAF.
     if (isAsync)
       await Task.Delay((int)(Math.Pow(Math.E, -0.106 * Synthesizer.Rate) * msg.Length * 3659.8 / 48.0));
-    Synthesizer.Volume = prev;
+    //2025-08: synce async it dows not work:       Synthesizer.Volume = prev;
   }
 
   [Obsolete("Use ..SpeakFreeFAF()")]
