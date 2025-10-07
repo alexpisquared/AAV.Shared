@@ -1,4 +1,5 @@
 ﻿namespace AmbienceLib;
+
 public partial class Bpr
 {
   readonly SoundPlayer _p = new();
@@ -6,28 +7,28 @@ public partial class Bpr
   const int d2 = d1 + d1;
   readonly int[][] _Beethoven6thWarn;
   readonly int[][] _Beethoven6thErr;
-  readonly int[]     _fd11 ,     _fd22 ,     _fdw1 ,     _fdw2 ,     _fd21 ,     _fd23 ;
+  readonly int[] _fd11, _fd22, _fdw1, _fdw2, _fd21, _fd23;
 
   public Bpr()
   {
     _Beethoven6thWarn = new[] {
-    FixDuration(392/2, d1), FixDuration(10, d1),
-    FixDuration(392/2, d1), FixDuration(10, d1),
-    FixDuration(392/2, d1), FixDuration(10, d1),
-    FixDuration(311/2, d2), FixDuration(10, d2),
-    FixDuration(349/2, d1), FixDuration(10, d1),
-    FixDuration(349/2, d1), FixDuration(10, d1),
-    FixDuration(349/2, d1), FixDuration(10, d1),
-    FixDuration(294/2, d2), FixDuration(10, d2) };
+    FixDuration(392/5, d1), FixDuration(10, d1),
+    FixDuration(392/5, d1), FixDuration(10, d1),
+    FixDuration(392/5, d1), FixDuration(10, d1),
+    FixDuration(311/5, d2), FixDuration(10, d2),
+    FixDuration(349/5, d1), FixDuration(10, d1),
+    FixDuration(349/5, d1), FixDuration(10, d1),
+    FixDuration(349/5, d1), FixDuration(10, d1),
+    FixDuration(294/5, d2), FixDuration(10, d2) };
     _Beethoven6thErr = new[] { //April 2024: 3920=>392 :quieter for office!!!
-    FixDuration(392, d1), FixDuration(10, d1),
-    FixDuration(392, d1), FixDuration(10, d1),
-    FixDuration(392, d1), FixDuration(10, d1),
-    FixDuration(311, d2), FixDuration(10, d2),
-    FixDuration(349, d1), FixDuration(10, d1),
-    FixDuration(349, d1), FixDuration(10, d1),
-    FixDuration(349, d1), FixDuration(10, d1),
-    FixDuration(294, d2), FixDuration(10, d2) };
+    FixDuration(392/3, d1), FixDuration(10, d1),
+    FixDuration(392/3, d1), FixDuration(10, d1),
+    FixDuration(392/3, d1), FixDuration(10, d1),
+    FixDuration(311/3, d2), FixDuration(10, d2),
+    FixDuration(349/3, d1), FixDuration(10, d1),
+    FixDuration(349/3, d1), FixDuration(10, d1),
+    FixDuration(349/3, d1), FixDuration(10, d1),
+    FixDuration(294/3, d2), FixDuration(10, d2) };
     _fd11 = FixDuration(5000, _dMin);
     _fd22 = FixDuration(6000, _dMin * 2);
     _fdw1 = FixDuration(2000, _dMin);
