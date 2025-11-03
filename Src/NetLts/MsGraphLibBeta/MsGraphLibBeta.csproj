@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Graph.Beta" Version="5.88.0-preview" />
-    <PackageReference Include="Azure.Identity" Version="1.15.0" />
-    <PackageReference Include="Pastel" Version="7.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.17.0" />
+    <PackageReference Include="Pastel" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
