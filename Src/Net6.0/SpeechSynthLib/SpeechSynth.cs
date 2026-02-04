@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SpeechSynthLib
 {
-  [Obsolete(@"Use this: C:\g\AAV.Shared\Src\NetLts\Ambience\SpeechSynth.cs", true)]  
+  [Obsolete(@"Use this: C:\g\AAV.Shared\Src\NetLts\Ambience\SpeechSynth.cs", false)]  
   public class SpeechSynth : IDisposable
   {
     const double _speakingRate = 1.25;

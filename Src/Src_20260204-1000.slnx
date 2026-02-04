@@ -1,0 +1,45 @@
+<Solution>
+  <Folder Name="/Db/">
+    <Project Path="Db/Db.MinFinInv.PowerTools/Db.MinFinInv.PowerTools.csproj" Id="029c3f4a-0996-460f-acdc-c8fdd170c8cc" />
+  </Folder>
+  <Folder Name="/Net4.8/">
+    <Project Path="Net4.8/AAV.Mvvm/AAV.Mvvm.csproj" Id="aa5c34cf-6f6a-4b2c-b067-d9aabcac1b6b" />
+    <Project Path="Net4.8/AAV.WPF/AAV.WPF.4.8.csproj" Id="df459a59-5c58-4930-ab44-9b3d6e36cd98" />
+  </Folder>
+  <Folder Name="/Net6.0/">
+    <Project Path="Net6.0/AAV.Anime.Wpf3dCube/AAV.Anime.Wpf3dCube.csproj" Id="6f8417bf-ac52-4df1-9b0f-7a80c09a7d26" />
+    <Project Path="Net6.0/AAV.Anime/AAV.Anime.csproj" Id="64180a7d-a7b4-4ee1-aaaa-f023c6360407" />
+    <Project Path="Net6.0/AAV.Mvvm/AAV.Mvvm.csproj" Id="751dd4f2-f35c-4120-aff1-c60a6ad988b2" />
+    <Project Path="Net6.0/AAV.Sph/AAV.Sph.csproj" Id="5abfe9d1-0ea7-4f37-9090-e30887afb6ee" />
+    <Project Path="Net6.0/AAV.Sys/AAV.Sys.8.0.csproj" Id="347edfdc-6460-4de4-8e21-db19d4c96b75" />
+    <Project Path="Net6.0/AAV.UI/AAV.UI.csproj" Id="5d5a5f18-bf85-41a6-a7c4-7fc97df2c7c3" />
+    <Project Path="Net6.0/AAV.WPF/AAV.WPF.csproj" Id="8e1f37c6-f837-483a-acc0-115882521154" />
+    <Project Path="Net6.0/SpeechSynthLib/SpeechSynthLib.csproj" Id="35c10007-c2c0-4a77-aa2a-f10b4b950c98" />
+  </Folder>
+  <Folder Name="/NetLts/">
+    <Project Path="NetLts/Ambience/AmbienceLib.csproj" Id="830980ec-746b-470d-8a50-9eb8e49fab5b" />
+    <Project Path="NetLts/AmbienceDevDbg/AmbienceDevDbg.csproj" Id="8da7f21a-3689-4878-9dc8-1526c3e0032c" />
+    <Project Path="NetLts/ArcLib/ArcLib.csproj" Id="e4ccc459-feb3-4bd7-9e44-646b89a4a7a9" />
+    <Project Path="NetLts/EfDbHelperLib/EfDbHelperLib.csproj" Id="3b9d0081-c055-4f8e-9e50-672e940fb474" />
+    <Project Path="NetLts/EventLogHelperLib/EventLogHelperLib.csproj" Id="bb6eebc0-5848-42b3-97fd-c42c7f9350ef" />
+    <Project Path="NetLts/LibraryImportLib/LibraryImportLib.csproj" Id="98108e8c-fca9-4c1e-a06e-554de6789125" />
+    <Project Path="NetLts/MsGraphLib/MsGraphLibVer1.csproj" Id="31874c94-7114-4d58-944c-94aeb94b17a3" />
+    <Project Path="NetLts/MsGraphLibBeta/MsGraphLibBeta.csproj" Id="0bca1d98-0cc2-4683-b066-9170a2416e27" />
+    <Project Path="NetLts/NavigationDrawerControl/NavigationDrawerControl.csproj" Id="3a170182-93db-45e3-8fe2-8bf988d22845" />
+    <Project Path="NetLts/PeriodicTimerLib/PeriodicTimerLib.csproj" Id="c5858db7-59c6-4ffa-b596-90f6bf9909da" />
+    <Project Path="NetLts/PhoneAreaCoder/PhoneAreaCoder.csproj" Id="fa5bb9f5-bbd1-41b5-ae76-12f0cd4ca5ae" />
+    <Project Path="NetLts/SerilogHelperLib/SerilogHelperLib.csproj" Id="25bfc8be-0c24-4943-845d-69a9b6d3f1cc" />
+    <Project Path="NetLts/StandardContractsLib/StandardContractsLib.csproj" Id="827c50b8-3789-4e6b-a755-ecd51dc8eba3" />
+    <Project Path="NetLts/StandardLib/StandardLib.csproj" Id="f5fe19da-b74b-4ce4-a7a4-5423c7eb91e5" />
+    <Project Path="NetLts/StdLibTestConsoleApp/StdLibTestConsoleApp.csproj" Id="2f900587-5aee-4af3-bb76-76fdd918877d" />
+    <Project Path="NetLts/StickyWindow/StickyWindow.csproj" Id="177e4b5d-8bc5-445b-a879-62f380ce4592" />
+    <Project Path="NetLts/WinFormsControlLib/WinFormsControlLib.csproj" Id="312b6451-a7ca-4837-aecd-c294ec23eaa9" />
+    <Project Path="NetLts/WpfUserControlLib/WpfUserControlLib.csproj" Id="5fd03146-261c-4d62-9564-47e71f06bd10" />
+  </Folder>
+  <Folder Name="/AsLink/" />
+  <Folder Name="/AsLink/CsProj/">
+    <Project Path="AsLink/CsProj/AAV.Common.MVVM/AAV.Common.MVVM.csproj" Id="175d8a5c-519d-4a1f-8b6e-d822a0717680" />
+    <Project Path="AsLink/CsProj/AAV.Common.UI/AAV.Common.UI.csproj" Id="62e489f8-ccae-4984-a19d-03abb8eb1854" />
+  </Folder>
+  <Project Path="../../../C/AAV/AAV.Sys/AAV.Sys.4.8.csproj" Id="60bb75f4-e913-40f9-be60-d5e408f24751" />
+</Solution>
