@@ -68,3 +68,9 @@ forget it for now.  It is not working.  I will try it later.
 
 ### 2025-03-04  Email alarm:
   I have to set up an email alarm for the next week.
+
+### 2026-02-09  Still no solution for the video streaming issue already with .NET 10.
+  Must try Copilot for help.  
+  I will try it later.  
+  It is not a critical issue for now.  
+  I can download the videos and play them locally.
