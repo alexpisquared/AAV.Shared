@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -9,7 +8,6 @@
     <UserSecretsId>480cb88e-7081-4d0f-b871-c5af36c5f476</UserSecretsId>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Assets\error.gif" />
     <None Remove="Assets\sql.ico" />
@@ -22,12 +20,10 @@
     <None Remove="ReadMe.AppStngs.UserScrts.md" />
     <None Remove="ReadMe.md" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="ReadMe.AppStngs.UserScrts.md" />
     <Content Include="ReadMe.md" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\ArcLib\ArcLib.csproj" />
     <ProjectReference Include="..\LibraryImportLib\LibraryImportLib.csproj" />
@@ -35,7 +31,6 @@
     <ProjectReference Include="..\StandardContractsLib\StandardContractsLib.csproj" />
     <ProjectReference Include="..\StandardLib\StandardLib.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Resource Include="Assets\error.gif" />
     <Resource Include="Assets\sql.ico">
@@ -48,13 +43,12 @@
     <Resource Include="Assets\vb VIRTUAL BROKERS - logo_s.gif" />
     <Resource Include="Assets\Watermark.png" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="CliWrap" Version="3.10.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
     <!--Easier controlling from here
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64">
       <PrivateAssets>all</PrivateAssets>
@@ -65,14 +59,11 @@
     <PackageReference Include="System.Text.Json" Version="10.0.2" />
     -->
   </ItemGroup>
-
-
   <ItemGroup>
     <Compile Update="Anime\GravityAnimeDropPanel.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Page Update="Anime\ArrivaLogoDropPanel.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
@@ -163,5 +154,4 @@
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>
-
 </Project>
