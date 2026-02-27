@@ -1,28 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\MsGraphLib\MyGraphServiceClient.cs" Link="MyGraphServiceClient.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\MsGraphLib\README.md" Link="README.md" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Graph.Beta" Version="5.88.0-preview" />
-    <PackageReference Include="Azure.Identity" Version="1.17.1" />
+    <PackageReference Include="Azure.Identity" Version="1.18.0" />
     <PackageReference Include="Pastel" Version="7.0.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AiGen\Sln1\MsGraphLibContract\MsGraphLibContract.csproj" />
   </ItemGroup>
-
 </Project>
