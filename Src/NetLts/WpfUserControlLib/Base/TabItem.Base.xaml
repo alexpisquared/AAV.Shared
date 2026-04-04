@@ -12,7 +12,9 @@
         <ControlTemplate TargetType="{x:Type TabItem}">
           <Grid>
             <Border Name="Border" Margin="0,0,-4,0" Background="{StaticResource InactiveTabBrush}" BorderBrush="{StaticResource  SolidBorderBrush}" BorderThickness="1,1,1,1" CornerRadius="2,12,0,0" >
-              <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,12,2" RecognizesAccessKey="True"/>
+              <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,12,2" 
+                                RecognizesAccessKey="True"/>
+              <!--              RecognizesAccessKey="True" //tu: missing underscored accelerator key functionality for buttons, labels, etc. 2026 OP -->
             </Border>
           </Grid>
           <ControlTemplate.Triggers>
