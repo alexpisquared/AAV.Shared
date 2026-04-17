@@ -1,4 +1,8 @@
 ﻿namespace AmbienceLib;
+/// <summary>
+/// 2026:
+/// Voice	Styles	Roles: https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-support?tabs=tts#multilingual-voices
+/// </summary>
 public partial class SpeechSynth
 {
   public class CC
