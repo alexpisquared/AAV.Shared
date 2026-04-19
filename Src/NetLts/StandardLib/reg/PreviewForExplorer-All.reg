@@ -251,6 +251,11 @@ Windows Registry Editor Version 5.00
 "Content Type"="text/plain"
 "PerceivedType"="text"
 
+[HKEY_CLASSES_ROOT\.pubxml]
+@="txtfile"
+"Content Type"="text/plain"
+"PerceivedType"="text"
+
 
 
 
