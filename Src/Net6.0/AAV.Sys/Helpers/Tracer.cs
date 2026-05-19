@@ -46,12 +46,12 @@ public static partial class Tracer // .NET Core 3.*
     return FileExistAndIsLocked(new FileInfo(filename)) ? getLogPathFileName(appName, true, is4wk) : filename;
   }
 
-  static string getLogPathFileName(string appName, bool isRandom, bool is4wk, bool is1FilePerSession = false)
+  static string getLogPathFileName(string appName, bool isRandom, bool is4wk)
   {
     var len = Environment.UserName.Length;
     var nm2 = len > 4 ? Environment.UserName.Substring(3, 2) : Environment.UserName[(len - 2)..];
     var filename = Path.Combine(getLogPath(is4wk), appName +
-      (is1FilePerSession ? $"-{DateTimeOffset.Now:MMdd.HHmm}" : "") +
+      //(is1FilePerSession ? $"-{DateTimeOffset.Now:MMdd.HHmm}" : "") +
       $"-{Environment.UserName.Substring(1, 2)}@{Environment.MachineName[..3]}~{nm2.ToUpperInvariant()}{Environment.UserName[..1].ToLowerInvariant()}~{(isRandom ? Path.GetRandomFileName().Replace(".", "") : "")}-.log"); // .log extension has better color coding in VSCode (2021-03)
     return filename;
   }

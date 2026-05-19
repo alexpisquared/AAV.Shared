@@ -32,10 +32,8 @@ public class SeriLogHelper
   {
     var basePath = Constants.IsDbg ? $@"\temp\bak\Logs" : $@"C:\Users\{Environment.UserName}\OneDrive\Public\Logs\";
 
-    var fileName = Constants.IsDbg
-        ? $"{assemblyName}-{DateTime.Now:MM.dd·HH.mm.ss.f}.log"
-        : $"{assemblyName}.{DateTime.Now:MMdd.HHmm}.log";
+    var fileName = ""; // Constants.IsDbg        ? $"{assemblyName}-{DateTime.Now:MM.dd·HH.mm.ss.f}"        : $"{assemblyName}.{DateTime.Now:MMdd.HHmm}";
 
-    return Path.Combine(basePath, fileName);
+    return Path.Combine(basePath, fileName, ".log");
   }
 }
