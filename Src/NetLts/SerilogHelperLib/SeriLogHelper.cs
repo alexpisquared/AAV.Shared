@@ -28,12 +28,5 @@ public class SeriLogHelper
       _ = builder.AddSerilog(loggerConfig.CreateLogger());
     }).CreateLogger<T>();
 
-  static string GetLogFilePath(string assemblyName)
-  {
-    var basePath = Constants.IsDbg ? $@"\temp\bak\Logs" : $@"C:\Users\{Environment.UserName}\OneDrive\Public\Logs\";
-
-    var fileName = ""; // Constants.IsDbg        ? $"{assemblyName}-{DateTime.Now:MM.dd·HH.mm.ss.f}"        : $"{assemblyName}.{DateTime.Now:MMdd.HHmm}";
-
-    return Path.Combine(basePath, fileName, ".log");
-  }
+  static string GetLogFilePath(string assemblyName) => Path.Combine(Constants.IsDbg ? $@"\temp\bak\Logs" : $@"C:\Users\{Environment.UserName}\OneDrive\Public\Logs\", assemblyName, ".log"); // Constants.IsDbg ? $"{DateTime.Now:MM.dd·HH.mm.ss.f}" : $"{DateTime.Now:MMdd.HHmm}";
 }
