@@ -11,7 +11,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
   {
     get
     {
-      _drive = _graphServiceClient?.Me.Drive.GetAsync().Result;
+      _drive = _graphServiceClient?.Me.Drive.GetAsync().GetAwaiter().GetResult();
 
       return _drive ?? throw new InvalidOperationException("■ Drive not initialized");
     }
@@ -21,7 +21,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
   {
     get
     {
-      (bool success, string report, AuthenticationResult _, Azure.Core.TokenCredential _) = InitializeGraphClientIfNeeded().Result;
+      (bool success, string report, AuthenticationResult _, Azure.Core.TokenCredential _) = InitializeGraphClientIfNeeded().GetAwaiter().GetResult();
       WriteLine(report.Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(128, 160, 0)));
 

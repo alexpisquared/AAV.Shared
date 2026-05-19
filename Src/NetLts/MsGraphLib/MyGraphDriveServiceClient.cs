@@ -11,7 +11,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
   {
     get
     {
-      _drive = _graphServiceClient?.Me.Drive.GetAsync().Result;
+      _drive = _graphServiceClient?.Me.Drive.GetAsync().GetAwaiter().GetResult();
 
       return _drive ?? throw new InvalidOperationException("■ Drive not initialized");
     }
@@ -20,7 +20,7 @@ public class MyGraphDriveServiceClient(string clientId) : MyGraphServiceClient(c
   {
     get
     {
-      var (success, report, _, _) = InitializeGraphClientIfNeeded().Result;
+      var (success, report, _, _) = InitializeGraphClientIfNeeded().GetAwaiter().GetResult();
       WriteLine($"{DateTime.Now:HH:mm:ss}  {report}".Pastel(Color.FromArgb(success ? 128 : 255, success ? 196 : 160, 0)));
       Trace.WriteLine(report.Pastel(Color.FromArgb(200, 100, 100)));
 
