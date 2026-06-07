@@ -46,18 +46,9 @@ public static class VersionHelper
                                       /**/ (versionMode ? $"{since}{DateTime.Now - timespan:yyyy.M.d}" : $"{since}{DateTime.Now - timespan:yyyy-MM-dd}");
 
   static string TimedVerStringTimeAgo => TimeAgo(DateTime.Now - new DateTime(2000, 1, 1).AddDays(CurVer.Build).AddSeconds(CurVer.Revision * 2), small: true, ago: " ago"); // based on [assembly: AssemblyVersion("0.8.*")] in AssemblyInfo.cs
-  static string TimedVerStringFromPhysicalBinaries
-  {
-    get
-    {
-      var max = Math.Max(Math.Max(
-        new FileInfo(Assembly.GetEntryAssembly()?.Location ?? throw new ArgumentNullException("▄▀")).LastWriteTime.ToOADate(),
-        new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToOADate()),
-        new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime.ToOADate());
+  static string TimedVerStringFromPhysicalBinaries => TimedVerString202606();
 
-      return TimeAgo(DateTime.Now - DateTime.FromOADate(max), ago: " ago");
-    }
-  }
+  public static string TimedVerString202606(string f = "y.M.d.HHmm") => new[] { Assembly.GetEntryAssembly()?.Location, Assembly.GetExecutingAssembly().Location, Assembly.GetCallingAssembly().Location }.Where(l => l is not null).Max(l => new FileInfo(l!).LastWriteTime).ToString(f);
 
   public static bool IsDbgOrRBD => IsDbg || IsRBD; // Ran by Dev.
   public static bool IsRBD => Environment.UserName.EndsWith("lexp") || Environment.UserName.StartsWith("olepi"); // ran by dev.

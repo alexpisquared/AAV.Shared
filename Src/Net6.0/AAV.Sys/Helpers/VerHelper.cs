@@ -8,7 +8,7 @@ namespace AAV.Sys.Helpers;
 
 public static class VerHelper
 {
-  public static string CurVerStr(string dotnetvernum="") => $"{dotnetvernum}{getTimedVerString} - {CompileMode}";
+  public static string CurVerStr(string dotnetvernum = "") => $"{dotnetvernum}{getTimedVerString} - {CompileMode}";
 
   public static string TimeAgo(DateTimeOffset max, bool versionMode = false)
   {
@@ -100,16 +100,7 @@ public static class VerHelper
   public static bool IsKnownNonVMPC => IsMyHomePC;
   public static bool IsMyHomePC => new string[] { "LN1", "VAIO1", "ASUS2", "RAZER1", "NUC2", "SURFACEPRO1", "YOGA1", "GRAM1" }.Contains(Environment.MachineName.ToUpperInvariant());
 
-  static string getTimedVerString
-  {
-    get
-    {
-      var max = Math.Max(Math.Max(
-        new FileInfo(Assembly.GetEntryAssembly()?.Location).LastWriteTime.ToOADate(),
-        new FileInfo(Assembly.GetExecutingAssembly().Location).LastWriteTime.ToOADate()),
-        new FileInfo(Assembly.GetCallingAssembly().Location).LastWriteTime.ToOADate());
+  static string getTimedVerString => TimedVerString202606();
 
-      return DateTime.FromOADate(max).ToString("yyyy.M.d.HHmm"); // return TimeAgo(DateTime.Now - DateTime.FromOADate(max), ago: " ago");
-    }
-  }
+  public static string TimedVerString202606(string f = "y.M.d.HHmm") => new[] { Assembly.GetEntryAssembly()?.Location, Assembly.GetExecutingAssembly().Location, Assembly.GetCallingAssembly().Location }.Where(l => l is not null).Max(l => new FileInfo(l!).LastWriteTime).ToString(f);
 }
