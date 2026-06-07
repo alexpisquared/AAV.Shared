@@ -1,7 +1,7 @@
 ﻿namespace StandardLib.Helpers;
+
 public static class VersionHelper
 {
-
   public static string CurVerStr => DateTime.Now - TimedVer < TimeSpan.FromHours(24) ? CurVerStrYYMMDDHHmm : CurVerStrYYMMDD;
   static string CurVerStrFmt(string fmt) => $"v{TimedVer.ToString(fmt)}  {CompileMode}";
   static string CurVerStrYYMMDD => $"v{TimedVer:yy-MM-dd}  {CompileMode}";
@@ -51,7 +51,7 @@ public static class VersionHelper
   public static string TimedVerString202606(string f = "y.M.d.HHmm") => new[] { Assembly.GetEntryAssembly()?.Location, Assembly.GetExecutingAssembly().Location, Assembly.GetCallingAssembly().Location }.Where(l => l is not null).Max(l => new FileInfo(l!).LastWriteTime).ToString(f);
 
   public static bool IsDbgOrRBD => IsDbg || IsRBD; // Ran by Dev.
-  public static bool IsRBD => Environment.UserName.EndsWith("lexp") || Environment.UserName.StartsWith("olepi"); // ran by dev.
+  public static bool IsRBD => Environment.UserName.Contains("igid") || Environment.UserName.EndsWith("lexp") || Environment.UserName.StartsWith("olepi"); // ran by dev.
   public static bool IsDbg =>
 #if DEBUG
       true;
