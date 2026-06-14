@@ -1,5 +1,7 @@
 ﻿#if MockingCore3
 #else
+using StandardLib.Helpers;
+using StandardLib.Extensions;
 using Microsoft.Extensions.Logging;
 //using AAV.Sys.Core3Ext;
 #endif
@@ -12,12 +14,11 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using AAV.Sys.Ext;
+using AAV.Sys.Core3Ext;
 using AAV.Sys.Helpers;
 
 //using AAV.Sys.Helpers;
 using AAV.WPF.Ext;
-//using StandardLib.Helpers;
 
 namespace AAV.WPF.Base
 {
@@ -151,7 +152,7 @@ namespace AAV.WPF.Base
 
           ApplyTheme(string.IsNullOrEmpty(wpc.Thm) ? _defaultTheme : wpc.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
         }
-        catch (Exception ex) { _ = (ex?.Log()); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<AAV.Sys.Helpers.NativeMethods.WindowPlacement>(IsoFilenameONLY); }
+        catch (Exception ex) {  ex.Log(); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<AAV.Sys.Helpers.NativeMethods.WindowPlacement>(IsoFilenameONLY); }
 
         winPlcmnt.length = Marshal.SizeOf(typeof(AAV.Sys.Helpers.NativeMethods.WindowPlacement));
         winPlcmnt.flags = 0;
@@ -189,7 +190,7 @@ namespace AAV.WPF.Base
 
         AAV.Sys.Helpers.NativeMethods.SetWindowPlacement(new WindowInteropHelper(this).Handle, ref winPlcmnt); //Note: if window was closed on a monitor that is now disconnected from the computer, SetWindowPlacement will place the window onto a visible monitor.
       }
-      catch (Exception ex) { _ = ex.Log($"*&^> for {GetType().Name}."); }
+      catch (Exception ex) {  ex.Log(); }
     }
     protected override void OnClosing(CancelEventArgs e) // WARNING - Not fired when Application.SessionEnding is fired
     {
