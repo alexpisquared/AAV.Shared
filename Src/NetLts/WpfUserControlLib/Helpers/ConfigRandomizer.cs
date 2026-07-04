@@ -8,7 +8,7 @@ public class ConfigRandomizer
   public ConfigRandomizer(string jsonFile = "appsettings.json") => _config = new ConfigurationBuilder()
       .SetBasePath(AppContext.BaseDirectory)
       //.AddJsonFile(jsonFile)                                            // the last overwrites!!!
-      .AddUserSecrets<WhatIsThatForType>() //note: of this assenbly!!!    // the last overwrites!!!
+      .AddUserSecrets<WhatIsThatForType>() //note: of this assenbly!!!    //tu: the last overwrites!!! ??: config priority: 1. appsettings.json, 2. user secrets
       .Build();
 
   public IConfigurationRoot Config => _config;
