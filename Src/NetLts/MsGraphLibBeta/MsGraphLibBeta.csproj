@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Graph.Beta" Version="5.88.0-preview" />
     <PackageReference Include="Azure.Identity" Version="1.21.0" />
-    <PackageReference Include="Pastel" Version="7.0.1" />
+    <PackageReference Include="Pastel" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\AiGen\Sln1\MsGraphLibContract\MsGraphLibContract.csproj" />
