@@ -1,0 +1,9 @@
+<Window x:Class="AAV.Anime.Wpf3dCube.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:cube="clr-namespace:AAV.Anime.Wpf3dCube;assembly=AAV.Anime.Wpf3dCube"
+        Title="3D Cube Animation Demo" Height="450" Width="800" Background="#FF3F3F46" WindowStartupLocation="CenterScreen">
+  <Grid>
+    <cube:CntDn_3dCubeUC />
+  </Grid>
+</Window>
