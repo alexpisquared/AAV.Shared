@@ -1,24 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
-	<PropertyGroup Label="Globals">
-		<SccProjectName>SAK</SccProjectName>
-		<SccProvider>SAK</SccProvider>
-		<SccAuxPath>SAK</SccAuxPath>
-		<SccLocalPath>SAK</SccLocalPath>
-		<Platforms>AnyCPU;x64</Platforms>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<TargetFramework>net11.0-windows8.0</TargetFramework>
-		<UseWPF>true</UseWPF>
-
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
-
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="System.Threading.Thread" Version="4.3.0" />
-	</ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net11.0-windows8.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Threading.Thread" />
+  </ItemGroup>
 </Project>

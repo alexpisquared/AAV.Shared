@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net11.0-windows</TargetFramework>
     <LangVersion>latest</LangVersion>
@@ -34,7 +34,8 @@
   <ItemGroup>
     <Resource Include="Assets\error.gif" />
     <Resource Include="Assets\sql.ico">
-      <CopyToOutputDirectory></CopyToOutputDirectory>
+      <CopyToOutputDirectory>
+      </CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\theme-icon.png" />
     <Resource Include="Assets\vb - logo.ico" />
@@ -44,11 +45,11 @@
     <Resource Include="Assets\Watermark.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="3.10.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
+    <PackageReference Include="CliWrap" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <!--Easier controlling from here
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64">
       <PrivateAssets>all</PrivateAssets>
