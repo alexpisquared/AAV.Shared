@@ -1,6 +1,5 @@
 ﻿#if MockingCore3
 #else
-using StandardLib.Helpers;
 using StandardLib.Extensions;
 using Microsoft.Extensions.Logging;
 //using AAV.Sys.Core3Ext;
@@ -14,7 +13,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using AAV.Sys.Core3Ext;
 using AAV.Sys.Helpers;
 
 //using AAV.Sys.Helpers;
@@ -146,13 +144,13 @@ namespace AAV.WPF.Base
       {
         try
         {
-          var wpc = JsonFileSerializer.Load<AAV.Sys.Helpers.NativeMethods.WPContainer>(IsoFilenameONLY);
+          var wpc = AAV.Sys.Helpers.JsonFileSerializer.Load<AAV.Sys.Helpers.NativeMethods.WPContainer>(IsoFilenameONLY);
           ZV = wpc.Zb == 0 ? 1 : wpc.Zb;
           winPlcmnt = wpc.WindowPlacement;
 
           ApplyTheme(string.IsNullOrEmpty(wpc.Thm) ? _defaultTheme : wpc.Thm); // -- for Mail.sln - causes the error: Cannot find resource named 'WindowStyle_Aav0'. Resource names are case sensitive 
         }
-        catch (Exception ex) {  ex.Log(); ZV = 1d; winPlcmnt = JsonFileSerializer.Load<AAV.Sys.Helpers.NativeMethods.WindowPlacement>(IsoFilenameONLY); }
+        catch (Exception ex) {  ex.Log(); ZV = 1d; winPlcmnt = AAV.Sys.Helpers.JsonFileSerializer.Load<AAV.Sys.Helpers.NativeMethods.WindowPlacement>(IsoFilenameONLY); }
 
         winPlcmnt.length = Marshal.SizeOf(typeof(AAV.Sys.Helpers.NativeMethods.WindowPlacement));
         winPlcmnt.flags = 0;
@@ -197,7 +195,7 @@ namespace AAV.WPF.Base
       base.OnClosing(e);
 
       AAV.Sys.Helpers.NativeMethods.GetWindowPlacement(new WindowInteropHelper(this).Handle, out var wp);
-      JsonFileSerializer.Save(new AAV.Sys.Helpers.NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, IsoFilenameONLY);
+      AAV.Sys.Helpers.JsonFileSerializer.Save(new AAV.Sys.Helpers.NativeMethods.WPContainer { WindowPlacement = wp, Zb = ZV, Thm = Thm }, IsoFilenameONLY);
     }
     bool IsDbg =>
 #if DEBUG
