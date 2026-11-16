@@ -60,7 +60,7 @@ public static class ExnLogr // the one and only .net core 3 (Dec2019)
         .WithArguments([filename, fileline.ToString()])
         //.WithWorkingDirectory("work/dir/path")
         .ExecuteAsync();
-#elif true
+#elif true_
     VsOpenerAttacher.OpenVsOnTheCulpritLine(filename, fileline);     //todo: test this call of the opener directly - not through EXE (Jun 2024)
 #else
     const string _dotnet4exe = """C:\g\Util\Src\OpenInVsOnTheCulpritLine6\bin\Release\net9.0-windows8.0\OpenInVsOnTheCulpritLine6.exe""";

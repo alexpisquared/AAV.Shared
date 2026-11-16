@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!--<TargetFramework>netstandard2.0</TargetFramework>-->
-    <TargetFramework>net11.0</TargetFramework>
+    <TargetFrameworks>net48;net11.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
@@ -22,6 +22,6 @@
     <PackageReference Include="System.Text.Json" Version="10.0.2" />-->
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Util\Src\OpenVsOnTheCulpritLine\OpenVsOnTheCulpritLine.csproj" />
+    <ProjectReference Include="..\..\..\..\Util\Src\OpenInVsOnTheCulpritLine\OpenInVsOnTheCulpritLine.csproj" />
   </ItemGroup>
 </Project>
